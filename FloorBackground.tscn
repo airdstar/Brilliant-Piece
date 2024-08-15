@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cd4hnlrfvcr6h"]
+
+[ext_resource type="Script" path="res://FloorBackground.gd" id="1_0bhey"]
+[ext_resource type="Texture2D" uid="uid://c0owfrdvwxl17" path="res://background.png" id="2_okxpb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvc75"]
+albedo_texture = ExtResource("2_okxpb")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fujsh"]
+material = SubResource("StandardMaterial3D_uvc75")
+flip_faces = true
+top_radius = 20.0
+bottom_radius = 20.0
+height = 100.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_0bhey")
+
+[node name="Background" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9, 0)
+mesh = SubResource("CylinderMesh_fujsh")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.8092, -0.0417047)
+light_energy = 16.0
+light_size = 1.0
+light_negative = true
+shadow_enabled = true
+omni_range = 29.189
+omni_attenuation = 0.0824697

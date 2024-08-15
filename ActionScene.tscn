@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bte5iduphol4i"]
+
+[ext_resource type="Texture2D" uid="uid://3mgjn3ea3v4i" path="res://BattleBorder.png" id="1_8h00y"]
+[ext_resource type="Script" path="res://ActionScreen.gd" id="1_lwr4s"]
+[ext_resource type="PackedScene" uid="uid://kq7nnhxo616a" path="res://ActionBase.tscn" id="3_yvqeu"]
+
+[node name="ActionScene" type="Node"]
+script = ExtResource("1_lwr4s")
+
+[node name="Screen" type="TextureRect" parent="."]
+offset_left = 166.0
+offset_top = 14.0
+offset_right = 858.0
+offset_bottom = 706.0
+
+[node name="Border" type="TextureRect" parent="."]
+offset_left = 162.0
+offset_top = 10.0
+offset_right = 862.0
+offset_bottom = 710.0
+texture = ExtResource("1_8h00y")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="ActionBase" parent="SubViewport" instance=ExtResource("3_yvqeu")]

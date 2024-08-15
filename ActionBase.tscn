@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://kq7nnhxo616a"]
+
+[ext_resource type="Script" path="res://ActionScene.gd" id="1_ymby1"]
+[ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="2_be8eo"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Pointer.tscn" id="3_j8khg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dlqtq"]
+size = Vector3(100, 200, 1)
+
+[node name="ActionBase" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 60, 100)
+script = ExtResource("1_ymby1")
+
+[node name="PlayerPiece" parent="." instance=ExtResource("2_be8eo")]
+
+[node name="Tiles" type="Node3D" parent="."]
+
+[node name="Pointer" parent="." instance=ExtResource("3_j8khg")]
+
+[node name="Twist" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Twist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 2)
+
+[node name="Background" type="MeshInstance3D" parent="Twist/Camera3D"]
+transform = Transform3D(1, 2.98023e-08, 0, 2.98023e-08, 1, 0, -2.98023e-08, 0, 1, 0, 69, -40)
+mesh = SubResource("BoxMesh_dlqtq")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Twist/Camera3D"]
+spot_range = 60.85
+spot_attenuation = 0.108819

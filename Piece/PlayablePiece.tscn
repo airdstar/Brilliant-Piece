@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlu6bkktlk1o"]
+
+[ext_resource type="Script" path="res://Piece/PlayablePiece.gd" id="1_v20ax"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_83i58"]
+height = 1.0
+
+[node name="PlayablePiece" type="Node3D"]
+script = ExtResource("1_v20ax")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("CylinderMesh_83i58")

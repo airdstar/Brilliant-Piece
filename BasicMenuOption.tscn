@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://fy13pgcygfo1"]
+
+[ext_resource type="Script" path="res://BasicMenuOption.gd" id="1_xgm12"]
+[ext_resource type="Texture2D" uid="uid://dfd48wngnhcye" path="res://MenuHighlight.png" id="2_u4cdl"]
+[ext_resource type="Texture2D" uid="uid://cfxswvfsju0iu" path="res://MenuFull.png" id="4_sm4se"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r2ckk"]
+font_size = 18
+
+[node name="Option" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xgm12")
+
+[node name="Outline" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -3.0
+offset_right = 64.0
+offset_bottom = 32.0
+texture = ExtResource("4_sm4se")
+
+[node name="Label" type="Label" parent="Outline"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 93.0
+offset_bottom = 32.0
+text = "hi"
+label_settings = SubResource("LabelSettings_r2ckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="TextureRect" parent="Outline"]
+visible = false
+modulate = Color(1, 1, 1, 0.0784314)
+layout_mode = 0
+offset_left = 5.6
+offset_top = 4.0
+offset_right = 62.6
+offset_bottom = 31.0
+texture = ExtResource("2_u4cdl")
+
+[node name="HighlightTimer" type="Timer" parent="."]
+wait_time = 0.6
+autostart = true
+
+[connection signal="timeout" from="HighlightTimer" to="." method="ToggleGrow"]
