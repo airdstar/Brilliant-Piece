@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=15 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
 [ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="3_a68on"]
@@ -37,6 +37,9 @@ shader_parameter/roll_speed = 1.0
 shader_parameter/scan_line_strength = -6.0
 shader_parameter/pixel_strength = -2.0
 
+[sub_resource type="BoxMesh" id="BoxMesh_re4dm"]
+size = Vector3(8, 8, 0.5)
+
 [node name="Base" type="Node3D"]
 script = ExtResource("1_snloc")
 tileAmount = 100
@@ -46,10 +49,9 @@ tileAmount = 100
 [node name="Camera3D" type="Camera3D" parent="Twist"]
 transform = Transform3D(0.766044, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642788, -0.492404, 0.586824, 5, 5, 5)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Twist/Camera3D"]
-transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-light_energy = 0.4
-sky_mode = 1
+[node name="SpotLight3D" type="SpotLight3D" parent="Twist/Camera3D"]
+light_energy = 2.0
+spot_range = 30.0
 
 [node name="Pointer" parent="." instance=ExtResource("3_uhgei")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -70,6 +72,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31674, 0, 0)
 [node name="StaticHUD" type="CanvasLayer" parent="."]
 layer = 2
 follow_viewport_enabled = true
+
+[node name="PortraitBackground" type="TextureRect" parent="StaticHUD"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 144.0
+offset_bottom = 144.0
 
 [node name="Portrait" type="TextureRect" parent="StaticHUD"]
 offset_left = 20.0
@@ -126,5 +134,18 @@ offset_right = 1024.0
 offset_bottom = 768.0
 mouse_filter = 2
 
-[node name="GUI" type="CanvasLayer" parent="StaticHUD"]
-layer = 2
+[node name="SubViewport" type="SubViewport" parent="StaticHUD"]
+size = Vector2i(120, 120)
+
+[node name="Portrait" type="Node3D" parent="StaticHUD/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="StaticHUD/SubViewport/Portrait"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+fov = 60.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="StaticHUD/SubViewport/Portrait/Camera3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticHUD/SubViewport/Portrait/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = SubResource("BoxMesh_re4dm")

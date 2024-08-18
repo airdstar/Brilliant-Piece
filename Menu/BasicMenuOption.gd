@@ -11,7 +11,7 @@ var additionalOpacity : float
 @onready var highlight := $Outline/Highlight
 
 func _ready():
-	outline.set_texture(load("res://MenuFull.png"))
+	outline.set_texture(load("res://Menu/MenuFull.png"))
 	outline.size = Vector2(96,35)
 	outline.position = Vector2(-4,-1)
 	label.size = Vector2(86,29)
@@ -33,7 +33,7 @@ func _process(delta):
 func SetSprite(num : int):
 	match num:
 		1:
-			outline.set_texture(load("res://MenuTop.png"))
+			outline.set_texture(load("res://Menu/MenuTop.png"))
 			outline.size = Vector2(96,32)
 			outline.flip_v = true
 			outline.position = Vector2(-4,0)
@@ -42,7 +42,7 @@ func SetSprite(num : int):
 			highlight.size = Vector2(90,29)
 			highlight.position = Vector2(4,0)
 		2:
-			outline.set_texture(load("res://MenuTop.png"))
+			outline.set_texture(load("res://Menu/MenuTop.png"))
 			outline.size = Vector2(96,32)
 			outline.position = Vector2(-4,-1)
 			label.size = Vector2(86,29)
@@ -50,7 +50,7 @@ func SetSprite(num : int):
 			highlight.size = Vector2(90,29)
 			highlight.position = Vector2(4,3)
 		3:
-			outline.set_texture(load("res://MenuMiddle.png"))
+			outline.set_texture(load("res://Menu/MenuMiddle.png"))
 			outline.size = Vector2(96,29)
 			outline.position = Vector2(-4,1)
 			label.size = Vector2(86,29)
@@ -71,4 +71,3 @@ func selectToggle():
 
 func ToggleGrow():
 	growing = !growing
-

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://fy13pgcygfo1"]
 
-[ext_resource type="Script" path="res://BasicMenuOption.gd" id="1_xgm12"]
-[ext_resource type="Texture2D" uid="uid://dfd48wngnhcye" path="res://MenuHighlight.png" id="2_u4cdl"]
-[ext_resource type="Texture2D" uid="uid://cfxswvfsju0iu" path="res://MenuFull.png" id="4_sm4se"]
+[ext_resource type="Script" path="res://Menu/BasicMenuOption.gd" id="1_xgm12"]
+[ext_resource type="Texture2D" uid="uid://dfd48wngnhcye" path="res://Menu/MenuHighlight.png" id="2_u4cdl"]
+[ext_resource type="Texture2D" uid="uid://cfxswvfsju0iu" path="res://Menu/MenuFull.png" id="4_sm4se"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_r2ckk"]
 font_size = 18

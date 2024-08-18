@@ -6,13 +6,10 @@ var highlightedOption : int = 1
 @onready var options = $Options
 
 func _ready():
-	$MenuEnter.play()
-	var toAdd = preload("res://BasicMenuOption.tscn").instantiate()
+	var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 	options.add_child(toAdd)
 	toAdd.setOptionType("View")
 	toAdd.hoverToggle()
-	await get_tree().create_timer(0.2).timeout
-	self.visible = true
 
 func _process(_delta):
 	if Input.is_action_just_pressed("Forward") and !hasSelectedOption:
@@ -40,11 +37,18 @@ func _process(_delta):
 		options.get_child(highlightedOption - 1).selectToggle()
 		hasSelectedOption = false
 
+func showMenu(sound : bool):
+	visible = true
+	if sound:
+		$AnimationPlayer.play("OpenMenuSound")
+	else:
+		$AnimationPlayer.play("OpenMenu")
+
 func addPlayerOptions():
 	optionCount = 4
 	for n in range(optionCount):
 		if n != 0:
-			var toAdd = preload("res://BasicMenuOption.tscn").instantiate()
+			var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 			options.add_child(toAdd)
 			match n:
 				1:
@@ -67,12 +71,12 @@ func addActionOptions():
 	optionCount = 5
 	for n in range(optionCount):
 		if n != 0:
-			var toAdd = preload("res://BasicMenuOption.tscn").instantiate()
+			var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 			options.add_child(toAdd)
 			match n:
 				1:
 					toAdd.SetSprite(3)
-					toAdd.setOptionType("Magic")
+					toAdd.setOptionType("Soul")
 					toAdd.position = Vector2(0,-31)
 				2:
 					toAdd.SetSprite(3)
@@ -93,17 +97,18 @@ func addActionOptions():
 func selectedOption():
 	match options.get_child(highlightedOption - 1).type:
 		"Move":
+			$AnimationPlayer.play("SelectCloseMenu")
+			await get_tree().create_timer(0.1).timeout
 			get_parent().get_parent().moving[0] = true
 			get_parent().get_parent().moving[1] = get_parent().get_parent().highlightedTile.contains
 			get_parent().get_parent().inMenu = false
 			get_parent().get_parent().findMoveableTiles()
-			options.queue_free()
-			$MenuSelect.play()
-			await get_tree().create_timer(0.3).timeout
 			queue_free()
+		"Attack":
+			$MenuSelect.play()
 
 func closeMenu():
-	$MenuExit.play()
+	$AnimationPlayer.play("CloseMenu")
 	await get_tree().create_timer(0.2).timeout
 	if get_parent().get_parent() is PlayableArea:
 		get_parent().get_parent().inMenu = false

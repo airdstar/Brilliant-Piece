@@ -1,6 +1,8 @@
 extends PlayablePiece
 class_name PlayerPiece
 
-var classType : String = "Test"
-var maxMagic : int = 20
-var magic : int = maxMagic
+var classType : String = "Crystal Sage"
+#CLASSES
+## CrystalSage Pyromancer Speedster
+var maxSoul : int = 2
+var soul : int = maxSoul

@@ -13,5 +13,3 @@ func cameraControls(twistAmount : float):
 func _process(delta):
 	var texture = $SubViewport.get_texture()
 	$Screen.texture = texture
-
-

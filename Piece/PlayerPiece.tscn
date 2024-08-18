@@ -1,64 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://fkaj1xnx5wjr"]
+[gd_scene load_steps=3 format=3 uid="uid://fkaj1xnx5wjr"]
 
 [ext_resource type="Script" path="res://Piece/PlayerPiece.gd" id="1_5b7hp"]
-[ext_resource type="Shader" path="res://addons/flexible_toon_shader/flexible_toon.gdshader" id="2_t4srl"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcjt0"]
-render_priority = 0
-shader = ExtResource("2_t4srl")
-shader_parameter/albedo = Color(0.796078, 0.478431, 0.686275, 1)
-shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = true
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_un2k5"]
-material = SubResource("ShaderMaterial_rcjt0")
-top_radius = 0.1
-bottom_radius = 0.6
-height = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ya2e7"]
-render_priority = 0
-shader = ExtResource("2_t4srl")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = true
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-
-[sub_resource type="SphereMesh" id="SphereMesh_wyl35"]
-material = SubResource("ShaderMaterial_ya2e7")
-radius = 0.4
-height = 0.8
+[ext_resource type="PackedScene" uid="uid://wokbbxygcayx" path="res://Piece/CrystalSage.tscn" id="2_sg548"]
 
 [node name="PlayerPiece" type="Node3D"]
 script = ExtResource("1_5b7hp")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("CylinderMesh_un2k5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-mesh = SubResource("SphereMesh_wyl35")
+[node name="CrystalSage" parent="." instance=ExtResource("2_sg548")]

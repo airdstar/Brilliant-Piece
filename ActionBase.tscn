@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://kq7nnhxo616a"]
+[gd_scene load_steps=8 format=3 uid="uid://kq7nnhxo616a"]
 
 [ext_resource type="Script" path="res://ActionScene.gd" id="1_ymby1"]
 [ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="2_be8eo"]
@@ -6,6 +6,95 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_dlqtq"]
 size = Vector3(100, 200, 1)
+
+[sub_resource type="Animation" id="Animation_y2anf"]
+resource_name = "CombatStart"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Twist:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 2.73208),
+"update": 0,
+"values": [Vector3(0, 1.5708, 0), Vector3(0, 7.85398, 0)]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Twist/Camera3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 5, 6, 3, 1, -0.5, 1, 2)
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Twist/Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.698132, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"openMenu"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_n6bem"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Twist:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Twist/Camera3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.5, 1, 2)
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Twist/Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rbu50"]
+_data = {
+"CombatStart": SubResource("Animation_y2anf"),
+"RESET": SubResource("Animation_n6bem")
+}
 
 [node name="ActionBase" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 60, 100)
@@ -16,11 +105,12 @@ script = ExtResource("1_ymby1")
 [node name="Tiles" type="Node3D" parent="."]
 
 [node name="Pointer" parent="." instance=ExtResource("3_j8khg")]
+visible = false
 
 [node name="Twist" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Twist"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 2)
 
 [node name="Background" type="MeshInstance3D" parent="Twist/Camera3D"]
 transform = Transform3D(1, 2.98023e-08, 0, 2.98023e-08, 1, 0, -2.98023e-08, 0, 1, 0, 69, -40)
@@ -28,5 +118,14 @@ mesh = SubResource("BoxMesh_dlqtq")
 skeleton = NodePath("../..")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Twist/Camera3D"]
+light_energy = 0.4
 spot_range = 60.85
 spot_attenuation = 0.108819
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rbu50")
+}
+autoplay = "CombatStart"

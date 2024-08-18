@@ -4,6 +4,7 @@ class_name PlayableArea
 var mouse_sensitivity := 0.0005
 var twist : float
 var inMenu : bool = false
+var menu
 var moving = [false,PlayablePiece]
 var highlightedTile : tile
 @onready var Pointer = $Pointer
@@ -63,6 +64,11 @@ func highlightTile(tileToSelect : tile):
 func displayInfo():
 	if highlightedTile.contains:
 		$StaticHUD/Portrait.visible = true
+		var portraitPic = highlightedTile.contains.duplicate()
+		$StaticHUD/SubViewport/Portrait.add_child(portraitPic)
+		portraitPic.global_position = $StaticHUD/SubViewport/Portrait.global_position
+		$StaticHUD/PortraitBackground.texture = $StaticHUD/SubViewport.get_texture()
+		$StaticHUD/PortraitBackground.visible = true
 		if highlightedTile.contains is PlayablePiece:
 			$StaticHUD/Portrait/Status/NameLabel.text = highlightedTile.contains.pieceName
 			$StaticHUD/Portrait/Status/TypeLabel.text = highlightedTile.contains.type
@@ -70,8 +76,11 @@ func displayInfo():
 			$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
 			if highlightedTile.contains is PlayerPiece:
 				$StaticHUD/Portrait/Status/LevelLabel.text = str(highlightedTile.contains.classType) + " lvl " + str(highlightedTile.contains.level)
-				$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) + "        MP: " + str(highlightedTile.contains.magic) + "/" + str(highlightedTile.contains.maxMagic)
+				$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) + "        SP: " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
 	else:
+		if $StaticHUD/SubViewport/Portrait.get_child_count() == 2:
+			$StaticHUD/SubViewport/Portrait.remove_child($StaticHUD/SubViewport/Portrait.get_child(1))
+		$StaticHUD/PortraitBackground.visible = false
 		$StaticHUD/Portrait.visible = false
 
 func stopShowingMovement():
@@ -94,6 +103,15 @@ func setMoveable(moveableTile : tile):
 	else:
 		moveableTile.setColor("Green")
 
+func lookForTile(pos : Vector3):
+	var toReturn = [null, false]
+	var allTiles = $Tiles.get_children()
+	for n in range(allTiles.size()):
+		if allTiles[n].global_position == pos:
+			toReturn[0] = allTiles[n]
+			toReturn[1] = true
+	return toReturn
+
 func findMoveableTiles():
 	match highlightedTile.contains.type:
 		"Pawn":
@@ -103,14 +121,35 @@ func findMoveableTiles():
 		"Rook":
 			for n in range(4):
 				var CheckTile = highlightedTile
+				var canContinue = true
 				for m in range(3):
-					if CheckTile.closeTiles[n]:
+					if CheckTile.closeTiles[n] and canContinue:
 						CheckTile = CheckTile.closeTiles[n]
 						if CheckTile:
 							setMoveable(CheckTile)
+							if CheckTile.contains is PlayablePiece:
+								canContinue = false
 		"Bishop":
-			pass
-
+			for n in range(4):
+				var CheckTile = highlightedTile
+				var canContinue = true
+				var pos : Vector3
+				match n:
+					0:
+						pos = Vector3(1,0,1)
+					1:
+						pos = Vector3(-1,0,1)
+					2:
+						pos = Vector3(1,0,-1)
+					3:
+						pos = Vector3(-1,0,-1)
+				for m in range(3):
+					var tileData = lookForTile(CheckTile.global_position + pos)
+					if tileData[1] and canContinue:
+						setMoveable(tileData[0])
+						CheckTile = tileData[0]
+						if tileData[0].contains is PlayablePiece:
+							canContinue = false
 #Fix this later
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)

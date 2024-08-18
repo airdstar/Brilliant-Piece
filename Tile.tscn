@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhkibg0mnfn5v"]
+[gd_scene load_steps=6 format=3 uid="uid://bhkibg0mnfn5v"]
 
 [ext_resource type="Script" path="res://Tile.gd" id="1_bu18m"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fohnx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i02ah"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_s8spc"]
+material = SubResource("StandardMaterial3D_i02ah")
+inner_radius = 0.9
+rings = 4
+ring_segments = 12
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b5ab5"]
 
@@ -12,6 +21,11 @@ script = ExtResource("1_bu18m")
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_fohnx")
+
+[node name="Outline" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(0.53033, 0, 0.53033, 0, 10, 0, -0.53033, 0, 0.53033, 0, 0.25, 0)
+mesh = SubResource("TorusMesh_s8spc")
+skeleton = NodePath("../..")
 
 [node name="PointerPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

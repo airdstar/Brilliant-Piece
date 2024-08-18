@@ -1,22 +1,40 @@
 extends PlayableArea
 
 @onready var player := $PlayerPiece
+var playerTile : tile
 var enemy : PlayablePiece
+var doingAttack : bool = false
 
 func secondaryReady():
 	inMenu = true
 	makeArena(9,9)
 
 func secondaryProcess(_delta):
+	if Input.is_action_just_pressed("Cancel"):
+		if moving[0]:
+			stopShowingMovement()
+			moving[0] = false
+			moving[1] = null
+			inMenu = true
+			highlightTile(playerTile)
+			openMenu()
+	
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
 			handleMovement()
 
-func cameraControls():
-	pass
 
 func displayInfo():
 	pass
+
+func openMenu():
+	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
+	menu.scale = Vector2(1.8,1.8)
+	$Menu.add_child(menu)
+	menu.addActionOptions()
+	menu.position = Vector2(0, 400)
+	menu.showMenu(false)
+
 
 func makeArena(x : int, z : int):
 	var playerPos = randi_range(1,z - 2)
@@ -29,8 +47,8 @@ func makeArena(x : int, z : int):
 			if n == 1:
 				if m == playerPos:
 					tileToAdd.setPiece(player)
+					playerTile = tileToAdd
 					highlightTile(tileToAdd)
 			elif n == x - 2:
 				if m == enemyPos:
 					tileToAdd.setPiece(enemy)
-

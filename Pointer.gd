@@ -18,14 +18,14 @@ func _process(delta):
 func setColor(color : String):
 	match color:
 		"Blue":
-			$Top.mesh.material.set_shader_parameter("albedo", Color(0.569,0.71,1))
-			$Bottom.mesh.material.set_shader_parameter("albedo", Color(0.569,0.71,1))
+			$Top.mesh.material.set_albedo(Color(0.569,0.71,1))
+			$Bottom.mesh.material.set_albedo(Color(0.569,0.71,1))
 		"Green":
-			$Top.mesh.material.set_shader_parameter("albedo", Color(0.569,1,0.71))
-			$Bottom.mesh.material.set_shader_parameter("albedo", Color(0.569,1,0.71))
+			$Top.mesh.material.set_albedo(Color(0.569,1,0.71))
+			$Bottom.mesh.material.set_albedo(Color(0.569,1,0.71))
 		"Red":
-			$Top.mesh.material.set_shader_parameter("albedo", Color(1,0.569,0.71))
-			$Bottom.mesh.material.set_shader_parameter("albedo", Color(1,0.569,0.71))
+			$Top.mesh.material.set_albedo(Color(1,0.569,0.71))
+			$Bottom.mesh.material.set_albedo(Color(1,0.569,0.71))
 
 func StartBob():
 	up = !up

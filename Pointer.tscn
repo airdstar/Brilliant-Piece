@@ -1,33 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://vhhyi3mimwtp"]
+[gd_scene load_steps=6 format=3 uid="uid://vhhyi3mimwtp"]
 
-[ext_resource type="Material" uid="uid://bb43ngplsfis2" path="res://addons/flexible_toon_shader/FlexibleToonMaterial.tres" id="1_cwke4"]
 [ext_resource type="Script" path="res://Pointer.gd" id="1_syfrq"]
-[ext_resource type="Shader" path="res://addons/flexible_toon_shader/flexible_toon.gdshader" id="2_ifchc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oji6a"]
+albedo_color = Color(0.569, 0.71, 1, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_iu87g"]
-material = ExtResource("1_cwke4")
+material = SubResource("StandardMaterial3D_oji6a")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_421g8"]
-render_priority = 0
-shader = ExtResource("2_ifchc")
-shader_parameter/albedo = Color(0.568627, 0.709804, 1, 1)
-shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/cuts = 6
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = true
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = true
-shader_parameter/rim_width = 4.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e7v6"]
+albedo_color = Color(0.568627, 0.709804, 1, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_80x6k"]
-material = SubResource("ShaderMaterial_421g8")
+material = SubResource("StandardMaterial3D_6e7v6")
 top_radius = 0.0
 
 [node name="Pointer" type="Node3D"]
