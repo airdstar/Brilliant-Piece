@@ -5,7 +5,7 @@ var pointerHeight
 var moveable := false
 var material := StandardMaterial3D.new()
 var contains : Piece
-var closeTiles := [null, null, null, null]
+var obstructed := false
 
 func _ready():
 	$Base.material_override = material
@@ -35,28 +35,3 @@ func setColor(color : String):
 		"Red":
 			$Base.material_override.set_albedo(Color(1,0.569,0.71))
 	
-
-func Direction1Found(area):
-	closeTiles[0] = area.get_parent()
-
-func Direction2Found(area):
-	closeTiles[1] = area.get_parent()
-
-func Direction3Found(area):
-	closeTiles[2] = area.get_parent()
-
-func Direction4Found(area):
-	closeTiles[3] = area.get_parent()
-
-
-func Direction1Lost(_area):
-	closeTiles[0] = null
-
-func Direction2Lost(_area):
-	closeTiles[1] = null
-
-func Direction3Lost(_area):
-	closeTiles[2] = null
-
-func Direction4Lost(_area):
-	closeTiles[3] = null

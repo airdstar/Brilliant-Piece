@@ -31,8 +31,24 @@ func secondaryProcess(_delta):
 				moving[1].previousTile.contains = null
 				highlightedTile.setPiece(moving[1])
 				stopShowingMovement()
+				var x = moving[1].currentTile.position.x - moving[1].previousTile.position.x
+				var z = moving[1].currentTile.position.z - moving[1].previousTile.position.z
+				if x > z and x > 0:
+					#West
+					moving[1].global_rotation.y = deg_to_rad(0)
+				elif x < z and x < 0:
+					#East
+					moving[1].global_rotation.y = deg_to_rad(180)
+				elif z > x and z > 0:
+					#North
+					moving[1].global_rotation.y = deg_to_rad(-90)
+				elif z < x and z < 0:
+					#South
+					moving[1].global_rotation.y = deg_to_rad(90)
 				moving[0] = false
 				moving[1] = null
+				displayInfo()
+				Pointer.height = highlightedTile.getPointerPos()
 		if moving[0] and highlightedTile.contains == moving[1]:
 			stopShowingMovement()
 			moving[0] = false

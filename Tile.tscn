@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhkibg0mnfn5v"]
+[gd_scene load_steps=5 format=3 uid="uid://bhkibg0mnfn5v"]
 
 [ext_resource type="Script" path="res://Tile.gd" id="1_bu18m"]
 
@@ -12,8 +12,6 @@ material = SubResource("StandardMaterial3D_i02ah")
 inner_radius = 0.9
 rings = 4
 ring_segments = 12
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_b5ab5"]
 
 [node name="Tile" type="Node3D"]
 script = ExtResource("1_bu18m")
@@ -35,36 +33,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="PiecePos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-
-[node name="Direction1" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction1"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.5, 0, 0)
-shape = SubResource("BoxShape3D_b5ab5")
-
-[node name="Direction2" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction2"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0.5)
-shape = SubResource("BoxShape3D_b5ab5")
-
-[node name="Direction3" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction3"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.5, 0, 0)
-shape = SubResource("BoxShape3D_b5ab5")
-
-[node name="Direction4" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction4"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -0.5)
-shape = SubResource("BoxShape3D_b5ab5")
-
-[connection signal="area_entered" from="Direction1" to="." method="Direction1Found"]
-[connection signal="area_exited" from="Direction1" to="." method="Direction1Lost"]
-[connection signal="area_entered" from="Direction2" to="." method="Direction2Found"]
-[connection signal="area_exited" from="Direction2" to="." method="Direction2Lost"]
-[connection signal="area_entered" from="Direction3" to="." method="Direction3Found"]
-[connection signal="area_exited" from="Direction3" to="." method="Direction3Lost"]
-[connection signal="area_entered" from="Direction4" to="." method="Direction4Found"]
-[connection signal="area_exited" from="Direction4" to="." method="Direction4Lost"]

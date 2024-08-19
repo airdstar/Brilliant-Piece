@@ -67,6 +67,7 @@ func displayInfo():
 		var portraitPic = highlightedTile.contains.duplicate()
 		$StaticHUD/SubViewport/Portrait.add_child(portraitPic)
 		portraitPic.global_position = $StaticHUD/SubViewport/Portrait.global_position
+		portraitPic.global_rotation.y = deg_to_rad(-90)
 		$StaticHUD/PortraitBackground.texture = $StaticHUD/SubViewport.get_texture()
 		$StaticHUD/PortraitBackground.visible = true
 		if highlightedTile.contains is PlayablePiece:
@@ -112,23 +113,47 @@ func lookForTile(pos : Vector3):
 			toReturn[1] = true
 	return toReturn
 
+func travelTo(destination : tile):
+	pass
+
 func findMoveableTiles():
 	match highlightedTile.contains.type:
 		"Pawn":
 			for n in range(4):
-				if highlightedTile.closeTiles[n]:
-					setMoveable(highlightedTile.closeTiles[n])
+				var tileData
+				match n:
+					0:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,0))
+					1:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,0))
+					2:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,1))
+					3:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,-1))
+				
+				if tileData[1]:
+					setMoveable(tileData[0])
 		"Rook":
 			for n in range(4):
 				var CheckTile = highlightedTile
 				var canContinue = true
+				var pos : Vector3
+				match n:
+					0:
+						pos = Vector3(1,0,0)
+					1:
+						pos = Vector3(-1,0,0)
+					2:
+						pos = Vector3(0,0,1)
+					3:
+						pos = Vector3(0,0,-1)
 				for m in range(3):
-					if CheckTile.closeTiles[n] and canContinue:
-						CheckTile = CheckTile.closeTiles[n]
-						if CheckTile:
-							setMoveable(CheckTile)
-							if CheckTile.contains is PlayablePiece:
-								canContinue = false
+					var tileData = lookForTile(CheckTile.global_position + pos)
+					if tileData[1] and canContinue:
+						setMoveable(tileData[0])
+						CheckTile = tileData[0]
+						if tileData[0].contains is PlayablePiece:
+							canContinue = false
 		"Bishop":
 			for n in range(4):
 				var CheckTile = highlightedTile
@@ -150,61 +175,107 @@ func findMoveableTiles():
 						CheckTile = tileData[0]
 						if tileData[0].contains is PlayablePiece:
 							canContinue = false
-#Fix this later
+
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)
-	if rotation > -180 and rotation <= -90:
-		if Input.is_action_just_pressed("Forward"):
-			if highlightedTile.closeTiles[0]:
-				highlightTile(highlightedTile.closeTiles[0])
-		elif Input.is_action_just_pressed("Backward"):
-			if highlightedTile.closeTiles[2]:
-				highlightTile(highlightedTile.closeTiles[2])
-		elif Input.is_action_just_pressed("Left"):
-			if highlightedTile.closeTiles[3]:
-				highlightTile(highlightedTile.closeTiles[3])
-		elif Input.is_action_just_pressed("Right"):
-			if highlightedTile.closeTiles[1]:
-				highlightTile(highlightedTile.closeTiles[1])
-	elif rotation > -90 and rotation <= 0:
-		if Input.is_action_just_pressed("Forward"):
-			if highlightedTile.closeTiles[3]:
-				highlightTile(highlightedTile.closeTiles[3])
-		elif Input.is_action_just_pressed("Backward"):
-			if highlightedTile.closeTiles[1]:
-				highlightTile(highlightedTile.closeTiles[1])
-		elif Input.is_action_just_pressed("Left"):
-			if highlightedTile.closeTiles[2]:
-				highlightTile(highlightedTile.closeTiles[2])
-		elif Input.is_action_just_pressed("Right"):
-			if highlightedTile.closeTiles[0]:
-				highlightTile(highlightedTile.closeTiles[0])
-	elif rotation > 0 and rotation <= 90:
-		if Input.is_action_just_pressed("Forward"):
-			if highlightedTile.closeTiles[2]:
-				highlightTile(highlightedTile.closeTiles[2])
-		elif Input.is_action_just_pressed("Backward"):
-			if highlightedTile.closeTiles[0]:
-				highlightTile(highlightedTile.closeTiles[0])
-		elif Input.is_action_just_pressed("Left"):
-			if highlightedTile.closeTiles[1]:
-				highlightTile(highlightedTile.closeTiles[1])
-		elif Input.is_action_just_pressed("Right"):
-			if highlightedTile.closeTiles[3]:
-				highlightTile(highlightedTile.closeTiles[3])
-	elif rotation > 90 and rotation <= 180:
-		if Input.is_action_just_pressed("Forward"):
-			if highlightedTile.closeTiles[1]:
-				highlightTile(highlightedTile.closeTiles[1])
-		elif Input.is_action_just_pressed("Backward"):
-			if highlightedTile.closeTiles[3]:
-				highlightTile(highlightedTile.closeTiles[3])
-		elif Input.is_action_just_pressed("Left"):
-			if highlightedTile.closeTiles[0]:
-				highlightTile(highlightedTile.closeTiles[0])
-		elif Input.is_action_just_pressed("Right"):
-			if highlightedTile.closeTiles[2]:
-				highlightTile(highlightedTile.closeTiles[2])
+	var direction = null
+	
+	if Input.is_action_just_pressed("Left"):
+		if rotation > -180 and rotation <= -90:
+			direction = "South"
+		elif rotation > -90 and rotation <= 0:
+			direction = "East"
+		elif rotation > 0 and rotation <= 90:
+			direction = "North"
+		elif rotation > 90 and rotation <= 180:
+			direction = "West"
+	elif Input.is_action_just_pressed("Right"):
+		if rotation > -180 and rotation <= -90:
+			direction = "North"
+		elif rotation > -90 and rotation <= 0:
+			direction = "West"
+		elif rotation > 0 and rotation <= 90:
+			direction = "South"
+		elif rotation > 90 and rotation <= 180:
+			direction = "East"
+	elif Input.is_action_just_pressed("Backward"):
+		if rotation > -180 and rotation <= -90:
+			direction = "East"
+		elif rotation > -90 and rotation <= 0:
+			direction = "North"
+		elif rotation > 0 and rotation <= 90:
+			direction = "West"
+		elif rotation > 90 and rotation <= 180:
+			direction = "South"
+	elif Input.is_action_just_pressed("Forward"):
+		if rotation > -180 and rotation <= -90:
+			direction = "West"
+		elif rotation > -90 and rotation <= 0:
+			direction = "South"
+		elif rotation > 0 and rotation <= 90:
+			direction = "East"
+		elif rotation > 90 and rotation <= 180:
+			direction = "North"
+	findClosestTile(direction)
+
+func findClosestTile(direction : String):
+	var foundTile : tile
+	var searcher : Vector3 = highlightedTile.position
+	match direction:
+		"North":
+			var toAdd := Vector3(0,0,1)
+			for n in range(4):
+				if !foundTile:
+					searcher += toAdd
+					if !lookForTile(searcher)[1]:
+						if !lookForTile(searcher + Vector3(-1,0,0))[1]:
+							if lookForTile(searcher + Vector3(1,0,0))[1]:
+								foundTile = lookForTile(searcher + Vector3(1,0,0))[0]
+						else:
+							foundTile = lookForTile(searcher + Vector3(-1,0,0))[0]
+					else:
+						foundTile = lookForTile(searcher)[0]
+		"South":
+			var toAdd := Vector3(0,0,-1)
+			for n in range(4):
+				if !foundTile:
+					searcher += toAdd
+					if !lookForTile(searcher)[1]:
+						if !lookForTile(searcher + Vector3(1,0,0))[1]:
+							if lookForTile(searcher + Vector3(-1,0,0))[1]:
+								foundTile = lookForTile(searcher + Vector3(-1,0,0))[0]
+						else:
+							foundTile = lookForTile(searcher + Vector3(1,0,0))[0]
+					else:
+						foundTile = lookForTile(searcher)[0]
+		"West":
+			var toAdd := Vector3(1,0,0)
+			for n in range(4):
+				if !foundTile:
+					searcher += toAdd
+					if !lookForTile(searcher)[1]:
+						if !lookForTile(searcher + Vector3(0,0,-1))[1]:
+							if lookForTile(searcher + Vector3(0,0,1))[1]:
+								foundTile = lookForTile(searcher + Vector3(0,0,1))[0]
+						else:
+							foundTile = lookForTile(searcher + Vector3(0,0,-1))[0]
+					else:
+						foundTile = lookForTile(searcher)[0]
+		"East":
+			var toAdd := Vector3(-1,0,0)
+			for n in range(4):
+				if !foundTile:
+					searcher += toAdd
+					if !lookForTile(searcher)[1]:
+						if !lookForTile(searcher + Vector3(0,0,1))[1]:
+							if lookForTile(searcher + Vector3(0,0,-1))[1]:
+								foundTile = lookForTile(searcher + Vector3(0,0,-1))[0]
+						else:
+							foundTile = lookForTile(searcher + Vector3(0,0,1))[0]
+					else:
+						foundTile = lookForTile(searcher)[0]
+	if foundTile:
+		highlightTile(foundTile)
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion:
