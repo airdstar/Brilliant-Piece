@@ -175,7 +175,88 @@ func findMoveableTiles():
 						CheckTile = tileData[0]
 						if tileData[0].contains is PlayablePiece:
 							canContinue = false
-
+		"Knight":
+			for n in range(4):
+				var CheckTile = highlightedTile.global_position
+				var pos : Vector3
+				var tileData
+				match n:
+					0:
+						pos = Vector3(1,0,0)
+					1:
+						pos = Vector3(-1,0,0)
+					2:
+						pos = Vector3(0,0,1)
+					3:
+						pos = Vector3(0,0,-1)
+				CheckTile += pos
+				if pos.x == 0:
+					tileData = lookForTile(CheckTile + pos + Vector3(1,0,0))
+					if tileData[1]:
+						setMoveable(tileData[0])
+					tileData = lookForTile(CheckTile + pos + Vector3(-1,0,0))
+					if tileData[1]:
+						setMoveable(tileData[0])
+				else:
+					tileData = lookForTile(CheckTile + pos + Vector3(0,0,1))
+					if tileData[1]:
+						setMoveable(tileData[0])
+					tileData = lookForTile(CheckTile + pos + Vector3(0,0,-1))
+					if tileData[1]:
+						setMoveable(tileData[0])
+		"Queen":
+			for n in range(8):
+				var CheckTile = highlightedTile
+				var canContinue = true
+				var pos : Vector3
+				match n:
+					0:
+						pos = Vector3(1,0,0)
+					1:
+						pos = Vector3(-1,0,0)
+					2:
+						pos = Vector3(0,0,1)
+					3:
+						pos = Vector3(0,0,-1)
+					4:
+						pos = Vector3(1,0,1)
+					5:
+						pos = Vector3(-1,0,1)
+					6:
+						pos = Vector3(1,0,-1)
+					7:
+						pos = Vector3(-1,0,-1)
+				
+				for m in range(3):
+					var tileData = lookForTile(CheckTile.global_position + pos)
+					if tileData[1] and canContinue:
+						setMoveable(tileData[0])
+						CheckTile = tileData[0]
+						if tileData[0].contains is PlayablePiece:
+							canContinue = false
+		"King":
+			for n in range(8):
+				var tileData
+				match n:
+					0:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,0))
+					1:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,0))
+					2:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,1))
+					3:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,-1))
+					4:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,1))
+					5:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,1))
+					6:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,-1))
+					7:
+						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,-1))
+						
+				if tileData[1]:
+					setMoveable(tileData[0])
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)
 	var direction = null
