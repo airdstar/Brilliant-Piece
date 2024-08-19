@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://be11da46whfhl"
-path="res://.godot/imported/CrystalSage.blend-294be4bf69aad7c57f133454cbfeb18e.scn"
+path="res://.godot/imported/CrystalSage.blend-26586ff1c1b6a4cc9a993299c94691a6.scn"
 
 [deps]
 
-source_file="res://Piece/CrystalSage.blend"
-dest_files=["res://.godot/imported/CrystalSage.blend-294be4bf69aad7c57f133454cbfeb18e.scn"]
+source_file="res://Classes/CrystalSage.blend"
+dest_files=["res://.godot/imported/CrystalSage.blend-26586ff1c1b6a4cc9a993299c94691a6.scn"]
 
 [params]
 

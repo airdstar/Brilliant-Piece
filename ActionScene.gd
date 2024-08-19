@@ -2,7 +2,7 @@ extends PlayableArea
 
 @onready var player := $PlayerPiece
 var playerTile : tile
-var enemy : PlayablePiece
+var enemy : EnemyPiece
 var doingAttack : bool = false
 
 func secondaryReady():

@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bte5iduphol4i"]
+[gd_scene load_steps=4 format=3 uid="uid://bte5iduphol4i"]
 
 [ext_resource type="Texture2D" uid="uid://3mgjn3ea3v4i" path="res://BattleBorder.png" id="1_8h00y"]
 [ext_resource type="Script" path="res://ActionScreen.gd" id="1_lwr4s"]
 [ext_resource type="PackedScene" uid="uid://kq7nnhxo616a" path="res://ActionBase.tscn" id="3_yvqeu"]
-[ext_resource type="AudioStream" uid="uid://dgnuo8c7dt6dw" path="res://EarlyFloorCombat.mp3" id="4_0yk1q"]
 
 [node name="ActionScene" type="Node"]
 script = ExtResource("1_lwr4s")
@@ -24,8 +23,3 @@ texture = ExtResource("1_8h00y")
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="ActionBase" parent="SubViewport" instance=ExtResource("3_yvqeu")]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_0yk1q")
-autoplay = true
-parameters/looping = true

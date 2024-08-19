@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=2 format=3 uid="uid://dfjb6if6vtt3e"]
+
+[ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_ibghg"]
+
+[resource]
+script = ExtResource("1_ibghg")
+name = "Goblin"
+type = Array[String](["Pawn", "Rook", "Bishop"])
+maxHealth = 6
+maxLevel = 4
+minLevel = 1
+minFloor = 1
+maxFloor = 5

@@ -1,5 +1,5 @@
 [gd_scene load_steps=2 format=3 uid="uid://wokbbxygcayx"]
 
-[ext_resource type="PackedScene" uid="uid://be11da46whfhl" path="res://Piece/CrystalSage.blend" id="1_bfrhn"]
+[ext_resource type="PackedScene" uid="uid://be11da46whfhl" path="res://Classes/CrystalSage.blend" id="1_bfrhn"]
 
 [node name="CrystalSage" instance=ExtResource("1_bfrhn")]

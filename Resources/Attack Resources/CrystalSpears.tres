@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackResource" load_steps=2 format=3 uid="uid://clk1n28hr60dc"]
+
+[ext_resource type="Script" path="res://Resources/AttackResource.gd" id="1_nayvd"]
+
+[resource]
+script = ExtResource("1_nayvd")
+name = "Crystal Spears"
+animationPath = ""
+damage = 2
+scaling = 1.8
+range = 2
+knockback = false
+status = ""
+AOE = Vector2(3, 3)

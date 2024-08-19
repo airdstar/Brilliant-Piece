@@ -5,7 +5,7 @@ var mouse_sensitivity := 0.0005
 var twist : float
 var inMenu : bool = false
 var menu
-var moving = [false,PlayablePiece]
+var moving = [false,MoveablePiece]
 var highlightedTile : tile
 @onready var Pointer = $Pointer
 
@@ -49,7 +49,7 @@ func highlightTile(tileToSelect : tile):
 	$Twist.position.x = Pointer.position.x
 	$Twist.position.z = Pointer.position.z
 	if highlightedTile.moveable:
-		if highlightedTile.contains is PlayablePiece:
+		if highlightedTile.contains is EnemyPiece:
 			highlightedTile.setColor("Red")
 			Pointer.setColor("Red")
 		else:
@@ -70,13 +70,13 @@ func displayInfo():
 		portraitPic.global_rotation.y = deg_to_rad(-90)
 		$StaticHUD/PortraitBackground.texture = $StaticHUD/SubViewport.get_texture()
 		$StaticHUD/PortraitBackground.visible = true
-		if highlightedTile.contains is PlayablePiece:
+		if highlightedTile.contains is MoveablePiece:
 			$StaticHUD/Portrait/Status/NameLabel.text = highlightedTile.contains.pieceName
 			$StaticHUD/Portrait/Status/TypeLabel.text = highlightedTile.contains.type
 			$StaticHUD/Portrait/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
 			$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
 			if highlightedTile.contains is PlayerPiece:
-				$StaticHUD/Portrait/Status/LevelLabel.text = str(highlightedTile.contains.classType) + " lvl " + str(highlightedTile.contains.level)
+				$StaticHUD/Portrait/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level)
 				$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) + "        SP: " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
 	else:
 		if $StaticHUD/SubViewport/Portrait.get_child_count() == 2:
@@ -99,7 +99,7 @@ func stopShowingMovement():
 
 func setMoveable(moveableTile : tile):
 	moveableTile.moveable = true
-	if moveableTile.contains is PlayablePiece:
+	if moveableTile.contains is EnemyPiece:
 		moveableTile.setColor("Red")
 	else:
 		moveableTile.setColor("Green")
@@ -152,7 +152,7 @@ func findMoveableTiles():
 					if tileData[1] and canContinue:
 						setMoveable(tileData[0])
 						CheckTile = tileData[0]
-						if tileData[0].contains is PlayablePiece:
+						if tileData[0].contains is MoveablePiece:
 							canContinue = false
 		"Bishop":
 			for n in range(4):
@@ -173,7 +173,7 @@ func findMoveableTiles():
 					if tileData[1] and canContinue:
 						setMoveable(tileData[0])
 						CheckTile = tileData[0]
-						if tileData[0].contains is PlayablePiece:
+						if tileData[0].contains is MoveablePiece:
 							canContinue = false
 		"Knight":
 			for n in range(4):
@@ -232,7 +232,7 @@ func findMoveableTiles():
 					if tileData[1] and canContinue:
 						setMoveable(tileData[0])
 						CheckTile = tileData[0]
-						if tileData[0].contains is PlayablePiece:
+						if tileData[0].contains is MoveablePiece:
 							canContinue = false
 		"King":
 			for n in range(8):
@@ -257,6 +257,7 @@ func findMoveableTiles():
 						
 				if tileData[1]:
 					setMoveable(tileData[0])
+
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)
 	var direction = null

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
 [ext_resource type="Shader" path="res://CRTShader.gdshader" id="5_si7mu"]
 [ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://Portrait.png" id="5_y64f2"]
-[ext_resource type="PackedScene" uid="uid://dlu6bkktlk1o" path="res://Piece/PlayablePiece.tscn" id="7_ewcja"]
+[ext_resource type="PackedScene" uid="uid://dlu6bkktlk1o" path="res://Piece/EnemyPiece.tscn" id="7_ewcja"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5n4ns"]
 font_size = 20

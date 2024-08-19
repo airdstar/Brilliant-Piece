@@ -3,7 +3,7 @@ extends Node
 func _ready():
 	pass
 
-func setEnemy(enemy : PlayablePiece):
+func setEnemy(enemy : EnemyPiece):
 	$SubViewport/ActionBase.enemy = enemy
 	$SubViewport/ActionBase.add_child(enemy)
 

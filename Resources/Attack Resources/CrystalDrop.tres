@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AttackResource" load_steps=2 format=3 uid="uid://da62gojgkabpy"]
+
+[ext_resource type="Script" path="res://Resources/AttackResource.gd" id="1_2wmng"]
+
+[resource]
+script = ExtResource("1_2wmng")
+name = "Crystal Drop"
+animationPath = ""
+damage = 2
+scaling = 1.5
+range = 3
+knockback = false
+doesStatus = false
+status = ""
+DoesAOE = false
+AOE = Vector2(0, 0)
+learnedBy = []

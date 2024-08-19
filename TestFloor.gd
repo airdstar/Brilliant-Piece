@@ -1,6 +1,8 @@
 extends PlayableArea
 class_name Floor
 
+var save_path := "user://test.save"
+var toSave
 var inCombat : bool = false
 @export var tileAmount : int
 
@@ -8,6 +10,7 @@ func secondaryReady():
 	generateTiles()
 
 func secondaryProcess(_delta):
+	toSave = $PlayerPiece.global_position
 	if Input.is_action_just_pressed("Select") and !inCombat:
 		if highlightedTile.contains is Piece and !inMenu and !moving[0]:
 			inMenu = true
@@ -18,7 +21,7 @@ func secondaryProcess(_delta):
 				menu.addPlayerOptions()
 			menu.showMenu(true)
 		if moving[0] and highlightedTile.moveable:
-			if highlightedTile.contains is PlayablePiece:
+			if highlightedTile.contains is EnemyPiece:
 				var actionScene = preload("res://ActionScene.tscn").instantiate()
 				remove_child($PlayablePiece)
 				actionScene.setEnemy(highlightedTile.contains)

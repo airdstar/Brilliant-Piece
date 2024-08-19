@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ClassResource" load_steps=3 format=3 uid="uid://lvfi5wwrr7or"]
+
+[ext_resource type="Resource" uid="uid://c4texbnwufk0" path="res://Resources/Attackset Resources/CrystalSageAttackset.tres" id="1_c60t2"]
+[ext_resource type="Script" path="res://Resources/ClassResource.gd" id="1_lnosw"]
+
+[resource]
+script = ExtResource("1_lnosw")
+className = "Crystal Sage"
+attacks = ExtResource("1_c60t2")
+maxHealth = 6
+maxSoul = 1
+associatedScene = "res://Classes/CrystalSage.tscn"
