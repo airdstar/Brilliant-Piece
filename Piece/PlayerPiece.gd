@@ -26,3 +26,6 @@ func setData():
 	var s = ResourceLoader.load(classType.associatedScene)
 	s = s.instantiate()
 	add_child(s)
+
+func levelUp():
+	pass

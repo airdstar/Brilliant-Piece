@@ -108,6 +108,8 @@ func selectedOption():
 			queue_free()
 		"Attack":
 			$MenuSelect.play()
+			var toAdd = preload("res://Menu/AttackMenu.tscn").instantiate()
+			add_child(toAdd)
 
 func closeMenu():
 	$AnimationPlayer.play("CloseMenu")

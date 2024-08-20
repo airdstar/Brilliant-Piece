@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://br3my5gbq2wqq"]
+
+[ext_resource type="Texture2D" uid="uid://cdwqaxqiht31h" path="res://Menu/AttackMenuFull.png" id="1_8cw0f"]
+[ext_resource type="Script" path="res://Menu/AttackMenu.gd" id="1_d4mfi"]
+
+[node name="AttackMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_d4mfi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 128.0
+texture = ExtResource("1_8cw0f")
+
+[node name="Options" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Options"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 252.0
+offset_bottom = 27.0
+
+[node name="Label2" type="Label" parent="Options"]
+offset_left = 4.0
+offset_top = 27.0
+offset_right = 252.0
+offset_bottom = 50.0
+
+[node name="Label3" type="Label" parent="Options"]
+offset_left = 4.0
+offset_top = 50.0
+offset_right = 252.0
+offset_bottom = 73.0
+
+[node name="Label4" type="Label" parent="Options"]
+offset_left = 4.0
+offset_top = 73.0
+offset_right = 252.0
+offset_bottom = 96.0
+
+[node name="Label5" type="Label" parent="Options"]
+offset_left = 4.0
+offset_top = 96.0
+offset_right = 252.0
+offset_bottom = 119.0
