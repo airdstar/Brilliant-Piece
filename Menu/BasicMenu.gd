@@ -103,6 +103,8 @@ func selectedOption():
 			get_parent().get_parent().moving[1] = get_parent().get_parent().highlightedTile.contains
 			get_parent().get_parent().inMenu = false
 			get_parent().get_parent().findMoveableTiles()
+			get_parent().get_parent().camera.position = Vector3(5,5,5)
+			get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 			queue_free()
 		"Attack":
 			$MenuSelect.play()

@@ -18,6 +18,8 @@ func secondaryProcess(_delta):
 			inMenu = true
 			highlightTile(playerTile)
 			openMenu()
+			camera.position = Vector3(-0.5,1,2)
+			camera.rotation = Vector3(0,0,0)
 	
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
@@ -35,6 +37,8 @@ func openMenu():
 	menu.position = Vector2(0, 400)
 	menu.showMenu(false)
 
+func showAttacks():
+	pass
 
 func makeArena(x : int, z : int):
 	var playerPos = randi_range(1,z - 2)

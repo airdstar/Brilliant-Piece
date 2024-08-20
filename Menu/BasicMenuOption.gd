@@ -19,7 +19,7 @@ func _ready():
 	highlight.size = Vector2(57,27)
 	highlight.position = Vector2(4,4)
 
-func _process(delta):
+func _process(_delta):
 	if growing:
 		additionalOpacity += 0.001
 	else:

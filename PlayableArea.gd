@@ -8,6 +8,7 @@ var menu
 var moving = [false,MoveablePiece]
 var highlightedTile : tile
 @onready var Pointer = $Pointer
+@onready var camera = $Twist/Camera3D
 
 func _ready():
 	secondaryReady()
