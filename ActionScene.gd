@@ -1,12 +1,14 @@
 extends PlayableArea
 
-var player : PlayerPiece
 var playerTile : tile
+var player : PlayerPiece
 var enemy : EnemyPiece
 var attack : AttackResource
 
 func secondaryReady():
 	inMenu = true
+	enemy.death.connect(self.enemyDeath)
+	player.death.connect(self.playerDeath)
 	makeArena(9,9)
 
 func secondaryProcess(_delta):
@@ -143,3 +145,9 @@ func makeArena(x : int, z : int):
 			elif n == x - 2:
 				if m == enemyPos:
 					tileToAdd.setPiece(enemy)
+
+func enemyDeath():
+	print("hi")
+
+func playerDeath():
+	print("ummm u died")

@@ -9,5 +9,4 @@ signal death
 func damage(attack : AttackResource):
 	health -= attack.damage
 	if health <= 0:
-		print("Dead")
 		death.emit()
