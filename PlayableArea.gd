@@ -35,7 +35,7 @@ func cameraControls():
 func setTilePattern():
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
-		if highlightedTile != allTiles[n] and !allTiles[n].moveable:
+		if highlightedTile != allTiles[n] and !allTiles[n].moveable and !allTiles[n].attackable:
 			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
 				allTiles[n].setColor("Black")
 			else:
@@ -56,6 +56,8 @@ func highlightTile(tileToSelect : tile):
 		else:
 			highlightedTile.setColor("Green")
 			Pointer.setColor("Green")
+	elif highlightedTile.attackable:
+		highlightedTile.setColor("Red")
 	else:
 		highlightedTile.setColor("Blue")
 		Pointer.setColor("Blue")
@@ -106,12 +108,11 @@ func setMoveable(moveableTile : tile):
 		moveableTile.setColor("Green")
 
 func lookForTile(pos : Vector3):
-	var toReturn = [null, false]
+	var toReturn
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
 		if allTiles[n].global_position == pos:
-			toReturn[0] = allTiles[n]
-			toReturn[1] = true
+			toReturn = allTiles[n]
 	return toReturn
 
 func travelTo(destination : tile):
@@ -121,143 +122,60 @@ func findMoveableTiles():
 	match highlightedTile.contains.type:
 		"Pawn":
 			for n in range(4):
-				var tileData
-				match n:
-					0:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,0))
-					1:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,0))
-					2:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,1))
-					3:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,-1))
-				
-				if tileData[1]:
-					setMoveable(tileData[0])
+				var tileData = lookForTile(highlightedTile.global_position + Directions.getDirection(Directions.getAllStraight()[n]))
+				if tileData:
+					setMoveable(tileData)
 		"Rook":
 			for n in range(4):
 				var CheckTile = highlightedTile
-				var canContinue = true
-				var pos : Vector3
-				match n:
-					0:
-						pos = Vector3(1,0,0)
-					1:
-						pos = Vector3(-1,0,0)
-					2:
-						pos = Vector3(0,0,1)
-					3:
-						pos = Vector3(0,0,-1)
+				var canContinue := true
+				var pos = Directions.getDirection(Directions.getAllStraight()[n])
 				for m in range(3):
 					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData[1] and canContinue:
-						setMoveable(tileData[0])
-						CheckTile = tileData[0]
-						if tileData[0].contains is MoveablePiece:
+					if tileData and canContinue:
+						setMoveable(tileData)
+						CheckTile = tileData
+						if tileData.contains is MoveablePiece:
 							canContinue = false
 		"Bishop":
 			for n in range(4):
 				var CheckTile = highlightedTile
 				var canContinue = true
-				var pos : Vector3
-				match n:
-					0:
-						pos = Vector3(1,0,1)
-					1:
-						pos = Vector3(-1,0,1)
-					2:
-						pos = Vector3(1,0,-1)
-					3:
-						pos = Vector3(-1,0,-1)
+				var pos = Directions.getDirection(Directions.getAllDiagonal()[n])
 				for m in range(3):
 					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData[1] and canContinue:
-						setMoveable(tileData[0])
-						CheckTile = tileData[0]
-						if tileData[0].contains is MoveablePiece:
+					if tileData and canContinue:
+						setMoveable(tileData)
+						CheckTile = tileData
+						if tileData.contains is MoveablePiece:
 							canContinue = false
 		"Knight":
 			for n in range(4):
 				var CheckTile = highlightedTile.global_position
-				var pos : Vector3
+				var pos = Directions.getDirection(Directions.getAllStraight()[n])
 				var tileData
-				match n:
-					0:
-						pos = Vector3(1,0,0)
-					1:
-						pos = Vector3(-1,0,0)
-					2:
-						pos = Vector3(0,0,1)
-					3:
-						pos = Vector3(0,0,-1)
 				CheckTile += pos
-				if pos.x == 0:
-					tileData = lookForTile(CheckTile + pos + Vector3(1,0,0))
-					if tileData[1]:
-						setMoveable(tileData[0])
-					tileData = lookForTile(CheckTile + pos + Vector3(-1,0,0))
-					if tileData[1]:
-						setMoveable(tileData[0])
-				else:
-					tileData = lookForTile(CheckTile + pos + Vector3(0,0,1))
-					if tileData[1]:
-						setMoveable(tileData[0])
-					tileData = lookForTile(CheckTile + pos + Vector3(0,0,-1))
-					if tileData[1]:
-						setMoveable(tileData[0])
+				for m in range(2):
+					tileData = lookForTile(CheckTile + Directions.getDirection(Directions.getDiagonals(Directions.getAllStraight()[n])[m]))
+					if tileData:
+						setMoveable(tileData)
 		"Queen":
 			for n in range(8):
 				var CheckTile = highlightedTile
 				var canContinue = true
-				var pos : Vector3
-				match n:
-					0:
-						pos = Vector3(1,0,0)
-					1:
-						pos = Vector3(-1,0,0)
-					2:
-						pos = Vector3(0,0,1)
-					3:
-						pos = Vector3(0,0,-1)
-					4:
-						pos = Vector3(1,0,1)
-					5:
-						pos = Vector3(-1,0,1)
-					6:
-						pos = Vector3(1,0,-1)
-					7:
-						pos = Vector3(-1,0,-1)
-				
+				var pos = Directions.getDirection(Directions.getAllDirections()[n])
 				for m in range(3):
 					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData[1] and canContinue:
-						setMoveable(tileData[0])
-						CheckTile = tileData[0]
-						if tileData[0].contains is MoveablePiece:
+					if tileData and canContinue:
+						setMoveable(tileData)
+						CheckTile = tileData
+						if tileData.contains is MoveablePiece:
 							canContinue = false
 		"King":
 			for n in range(8):
-				var tileData
-				match n:
-					0:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,0))
-					1:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,0))
-					2:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,1))
-					3:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(0,0,-1))
-					4:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,1))
-					5:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,1))
-					6:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(1,0,-1))
-					7:
-						tileData = lookForTile(highlightedTile.global_position + Vector3(-1,0,-1))
-						
-				if tileData[1]:
-					setMoveable(tileData[0])
+				var tileData = lookForTile(highlightedTile.global_position + Directions.getDirection(Directions.getAllDirections()[n]))
+				if tileData:
+					setMoveable(tileData)
 
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)
@@ -303,60 +221,22 @@ func handleMovement():
 
 func findClosestTile(direction : String):
 	var foundTile : tile
-	var searcher : Vector3 = highlightedTile.position
-	match direction:
-		"North":
-			var toAdd := Vector3(0,0,1)
-			for n in range(4):
-				if !foundTile:
-					searcher += toAdd
-					if !lookForTile(searcher)[1]:
-						if !lookForTile(searcher + Vector3(-1,0,0))[1]:
-							if lookForTile(searcher + Vector3(1,0,0))[1]:
-								foundTile = lookForTile(searcher + Vector3(1,0,0))[0]
-						else:
-							foundTile = lookForTile(searcher + Vector3(-1,0,0))[0]
-					else:
-						foundTile = lookForTile(searcher)[0]
-		"South":
-			var toAdd := Vector3(0,0,-1)
-			for n in range(4):
-				if !foundTile:
-					searcher += toAdd
-					if !lookForTile(searcher)[1]:
-						if !lookForTile(searcher + Vector3(1,0,0))[1]:
-							if lookForTile(searcher + Vector3(-1,0,0))[1]:
-								foundTile = lookForTile(searcher + Vector3(-1,0,0))[0]
-						else:
-							foundTile = lookForTile(searcher + Vector3(1,0,0))[0]
-					else:
-						foundTile = lookForTile(searcher)[0]
-		"West":
-			var toAdd := Vector3(1,0,0)
-			for n in range(4):
-				if !foundTile:
-					searcher += toAdd
-					if !lookForTile(searcher)[1]:
-						if !lookForTile(searcher + Vector3(0,0,-1))[1]:
-							if lookForTile(searcher + Vector3(0,0,1))[1]:
-								foundTile = lookForTile(searcher + Vector3(0,0,1))[0]
-						else:
-							foundTile = lookForTile(searcher + Vector3(0,0,-1))[0]
-					else:
-						foundTile = lookForTile(searcher)[0]
-		"East":
-			var toAdd := Vector3(-1,0,0)
-			for n in range(4):
-				if !foundTile:
-					searcher += toAdd
-					if !lookForTile(searcher)[1]:
-						if !lookForTile(searcher + Vector3(0,0,1))[1]:
-							if lookForTile(searcher + Vector3(0,0,-1))[1]:
-								foundTile = lookForTile(searcher + Vector3(0,0,-1))[0]
-						else:
-							foundTile = lookForTile(searcher + Vector3(0,0,1))[0]
-					else:
-						foundTile = lookForTile(searcher)[0]
+	var searcher : Vector3 = highlightedTile.global_position
+	var toAdd = Directions.getDirection(direction)
+	var left = Directions.getDirection(Directions.getSides(direction)[0])
+	var right = Directions.getDirection(Directions.getSides(direction)[1])
+	for n in range(4):
+		if !foundTile:
+			searcher += toAdd
+			if !lookForTile(searcher):
+				if !lookForTile(searcher + left):
+					if lookForTile(searcher + right):
+						foundTile = lookForTile(searcher + right)
+				else:
+					foundTile = lookForTile(searcher + left)
+			else:
+				foundTile = lookForTile(searcher)
+
 	if foundTile:
 		highlightTile(foundTile)
 

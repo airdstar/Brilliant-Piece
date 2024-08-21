@@ -31,4 +31,9 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("Select"):
 		get_parent().get_parent().get_parent().inMenu = false
+		get_parent().get_parent().get_parent().attack = attacks[highlightedOption]
+		get_parent().get_parent().get_parent().showAttack()
+		get_parent().get_parent().get_parent().Pointer.visible = true
+		get_parent().get_parent().get_parent().camera.position = Vector3(5,5,5)
+		get_parent().get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 		get_parent().queue_free()

@@ -5,8 +5,6 @@ class_name PlayerPiece
 @export var type : String
 
 var level : int = 1
-var maxHealth : int 
-var health : int 
 var maxSoul : int 
 var soul : int 
 var attacks : Array[AttackResource]

@@ -2,7 +2,7 @@ extends Resource
 class_name ClassResource
 
 #CLASSES
-## CrystalSage Pyromancer Speedster Gunslinger
+## CrystalSage Pyromancer Speedster Gunslinger Brawler
 
 @export var className : String
 @export var attacks : AttacksetResource

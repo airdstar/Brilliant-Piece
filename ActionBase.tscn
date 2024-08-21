@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://kq7nnhxo616a"]
+[gd_scene load_steps=7 format=3 uid="uid://kq7nnhxo616a"]
 
 [ext_resource type="Script" path="res://ActionScene.gd" id="1_ymby1"]
-[ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="2_be8eo"]
 [ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Pointer.tscn" id="3_j8khg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_dlqtq"]
@@ -99,9 +98,6 @@ _data = {
 [node name="ActionBase" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 60, 100)
 script = ExtResource("1_ymby1")
-
-[node name="PlayerPiece" parent="." instance=ExtResource("2_be8eo")]
-transform = Transform3D(-0.425, 0, -3.71547e-08, 0, 0.425, 0, 3.71547e-08, 0, -0.425, 0, 0, 0)
 
 [node name="Tiles" type="Node3D" parent="."]
 

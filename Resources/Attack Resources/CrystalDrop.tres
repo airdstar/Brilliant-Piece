@@ -6,9 +6,12 @@
 script = ExtResource("1_2wmng")
 name = "Crystal Drop"
 animationPath = ""
-damage = 2
+damage = 20
 scaling = 1.5
-attackRange = 0
+attackRange = 3
+attackDirection = "Straight"
+rangeExclusive = false
+blockable = false
 knockback = false
 status = ""
 AOE = Vector2(0, 0)

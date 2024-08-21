@@ -3,6 +3,7 @@ class_name tile
 
 var pointerHeight
 var moveable := false
+var attackable := false
 var material := StandardMaterial3D.new()
 var contains : Piece
 var obstructed := false
@@ -15,6 +16,10 @@ func setPiece(piece : Piece):
 	contains = piece
 	piece.currentTile = self
 	contains.global_position = $PiecePos.global_position
+
+func attack(attack : AttackResource):
+	if contains:
+		contains.damage(attack)
 
 func getPointerPos():
 	if contains:

@@ -23,8 +23,9 @@ func secondaryProcess(_delta):
 		if moving[0] and highlightedTile.moveable:
 			if highlightedTile.contains is EnemyPiece:
 				var actionScene = preload("res://ActionScene.tscn").instantiate()
-				remove_child($PlayablePiece)
+				remove_child($EnemyPiece)
 				actionScene.setEnemy(highlightedTile.contains)
+				actionScene.setPlayer($PlayerPiece.duplicate())
 				$StaticHUD/Portrait.visible = false
 				$StaticHUD/PortraitBackground.visible = false
 				$Action.add_child(actionScene)
@@ -74,7 +75,7 @@ func generateTiles():
 	var enemyPos = randi_range(0, tileAmount - 1)
 	for n in range(tileAmount):
 		var cantPlace = true
-		var tileToAdd = preload("res://Tile.tscn").instantiate()
+		var tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
 		var allTiles = $Tiles.get_children()
 		if allTiles.size() == 0:
 			$Tiles.add_child(tileToAdd)
@@ -94,7 +95,7 @@ func generateTiles():
 					tileToAdd.setPiece($PlayerPiece)
 					highlightTile(tileToAdd)
 				elif n == enemyPos:
-					tileToAdd.setPiece($PlayablePiece)
+					tileToAdd.setPiece($EnemyPiece)
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion:

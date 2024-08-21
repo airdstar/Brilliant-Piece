@@ -58,7 +58,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="PlayerPiece" parent="." instance=ExtResource("3_a68on")]
 
-[node name="PlayablePiece" parent="." instance=ExtResource("7_ewcja")]
+[node name="EnemyPiece" parent="." instance=ExtResource("7_ewcja")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31674, 0, 0)
 
 [node name="Tiles" type="Node3D" parent="."]
