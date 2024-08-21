@@ -35,6 +35,7 @@ func cameraControls():
 func setTilePattern():
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
+		allTiles[n].highlight.visible = false
 		if highlightedTile != allTiles[n] and !allTiles[n].moveable and !allTiles[n].hittable:
 			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
 				allTiles[n].setColor("Black")
@@ -44,6 +45,7 @@ func setTilePattern():
 func highlightTile(tileToSelect : tile):
 	highlightedTile = tileToSelect
 	setTilePattern()
+	highlightedTile.highlight.visible = true
 	Pointer.position.x = highlightedTile.position.x
 	Pointer.position.z = highlightedTile.position.z
 	Pointer.height = highlightedTile.getPointerPos()

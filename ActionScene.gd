@@ -89,28 +89,12 @@ func openMenu():
 	menu.position = Vector2(0, 400)
 	menu.showMenu(false)
 
+#Need to make blockable stuff
 func showAction():
-	var directions
-	var pos
-	if action.actionDirection == "Straight":
-		directions = 4
-		pos = Directions.getAllStraight()
-	elif action.actionDirection == "Diagonal":
-		directions = 4
-		pos = Directions.getAllDiagonal()
-	elif action.actionDirection == "Both":
-		directions = 8
-		pos = Directions.getAllDirections()
-	for n in range(directions):
-		var tileData : Vector3 = playerTile.global_position
-		var blocked = false
-		for m in range(action.range):
-			tileData += Directions.getDirection(pos[n])
-			if action.rangeExclusive and m != action.range - 1:
-				pass
-			else:
-				if lookForTile(tileData):
-					setHittable(lookForTile(tileData))
+	var tileData = action.getActionRange(playerTile.global_position)
+	for n in range(tileData.size()):
+		if lookForTile(tileData[n]):
+			setHittable(lookForTile(tileData[n]))
 
 func stopShowingAction():
 	var allTiles = $Tiles.get_children()

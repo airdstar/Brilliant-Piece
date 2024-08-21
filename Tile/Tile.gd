@@ -8,9 +8,28 @@ var material := StandardMaterial3D.new()
 var contains : Piece
 var obstructed := false
 
+@onready var highlight := $Base/Highlight
+var lowestOpacity := 0.2
+var additionalOpacity : float
+var growing := true
+
+
 func _ready():
 	$Base.material_override = material
 	pointerHeight = [$PointerPos.position.y, $PointerPosBlocked.position.y]
+
+func _process(_delta):
+	if growing:
+		additionalOpacity += 0.001
+	else:
+		additionalOpacity -= 0.001
+	
+	if highlight.visible:
+		highlight.mesh.material.set_albedo(Color(1,1,1,lowestOpacity + additionalOpacity))
+
+
+func ToggleGrow():
+	growing = !growing
 
 func setPiece(piece : Piece):
 	contains = piece
