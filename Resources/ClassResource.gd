@@ -5,7 +5,7 @@ class_name ClassResource
 ## CrystalSage Pyromancer Speedster Gunslinger Brawler
 
 @export var className : String
-@export var attacks : AttacksetResource
+@export var actions : ActionSetResource
 @export var maxHealth : int
 @export var maxSoul : int
 @export var associatedScene : String

@@ -6,7 +6,10 @@ var health : int
 
 signal death
 
-func damage(attack : AttackResource):
-	health -= attack.damage
+func fall():
+	pass
+
+func damage(action : ActionResource):
+	health -= action.damage
 	if health <= 0:
 		death.emit()

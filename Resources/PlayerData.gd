@@ -9,7 +9,7 @@ var level : int
 var maxHealth : int
 var health : int
 var maxSoul : int
-var attacks : Array[AttackResource]
+var attacks : Array[ActionResource]
 
 
 func Save():

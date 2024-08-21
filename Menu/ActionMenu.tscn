@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://br3my5gbq2wqq"]
 
-[ext_resource type="Texture2D" uid="uid://cdwqaxqiht31h" path="res://Menu/AttackMenuFull.png" id="1_8cw0f"]
-[ext_resource type="Script" path="res://Menu/AttackMenu.gd" id="1_d4mfi"]
+[ext_resource type="Script" path="res://Menu/ActionMenu.gd" id="1_721oc"]
+[ext_resource type="Texture2D" uid="uid://cdwqaxqiht31h" path="res://Menu/AttackMenuFull.png" id="2_gpeg0"]
 
-[node name="AttackMenu" type="Control"]
+[node name="ActionMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,13 +13,13 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-script = ExtResource("1_d4mfi")
+script = ExtResource("1_721oc")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 256.0
 offset_bottom = 128.0
-texture = ExtResource("1_8cw0f")
+texture = ExtResource("2_gpeg0")
 
 [node name="Options" type="Control" parent="."]
 anchors_preset = 0

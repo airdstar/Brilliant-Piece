@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://clk1n28hr60dc"]
+
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_fookx"]
+
+[resource]
+script = ExtResource("1_fookx")
+name = "Crystal Spears"
+animationPath = ""
+damage = 2
+healing = 0
+range = 3
+actionDirection = "Both"
+rangeExclusive = false
+blockable = false
+knockback = false
+status = ""
+AOE = Vector2(3, 3)

@@ -1,16 +1,16 @@
 extends Resource
-class_name AttackResource
+class_name ActionResource
 
 @export var name : String
 @export var animationPath : String
 @export var damage : int
-@export var scaling : float
+@export var healing : int
 
-@export var attackRange : int
-@export var attackDirection : String #Straight/Diagonal/Both
+@export var range : int
+@export var actionDirection : String #Straight/Diagonal/Both
 @export var rangeExclusive : bool #Does it only hit that range
 @export var blockable : bool
 
 @export var knockback : bool
 @export var status : String
-@export var AOE : Vector2
+@export var AOE : int

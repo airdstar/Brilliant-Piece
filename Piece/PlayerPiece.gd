@@ -7,7 +7,7 @@ class_name PlayerPiece
 var level : int = 1
 var maxSoul : int 
 var soul : int 
-var attacks : Array[AttackResource]
+var actions : Array[ActionResource]
 
 func _ready():
 	#Add check for saves
@@ -19,7 +19,7 @@ func setData():
 	maxSoul = classType.maxSoul
 	soul = maxSoul
 	for n in range(5):
-		attacks.append(classType.attacks.attacks[n])
+		actions.append(classType.actions.actions[n])
 	
 	var s = ResourceLoader.load(classType.associatedScene)
 	s = s.instantiate()

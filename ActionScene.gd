@@ -3,7 +3,7 @@ extends PlayableArea
 var playerTile : tile
 var player : PlayerPiece
 var enemy : EnemyPiece
-var attack : AttackResource
+var action : ActionResource
 
 func secondaryReady():
 	inMenu = true
@@ -23,9 +23,9 @@ func secondaryProcess(_delta):
 			openMenu()
 			camera.position = Vector3(-0.5,1,2)
 			camera.rotation = Vector3(0,0,0)
-		elif attack:
-			stopShowingAttack()
-			attack = null
+		elif action:
+			stopShowingAction()
+			action = null
 			inMenu = true
 			Pointer.visible = false
 			openMenu()
@@ -57,16 +57,16 @@ func secondaryProcess(_delta):
 			moving[0] = false
 			moving[1] = null
 			Pointer.height = highlightedTile.getPointerPos()
-			attack = null
+			action = null
 			inMenu = true
 			Pointer.visible = false
 			openMenu()
 			camera.position = Vector3(-0.5,1,2)
 			camera.rotation = Vector3(0,0,0)
-		elif highlightedTile.attackable:
-			highlightedTile.attack(attack)
-			stopShowingAttack()
-			attack = null
+		elif highlightedTile.hittable:
+			highlightedTile.actionUsed(action)
+			stopShowingAction()
+			action = null
 			inMenu = true
 			Pointer.visible = false
 			openMenu()
@@ -89,33 +89,33 @@ func openMenu():
 	menu.position = Vector2(0, 400)
 	menu.showMenu(false)
 
-func showAttack():
+func showAction():
 	var directions
 	var pos
-	if attack.attackDirection == "Straight":
+	if action.actionDirection == "Straight":
 		directions = 4
 		pos = Directions.getAllStraight()
-	elif attack.attackDirection == "Diagonal":
+	elif action.actionDirection == "Diagonal":
 		directions = 4
 		pos = Directions.getAllDiagonal()
-	elif attack.attackDirection == "Both":
+	elif action.actionDirection == "Both":
 		directions = 8
 		pos = Directions.getAllDirections()
 	for n in range(directions):
 		var tileData : Vector3 = playerTile.global_position
 		var blocked = false
-		for m in range(attack.attackRange):
+		for m in range(action.range):
 			tileData += Directions.getDirection(pos[n])
-			if attack.rangeExclusive and m != attack.attackRange - 1:
+			if action.rangeExclusive and m != action.range - 1:
 				pass
 			else:
 				if lookForTile(tileData):
-					setAttackable(lookForTile(tileData))
+					setHittable(lookForTile(tileData))
 
-func stopShowingAttack():
+func stopShowingAction():
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
-		allTiles[n].attackable = false
+		allTiles[n].hittable = false
 		if allTiles[n] == highlightedTile:
 			allTiles[n].setColor("Blue")
 			
@@ -125,9 +125,9 @@ func stopShowingAttack():
 			else:
 				allTiles[n].setColor("White")
 
-func setAttackable(attackableTile : tile):
-	attackableTile.attackable = true
-	attackableTile.setColor("Red")
+func setHittable(possibleTile : tile):
+	possibleTile.hittable = true
+	possibleTile.setColor("Red")
 
 func makeArena(x : int, z : int):
 	var playerPos = randi_range(1,z - 2)

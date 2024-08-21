@@ -91,7 +91,7 @@ func addActionOptions():
 					toAdd.setOptionType("Stats")
 					toAdd.position = Vector2(0,-121)
 		else:
-			options.get_child(0).setOptionType("Attack")
+			options.get_child(0).setOptionType("Action")
 			options.get_child(0).SetSprite(1)
 
 func selectedOption():
@@ -107,9 +107,9 @@ func selectedOption():
 			get_parent().get_parent().camera.position = Vector3(5,5,5)
 			get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 			queue_free()
-		"Attack":
+		"Action":
 			$MenuSelect.play()
-			var toAdd = preload("res://Menu/AttackMenu.tscn").instantiate()
+			var toAdd = preload("res://Menu/ActionMenu.tscn").instantiate()
 			add_child(toAdd)
 
 func closeMenu():

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://0a42lwknko2l"]
+
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_xv4x0"]
+
+[resource]
+script = ExtResource("1_xv4x0")
+name = "Attack"
+animationPath = ""
+damage = 1
+healing = 0
+range = 1
+actionDirection = "Both"
+rangeExclusive = true
+blockable = false
+knockback = false
+status = ""
+AOE = Vector2(0, 0)

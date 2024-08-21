@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://cdyj2x074vkwb"]
+
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_fo6t0"]
+
+[resource]
+script = ExtResource("1_fo6t0")
+name = "Light Beam"
+animationPath = ""
+damage = 3
+healing = 0
+range = 7
+actionDirection = "Diagonal"
+rangeExclusive = false
+blockable = false
+knockback = false
+status = ""
+AOE = Vector2(0, 0)
