@@ -58,4 +58,6 @@ func setColor(color : String):
 			$Base.material_override.set_albedo(Color(0.569,1,0.71))
 		"Red":
 			$Base.material_override.set_albedo(Color(1,0.569,0.71))
+		"Orange":
+			$Base.material_override.set_albedo(Color(1,0.71,0.569))
 	

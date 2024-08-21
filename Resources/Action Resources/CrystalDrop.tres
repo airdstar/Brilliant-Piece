@@ -14,4 +14,4 @@ rangeExclusive = false
 blockable = false
 knockback = false
 status = ""
-AOE = 0
+AOE = 1

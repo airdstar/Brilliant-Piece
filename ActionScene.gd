@@ -3,7 +3,6 @@ extends PlayableArea
 var playerTile : tile
 var player : PlayerPiece
 var enemy : EnemyPiece
-var action : ActionResource
 
 func secondaryReady():
 	inMenu = true
@@ -65,6 +64,14 @@ func secondaryProcess(_delta):
 			camera.rotation = Vector3(0,0,0)
 		elif highlightedTile.hittable:
 			highlightedTile.actionUsed(action)
+			if action.AOE != 0:
+				var pos = Directions.getAllDirections()
+				for n in range(8):
+					var currentTile = highlightedTile.global_position
+					for m in range(action.AOE):
+						currentTile += Directions.getDirection(pos[n])
+						if lookForTile(currentTile):
+							lookForTile(currentTile).actionUsed(action)
 			stopShowingAction()
 			action = null
 			inMenu = true
@@ -111,7 +118,7 @@ func stopShowingAction():
 
 func setHittable(possibleTile : tile):
 	possibleTile.hittable = true
-	possibleTile.setColor("Red")
+	possibleTile.setColor("Orange")
 
 func makeArena(x : int, z : int):
 	var playerPos = randi_range(1,z - 2)

@@ -7,6 +7,7 @@ var inMenu : bool = false
 var menu
 var moving = [false,MoveablePiece]
 var highlightedTile : tile
+var action : ActionResource
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
 
@@ -59,7 +60,17 @@ func highlightTile(tileToSelect : tile):
 			highlightedTile.setColor("Green")
 			Pointer.setColor("Green")
 	elif highlightedTile.hittable:
-		highlightedTile.setColor("Red")
+		highlightedTile.setColor("Orange")
+		Pointer.setColor("Orange")
+		if action.AOE != 0:
+			var pos = Directions.getAllDirections()
+			for n in range(8):
+				var currentTile = highlightedTile.global_position
+				for m in range(action.AOE):
+					currentTile += Directions.getDirection(pos[n])
+					if lookForTile(currentTile):
+						lookForTile(currentTile).highlight.visible = true
+			
 	else:
 		highlightedTile.setColor("Blue")
 		Pointer.setColor("Blue")

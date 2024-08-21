@@ -26,6 +26,9 @@ func setColor(color : String):
 		"Red":
 			$Top.mesh.material.set_albedo(Color(1,0.569,0.71))
 			$Bottom.mesh.material.set_albedo(Color(1,0.569,0.71))
+		"Orange":
+			$Top.mesh.material.set_albedo(Color(1,0.71,0.569))
+			$Bottom.mesh.material.set_albedo(Color(1,0.71,0.569))
 
 func StartBob():
 	up = !up
