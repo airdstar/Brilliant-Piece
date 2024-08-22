@@ -18,16 +18,16 @@ func _process(_delta):
 		queue_free()
 	
 	if Input.is_action_just_pressed("Forward"):
-		if highlightedOption < 5:
-			highlightedOption += 1
+		if highlightedOption == 0:
+			highlightedOption = 4
 		else:
-			highlightedOption = 0
+			highlightedOption -= 1
 
 	elif Input.is_action_just_pressed("Backward"):
-		if highlightedOption > 0:
-			highlightedOption -= 1
+		if highlightedOption == 4:
+			highlightedOption = 0
 		else:
-			highlightedOption = 4
+			highlightedOption += 1
 	
 	if Input.is_action_just_pressed("Select"):
 		get_parent().get_parent().get_parent().inMenu = false

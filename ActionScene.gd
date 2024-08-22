@@ -1,7 +1,5 @@
 extends PlayableArea
 
-var playerTile : tile
-var player : PlayerPiece
 var enemy : EnemyPiece
 
 func secondaryReady():
@@ -12,10 +10,9 @@ func secondaryReady():
 
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Cancel"):
-		if moving[0]:
+		if moving:
 			stopShowingMovement()
-			moving[0] = false
-			moving[1] = null
+			moving = null
 			inMenu = true
 			Pointer.visible = false
 			highlightTile(playerTile)
@@ -34,27 +31,26 @@ func secondaryProcess(_delta):
 	
 	if Input.is_action_just_pressed("Select"):
 		if highlightedTile.moveable:
-			moving[1].previousTile = moving[1].currentTile
-			moving[1].previousTile.contains = null
-			highlightedTile.setPiece(moving[1])
+			moving.previousTile = moving.currentTile
+			moving.previousTile.contains = null
+			highlightedTile.setPiece(moving)
 			playerTile = highlightedTile
 			stopShowingMovement()
-			var x = moving[1].currentTile.position.x - moving[1].previousTile.position.x
-			var z = moving[1].currentTile.position.z - moving[1].previousTile.position.z
+			var x = moving.currentTile.position.x - moving.previousTile.position.x
+			var z = moving.currentTile.position.z - moving.previousTile.position.z
 			if x > z and x > 0:
 				#West
-				moving[1].global_rotation.y = deg_to_rad(0)
+				moving.global_rotation.y = deg_to_rad(0)
 			elif x < z and x < 0:
 				#East
-				moving[1].global_rotation.y = deg_to_rad(180)
+				moving.global_rotation.y = deg_to_rad(180)
 			elif z > x and z > 0:
 				#North
-				moving[1].global_rotation.y = deg_to_rad(-90)
+				moving.global_rotation.y = deg_to_rad(-90)
 			elif z < x and z < 0:
 				#South
-				moving[1].global_rotation.y = deg_to_rad(90)
-			moving[0] = false
-			moving[1] = null
+				moving.global_rotation.y = deg_to_rad(90)
+			moving = null
 			Pointer.height = highlightedTile.getPointerPos()
 			action = null
 			inMenu = true
@@ -90,37 +86,6 @@ func secondaryProcess(_delta):
 func displayInfo():
 	pass
 
-func openMenu():
-	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
-	menu.scale = Vector2(1.8,1.8)
-	$Menu.add_child(menu)
-	menu.addActionOptions()
-	menu.position = Vector2(0, 400)
-	menu.showMenu(false)
-
-#Need to make blockable stuff
-func showAction():
-	var tileData = action.getActionRange(playerTile.global_position)
-	for n in range(tileData.size()):
-		if lookForTile(tileData[n]):
-			setHittable(lookForTile(tileData[n]))
-
-func stopShowingAction():
-	var allTiles = $Tiles.get_children()
-	for n in range(allTiles.size()):
-		allTiles[n].hittable = false
-		if allTiles[n] == highlightedTile:
-			allTiles[n].setColor("Blue")
-			
-		else:
-			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
-				allTiles[n].setColor("Black")
-			else:
-				allTiles[n].setColor("White")
-
-func setHittable(possibleTile : tile):
-	possibleTile.hittable = true
-	possibleTile.setColor("Orange")
 
 func makeArena(x : int, z : int):
 	var playerPos = randi_range(1,z - 2)
@@ -144,6 +109,3 @@ func enemyDeath():
 	enemy.queue_free()
 	get_parent().get_parent().get_parent().get_parent().inCombat = false
 	get_parent().get_parent().queue_free()
-
-func playerDeath():
-	get_tree().quit()

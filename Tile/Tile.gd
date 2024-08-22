@@ -52,12 +52,14 @@ func setColor(color : String):
 			$Base.material_override.set_albedo(Color(1,1,1))
 		"Black":
 			$Base.material_override.set_albedo(Color(0,0,0))
+		"Gray":
+			$Base.material_override.set_albedo(Color(0.5,0.5,0.5))
 		"Blue":
-			$Base.material_override.set_albedo(Color(0.569,0.71,1))
+			$Base.material_override.set_albedo(Color(0.63,0.72,0.86))
 		"Green":
-			$Base.material_override.set_albedo(Color(0.569,1,0.71))
+			$Base.material_override.set_albedo(Color(0.63,0.86,0.72))
 		"Red":
-			$Base.material_override.set_albedo(Color(1,0.569,0.71))
+			$Base.material_override.set_albedo(Color(0.86,0.63,0.72))
 		"Orange":
-			$Base.material_override.set_albedo(Color(1,0.71,0.569))
+			$Base.material_override.set_albedo(Color(0.86,0.72,0.63))
 	

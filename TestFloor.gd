@@ -1,75 +1,67 @@
 extends PlayableArea
 class_name Floor
 
-var save_path := "user://test.save"
-var toSave
-var inCombat : bool = false
+var soulUsed : bool = false
 @export var tileAmount : int
 
 func secondaryReady():
 	generateTiles()
+	player = $PlayerPiece
+	openMenu()
 
 func secondaryProcess(_delta):
-	toSave = $PlayerPiece.global_position
-	if Input.is_action_just_pressed("Select") and !inCombat:
-		if highlightedTile.contains is Piece and !inMenu and !moving[0]:
+	if Input.is_action_just_pressed("Select"):
+		if moving and highlightedTile.moveable:
+			moving.previousTile = moving.currentTile
+			moving.previousTile.contains = null
+			highlightedTile.setPiece(moving)
+			playerTile = highlightedTile
+			stopShowingMovement()
+			var x = moving.currentTile.position.x - moving.previousTile.position.x
+			var z = moving.currentTile.position.z - moving.previousTile.position.z
+			if x > z and x > 0:
+				#West
+				moving.global_rotation.y = deg_to_rad(0)
+			elif x < z and x < 0:
+				#East
+				moving.global_rotation.y = deg_to_rad(180)
+			elif z > x and z > 0:
+				#North
+				moving.global_rotation.y = deg_to_rad(-90)
+			elif z < x and z < 0:
+				#South
+				moving.global_rotation.y = deg_to_rad(90)
+				
+			moving = null
+			displayInfo()
+			openMenu()
+			Pointer.height = highlightedTile.getPointerPos()
+		elif action and highlightedTile.hittable:
+			highlightedTile.actionUsed(action)
+			if action.AOE != 0:
+				var pos = Directions.getAllDirections()
+				for n in range(8):
+					var currentTile = highlightedTile.global_position
+					for m in range(action.AOE):
+						currentTile += Directions.getDirection(pos[n])
+						if lookForTile(currentTile):
+							lookForTile(currentTile).actionUsed(action)
+			stopShowingAction()
+			action = null
 			inMenu = true
-			menu = preload("res://Menu/BasicMenu.tscn").instantiate()
-			menu.position = Vector2(360,313)
-			$Menu.add_child(menu)
-			if highlightedTile.contains is PlayerPiece:
-				menu.addPlayerOptions()
-			menu.showMenu(true)
-		if moving[0] and highlightedTile.moveable:
-			if highlightedTile.contains is EnemyPiece:
-				var actionScene = preload("res://ActionScene.tscn").instantiate()
-				var enemy = $EnemyPiece
-				remove_child($EnemyPiece)
-				actionScene.setEnemy(highlightedTile.contains)
-				actionScene.setPlayer($PlayerPiece.duplicate())
-				$StaticHUD/Portrait.visible = false
-				$StaticHUD/PortraitBackground.visible = false
-				$Action.add_child(actionScene)
-				actionScene.updateHUD($PlayerPiece, enemy)
-				inCombat = true
-				highlightedTile.setPiece($PlayerPiece)
-			else:
-				moving[1].previousTile = moving[1].currentTile
-				moving[1].previousTile.contains = null
-				highlightedTile.setPiece(moving[1])
-				stopShowingMovement()
-				var x = moving[1].currentTile.position.x - moving[1].previousTile.position.x
-				var z = moving[1].currentTile.position.z - moving[1].previousTile.position.z
-				if x > z and x > 0:
-					#West
-					moving[1].global_rotation.y = deg_to_rad(0)
-				elif x < z and x < 0:
-					#East
-					moving[1].global_rotation.y = deg_to_rad(180)
-				elif z > x and z > 0:
-					#North
-					moving[1].global_rotation.y = deg_to_rad(-90)
-				elif z < x and z < 0:
-					#South
-					moving[1].global_rotation.y = deg_to_rad(90)
-				moving[0] = false
-				moving[1] = null
-				displayInfo()
-				Pointer.height = highlightedTile.getPointerPos()
-		if moving[0] and highlightedTile.contains == moving[1]:
-			stopShowingMovement()
-			moving[0] = false
-			moving[1] = null
+			openMenu()
 	
-	if Input.is_action_just_pressed("Cancel") and !inCombat:
-		if inMenu and !menu.hasSelectedOption:
-			$Menu.get_child(0).closeMenu()
-		if moving[0]:
+	if Input.is_action_just_pressed("Cancel") and !soulUsed:
+		if moving:
 			stopShowingMovement()
-			moving[0] = false
-			moving[1] = null
+			moving = null
+			openMenu()
+		if action:
+			stopShowingAction()
+			action = null
+			openMenu()
 	
-	if !inMenu and !inCombat:
+	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
 			handleMovement()
 
@@ -97,12 +89,6 @@ func generateTiles():
 				if n == playerPos:
 					tileToAdd.setPiece($PlayerPiece)
 					highlightTile(tileToAdd)
+					playerTile = highlightedTile
 				elif n == enemyPos:
 					tileToAdd.setPiece($EnemyPiece)
-
-func _unhandled_input(event : InputEvent):
-	if event is InputEventMouseMotion:
-		if !inCombat:
-			twist = -event.relative.x *  mouse_sensitivity
-		else:
-			$Action.get_child(0).cameraControls(-event.relative.x *  mouse_sensitivity)

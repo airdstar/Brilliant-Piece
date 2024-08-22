@@ -1,0 +1,151 @@
+[gd_scene load_steps=15 format=3 uid="uid://c0rs8wca01dop"]
+
+[ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
+[ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="3_a68on"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_uhgei"]
+[ext_resource type="Texture2D" uid="uid://ctnxjwjh7mcv8" path="res://Status.png" id="5_8r0bm"]
+[ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
+[ext_resource type="Shader" path="res://Shaders/CRTShader.gdshader" id="5_si7mu"]
+[ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://Portrait.png" id="5_y64f2"]
+[ext_resource type="PackedScene" uid="uid://dlu6bkktlk1o" path="res://Piece/EnemyPiece.tscn" id="7_ewcja"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5n4ns"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_wo33k"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_hukod"]
+font_size = 19
+
+[sub_resource type="LabelSettings" id="LabelSettings_icvr5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_co3q6"]
+shader = ExtResource("5_si7mu")
+shader_parameter/resolution = Vector2(400, 300)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.0
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.0
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.4
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.0
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -6.0
+shader_parameter/pixel_strength = -2.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_re4dm"]
+size = Vector3(8, 8, 0.5)
+
+[node name="Base" type="Node3D"]
+script = ExtResource("1_snloc")
+tileAmount = 100
+
+[node name="Twist" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Twist"]
+transform = Transform3D(0.766044, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642788, -0.492404, 0.586824, 5, 5, 5)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Twist/Camera3D"]
+light_energy = 2.0
+spot_range = 30.0
+
+[node name="Pointer" parent="." instance=ExtResource("3_uhgei")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="PlayerPiece" parent="." instance=ExtResource("3_a68on")]
+
+[node name="EnemyPiece" parent="." instance=ExtResource("7_ewcja")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31674, 0, 0)
+
+[node name="Tiles" type="Node3D" parent="."]
+
+[node name="Background" parent="." instance=ExtResource("5_f853j")]
+
+[node name="Action" type="Node" parent="."]
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="StaticHUD" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="PortraitBackground" type="TextureRect" parent="StaticHUD"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 144.0
+offset_bottom = 144.0
+
+[node name="Portrait" type="TextureRect" parent="StaticHUD"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 148.0
+offset_bottom = 148.0
+texture = ExtResource("5_y64f2")
+
+[node name="Status" type="TextureRect" parent="StaticHUD/Portrait"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 384.0
+offset_bottom = 64.0
+texture = ExtResource("5_8r0bm")
+
+[node name="NameLabel" type="Label" parent="StaticHUD/Portrait/Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 6.0
+offset_bottom = 26.0
+label_settings = SubResource("LabelSettings_5n4ns")
+
+[node name="TypeLabel" type="Label" parent="StaticHUD/Portrait/Status"]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 3.0
+offset_right = 378.0
+offset_bottom = 31.0
+label_settings = SubResource("LabelSettings_wo33k")
+horizontal_alignment = 2
+
+[node name="LevelLabel" type="Label" parent="StaticHUD/Portrait/Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 31.0
+offset_right = 6.0
+offset_bottom = 59.0
+label_settings = SubResource("LabelSettings_hukod")
+
+[node name="PointLabel" type="Label" parent="StaticHUD/Portrait/Status"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 31.0
+offset_right = 378.0
+offset_bottom = 59.0
+label_settings = SubResource("LabelSettings_icvr5")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CRTFilter" type="ColorRect" parent="StaticHUD"]
+material = SubResource("ShaderMaterial_co3q6")
+offset_right = 1024.0
+offset_bottom = 768.0
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="StaticHUD"]
+size = Vector2i(120, 120)
+
+[node name="Portrait" type="Node3D" parent="StaticHUD/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="StaticHUD/SubViewport/Portrait"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+fov = 60.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="StaticHUD/SubViewport/Portrait/Camera3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticHUD/SubViewport/Portrait/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = SubResource("BoxMesh_re4dm")

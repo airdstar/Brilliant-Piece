@@ -1,15 +1,13 @@
 extends Control
+class_name BasicMenu
 
 var hasSelectedOption : bool = false
-var optionCount : int = 1
+var optionCount : int
 var highlightedOption : int = 1
 @onready var options = $Options
 
 func _ready():
-	var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
-	options.add_child(toAdd)
-	toAdd.setOptionType("View")
-	toAdd.hoverToggle()
+	pass
 
 func _process(_delta):
 	if Input.is_action_just_pressed("Forward") and !hasSelectedOption:
@@ -47,60 +45,33 @@ func showMenu(sound : bool):
 func addPlayerOptions():
 	optionCount = 4
 	for n in range(optionCount):
-		if n != 0:
-			var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
-			options.add_child(toAdd)
-			match n:
-				1:
-					toAdd.SetSprite(3)
-					toAdd.setOptionType("Items")
-					toAdd.position = Vector2(0,-31)
-				2:
-					toAdd.SetSprite(3)
-					toAdd.setOptionType("Stats")
-					toAdd.position = Vector2(0,-60)
-				3:
-					toAdd.SetSprite(2)
-					toAdd.setOptionType("View")
-					toAdd.position = Vector2(0,-91)
-		else:
-			options.get_child(0).setOptionType("Move")
-			options.get_child(0).SetSprite(1)
+		var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
+		options.add_child(toAdd)
+		match n:
+			0:
+				toAdd.SetSprite(1)
+				toAdd.setOptionType("Action")
+				toAdd.hoverToggle()
+			1:
+				toAdd.SetSprite(3)
+				toAdd.setOptionType("Items")
+				toAdd.position = Vector2(0,-31)
+			2:
+				toAdd.SetSprite(3)
+				toAdd.setOptionType("Move")
+				toAdd.position = Vector2(0,-60)
+			3:
+				toAdd.SetSprite(2)
+				toAdd.setOptionType("View")
+				toAdd.position = Vector2(0,-91)
 
-func addActionOptions():
-	optionCount = 5
-	for n in range(optionCount):
-		if n != 0:
-			var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
-			options.add_child(toAdd)
-			match n:
-				1:
-					toAdd.SetSprite(3)
-					toAdd.setOptionType("Soul")
-					toAdd.position = Vector2(0,-31)
-				2:
-					toAdd.SetSprite(3)
-					toAdd.setOptionType("Move")
-					toAdd.position = Vector2(0,-60)
-				3:
-					toAdd.SetSprite(3)
-					toAdd.setOptionType("Items")
-					toAdd.position = Vector2(0,-90)
-				4:
-					toAdd.SetSprite(2)
-					toAdd.setOptionType("Stats")
-					toAdd.position = Vector2(0,-121)
-		else:
-			options.get_child(0).setOptionType("Action")
-			options.get_child(0).SetSprite(1)
 
 func selectedOption():
 	match options.get_child(highlightedOption - 1).type:
 		"Move":
 			$AnimationPlayer.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			get_parent().get_parent().moving[0] = true
-			get_parent().get_parent().moving[1] = get_parent().get_parent().highlightedTile.contains
+			get_parent().get_parent().moving = get_parent().get_parent().player
 			get_parent().get_parent().inMenu = false
 			get_parent().get_parent().Pointer.visible = true
 			get_parent().get_parent().findMoveableTiles()

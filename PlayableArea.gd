@@ -3,16 +3,26 @@ class_name PlayableArea
 
 var mouse_sensitivity := 0.0005
 var twist : float
+
+
 var inMenu : bool = false
-var menu
-var moving = [false,MoveablePiece]
-var highlightedTile : tile
+var menu : BasicMenu
+
+var player : PlayerPiece
+var playerTile : tile
+
+var viewing : bool = false
+var moving : MoveablePiece
 var action : ActionResource
+
+var highlightedTile : tile
+
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
 
 func _ready():
 	secondaryReady()
+	player.death.connect(self.playerDeath)
 	setTilePattern()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -42,6 +52,8 @@ func setTilePattern():
 				allTiles[n].setColor("Black")
 			else:
 				allTiles[n].setColor("White")
+		if allTiles[n].hittable:
+			allTiles[n].setColor("Orange")
 
 func highlightTile(tileToSelect : tile):
 	highlightedTile = tileToSelect
@@ -54,14 +66,14 @@ func highlightTile(tileToSelect : tile):
 	$Twist.position.z = Pointer.position.z
 	if highlightedTile.moveable:
 		if highlightedTile.contains is EnemyPiece:
-			highlightedTile.setColor("Red")
-			Pointer.setColor("Red")
+			highlightedTile.setColor("Orange")
+			Pointer.setColor("Orange")
 		else:
-			highlightedTile.setColor("Green")
-			Pointer.setColor("Green")
+			highlightedTile.setColor("Blue")
+			Pointer.setColor("Blue")
 	elif highlightedTile.hittable:
-		highlightedTile.setColor("Orange")
-		Pointer.setColor("Orange")
+		highlightedTile.setColor("Red")
+		Pointer.setColor("Red")
 		if action.AOE != 0:
 			var pos = Directions.getAllDirections()
 			for n in range(8):
@@ -70,10 +82,11 @@ func highlightTile(tileToSelect : tile):
 					currentTile += Directions.getDirection(pos[n])
 					if lookForTile(currentTile):
 						lookForTile(currentTile).highlight.visible = true
+						lookForTile(currentTile).setColor("Red")
 			
 	else:
-		highlightedTile.setColor("Blue")
-		Pointer.setColor("Blue")
+		highlightedTile.setColor("Gray")
+		Pointer.setColor("Gray")
 	
 	displayInfo()
 
@@ -100,13 +113,22 @@ func displayInfo():
 		$StaticHUD/PortraitBackground.visible = false
 		$StaticHUD/Portrait.visible = false
 
+func openMenu():
+	inMenu = true
+	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
+	$Menu.add_child(menu)
+	menu.addPlayerOptions()
+	menu.position = Vector2(360,313)
+	menu.showMenu(true)
+	Pointer.visible = false
+	highlightTile(playerTile)
+
 func stopShowingMovement():
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
 		allTiles[n].moveable = false
 		if allTiles[n] == highlightedTile:
-			allTiles[n].setColor("Blue")
-			Pointer.setColor("Blue")
+			allTiles[n].setColor("Grey")
 		else:
 			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
 				allTiles[n].setColor("Black")
@@ -116,9 +138,32 @@ func stopShowingMovement():
 func setMoveable(moveableTile : tile):
 	moveableTile.moveable = true
 	if moveableTile.contains is EnemyPiece:
-		moveableTile.setColor("Red")
+		moveableTile.setColor("Orange")
 	else:
-		moveableTile.setColor("Green")
+		moveableTile.setColor("Blue")
+
+#Need to make blockable stuff
+func showAction():
+	var tileData = action.getActionRange(playerTile.global_position)
+	for n in range(tileData.size()):
+		if lookForTile(tileData[n]):
+			setHittable(lookForTile(tileData[n]))
+
+func stopShowingAction():
+	var allTiles = $Tiles.get_children()
+	for n in range(allTiles.size()):
+		allTiles[n].hittable = false
+		if allTiles[n] == highlightedTile:
+			allTiles[n].setColor("Gray")
+		else:
+			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
+				allTiles[n].setColor("Black")
+			else:
+				allTiles[n].setColor("White")
+
+func setHittable(possibleTile : tile):
+	possibleTile.hittable = true
+	possibleTile.setColor("Orange")
 
 func lookForTile(pos : Vector3):
 	var toReturn
@@ -252,6 +297,9 @@ func findClosestTile(direction : String):
 
 	if foundTile:
 		highlightTile(foundTile)
+
+func playerDeath():
+	get_tree().quit()
 
 func _unhandled_input(event : InputEvent):
 	if event is InputEventMouseMotion:

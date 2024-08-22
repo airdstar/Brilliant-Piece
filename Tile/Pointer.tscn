@@ -3,13 +3,11 @@
 [ext_resource type="Script" path="res://Tile/Pointer.gd" id="1_syfrq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oji6a"]
-albedo_color = Color(0.569, 0.71, 1, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_iu87g"]
 material = SubResource("StandardMaterial3D_oji6a")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e7v6"]
-albedo_color = Color(0.568627, 0.709804, 1, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_80x6k"]
 material = SubResource("StandardMaterial3D_6e7v6")
