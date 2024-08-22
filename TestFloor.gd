@@ -23,13 +23,16 @@ func secondaryProcess(_delta):
 		if moving[0] and highlightedTile.moveable:
 			if highlightedTile.contains is EnemyPiece:
 				var actionScene = preload("res://ActionScene.tscn").instantiate()
+				var enemy = $EnemyPiece
 				remove_child($EnemyPiece)
 				actionScene.setEnemy(highlightedTile.contains)
 				actionScene.setPlayer($PlayerPiece.duplicate())
 				$StaticHUD/Portrait.visible = false
 				$StaticHUD/PortraitBackground.visible = false
 				$Action.add_child(actionScene)
+				actionScene.updateHUD($PlayerPiece, enemy)
 				inCombat = true
+				highlightedTile.setPiece($PlayerPiece)
 			else:
 				moving[1].previousTile = moving[1].currentTile
 				moving[1].previousTile.contains = null

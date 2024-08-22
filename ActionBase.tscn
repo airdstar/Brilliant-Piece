@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://kq7nnhxo616a"]
 
 [ext_resource type="Script" path="res://ActionScene.gd" id="1_ymby1"]
-[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Pointer.tscn" id="3_j8khg"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_j8khg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_dlqtq"]
 size = Vector3(100, 200, 1)

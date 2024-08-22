@@ -62,6 +62,7 @@ func secondaryProcess(_delta):
 			openMenu()
 			camera.position = Vector3(-0.5,1,2)
 			camera.rotation = Vector3(0,0,0)
+			get_parent().get_parent().updateHUD(player, enemy)
 		elif highlightedTile.hittable:
 			highlightedTile.actionUsed(action)
 			if action.AOE != 0:
@@ -80,6 +81,7 @@ func secondaryProcess(_delta):
 			highlightTile(playerTile)
 			camera.position = Vector3(-0.5,1,2)
 			camera.rotation = Vector3(0,0,0)
+			get_parent().get_parent().updateHUD(player, enemy)
 	
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
@@ -133,12 +135,15 @@ func makeArena(x : int, z : int):
 					tileToAdd.setPiece(player)
 					playerTile = tileToAdd
 					highlightTile(tileToAdd)
+					
 			elif n == x - 2:
 				if m == enemyPos:
 					tileToAdd.setPiece(enemy)
 
 func enemyDeath():
-	print("hi")
+	enemy.queue_free()
+	get_parent().get_parent().get_parent().get_parent().inCombat = false
+	get_parent().get_parent().queue_free()
 
 func playerDeath():
-	print("ummm u died")
+	get_tree().quit()

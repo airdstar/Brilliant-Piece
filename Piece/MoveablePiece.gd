@@ -12,4 +12,5 @@ func fall():
 func damage(action : ActionResource):
 	health -= action.damage
 	if health <= 0:
+		health = 0
 		death.emit()

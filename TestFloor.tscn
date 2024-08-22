@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
 [ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="3_a68on"]
-[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Pointer.tscn" id="3_uhgei"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_uhgei"]
 [ext_resource type="Texture2D" uid="uid://ctnxjwjh7mcv8" path="res://Status.png" id="5_8r0bm"]
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
-[ext_resource type="Shader" path="res://CRTShader.gdshader" id="5_si7mu"]
+[ext_resource type="Shader" path="res://Shaders/CRTShader.gdshader" id="5_si7mu"]
 [ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://Portrait.png" id="5_y64f2"]
 [ext_resource type="PackedScene" uid="uid://dlu6bkktlk1o" path="res://Piece/EnemyPiece.tscn" id="7_ewcja"]
 
