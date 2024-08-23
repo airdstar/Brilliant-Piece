@@ -10,6 +10,7 @@ var menu : BasicMenu
 
 var player : PlayerPiece
 var playerTile : tile
+var playerTurn : bool = true
 
 var viewing : bool = false
 var moving : MoveablePiece
@@ -91,6 +92,8 @@ func highlightTile(tileToSelect : tile):
 	displayInfo()
 
 func displayInfo():
+	if $StaticHUD/SubViewport/Portrait.get_child_count() == 2:
+		$StaticHUD/SubViewport/Portrait.remove_child($StaticHUD/SubViewport/Portrait.get_child(1))
 	if highlightedTile.contains:
 		$StaticHUD/Portrait.visible = true
 		var portraitPic = highlightedTile.contains.duplicate()
@@ -103,15 +106,20 @@ func displayInfo():
 			$StaticHUD/Portrait/Status/NameLabel.text = highlightedTile.contains.pieceName
 			$StaticHUD/Portrait/Status/TypeLabel.text = highlightedTile.contains.type
 			$StaticHUD/Portrait/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
-			$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
+			$StaticHUD/Portrait/Status/PointLabel.text = "[img]res://HUD/Heart.png[/img]" + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
 			if highlightedTile.contains is PlayerPiece:
 				$StaticHUD/Portrait/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level)
 				$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) + "        SP: " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
 	else:
-		if $StaticHUD/SubViewport/Portrait.get_child_count() == 2:
-			$StaticHUD/SubViewport/Portrait.remove_child($StaticHUD/SubViewport/Portrait.get_child(1))
 		$StaticHUD/PortraitBackground.visible = false
 		$StaticHUD/Portrait.visible = false
+
+func changeTurn():
+	playerTurn = !playerTurn
+	if playerTurn:
+		$StaticHUD/Turn.set_texture(load("res://HUD/PlayerTurn.png"))
+	else:
+		$StaticHUD/Turn.set_texture(load("res://HUD/EnemyTurn.png"))
 
 func openMenu():
 	inMenu = true
@@ -313,7 +321,6 @@ func setPieceOrientation(piece : MoveablePiece):
 	elif z < x and z < 0:
 		#South
 		piece.global_rotation.y = deg_to_rad(90)
-
 
 func playerDeath():
 	get_tree().quit()

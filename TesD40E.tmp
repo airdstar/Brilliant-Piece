@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
 [ext_resource type="Shader" path="res://Shaders/CRTShader.gdshader" id="5_si7mu"]
 [ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://Portrait.png" id="5_y64f2"]
-[ext_resource type="Texture2D" uid="uid://c7qpd0jxcxjle" path="res://HUD/PlayerTurn.png" id="6_jm0v8"]
 [ext_resource type="PackedScene" uid="uid://dlu6bkktlk1o" path="res://Piece/EnemyPiece.tscn" id="7_ewcja"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5n4ns"]
@@ -18,6 +17,8 @@ font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_hukod"]
 font_size = 19
+
+[sub_resource type="LabelSettings" id="LabelSettings_icvr5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_co3q6"]
 shader = ExtResource("5_si7mu")
@@ -72,13 +73,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31674, 0, 0)
 layer = 2
 follow_viewport_enabled = true
 
-[node name="Turn" type="TextureRect" parent="StaticHUD"]
-offset_left = 966.0
-offset_top = 10.0
-offset_right = 1014.0
-offset_bottom = 58.0
-texture = ExtResource("6_jm0v8")
-
 [node name="PortraitBackground" type="TextureRect" parent="StaticHUD"]
 offset_left = 24.0
 offset_top = 24.0
@@ -94,9 +88,9 @@ texture = ExtResource("5_y64f2")
 
 [node name="Status" type="TextureRect" parent="StaticHUD/Portrait"]
 layout_mode = 0
-offset_top = 128.0
+offset_left = 128.0
 offset_right = 384.0
-offset_bottom = 192.0
+offset_bottom = 64.0
 texture = ExtResource("5_8r0bm")
 
 [node name="NameLabel" type="Label" parent="StaticHUD/Portrait/Status"]
@@ -124,15 +118,15 @@ offset_right = 6.0
 offset_bottom = 59.0
 label_settings = SubResource("LabelSettings_hukod")
 
-[node name="PointLabel" type="RichTextLabel" parent="StaticHUD/Portrait/Status"]
+[node name="PointLabel" type="Label" parent="StaticHUD/Portrait/Status"]
 layout_mode = 0
 offset_left = 169.0
 offset_top = 31.0
 offset_right = 378.0
 offset_bottom = 59.0
-bbcode_enabled = true
-scroll_active = false
-text_direction = 2
+label_settings = SubResource("LabelSettings_icvr5")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="CRTFilter" type="ColorRect" parent="StaticHUD"]
 material = SubResource("ShaderMaterial_co3q6")
