@@ -1,17 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhkibg0mnfn5v"]
+[gd_scene load_steps=10 format=3 uid="uid://bhkibg0mnfn5v"]
 
 [ext_resource type="Script" path="res://Tile/Tile.gd" id="1_bu18m"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fohnx"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i02ah"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="TorusMesh" id="TorusMesh_s8spc"]
-material = SubResource("StandardMaterial3D_i02ah")
-inner_radius = 0.9
-rings = 4
-ring_segments = 12
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84bxu"]
 transparency = 1
@@ -21,6 +12,25 @@ albedo_color = Color(1, 1, 1, 0)
 material = SubResource("StandardMaterial3D_84bxu")
 size = Vector2(1, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqfcc"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uu8hq"]
+material = SubResource("StandardMaterial3D_cqfcc")
+size = Vector3(1, 1.1, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_svwbt"]
+material = SubResource("StandardMaterial3D_cqfcc")
+size = Vector3(0.05, 1.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_833jf"]
+material = SubResource("StandardMaterial3D_cqfcc")
+size = Vector3(0.05, 1.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vt17k"]
+material = SubResource("StandardMaterial3D_cqfcc")
+size = Vector3(1, 1.1, 0.05)
+
 [node name="Tile" type="Node3D"]
 script = ExtResource("1_bu18m")
 
@@ -28,15 +38,26 @@ script = ExtResource("1_bu18m")
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_fohnx")
 
-[node name="Outline" type="MeshInstance3D" parent="Base"]
-transform = Transform3D(0.53033, 0, 0.53033, 0, 10, 0, -0.53033, 0, 0.53033, 0, 0.25, 0)
-mesh = SubResource("TorusMesh_s8spc")
-skeleton = NodePath("../..")
-
 [node name="Highlight" type="MeshInstance3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525501, 0)
 visible = false
 mesh = SubResource("PlaneMesh_ittaf")
+
+[node name="OutlineSouth" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("BoxMesh_uu8hq")
+
+[node name="OutlineEast" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+mesh = SubResource("BoxMesh_svwbt")
+
+[node name="OutlineWest" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("BoxMesh_833jf")
+
+[node name="OutlineNorth" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_vt17k")
 
 [node name="PointerPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

@@ -298,6 +298,23 @@ func findClosestTile(direction : String):
 	if foundTile:
 		highlightTile(foundTile)
 
+func setPieceOrientation(piece : MoveablePiece):
+	var x = piece.currentTile.position.x - piece.previousTile.position.x
+	var z = piece.currentTile.position.z - piece.previousTile.position.z
+	if x > z and x > 0:
+		#West
+		piece.global_rotation.y = deg_to_rad(0)
+	elif x < z and x < 0:
+		#East
+		piece.global_rotation.y = deg_to_rad(180)
+	elif z > x and z > 0:
+		#North
+		piece.global_rotation.y = deg_to_rad(-90)
+	elif z < x and z < 0:
+		#South
+		piece.global_rotation.y = deg_to_rad(90)
+
+
 func playerDeath():
 	get_tree().quit()
 

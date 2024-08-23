@@ -16,22 +16,8 @@ func secondaryProcess(_delta):
 			moving.previousTile.contains = null
 			highlightedTile.setPiece(moving)
 			playerTile = highlightedTile
+			setPieceOrientation(player)
 			stopShowingMovement()
-			var x = moving.currentTile.position.x - moving.previousTile.position.x
-			var z = moving.currentTile.position.z - moving.previousTile.position.z
-			if x > z and x > 0:
-				#West
-				moving.global_rotation.y = deg_to_rad(0)
-			elif x < z and x < 0:
-				#East
-				moving.global_rotation.y = deg_to_rad(180)
-			elif z > x and z > 0:
-				#North
-				moving.global_rotation.y = deg_to_rad(-90)
-			elif z < x and z < 0:
-				#South
-				moving.global_rotation.y = deg_to_rad(90)
-				
 			moving = null
 			displayInfo()
 			openMenu()
@@ -51,7 +37,7 @@ func secondaryProcess(_delta):
 			inMenu = true
 			openMenu()
 	
-	if Input.is_action_just_pressed("Cancel") and !soulUsed:
+	if Input.is_action_just_pressed("Cancel"):
 		if moving:
 			stopShowingMovement()
 			moving = null
