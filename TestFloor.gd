@@ -10,46 +10,11 @@ func secondaryReady():
 	openMenu()
 
 func secondaryProcess(_delta):
-	if Input.is_action_just_pressed("Select"):
-		if moving and highlightedTile.moveable:
-			moving.previousTile = moving.currentTile
-			moving.previousTile.contains = null
-			highlightedTile.setPiece(moving)
-			playerTile = highlightedTile
-			setPieceOrientation(player)
-			stopShowingMovement()
-			moving = null
-			displayInfo()
-			openMenu()
-			Pointer.height = highlightedTile.getPointerPos()
-		elif action and highlightedTile.hittable:
-			highlightedTile.actionUsed(action)
-			if action.AOE != 0:
-				var pos = Directions.getAllDirections()
-				for n in range(8):
-					var currentTile = highlightedTile.global_position
-					for m in range(action.AOE):
-						currentTile += Directions.getDirection(pos[n])
-						if lookForTile(currentTile):
-							lookForTile(currentTile).actionUsed(action)
-			stopShowingAction()
-			action = null
-			inMenu = true
-			openMenu()
+	if Input.is_action_just_pressed("Test"):
+		endTurn()
+		changeTurn()
 	
-	if Input.is_action_just_pressed("Cancel"):
-		if moving:
-			stopShowingMovement()
-			moving = null
-			openMenu()
-		if action:
-			stopShowingAction()
-			action = null
-			openMenu()
 	
-	if !inMenu:
-		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
-			handleMovement()
 
 func generateTiles():
 	var playerPos = randi_range(0, tileAmount - 1)

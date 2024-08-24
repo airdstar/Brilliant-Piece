@@ -43,7 +43,7 @@ func showMenu(sound : bool):
 		$AnimationPlayer.play("OpenMenu")
 
 func addPlayerOptions():
-	optionCount = 4
+	optionCount = 3
 	for n in range(optionCount):
 		var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 		options.add_child(toAdd)
@@ -57,14 +57,9 @@ func addPlayerOptions():
 				toAdd.setOptionType("Items")
 				toAdd.position = Vector2(0,-31)
 			2:
-				toAdd.SetSprite(3)
+				toAdd.SetSprite(2)
 				toAdd.setOptionType("Move")
 				toAdd.position = Vector2(0,-60)
-			3:
-				toAdd.SetSprite(2)
-				toAdd.setOptionType("View")
-				toAdd.position = Vector2(0,-91)
-
 
 func selectedOption():
 	match options.get_child(highlightedOption - 1).type:

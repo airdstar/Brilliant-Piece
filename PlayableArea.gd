@@ -10,7 +10,9 @@ var menu : BasicMenu
 
 var player : PlayerPiece
 var playerTile : tile
-var playerTurn : bool = true
+
+var turn : String = "Player"
+var prevTurn : String = "None"
 
 var viewing : bool = false
 var moving : MoveablePiece
@@ -33,6 +35,48 @@ func secondaryReady():
 func _process(_delta):
 	if Input.is_action_just_pressed("Exit"):
 		get_tree().quit()
+	
+	if turn == "Player":
+		
+		if !menu and !action and !moving:
+			openMenu()
+		
+		if Input.is_action_just_pressed("Select"):
+			if moving and highlightedTile.moveable:
+				Pointer.visible = false
+				stopShowingMovement()
+				endTurn()
+				movePiece(moving, highlightedTile)
+				moving = null
+			elif action and highlightedTile.hittable:
+				endTurn()
+				highlightedTile.actionUsed(action)
+				# Move AOE to its own function
+				if action.AOE != 0:
+					var pos = Directions.getAllDirections()
+					for n in range(8):
+						var currentTile = highlightedTile.global_position
+						for m in range(action.AOE):
+							currentTile += Directions.getDirection(pos[n])
+							if lookForTile(currentTile):
+								lookForTile(currentTile).actionUsed(action)
+				stopShowingAction()
+				action = null
+				
+		
+		if Input.is_action_just_pressed("Cancel"):
+			if moving:
+				stopShowingMovement()
+				moving = null
+				openMenu()
+			if action:
+				stopShowingAction()
+				action = null
+				openMenu()
+		
+	if !inMenu:
+		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
+			handleMovement()
 	
 	secondaryProcess(_delta)
 	cameraControls()
@@ -115,11 +159,21 @@ func displayInfo():
 		$StaticHUD/Portrait.visible = false
 
 func changeTurn():
-	playerTurn = !playerTurn
-	if playerTurn:
+	if prevTurn == "Player":
+		turn = "Enemy"
+		Pointer.visible = true
+	else:
+		turn = "Player"
+	print(turn)
+	if turn == "Player":
 		$StaticHUD/Turn.set_texture(load("res://HUD/PlayerTurn.png"))
 	else:
 		$StaticHUD/Turn.set_texture(load("res://HUD/EnemyTurn.png"))
+
+func endTurn():
+	prevTurn = turn
+	turn = "None"
+	$StaticHUD/Turn.set_texture(load("res://HUD/NoTurn.png"))
 
 func openMenu():
 	inMenu = true
@@ -181,8 +235,63 @@ func lookForTile(pos : Vector3):
 			toReturn = allTiles[n]
 	return toReturn
 
-func travelTo(destination : tile):
-	pass
+func movePiece(piece : MoveablePiece, destination : tile):
+	var destinationReached : bool = false
+	var startingPos = piece.currentTile
+	var counter : int = 0
+	while(!destinationReached):
+		var allDirections = Directions.getAllStraight()
+		var closestDirection
+		var smallestVariation
+		for n in range(allDirections.size()):
+			var xVar = abs(destination.global_position.x - (piece.currentTile.global_position + Directions.getDirection(allDirections[n])).x)
+			var zVar = abs(destination.global_position.z - (piece.currentTile.global_position + Directions.getDirection(allDirections[n])).z)
+			if closestDirection:
+				if smallestVariation > xVar + zVar:
+					closestDirection = allDirections[n]
+					smallestVariation = xVar + zVar
+				elif smallestVariation == xVar + zVar:
+					if (closestDirection == "North" or allDirections[n] == "North"):
+						if (closestDirection == "West" or allDirections[n] == "West"):
+							if lookForTile(piece.currentTile.global_position + Directions.getDirection("NorthWest")):
+								closestDirection = "NorthWest"
+						elif (closestDirection == "East" or allDirections[n] == "East"):
+							if lookForTile(piece.currentTile.global_position + Directions.getDirection("NorthEast")):
+								closestDirection = "NorthEast"
+					elif (closestDirection == "South" or allDirections[n] == "South"):
+						if (closestDirection == "West" or allDirections[n] == "West"):
+							if lookForTile(piece.currentTile.global_position + Directions.getDirection("SouthWest")):
+								closestDirection = "SouthWest"
+						elif (closestDirection == "East" or allDirections[n] == "East"):
+							if lookForTile(piece.currentTile.global_position + Directions.getDirection("SouthEast")):
+								closestDirection = "SouthEast"
+			else:
+				closestDirection = allDirections[n]
+				smallestVariation = xVar + zVar
+		
+		piece.previousTile = piece.currentTile
+		piece.previousTile.contains = null
+		lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).setPiece(piece)
+		setPieceOrientation(piece, closestDirection)
+		if piece is PlayerPiece:
+			highlightTile(piece.currentTile)
+		if piece.currentTile == destination:
+			destinationReached = true
+			print(closestDirection)
+			changeTurn()
+			if piece is PlayerPiece:
+				playerTile = piece.currentTile
+				displayInfo()
+				Pointer.height = highlightedTile.getPointerPos()
+		else:
+			await get_tree().create_timer(0.3).timeout
+		
+		counter += 1
+		if counter == 10:
+			destinationReached = true
+			startingPos.setPiece(piece)
+			print("ERROR")
+			changeTurn()
 
 func findMoveableTiles():
 	match highlightedTile.contains.type:
@@ -306,21 +415,24 @@ func findClosestTile(direction : String):
 	if foundTile:
 		highlightTile(foundTile)
 
-func setPieceOrientation(piece : MoveablePiece):
-	var x = piece.currentTile.position.x - piece.previousTile.position.x
-	var z = piece.currentTile.position.z - piece.previousTile.position.z
-	if x > z and x > 0:
-		#West
-		piece.global_rotation.y = deg_to_rad(0)
-	elif x < z and x < 0:
-		#East
-		piece.global_rotation.y = deg_to_rad(180)
-	elif z > x and z > 0:
-		#North
-		piece.global_rotation.y = deg_to_rad(-90)
-	elif z < x and z < 0:
-		#South
-		piece.global_rotation.y = deg_to_rad(90)
+func setPieceOrientation(piece : MoveablePiece, direction : String):
+	match direction:
+		"West":
+			piece.global_rotation.y = deg_to_rad(0)
+		"SouthWest":
+			piece.global_rotation.y = deg_to_rad(45)
+		"South":
+			piece.global_rotation.y = deg_to_rad(90)
+		"SouthEast":
+			piece.global_rotation.y = deg_to_rad(135)
+		"East":
+			piece.global_rotation.y = deg_to_rad(180)
+		"NorthEast":
+			piece.global_rotation.y = deg_to_rad(-135)
+		"North":
+			piece.global_rotation.y = deg_to_rad(-90)
+		"NorthWest":
+			piece.global_rotation.y = deg_to_rad(-45)
 
 func playerDeath():
 	get_tree().quit()
