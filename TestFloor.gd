@@ -13,8 +13,6 @@ func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):
 		endTurn()
 		changeTurn()
-	
-	
 
 func generateTiles():
 	var playerPos = randi_range(0, tileAmount - 1)

@@ -49,20 +49,10 @@ func _process(_delta):
 				movePiece(moving, highlightedTile)
 				moving = null
 			elif action and highlightedTile.hittable:
-				endTurn()
-				highlightedTile.actionUsed(action)
-				# Move AOE to its own function
-				if action.AOE != 0:
-					var pos = Directions.getAllDirections()
-					for n in range(8):
-						var currentTile = highlightedTile.global_position
-						for m in range(action.AOE):
-							currentTile += Directions.getDirection(pos[n])
-							if lookForTile(currentTile):
-								lookForTile(currentTile).actionUsed(action)
 				stopShowingAction()
+				endTurn()
+				useAction(highlightedTile)
 				action = null
-				
 		
 		if Input.is_action_just_pressed("Cancel"):
 			if moving:
@@ -223,6 +213,17 @@ func stopShowingAction():
 			else:
 				allTiles[n].setColor("White")
 
+func useAction(destination : tile):
+	destination.actionUsed(action)
+	if action.AOE != 0:
+		var pos = Directions.getAllDirections()
+		for n in range(8):
+			var currentTile = destination.global_position
+			for m in range(action.AOE):
+				currentTile += Directions.getDirection(pos[n])
+				if lookForTile(currentTile):
+					lookForTile(currentTile).actionUsed(action)
+
 func setHittable(possibleTile : tile):
 	possibleTile.hittable = true
 	possibleTile.setColor("Orange")
@@ -357,41 +358,73 @@ func handleMovement():
 	var direction = null
 	
 	if Input.is_action_just_pressed("Left"):
-		if rotation > -180 and rotation <= -90:
+		if rotation > -172.5 and rotation < -97.5:
 			direction = "South"
-		elif rotation > -90 and rotation <= 0:
+		elif rotation >= -97.5 and rotation <= -82.5:
+			direction = "SouthEast"
+		elif rotation > -82.5 and rotation < -7.5:
 			direction = "East"
-		elif rotation > 0 and rotation <= 90:
+		elif rotation >= -7.5 and rotation <= 7.5:
+			direction = "NorthEast"
+		elif rotation > 7.5 and rotation < 82.5:
 			direction = "North"
-		elif rotation > 90 and rotation <= 180:
+		elif rotation >= 82.5 and rotation <= 97.5:
+			direction = "NorthWest"
+		elif rotation > 97.5 and rotation < 172.5:
 			direction = "West"
+		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
+			direction = "SouthWest"
 	elif Input.is_action_just_pressed("Right"):
-		if rotation > -180 and rotation <= -90:
+		if rotation > -172.5 and rotation < -97.5:
 			direction = "North"
-		elif rotation > -90 and rotation <= 0:
+		elif rotation >= -97.5 and rotation <= -82.5:
+			direction = "NorthWest"
+		elif rotation > -82.5 and rotation < -7.5:
 			direction = "West"
-		elif rotation > 0 and rotation <= 90:
+		elif rotation >= -7.5 and rotation <= 7.5:
+			direction = "SouthWest"
+		elif rotation > 7.5 and rotation < 82.5:
 			direction = "South"
-		elif rotation > 90 and rotation <= 180:
+		elif rotation >= 82.5 and rotation <= 97.5:
+			direction = "SouthEast"
+		elif rotation > 97.5 and rotation < 172.5:
 			direction = "East"
+		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
+			direction = "NorthEast"
 	elif Input.is_action_just_pressed("Backward"):
-		if rotation > -180 and rotation <= -90:
+		if rotation > -172.5 and rotation < -97.5:
 			direction = "East"
-		elif rotation > -90 and rotation <= 0:
+		elif rotation >= -97.5 and rotation <= -82.5:
+			direction = "NorthEast"
+		elif rotation > -82.5 and rotation < -7.5:
 			direction = "North"
-		elif rotation > 0 and rotation <= 90:
+		elif rotation >= -7.5 and rotation <= 7.5:
+			direction = "NorthWest"
+		elif rotation > 7.5 and rotation < 82.5:
 			direction = "West"
-		elif rotation > 90 and rotation <= 180:
+		elif rotation >= 82.5 and rotation <= 97.5:
+			direction = "SouthWest"
+		elif rotation > 97.5 and rotation < 172.5:
 			direction = "South"
+		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
+			direction = "SouthEast"
 	elif Input.is_action_just_pressed("Forward"):
-		if rotation > -180 and rotation <= -90:
+		if rotation > -172.5 and rotation < -97.5:
 			direction = "West"
-		elif rotation > -90 and rotation <= 0:
+		elif rotation >= -97.5 and rotation <= -82.5:
+			direction = "SouthWest"
+		elif rotation > -82.5 and rotation < -7.5:
 			direction = "South"
-		elif rotation > 0 and rotation <= 90:
+		elif rotation >= -7.5 and rotation <= 7.5:
+			direction = "SouthEast"
+		elif rotation > 7.5 and rotation < 82.5:
 			direction = "East"
-		elif rotation > 90 and rotation <= 180:
+		elif rotation >= 82.5 and rotation <= 97.5:
+			direction = "NorthEast"
+		elif rotation > 97.5 and rotation < 172.5:
 			direction = "North"
+		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
+			direction = "NorthWest"
 	findClosestTile(direction)
 
 func findClosestTile(direction : String):

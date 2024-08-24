@@ -41,6 +41,14 @@ func getSides(dir : String):
 			return ["East", "West"]
 		"East":
 			return ["North", "South"]
+		"NorthWest":
+			return ["West", "North"]
+		"NorthEast":
+			return ["North", "East"]
+		"SouthWest":
+			return ["South", "West"]
+		"SouthEast":
+			return ["East", "South"]
 
 func getAllStraight():
 	return ["North", "West", "South", "East"]
