@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kenaecnvt4ft"
-path="res://.godot/imported/EnemyTurn.png-dc531cac0ee327d24e1ac7d5d2c528cf.ctex"
+uid="uid://cxk0hte4oqp8b"
+path="res://.godot/imported/Move.png-cacbaa4e61954211d12c42ccb47a165e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HUD/EnemyTurn.png"
-dest_files=["res://.godot/imported/EnemyTurn.png-dc531cac0ee327d24e1ac7d5d2c528cf.ctex"]
+source_file="res://HUD/Move.png"
+dest_files=["res://.godot/imported/Move.png-cacbaa4e61954211d12c42ccb47a165e.ctex"]
 
 [params]
 

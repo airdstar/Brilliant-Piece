@@ -11,8 +11,9 @@ var menu : BasicMenu
 var player : PlayerPiece
 var playerTile : tile
 
-var turn : String = "Player"
-var prevTurn : String = "None"
+var playerTurn : bool = true
+var actionUsed : bool = false
+var moveUsed : bool = false
 
 var viewing : bool = false
 var moving : MoveablePiece
@@ -36,23 +37,21 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Exit"):
 		get_tree().quit()
 	
-	if turn == "Player":
+	if playerTurn:
 		
-		if !menu and !action and !moving:
+		if !menu and !action and !moving and !viewing:
 			openMenu()
 		
 		if Input.is_action_just_pressed("Select"):
 			if moving and highlightedTile.moveable:
 				Pointer.visible = false
 				stopShowingMovement()
-				endTurn()
-				movePiece(moving, highlightedTile)
-				moving = null
+				movePiece(highlightedTile)
+				usedMove()
 			elif action and highlightedTile.hittable:
 				stopShowingAction()
-				endTurn()
 				useAction(highlightedTile)
-				action = null
+				usedAction()
 		
 		if Input.is_action_just_pressed("Cancel"):
 			if moving:
@@ -62,6 +61,9 @@ func _process(_delta):
 			if action:
 				stopShowingAction()
 				action = null
+				openMenu()
+			if viewing:
+				viewing = false
 				openMenu()
 		
 	if !inMenu:
@@ -157,28 +159,33 @@ func displayInfo():
 		$StaticHUD/Portrait.visible = false
 		$StaticHUD/Status.visible = false
 
-func changeTurn():
-	if prevTurn == "Player":
-		turn = "Enemy"
-		Pointer.visible = true
-	else:
-		turn = "Player"
-	print(turn)
-	if turn == "Player":
-		$StaticHUD/Turn.set_texture(load("res://HUD/PlayerTurn.png"))
-	else:
-		$StaticHUD/Turn.set_texture(load("res://HUD/EnemyTurn.png"))
+func usedMove():
+	$StaticHUD/TurnHUD/MoveOutline/Move.modulate = Color(0.5,0.5,0.5)
+	moveUsed = true
+
+func usedAction():
+	$StaticHUD/TurnHUD/ActionOutline/Action.modulate = Color(0.5,0.5,0.5)
+	actionUsed = true
 
 func endTurn():
-	prevTurn = turn
-	turn = "None"
-	$StaticHUD/Turn.set_texture(load("res://HUD/NoTurn.png"))
+	playerTurn = !playerTurn
+	actionUsed = false
+	moveUsed = false
+	if !playerTurn:
+		Pointer.visible = true
+		$StaticHUD/TurnHUD/MoveOutline/Move.modulate = Color(0.86,0.63,0.72)
+		$StaticHUD/TurnHUD/ActionOutline/Action.modulate = Color(0.86,0.63,0.72)
+		$StaticHUD/TurnHUD/TurnOutline/Turn.modulate = Color(0.86,0.63,0.72)
+	else:
+		$StaticHUD/TurnHUD/MoveOutline/Move.modulate = Color(0.63,0.72,0.86)
+		$StaticHUD/TurnHUD/ActionOutline/Action.modulate = Color(0.63,0.72,0.86)
+		$StaticHUD/TurnHUD/TurnOutline/Turn.modulate = Color(0.63,0.72,0.86)
 
 func openMenu():
 	inMenu = true
 	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
 	$Menu.add_child(menu)
-	menu.addPlayerOptions()
+	menu.addOptions(moveUsed, actionUsed)
 	menu.position = Vector2(360,313)
 	menu.showMenu(true)
 	Pointer.visible = false
@@ -232,6 +239,7 @@ func useAction(destination : tile):
 				currentTile += Directions.getDirection(pos[n])
 				if lookForTile(currentTile):
 					lookForTile(currentTile).actionUsed(action)
+	action = null
 
 func setHittable(possibleTile : tile):
 	possibleTile.hittable = true
@@ -245,74 +253,78 @@ func lookForTile(pos : Vector3):
 			toReturn = allTiles[n]
 	return toReturn
 
-func movePiece(piece : MoveablePiece, destination : tile):
+func movePiece(destination : tile):
 	var destinationReached : bool = false
-	var startingPos = piece.currentTile
+	var startingPos = moving.currentTile
 	var counter : int = 0
 	while(!destinationReached):
 		var allDirections = Directions.getAllStraight()
 		var closestDirection
 		var smallestVariation
 		for n in range(allDirections.size()):
-			var xVar = abs(destination.global_position.x - (piece.currentTile.global_position + Directions.getDirection(allDirections[n])).x)
-			var zVar = abs(destination.global_position.z - (piece.currentTile.global_position + Directions.getDirection(allDirections[n])).z)
+			var xVar = abs(destination.global_position.x - (moving.currentTile.global_position + Directions.getDirection(allDirections[n])).x)
+			var zVar = abs(destination.global_position.z - (moving.currentTile.global_position + Directions.getDirection(allDirections[n])).z)
+			@warning_ignore("unassigned_variable")
 			if closestDirection:
+				@warning_ignore("unassigned_variable")
 				if smallestVariation > xVar + zVar:
 					closestDirection = allDirections[n]
 					smallestVariation = xVar + zVar
 				elif smallestVariation == xVar + zVar:
 					if (closestDirection == "North" or allDirections[n] == "North"):
 						if (closestDirection == "West" or allDirections[n] == "West"):
-							if lookForTile(piece.currentTile.global_position + Directions.getDirection("NorthWest")):
+							if lookForTile(moving.currentTile.global_position + Directions.getDirection("NorthWest")):
 								closestDirection = "NorthWest"
 						elif (closestDirection == "East" or allDirections[n] == "East"):
-							if lookForTile(piece.currentTile.global_position + Directions.getDirection("NorthEast")):
+							if lookForTile(moving.currentTile.global_position + Directions.getDirection("NorthEast")):
 								closestDirection = "NorthEast"
 					elif (closestDirection == "South" or allDirections[n] == "South"):
 						if (closestDirection == "West" or allDirections[n] == "West"):
-							if lookForTile(piece.currentTile.global_position + Directions.getDirection("SouthWest")):
+							if lookForTile(moving.currentTile.global_position + Directions.getDirection("SouthWest")):
 								closestDirection = "SouthWest"
 						elif (closestDirection == "East" or allDirections[n] == "East"):
-							if lookForTile(piece.currentTile.global_position + Directions.getDirection("SouthEast")):
+							if lookForTile(moving.currentTile.global_position + Directions.getDirection("SouthEast")):
 								closestDirection = "SouthEast"
 			else:
 				closestDirection = allDirections[n]
 				smallestVariation = xVar + zVar
 		
-		if lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains:
-			if lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains is MoveablePiece:
-				pushPiece(lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains, closestDirection)
-		piece.previousTile = piece.currentTile
-		piece.previousTile.contains = null
-		lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).setPiece(piece)
-		setPieceOrientation(piece, closestDirection)
-		if piece is PlayerPiece:
-			highlightTile(piece.currentTile)
-		if piece.currentTile == destination:
-			destinationReached = true
-			changeTurn()
-			if piece is PlayerPiece:
-				playerTile = piece.currentTile
+		if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains:
+			if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains is MoveablePiece:
+				pushPiece(lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains, closestDirection)
+		moving.previousTile = moving.currentTile
+		moving.previousTile.contains = null
+		lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).setPiece(moving)
+		setPieceOrientation(moving, closestDirection)
+		if moving is PlayerPiece:
+			highlightTile(moving.currentTile)
+		if moving.currentTile == destination:
+			if moving is PlayerPiece:
+				playerTile = moving.currentTile
 				displayInfo()
 				Pointer.height = highlightedTile.getPointerPos()
+			moving = null
+			destinationReached = true
 		else:
 			await get_tree().create_timer(0.3).timeout
 		
 		counter += 1
 		if counter == 10:
 			destinationReached = true
-			startingPos.setPiece(piece)
+			startingPos.setPiece(moving)
 			print("ERROR")
-			changeTurn()
 
 func pushPiece(piece : MoveablePiece, direction : String):
 	if lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)):
 		lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)).setPiece(piece)
+		@warning_ignore("integer_division")
 		if int(piece.maxHealth / 10) < 1:
 			piece.damage(1)
 		else:
+			@warning_ignore("integer_division")
 			piece.damage(int(piece.maxHealth / 10))
 	else:
+		@warning_ignore("integer_division")
 		piece.damage(int(piece.maxHealth / 4))
 		randPlacePiece(piece)
 

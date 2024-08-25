@@ -12,7 +12,6 @@ func secondaryReady():
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):
 		endTurn()
-		changeTurn()
 
 func generateTiles():
 	for n in range(tileAmount):
@@ -35,5 +34,3 @@ func generateTiles():
 				$Tiles.add_child(tileToAdd)
 	randPlacePiece($PlayerPiece)
 	randPlacePiece($EnemyPiece)
-
-				

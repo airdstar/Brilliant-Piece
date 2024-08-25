@@ -2,12 +2,18 @@ extends Resource
 class_name ActionResource
 
 @export var name : String
+@export var desc : String
 @export var animationPath : String
+@export var iconPath : String
+
+@export_enum("Attack", "Heal", "Armor", "Status") var actionType : String
+
 @export var damage : int
 @export var healing : int
+@export var armor : int
 
+@export_enum("Straight", "Diagonal", "Both", "Cone", "Circle") var actionDirection : String
 @export var range : int
-@export var actionDirection : String #Straight/Diagonal/Both/Cone/Circle
 @export var rangeExclusive : bool #Does it only hit that range
 @export var blockable : bool
 

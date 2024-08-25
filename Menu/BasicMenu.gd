@@ -34,6 +34,14 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Cancel") and hasSelectedOption:
 		options.get_child(highlightedOption - 1).selectToggle()
 		hasSelectedOption = false
+	
+	if Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
+		$AnimationPlayer.play("CloseMenu")
+		await get_tree().create_timer(0.2).timeout
+		get_parent().get_parent().inMenu = false
+		get_parent().get_parent().viewing = true
+		get_parent().get_parent().Pointer.visible = true
+		queue_free()
 
 func showMenu(sound : bool):
 	visible = true
@@ -42,24 +50,44 @@ func showMenu(sound : bool):
 	else:
 		$AnimationPlayer.play("OpenMenu")
 
-func addPlayerOptions():
-	optionCount = 3
+func addOptions(moveCheck : bool, actionCheck : bool):
+	optionCount = 2
+	if !moveCheck:
+		optionCount += 1
+	if !actionCheck:
+		optionCount += 1
 	for n in range(optionCount):
 		var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 		options.add_child(toAdd)
+		if n != optionCount - 1 and n == 0:
+			toAdd.SetSprite(1)
+		elif n == optionCount - 1 and n != 0:
+			toAdd.SetSprite(2)
+			toAdd.setOptionType("End Turn")
+		elif optionCount != 1:
+			toAdd.SetSprite(3)
+		
+		if n == optionCount - 2:
+			toAdd.setOptionType("Items")
+		
+		
 		match n:
 			0:
-				toAdd.SetSprite(1)
-				toAdd.setOptionType("Action")
+				if !actionCheck:
+					toAdd.setOptionType("Action")
+				elif !moveCheck:
+					toAdd.setOptionType("Move")
 				toAdd.hoverToggle()
 			1:
-				toAdd.SetSprite(3)
-				toAdd.setOptionType("Items")
+				if !actionCheck and !moveCheck:
+					toAdd.setOptionType("Move")
 				toAdd.position = Vector2(0,-31)
 			2:
-				toAdd.SetSprite(2)
-				toAdd.setOptionType("Move")
 				toAdd.position = Vector2(0,-60)
+			3:
+				toAdd.position = Vector2(0,-90)
+			4:
+				toAdd.position = Vector2(0,-119)
 
 func selectedOption():
 	match options.get_child(highlightedOption - 1).type:
@@ -78,6 +106,12 @@ func selectedOption():
 			var toAdd = preload("res://Menu/ActionMenu.tscn").instantiate()
 			add_child(toAdd)
 			toAdd.position.y += 40
+		"End Turn":
+			$AnimationPlayer.play("SelectCloseMenu")
+			await get_tree().create_timer(0.1).timeout
+			get_parent().get_parent().inMenu = false
+			get_parent().get_parent().endTurn()
+			queue_free()
 
 func closeMenu():
 	$AnimationPlayer.play("CloseMenu")

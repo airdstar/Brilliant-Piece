@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7ryfw86ussr5"
-path="res://.godot/imported/NoTurn.png-4a852ea3783cdfb673166b64b38082ef.ctex"
+uid="uid://deo1msgydtcbb"
+path="res://.godot/imported/Turn.png-1b692dbe3040709671b0a23d4e69c521.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HUD/NoTurn.png"
-dest_files=["res://.godot/imported/NoTurn.png-4a852ea3783cdfb673166b64b38082ef.ctex"]
+source_file="res://HUD/Turn.png"
+dest_files=["res://.godot/imported/Turn.png-1b692dbe3040709671b0a23d4e69c521.ctex"]
 
 [params]
 
