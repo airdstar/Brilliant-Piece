@@ -90,7 +90,6 @@ func setTilePattern():
 		if allTiles[n].hittable or (allTiles[n].moveable and allTiles[n].contains is EnemyPiece):
 			allTiles[n].setColor("Orange")
 			
-
 func highlightTile(tileToSelect : tile):
 	highlightedTile = tileToSelect
 	setTilePattern()
@@ -136,6 +135,10 @@ func displayInfo():
 		$StaticHUD/SubViewport/Portrait.add_child(portraitPic)
 		portraitPic.global_position = $StaticHUD/SubViewport/Portrait.global_position
 		portraitPic.global_rotation.y = deg_to_rad(-90)
+		if portraitPic is PlayerPiece:
+			$StaticHUD/SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.63,0.72,0.86))
+		elif portraitPic is EnemyPiece:
+			$StaticHUD/SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.86,0.63,0.72))
 		$StaticHUD/PortraitBackground.texture = $StaticHUD/SubViewport.get_texture()
 		$StaticHUD/PortraitBackground.visible = true
 		if highlightedTile.contains is MoveablePiece:
@@ -144,9 +147,10 @@ func displayInfo():
 			$StaticHUD/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
 			$StaticHUD/Status/HealthLabel.text = "[img]res://HUD/Heart.png[/img] " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
 			$StaticHUD/Status/SoulLabel.text = ""
+			if highlightedTile.contains.armor > 0:
+				$StaticHUD/Status/HealthLabel.text += "   [img]res://HUD/Armor.png[/img] " + str(highlightedTile.contains.armor)
 			if highlightedTile.contains is PlayerPiece:
-				$StaticHUD/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level)
-				$StaticHUD/Status/HealthLabel.text = "[img]res://HUD/Heart.png[/img] " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) 
+				$StaticHUD/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level) 
 				$StaticHUD/Status/SoulLabel.text = "[img]res://HUD/Soul.png[/img] " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
 	else:
 		$StaticHUD/PortraitBackground.visible = false
@@ -219,6 +223,7 @@ func stopShowingAction():
 
 func useAction(destination : tile):
 	destination.actionUsed(action)
+	setTilePattern()
 	if action.AOE != 0:
 		var pos = Directions.getAllDirections()
 		for n in range(8):
@@ -303,7 +308,10 @@ func movePiece(piece : MoveablePiece, destination : tile):
 func pushPiece(piece : MoveablePiece, direction : String):
 	if lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)):
 		lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)).setPiece(piece)
-		piece.damage(int(piece.maxHealth / 10))
+		if int(piece.maxHealth / 10) < 1:
+			piece.damage(1)
+		else:
+			piece.damage(int(piece.maxHealth / 10))
 	else:
 		piece.damage(int(piece.maxHealth / 4))
 		randPlacePiece(piece)

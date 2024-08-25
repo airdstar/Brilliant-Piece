@@ -77,6 +77,7 @@ func selectedOption():
 			$MenuSelect.play()
 			var toAdd = preload("res://Menu/ActionMenu.tscn").instantiate()
 			add_child(toAdd)
+			toAdd.position.y += 40
 
 func closeMenu():
 	$AnimationPlayer.play("CloseMenu")

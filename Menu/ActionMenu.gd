@@ -2,6 +2,9 @@ extends Control
 
 var highlightedOption = 0
 var actions
+var growing := true
+var lowestOpacity := 0.1
+var additionalOpacity : float
 @onready var options = $Options
 
 func _ready():
@@ -14,6 +17,13 @@ func _ready():
 
 
 func _process(_delta):
+	if growing:
+		additionalOpacity += 0.001
+	else:
+		additionalOpacity -= 0.001
+	
+	$TextureRect/Highlight.modulate = Color(1,1,1,lowestOpacity + additionalOpacity)
+	
 	if Input.is_action_just_pressed("Cancel"):
 		queue_free()
 	
@@ -22,12 +32,14 @@ func _process(_delta):
 			highlightedOption = 4
 		else:
 			highlightedOption -= 1
+		$TextureRect/Highlight.position = Vector2(4,4 + (24 * highlightedOption))
 
 	elif Input.is_action_just_pressed("Backward"):
 		if highlightedOption == 4:
 			highlightedOption = 0
 		else:
 			highlightedOption += 1
+		$TextureRect/Highlight.position = Vector2(4,4 + (24 * highlightedOption))
 	
 	if Input.is_action_just_pressed("Select"):
 		get_parent().get_parent().get_parent().inMenu = false
@@ -37,3 +49,7 @@ func _process(_delta):
 		get_parent().get_parent().get_parent().camera.position = Vector3(5,5,5)
 		get_parent().get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 		get_parent().queue_free()
+
+
+func ToggleGrow():
+	growing = !growing

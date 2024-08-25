@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=16 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
 [ext_resource type="PackedScene" uid="uid://fkaj1xnx5wjr" path="res://Piece/PlayerPiece.tscn" id="3_a68on"]
@@ -45,7 +45,10 @@ shader_parameter/roll_speed = 1.0
 shader_parameter/scan_line_strength = -6.0
 shader_parameter/pixel_strength = -2.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqgg"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_re4dm"]
+material = SubResource("StandardMaterial3D_jcqgg")
 size = Vector3(8, 8, 0.5)
 
 [node name="Base" type="Node3D"]

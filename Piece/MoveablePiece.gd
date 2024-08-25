@@ -3,6 +3,7 @@ class_name MoveablePiece
 
 var maxHealth : int
 var health : int
+var armor : int
 
 signal death
 
@@ -16,6 +17,13 @@ func actionUsed(action : ActionResource):
 		heal(action.healing)
 
 func damage(damageAmount : int):
+	if damageAmount >= armor:
+		damageAmount -= armor
+		armor = 0
+	else:
+		armor -= damageAmount
+		damageAmount = 0
+	
 	health -= damageAmount
 	if health <= 0:
 		health = 0
