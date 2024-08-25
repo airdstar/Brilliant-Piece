@@ -15,8 +15,6 @@ func secondaryProcess(_delta):
 		changeTurn()
 
 func generateTiles():
-	var playerPos = randi_range(0, tileAmount - 1)
-	var enemyPos = randi_range(0, tileAmount - 1)
 	for n in range(tileAmount):
 		var cantPlace = true
 		var tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
@@ -35,9 +33,7 @@ func generateTiles():
 			if goodForNow:
 				cantPlace = false
 				$Tiles.add_child(tileToAdd)
-				if n == playerPos:
-					tileToAdd.setPiece($PlayerPiece)
-					highlightTile(tileToAdd)
-					playerTile = highlightedTile
-				elif n == enemyPos:
-					tileToAdd.setPiece($EnemyPiece)
+	randPlacePiece($PlayerPiece)
+	randPlacePiece($EnemyPiece)
+
+				

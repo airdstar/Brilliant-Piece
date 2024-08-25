@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbqq2ih251vdk"
-path="res://.godot/imported/TurnDisplay.png-2f88da7bcf70a676a5dbce429b461ba6.ctex"
+uid="uid://c58cf4cmfkw7a"
+path="res://.godot/imported/Soul.png-12e8ad6fb326dc3e11e6f243cd149664.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HUD/TurnDisplay.png"
-dest_files=["res://.godot/imported/TurnDisplay.png-2f88da7bcf70a676a5dbce429b461ba6.ctex"]
+source_file="res://HUD/Soul.png"
+dest_files=["res://.godot/imported/Soul.png-12e8ad6fb326dc3e11e6f243cd149664.ctex"]
 
 [params]
 

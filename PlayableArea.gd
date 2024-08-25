@@ -87,8 +87,9 @@ func setTilePattern():
 				allTiles[n].setColor("Black")
 			else:
 				allTiles[n].setColor("White")
-		if allTiles[n].hittable:
+		if allTiles[n].hittable or (allTiles[n].moveable and allTiles[n].contains is EnemyPiece):
 			allTiles[n].setColor("Orange")
+			
 
 func highlightTile(tileToSelect : tile):
 	highlightedTile = tileToSelect
@@ -101,8 +102,8 @@ func highlightTile(tileToSelect : tile):
 	$Twist.position.z = Pointer.position.z
 	if highlightedTile.moveable:
 		if highlightedTile.contains is EnemyPiece:
-			highlightedTile.setColor("Orange")
-			Pointer.setColor("Orange")
+			highlightedTile.setColor("Red")
+			Pointer.setColor("Red")
 		else:
 			highlightedTile.setColor("Blue")
 			Pointer.setColor("Blue")
@@ -130,6 +131,7 @@ func displayInfo():
 		$StaticHUD/SubViewport/Portrait.remove_child($StaticHUD/SubViewport/Portrait.get_child(1))
 	if highlightedTile.contains:
 		$StaticHUD/Portrait.visible = true
+		$StaticHUD/Status.visible = true
 		var portraitPic = highlightedTile.contains.duplicate()
 		$StaticHUD/SubViewport/Portrait.add_child(portraitPic)
 		portraitPic.global_position = $StaticHUD/SubViewport/Portrait.global_position
@@ -137,16 +139,19 @@ func displayInfo():
 		$StaticHUD/PortraitBackground.texture = $StaticHUD/SubViewport.get_texture()
 		$StaticHUD/PortraitBackground.visible = true
 		if highlightedTile.contains is MoveablePiece:
-			$StaticHUD/Portrait/Status/NameLabel.text = highlightedTile.contains.pieceName
-			$StaticHUD/Portrait/Status/TypeLabel.text = highlightedTile.contains.type
-			$StaticHUD/Portrait/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
-			$StaticHUD/Portrait/Status/PointLabel.text = "[img]res://HUD/Heart.png[/img]" + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
+			$StaticHUD/Status/NameLabel.text = highlightedTile.contains.pieceName
+			$StaticHUD/Status/TypeLabel.text = highlightedTile.contains.type
+			$StaticHUD/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
+			$StaticHUD/Status/HealthLabel.text = "[img]res://HUD/Heart.png[/img] " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
+			$StaticHUD/Status/SoulLabel.text = ""
 			if highlightedTile.contains is PlayerPiece:
-				$StaticHUD/Portrait/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level)
-				$StaticHUD/Portrait/Status/PointLabel.text = "HP: " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) + "        SP: " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
+				$StaticHUD/Status/LevelLabel.text = str(highlightedTile.contains.classType.className) + " lvl " + str(highlightedTile.contains.level)
+				$StaticHUD/Status/HealthLabel.text = "[img]res://HUD/Heart.png[/img] " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth) 
+				$StaticHUD/Status/SoulLabel.text = "[img]res://HUD/Soul.png[/img] " + str(highlightedTile.contains.soul) + "/" + str(highlightedTile.contains.maxSoul)
 	else:
 		$StaticHUD/PortraitBackground.visible = false
 		$StaticHUD/Portrait.visible = false
+		$StaticHUD/Status.visible = false
 
 func changeTurn():
 	if prevTurn == "Player":
@@ -193,7 +198,6 @@ func setMoveable(moveableTile : tile):
 		moveableTile.setColor("Orange")
 	else:
 		moveableTile.setColor("Blue")
-
 #Need to make blockable stuff
 func showAction():
 	var tileData = action.getActionRange(playerTile.global_position)
@@ -270,6 +274,9 @@ func movePiece(piece : MoveablePiece, destination : tile):
 				closestDirection = allDirections[n]
 				smallestVariation = xVar + zVar
 		
+		if lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains:
+			if lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains is MoveablePiece:
+				pushPiece(lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).contains, closestDirection)
 		piece.previousTile = piece.currentTile
 		piece.previousTile.contains = null
 		lookForTile(piece.currentTile.global_position + Directions.getDirection(closestDirection)).setPiece(piece)
@@ -278,7 +285,6 @@ func movePiece(piece : MoveablePiece, destination : tile):
 			highlightTile(piece.currentTile)
 		if piece.currentTile == destination:
 			destinationReached = true
-			print(closestDirection)
 			changeTurn()
 			if piece is PlayerPiece:
 				playerTile = piece.currentTile
@@ -293,6 +299,27 @@ func movePiece(piece : MoveablePiece, destination : tile):
 			startingPos.setPiece(piece)
 			print("ERROR")
 			changeTurn()
+
+func pushPiece(piece : MoveablePiece, direction : String):
+	if lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)):
+		lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)).setPiece(piece)
+		piece.damage(int(piece.maxHealth / 10))
+	else:
+		piece.damage(int(piece.maxHealth / 4))
+		randPlacePiece(piece)
+
+func randPlacePiece(piece : MoveablePiece):
+	var piecePlaced : bool = false
+	while(!piecePlaced):
+		var piecePos := randi_range(0, $Tiles.get_child_count() - 1)
+		for n in range($Tiles.get_child_count()):
+			if n == piecePos:
+				if !$Tiles.get_child(n).contains:
+					$Tiles.get_child(n).setPiece(piece)
+					piecePlaced = true
+					if piece is PlayerPiece:
+						highlightTile($Tiles.get_child(n))
+						playerTile = $Tiles.get_child(n)
 
 func findMoveableTiles():
 	match highlightedTile.contains.type:

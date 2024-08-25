@@ -38,7 +38,7 @@ func setPiece(piece : Piece):
 
 func actionUsed(action : ActionResource):
 	if contains:
-		contains.damage(action)
+		contains.actionUsed(action)
 
 func getPointerPos():
 	if contains:
