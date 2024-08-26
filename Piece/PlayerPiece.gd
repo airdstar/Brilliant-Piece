@@ -14,9 +14,9 @@ func _ready():
 	setData()
 
 func setData():
-	maxHealth = classType.maxHealth
+	maxHealth = classType.startingHealth
 	health = maxHealth
-	maxSoul = classType.maxSoul
+	maxSoul = classType.startingSoul
 	soul = maxSoul
 	for n in range(5):
 		actions.append(classType.actions.actions[n])

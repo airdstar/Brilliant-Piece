@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClassResource" load_steps=2 format=3 uid="uid://evie3kgjg47c"]
+
+[ext_resource type="Script" path="res://Resources/ClassResource.gd" id="1_g8bua"]
+
+[resource]
+script = ExtResource("1_g8bua")
+className = "Pyromancer"
+startingHealth = 0
+startingSoul = 0
+associatedScene = ""

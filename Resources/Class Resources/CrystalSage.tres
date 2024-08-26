@@ -7,6 +7,6 @@
 script = ExtResource("1_lnosw")
 className = "Crystal Sage"
 actions = ExtResource("1_3yne0")
-maxHealth = 6
-maxSoul = 1
+startingHealth = 6
+startingSoul = 1
 associatedScene = "res://Classes/CrystalSage.tscn"

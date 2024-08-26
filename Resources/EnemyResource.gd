@@ -8,7 +8,5 @@ class_name EnemyResource
 
 @export var maxLevel : int
 @export var minLevel : int
-@export var minFloor : int
-@export var maxFloor : int
 
 @export var associatedScene : String

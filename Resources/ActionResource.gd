@@ -11,14 +11,15 @@ class_name ActionResource
 @export var damage : int
 @export var healing : int
 @export var armor : int
+@export var status : StatusResource
 
-@export_enum("Straight", "Diagonal", "Both", "Cone", "Circle") var actionDirection : String
+@export_enum("Straight", "Diagonal", "Both", "Cone", "Circle", "Square") var actionDirection : String
 @export var range : int
 @export var rangeExclusive : bool #Does it only hit that range
-@export var blockable : bool
+@export var canTargetSelf : bool
 
+@export var blockable : bool
 @export var knockback : bool
-@export var status : String
 @export var AOE : int
 
 func getActionRange(actionStart : Vector3):
