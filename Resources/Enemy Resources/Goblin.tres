@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_ibghg")
 name = "Goblin"
-type = Array[String](["Pawn", "Rook", "Bishop"])
+desc = ""
+type = 1
 maxHealth = 6
-maxLevel = 4
+maxLevel = 0
 minLevel = 1
-minFloor = 1
-maxFloor = 5
+associatedScene = ""

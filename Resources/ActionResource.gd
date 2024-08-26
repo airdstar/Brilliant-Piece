@@ -1,23 +1,28 @@
 extends Resource
 class_name ActionResource
 
+@export_category("General")
 @export var name : String
 @export var desc : String
 @export var animationPath : String
 @export var iconPath : String
 
-@export_enum("Attack", "Heal", "Armor", "Status") var actionType : String
+@export_category("Basic Stats")
+@export_enum("Attack", "Heal", "Defense", "Status") var actionType : String
 
 @export var damage : int
 @export var healing : int
 @export var armor : int
 @export var status : StatusResource
+@export var hazard : HazardResource
 
+@export_category("Targeting")
 @export_enum("Straight", "Diagonal", "Both", "Cone", "Circle", "Square") var actionDirection : String
 @export var range : int
 @export var rangeExclusive : bool #Does it only hit that range
 @export var canTargetSelf : bool
 
+@export_category("Other")
 @export var blockable : bool
 @export var knockback : bool
 @export var AOE : int

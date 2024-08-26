@@ -1,11 +1,18 @@
 extends Resource
 class_name ItemResource
 
+@export_category("General")
 @export var name : String
-@export_enum("Damage", "Healing", "Hazard", "Status", "Ammo", "Artifact") var itemType : String
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Ammo", "Artifact") var itemType : String
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
+
 
 @export var useAmount : int
 var amountUsed = useAmount
+@export var itemRange : int = 3
+#Direction is square always
 
-@export var itemRange : int
+@export_category("Basic Stats")
+@export var damage : int
+@export var healing : int
+@export var armor : int
