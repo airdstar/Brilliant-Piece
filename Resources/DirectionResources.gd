@@ -58,3 +58,22 @@ func getAllDiagonal():
 
 func getAllDirections():
 	return ["North", "West", "South", "East", "NorthWest", "SouthWest", "SouthEast", "NorthEast"]
+
+func getOppDirection(dir : String):
+	match dir:
+		"North":
+			return "South"
+		"West":
+			return "East"
+		"South":
+			return "North"
+		"East":
+			return "West"
+		"NorthWest":
+			return "SouthEast"
+		"NorthEast":
+			return "SouthWest"
+		"SouthWest":
+			return "NorthEast"
+		"SouthEast":
+			return "NorthWest"

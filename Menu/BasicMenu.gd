@@ -34,8 +34,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Cancel") and hasSelectedOption:
 		options.get_child(highlightedOption - 1).selectToggle()
 		hasSelectedOption = false
-	
-	if Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
+	elif Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
 		$AnimationPlayer.play("CloseMenu")
 		await get_tree().create_timer(0.2).timeout
 		get_parent().get_parent().inMenu = false
@@ -112,6 +111,12 @@ func selectedOption():
 			get_parent().get_parent().inMenu = false
 			get_parent().get_parent().endTurn()
 			queue_free()
+		"Items":
+			$MenuSelect.play()
+			var toAdd = preload("res://Menu/ItemMenu.tscn").instantiate()
+			get_parent().get_parent().highlightedTile
+			add_child(toAdd)
+			toAdd.position.y += 40
 
 func closeMenu():
 	$AnimationPlayer.play("CloseMenu")

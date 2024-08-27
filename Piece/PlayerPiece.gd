@@ -8,6 +8,7 @@ var level : int = 1
 var maxSoul : int 
 var soul : int 
 var actions : Array[ActionResource]
+@export var items : Array[ItemResource]
 
 func _ready():
 	#Add check for saves

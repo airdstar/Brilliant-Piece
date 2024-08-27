@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2qah8xmjv8m2"]
+
+[ext_resource type="Texture2D" uid="uid://d234dwytnykp" path="res://Menu/ItemMenuFull.png" id="1_87ud5"]
+[ext_resource type="Script" path="res://Menu/ItemMenu.gd" id="1_l64w7"]
+[ext_resource type="PackedScene" uid="uid://df7idym348ekg" path="res://Item/Bomb.blend" id="1_pbsp8"]
+
+[node name="ItemMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_l64w7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_87ud5")
+
+[node name="Screen" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 297.0
+offset_bottom = 94.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(294, 91)
+
+[node name="Base" type="Node3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Base"]
+transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 0, 0, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Base/Camera3D"]
+light_energy = 0.1
+spot_range = 10.0
+spot_angle = 65.0
+
+[node name="Items" type="Node3D" parent="SubViewport/Base"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Bomb" parent="SubViewport/Base/Items" instance=ExtResource("1_pbsp8")]
+transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, 0, 0)

@@ -12,6 +12,9 @@ func secondaryReady():
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):
 		endTurn()
+	
+	if Input.is_action_just_pressed("Reload"):
+		get_tree().reload_current_scene()
 
 func generateTiles():
 	for n in range(tileAmount):

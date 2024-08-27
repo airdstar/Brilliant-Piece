@@ -3,7 +3,9 @@ class_name ItemResource
 
 @export_category("General")
 @export var name : String
-@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Ammo", "Artifact") var itemType : String
+@export var desc : String
+@export var associatedModel : String
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Ammo") var itemType : String
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
 
 
