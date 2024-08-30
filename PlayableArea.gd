@@ -15,7 +15,9 @@ var playerTurn : bool = true
 var actionUsed : bool = false
 var moveUsed : bool = false
 
+
 var viewing : bool = false
+var item : ItemResource
 var moving : MoveablePiece
 var action : ActionResource
 
@@ -39,31 +41,39 @@ func _process(_delta):
 	
 	if playerTurn:
 		
-		if !menu and !action and !moving and !viewing:
+		if !menu and !action and !moving and !viewing and !item:
 			openMenu()
 		
 		if Input.is_action_just_pressed("Select"):
 			if moving and highlightedTile.moveable:
 				Pointer.visible = false
-				stopShowingMovement()
+				stopShowingOptions()
 				movePiece(highlightedTile)
 				usedMove()
 			elif action and highlightedTile.hittable:
-				stopShowingAction()
+				stopShowingOptions()
 				useAction(highlightedTile)
 				usedAction()
+			elif item and highlightedTile.hittable:
+				stopShowingOptions()
+				#useItem(highlightedTile)
+				#usedItem()
 		
 		if Input.is_action_just_pressed("Cancel"):
 			if moving:
-				stopShowingMovement()
+				stopShowingOptions()
 				moving = null
 				openMenu()
 			if action:
-				stopShowingAction()
+				stopShowingOptions()
 				action = null
 				openMenu()
 			if viewing:
 				viewing = false
+				openMenu()
+			if item:
+				stopShowingOptions()
+				item = null
 				openMenu()
 		
 	if !inMenu:
@@ -111,15 +121,16 @@ func highlightTile(tileToSelect : tile):
 	elif highlightedTile.hittable:
 		highlightedTile.setColor("Red")
 		Pointer.setColor("Red")
-		if action.AOE != 0:
-			var pos = Directions.getAllDirections()
-			for n in range(8):
-				var currentTile = highlightedTile.global_position
-				for m in range(action.AOE):
-					currentTile += Directions.getDirection(pos[n])
-					if lookForTile(currentTile):
-						lookForTile(currentTile).highlight.visible = true
-						lookForTile(currentTile).setColor("Red")
+		if action:
+			if action.AOE != 0:
+				var pos = Directions.getAllDirections()
+				for n in range(8):
+					var currentTile = highlightedTile.global_position
+					for m in range(action.AOE):
+						currentTile += Directions.getDirection(pos[n])
+						if lookForTile(currentTile):
+							lookForTile(currentTile).highlight.visible = true
+							lookForTile(currentTile).setColor("Red")
 			
 	else:
 		highlightedTile.setColor("Gray")
@@ -191,18 +202,6 @@ func openMenu():
 	Pointer.visible = false
 	highlightTile(playerTile)
 
-func stopShowingMovement():
-	var allTiles = $Tiles.get_children()
-	for n in range(allTiles.size()):
-		allTiles[n].moveable = false
-		if allTiles[n] == highlightedTile:
-			allTiles[n].setColor("Grey")
-		else:
-			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
-				allTiles[n].setColor("Black")
-			else:
-				allTiles[n].setColor("White")
-
 func setMoveable(moveableTile : tile):
 	moveableTile.moveable = true
 	if moveableTile.contains is EnemyPiece:
@@ -216,10 +215,11 @@ func showAction():
 		if lookForTile(tileData[n]):
 			setHittable(lookForTile(tileData[n]))
 
-func stopShowingAction():
+func stopShowingOptions():
 	var allTiles = $Tiles.get_children()
 	for n in range(allTiles.size()):
 		allTiles[n].hittable = false
+		allTiles[n].moveable = false
 		if allTiles[n] == highlightedTile:
 			allTiles[n].setColor("Gray")
 		else:
@@ -230,7 +230,7 @@ func stopShowingAction():
 
 func useAction(destination : tile):
 	destination.actionUsed(action)
-	setTilePattern()
+	#AOE function
 	if action.AOE != 0:
 		var pos = Directions.getAllDirections()
 		for n in range(8):
@@ -239,11 +239,20 @@ func useAction(destination : tile):
 				currentTile += Directions.getDirection(pos[n])
 				if lookForTile(currentTile):
 					lookForTile(currentTile).actionUsed(action)
+	setTilePattern()
 	action = null
 
 func setHittable(possibleTile : tile):
 	possibleTile.hittable = true
 	possibleTile.setColor("Orange")
+
+func showItem():
+	var tileData = item.getItemRange(playerTile.global_position)
+	for n in range(tileData.size()):
+		if lookForTile(tileData[n]):
+			if item.itemType == "Damage":
+				if lookForTile(tileData[n]).contains is EnemyPiece:
+					setHittable(lookForTile(tileData[n]))
 
 func lookForTile(pos : Vector3):
 	var toReturn

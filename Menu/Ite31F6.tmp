@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2qah8xmjv8m2"]
+[gd_scene load_steps=4 format=3 uid="uid://b2qah8xmjv8m2"]
 
 [ext_resource type="Texture2D" uid="uid://d234dwytnykp" path="res://Menu/ItemMenuFull.png" id="1_87ud5"]
 [ext_resource type="Script" path="res://Menu/ItemMenu.gd" id="1_l64w7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1y3gl"]
-font_size = 30
-
-[sub_resource type="LabelSettings" id="LabelSettings_eqs5b"]
 font_size = 20
 
 [node name="ItemMenu" type="Control"]
@@ -42,15 +39,6 @@ text = "hi"
 label_settings = SubResource("LabelSettings_1y3gl")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="StatsLabel" type="Label" parent="TextureRect"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 132.0
-offset_right = 296.0
-offset_bottom = 251.0
-text = "hi"
-label_settings = SubResource("LabelSettings_eqs5b")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true

@@ -46,8 +46,6 @@ func _process(_delta):
 		get_parent().get_parent().get_parent().action = actions[highlightedOption]
 		get_parent().get_parent().get_parent().showAction()
 		get_parent().get_parent().get_parent().Pointer.visible = true
-		get_parent().get_parent().get_parent().camera.position = Vector3(5,5,5)
-		get_parent().get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 		get_parent().queue_free()
 
 

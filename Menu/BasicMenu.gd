@@ -114,7 +114,7 @@ func selectedOption():
 		"Items":
 			$MenuSelect.play()
 			var toAdd = preload("res://Menu/ItemMenu.tscn").instantiate()
-			get_parent().get_parent().highlightedTile
+			toAdd.setItems(get_parent().get_parent().player.items)
 			add_child(toAdd)
 			toAdd.position.y += 40
 
