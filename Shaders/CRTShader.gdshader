@@ -1,183 +1,105 @@
-/*
-Shader from Godot Shaders - the free shader library.
-
-This shader is under CC0 license. Feel free to use, improve and
-change this shader according to your needs and consider sharing
-the modified result to godotshaders.com.
-
-Optimised and packed by @c64cosmin
-If you do use this please share it with me
-Would love to see what you're making with it <3
-
-It's a combination of these two shaders
-~godotshaders.com/shader/VHS-and-CRT-monitor-effect
-godotshaders.com/shader/crt-shader-with-realistic-blurring/
-
-CRT grille and rolling lines made by @c64cosmin
-Vignette and warping effect was made by pend00
-Scanlines are from "TimothyLottes" FROM SHADERTOY
-Then ported by AHOPNESS (@ahopness)
-https://www.shadertoy.com/view/MsjXzh
-*/
-
 shader_type canvas_item;
+render_mode blend_mix;
 
-uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
+uniform bool VerticalLines = false;
+uniform float Speed = 0.1;
+uniform float TextureStretchValue = 5;
+uniform sampler2D NoiseTexture : repeat_enable;
 
-uniform vec2 resolution = vec2(320.0, 180.0);
+//The shader was originally created using VisualShader
+void vertex() {
+// BooleanParameter:10
+	bool n_out10p0 = VerticalLines;
 
-uniform float scan_line_amount :hint_range(0.0, 1.0) = 1.0;
-uniform float warp_amount :hint_range(0.0, 5.0) = 0.1;
-uniform float noise_amount :hint_range(0.0, 0.3) = 0.03;
-uniform float interference_amount :hint_range(0.0, 1.0) = 0.2;
-uniform float grille_amount :hint_range(0.0, 1.0) = 0.1;
-uniform float grille_size :hint_range(1.0, 5.0) = 1.0;
-uniform float vignette_amount :hint_range(0.0, 2.0) = 0.6;
-uniform float vignette_intensity : hint_range(0.0, 1.0) = 0.4;
-uniform float aberation_amount :hint_range(0.0, 1.0) = 0.5;
-uniform float roll_line_amount :hint_range(0.0, 1.0) = 0.3;
-uniform float roll_speed :hint_range(-8.0, 8.0) = 1.0;
-uniform float scan_line_strength :hint_range(-12.0, -1.0) = -8.0;
-uniform float pixel_strength :hint_range(-4.0, 0.0) = -2.0;
 
-float random(vec2 uv){
-    return fract(cos(uv.x * 83.4827 + uv.y * 92.2842) * 43758.5453123);
-}
+// FloatParameter:8
+	float n_out8p0 = Speed;
 
-vec3 fetch_pixel(vec2 uv, vec2 off){
-	vec2 pos = floor(uv * resolution + off) / resolution + vec2(0.5) / resolution;
 
-	float noise = 0.0;
-	if(noise_amount > 0.0){
-		noise = random(pos + fract(TIME)) * noise_amount;
+	vec2 n_out12p0;
+// Expression:12
+	n_out12p0 = vec2(0.0, 0.0);
+	{
+		UV.x -= TIME * n_out8p0;
+		n_out12p0 = UV;
 	}
 
-	if(max(abs(pos.x - 0.5), abs(pos.y - 0.5)) > 0.5){
-		return vec3(0.0, 0.0, 0.0);
+
+	vec2 n_out7p0;
+// Expression:7
+	n_out7p0 = vec2(0.0, 0.0);
+	{
+		UV.y -= TIME * n_out8p0;
+		n_out7p0 = UV;
 	}
 
-	vec3 clr = texture(SCREEN_TEXTURE , pos, -16.0).rgb + noise;
-	return clr;
+
+	vec2 n_out13p0;
+// Switch:13
+	n_out13p0 = mix(n_out7p0, n_out12p0, float(n_out10p0));
+
+
+// Output:0
+	UV = n_out13p0;
+
+
 }
 
-// Distance in emulated pixels to nearest texel.
-vec2 Dist(vec2 pos){
-	pos = pos * resolution;
-	return - ((pos - floor(pos)) - vec2(0.5));
-}
+void fragment() {
+// ParameterRef:9
+	bool n_out9p0 = VerticalLines;
 
-// 1D Gaussian.
-float Gaus(float pos, float scale){ return exp2(scale * pos * pos); }
 
-// 3-tap Gaussian filter along horz line.
-vec3 Horz3(vec2 pos, float off){
-	vec3 b = fetch_pixel(pos, vec2(-1.0, off));
-	vec3 c = fetch_pixel(pos, vec2( 0.0, off));
-	vec3 d = fetch_pixel(pos, vec2( 1.0, off));
-	float dst = Dist(pos).x;
+// Input:11
+	vec2 n_out11p0 = UV;
 
-	// Convert distance to weight.
-	float scale = pixel_strength;
-	float wb = Gaus(dst - 1.0, scale);
-	float wc = Gaus(dst + 0.0, scale);
-	float wd = Gaus(dst + 1.0, scale);
 
-	// Return filtered sample.
-	return (b * wb + c * wc + d * wd) / (wb + wc + wd);
-}
+// VectorDecompose:13
+	float n_out13p0 = n_out11p0.x;
+	float n_out13p1 = n_out11p0.y;
 
-// Return scanline weight.
-float Scan(vec2 pos, float off){
-	float dst = Dist(pos).y;
 
-	return Gaus(dst + off, scan_line_strength);
-}
+// FloatParameter:18
+	float n_out18p0 = TextureStretchValue;
 
-// Allow nearest three lines to effect pixel.
-vec3 Tri(vec2 pos){
-	vec3 clr = fetch_pixel(pos, vec2(0.0));
-	if(scan_line_amount > 0.0){
-		vec3 a = Horz3(pos,-1.0);
-		vec3 b = Horz3(pos, 0.0);
-		vec3 c = Horz3(pos, 1.0);
 
-		float wa = Scan(pos,-1.0);
-		float wb = Scan(pos, 0.0);
-		float wc = Scan(pos, 1.0);
+// Reroute:19
+	float n_out19p0 = n_out18p0;
 
-		vec3 scanlines = a * wa + b * wb + c * wc;
-		clr = mix(clr, scanlines, scan_line_amount);
-	}
-	return clr;
-}
 
-// Takes in the UV and warps the edges, creating the spherized effect
-vec2 warp(vec2 uv){
-	vec2 delta = uv - 0.5;
-	float delta2 = dot(delta.xy, delta.xy);
-	float delta4 = delta2 * delta2;
-	float delta_offset = delta4 * warp_amount;
+// FloatOp:12
+	float n_out12p0 = n_out13p0 * n_out19p0;
 
-	vec2 warped = uv + delta * delta_offset;
-	return (warped - 0.5) / mix(1.0,1.2,warp_amount/5.0) + 0.5;
-}
 
-float vignette(vec2 uv){
-	uv *= 1.0 - uv.xy;
-	float vignette = uv.x * uv.y * 15.0;
-	return pow(vignette, vignette_intensity * vignette_amount);
-}
+// VectorCompose:14
+	float n_in14p1 = 5.00000;
+	vec2 n_out14p0 = vec2(n_out12p0, n_in14p1);
 
-float floating_mod(float a, float b){
-	return a - b * floor(a/b);
-}
 
-vec3 grille(vec2 uv){
-	float unit = PI / 3.0;
-	float scale = 2.0*unit/grille_size;
-	float r = smoothstep(0.5, 0.8, cos(uv.x*scale - unit));
-	float g = smoothstep(0.5, 0.8, cos(uv.x*scale + unit));
-	float b = smoothstep(0.5, 0.8, cos(uv.x*scale + 3.0*unit));
-	return mix(vec3(1.0), vec3(r,g,b), grille_amount);
-}
+// VectorDecompose:7
+	float n_out7p0 = n_out11p0.x;
+	float n_out7p1 = n_out11p0.y;
 
-float roll_line(vec2 uv){
-	float x = uv.y * 3.0 - TIME * roll_speed;
-	float f = cos(x) * cos(x * 2.35 + 1.1) * cos(x * 4.45 + 2.3);
-	float roll_line = smoothstep(0.5, 0.9, f);
-	return roll_line * roll_line_amount;
-}
 
-void fragment(){
-	vec2 pix = FRAGCOORD.xy;
-	vec2 pos = warp(SCREEN_UV);
+// FloatOp:5
+	float n_out5p0 = n_out7p1 * n_out19p0;
 
-	float line = 0.0;
-	if(roll_line_amount > 0.0){
-		line = roll_line(pos);
-	}
 
-	vec2 sq_pix = floor(pos * resolution) / resolution + vec2(0.5) / resolution;
-	if(interference_amount + roll_line_amount > 0.0){
-		float interference = random(sq_pix.yy + fract(TIME));
-		pos.x += (interference * (interference_amount + line * 6.0)) / resolution.x;
-	}
+// VectorCompose:6
+	float n_in6p0 = 5.00000;
+	vec2 n_out6p0 = vec2(n_in6p0, n_out5p0);
 
-	vec3 clr = Tri(pos);
-	if(aberation_amount > 0.0){
-		float chromatic = aberation_amount + line * 2.0;
-		vec2 chromatic_x = vec2(chromatic,0.0) / resolution.x;
-		vec2 chromatic_y = vec2(0.0, chromatic/2.0) / resolution.y;
-		float r = Tri(pos - chromatic_x).r;
-		float g = Tri(pos + chromatic_y).g;
-		float b = Tri(pos + chromatic_x).b;
-		clr = vec3(r,g,b);
-	}
 
-	if(grille_amount > 0.0)clr *= grille(pix);
-	clr *= 1.0 + scan_line_amount * 0.6 + line * 3.0 + grille_amount * 2.0;
-	if(vignette_amount > 0.0)clr *= vignette(pos);
+	vec2 n_out15p0;
+// Switch:15
+	n_out15p0 = mix(n_out6p0, n_out14p0, float(n_out9p0));
 
-	COLOR.rgb = clr;
-	COLOR.a = 1.0;
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(NoiseTexture, n_out15p0);
+
+
+// Output:0
+	COLOR.a = n_out3p0.x;
 }
