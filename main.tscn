@@ -36,7 +36,7 @@ handle_input_locally = false
 msaa_3d = 1
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(960, 720)
+size = Vector2i(1024, 768)
 render_target_update_mode = 4
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Texture/h_stretch/SubViewport"]
@@ -53,7 +53,7 @@ handle_input_locally = false
 msaa_3d = 1
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(960, 720)
+size = Vector2i(1024, 768)
 render_target_update_mode = 4
 
 [node name="Base" parent="Texture/h_stretch/SubViewport/SubViewportContainer/SubViewport" instance=ExtResource("4_jswh1")]

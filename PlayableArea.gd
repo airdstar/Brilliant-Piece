@@ -8,8 +8,10 @@ var twist : float
 var inMenu : bool = false
 var menu : BasicMenu
 
-var player : PlayerPiece
+@onready var player : PlayerPiece = $PlayerPiece
 var playerTile : tile
+
+@onready var enemies : EnemyPiece = $EnemyPiece
 
 var playerTurn : bool = true
 var actionUsed : bool = false
@@ -75,7 +77,9 @@ func _process(_delta):
 				stopShowingOptions()
 				item = null
 				openMenu()
-		
+	else:
+		#$EnemyController.makeDecision
+		pass
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
 			handleMovement()
@@ -156,7 +160,7 @@ func displayInfo():
 		$StaticHUD/PortraitBackground.visible = true
 		if highlightedTile.contains is MoveablePiece:
 			$StaticHUD/Status/NameLabel.text = highlightedTile.contains.pieceName
-			$StaticHUD/Status/TypeLabel.text = highlightedTile.contains.type
+			$StaticHUD/Status/TypeLabel.text = highlightedTile.contains.type.typeName
 			$StaticHUD/Status/LevelLabel.text = "Enemy lvl " + str(highlightedTile.contains.level)
 			$StaticHUD/Status/HealthLabel.text = "[img]res://HUD/Heart.png[/img] " + str(highlightedTile.contains.health) + "/" + str(highlightedTile.contains.maxHealth)
 			$StaticHUD/Status/SoulLabel.text = ""
@@ -197,7 +201,7 @@ func openMenu():
 	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
 	$Menu.add_child(menu)
 	menu.addOptions(moveUsed, actionUsed)
-	menu.position = Vector2(360,313)
+	menu.position = Vector2(360,325)
 	menu.showMenu(true)
 	Pointer.visible = false
 	highlightTile(playerTile)
@@ -331,10 +335,10 @@ func pushPiece(piece : MoveablePiece, direction : String):
 			piece.damage(1)
 		else:
 			@warning_ignore("integer_division")
-			piece.damage(int(piece.maxHealth / 10))
+			piece.damage(1 + int(piece.maxHealth / 10))
 	else:
 		@warning_ignore("integer_division")
-		piece.damage(int(piece.maxHealth / 4))
+		piece.damage(5 + int(piece.maxHealth / 4))
 		randPlacePiece(piece)
 
 func randPlacePiece(piece : MoveablePiece):
@@ -350,64 +354,24 @@ func randPlacePiece(piece : MoveablePiece):
 						highlightTile($Tiles.get_child(n))
 						playerTile = $Tiles.get_child(n)
 
-func findMoveableTiles():
-	match highlightedTile.contains.type:
-		"Pawn":
-			for n in range(4):
-				var tileData = lookForTile(highlightedTile.global_position + Directions.getDirection(Directions.getAllStraight()[n]))
-				if tileData:
-					setMoveable(tileData)
-		"Rook":
-			for n in range(4):
-				var CheckTile = highlightedTile
-				var canContinue := true
-				var pos = Directions.getDirection(Directions.getAllStraight()[n])
-				for m in range(3):
-					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData and canContinue:
-						setMoveable(tileData)
-						CheckTile = tileData
-						if tileData.contains is MoveablePiece:
-							canContinue = false
-		"Bishop":
-			for n in range(4):
-				var CheckTile = highlightedTile
-				var canContinue = true
-				var pos = Directions.getDirection(Directions.getAllDiagonal()[n])
-				for m in range(3):
-					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData and canContinue:
-						setMoveable(tileData)
-						CheckTile = tileData
-						if tileData.contains is MoveablePiece:
-							canContinue = false
-		"Knight":
-			for n in range(4):
-				var CheckTile = highlightedTile.global_position
-				var pos = Directions.getDirection(Directions.getAllStraight()[n])
-				var tileData
-				CheckTile += pos
-				for m in range(2):
-					tileData = lookForTile(CheckTile + Directions.getDirection(Directions.getDiagonals(Directions.getAllStraight()[n])[m]))
-					if tileData:
-						setMoveable(tileData)
-		"Queen":
-			for n in range(8):
-				var CheckTile = highlightedTile
-				var canContinue = true
-				var pos = Directions.getDirection(Directions.getAllDirections()[n])
-				for m in range(3):
-					var tileData = lookForTile(CheckTile.global_position + pos)
-					if tileData and canContinue:
-						setMoveable(tileData)
-						CheckTile = tileData
-						if tileData.contains is MoveablePiece:
-							canContinue = false
-		"King":
-			for n in range(8):
-				var tileData = lookForTile(highlightedTile.global_position + Directions.getDirection(Directions.getAllDirections()[n]))
-				if tileData:
-					setMoveable(tileData)
+func findMoveableTiles(piece : MoveablePiece, check : bool):
+	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
+	var currentTile
+	var toReturn
+	for n in range(possibleTiles.size()):
+		if n%2 == 0:
+			if lookForTile(possibleTiles[n]):
+				currentTile = lookForTile(possibleTiles[n])
+		else:
+			if currentTile:
+				if (lookForTile(possibleTiles[n]) and lookForTile(possibleTiles[n]).moveable) or possibleTiles[n] == piece.currentTile.global_position:
+					if check:
+						toReturn.append(currentTile)
+					else:
+						setMoveable(currentTile)
+			currentTile = null
+	if check:
+		return toReturn
 
 func handleMovement():
 	var rotation = rad_to_deg($Twist.rotation.y)

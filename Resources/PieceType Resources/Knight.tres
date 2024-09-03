@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PieceTypeResource" load_steps=2 format=3 uid="uid://71ylddgrf11"]
+
+[ext_resource type="Script" path="res://Resources/PieceTypeResource.gd" id="1_v0pjr"]
+
+[resource]
+script = ExtResource("1_v0pjr")
+typeName = "Knight"
+movementCount = 1
+movementAngle = "L"

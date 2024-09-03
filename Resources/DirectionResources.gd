@@ -77,3 +77,6 @@ func getOppDirection(dir : String):
 			return "NorthEast"
 		"SouthEast":
 			return "NorthWest"
+
+func getApproxDirection():
+	pass

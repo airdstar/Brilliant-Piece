@@ -34,29 +34,30 @@ func SetSprite(num : int):
 	match num:
 		1:
 			outline.set_texture(load("res://Menu/MenuTop.png"))
-			outline.size = Vector2(96,32)
+			outline.size = Vector2(96,25)
 			outline.flip_v = true
 			outline.position = Vector2(-4,0)
-			label.size = Vector2(86,29)
-			label.position = Vector2(5,0)
-			highlight.size = Vector2(90,29)
-			highlight.position = Vector2(4,0)
+			label.position = Vector2(5,-4)
+			highlight.set_texture(load("res://Menu/MenuTopHighlight.png"))
+			highlight.flip_v = true
+			highlight.size = Vector2(90,25)
+			highlight.position = Vector2(3,0)
 		2:
 			outline.set_texture(load("res://Menu/MenuTop.png"))
-			outline.size = Vector2(96,32)
+			outline.size = Vector2(96,25)
 			outline.position = Vector2(-4,-1)
-			label.size = Vector2(86,29)
 			label.position = Vector2(5,3)
-			highlight.size = Vector2(90,29)
-			highlight.position = Vector2(4,3)
+			highlight.set_texture(load("res://Menu/MenuTopHighlight.png"))
+			highlight.size = Vector2(90,25)
+			highlight.position = Vector2(3,3)
 		3:
 			outline.set_texture(load("res://Menu/MenuMiddle.png"))
-			outline.size = Vector2(96,29)
+			outline.size = Vector2(96,21)
 			outline.position = Vector2(-4,1)
-			label.size = Vector2(86,29)
-			label.position = Vector2(5,0)
-			highlight.size = Vector2(90,29)
-			highlight.position = Vector2(4,1)
+			label.position = Vector2(5,-4)
+			highlight.set_texture(load("res://Menu/MenuHighlight.png"))
+			highlight.size = Vector2(90,21)
+			highlight.position = Vector2(3,0)
 
 func setOptionType(optionType : String):
 	type = optionType

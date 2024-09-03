@@ -3,7 +3,6 @@ class_name EnemyPiece
 
 @export var enemyType : EnemyResource
 
-var type : String
 var level : int
 
 func _ready():

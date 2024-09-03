@@ -6,7 +6,6 @@ var soulUsed : bool = false
 
 func secondaryReady():
 	generateTiles()
-	player = $PlayerPiece
 	openMenu()
 
 func secondaryProcess(_delta):

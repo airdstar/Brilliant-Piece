@@ -1,6 +1,7 @@
 extends Piece
 class_name MoveablePiece
 
+var type : PieceTypeResource
 var maxHealth : int
 var health : int
 var armor : int

@@ -55,6 +55,7 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 		optionCount += 1
 	if !actionCheck:
 		optionCount += 1
+	var prevPos = Vector2(0,0)
 	for n in range(optionCount):
 		var toAdd = preload("res://Menu/BasicMenuOption.tscn").instantiate()
 		options.add_child(toAdd)
@@ -62,13 +63,12 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 			toAdd.SetSprite(1)
 		elif n == optionCount - 1 and n != 0:
 			toAdd.SetSprite(2)
-			toAdd.setOptionType("End Turn")
+			toAdd.setOptionType("End")
 		elif optionCount != 1:
 			toAdd.SetSprite(3)
 		
 		if n == optionCount - 2:
 			toAdd.setOptionType("Items")
-		
 		
 		match n:
 			0:
@@ -80,13 +80,17 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 			1:
 				if !actionCheck and !moveCheck:
 					toAdd.setOptionType("Move")
-				toAdd.position = Vector2(0,-31)
-			2:
-				toAdd.position = Vector2(0,-60)
-			3:
-				toAdd.position = Vector2(0,-90)
-			4:
-				toAdd.position = Vector2(0,-119)
+		
+		if n > 0 and n < optionCount - 1:
+			if prevPos == Vector2(0,0):
+				prevPos = Vector2(0,-22)
+			else:
+				prevPos += Vector2(0,-21)
+		elif n == optionCount - 1:
+			if optionCount == 2:
+				prevPos += Vector2(0,-1)
+			prevPos += Vector2(0,-26)
+		toAdd.position = prevPos
 
 func selectedOption():
 	match options.get_child(highlightedOption - 1).type:
@@ -96,7 +100,7 @@ func selectedOption():
 			get_parent().get_parent().moving = get_parent().get_parent().player
 			get_parent().get_parent().inMenu = false
 			get_parent().get_parent().Pointer.visible = true
-			get_parent().get_parent().findMoveableTiles()
+			get_parent().get_parent().findMoveableTiles(get_parent().get_parent().moving, false)
 			get_parent().get_parent().camera.position = Vector3(5,5,5)
 			get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
 			queue_free()
@@ -104,8 +108,9 @@ func selectedOption():
 			$MenuSelect.play()
 			var toAdd = preload("res://Menu/ActionMenu.tscn").instantiate()
 			add_child(toAdd)
-			toAdd.position.y += 40
-		"End Turn":
+			toAdd.position.y += 30
+			toAdd.position.x -= 4
+		"End":
 			$AnimationPlayer.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
 			get_parent().get_parent().inMenu = false
@@ -116,7 +121,8 @@ func selectedOption():
 			var toAdd = preload("res://Menu/ItemMenu.tscn").instantiate()
 			toAdd.setItems(get_parent().get_parent().player.items)
 			add_child(toAdd)
-			toAdd.position.y += 40
+			toAdd.position.y += 30
+			toAdd.position.x -= 4
 
 func closeMenu():
 	$AnimationPlayer.play("CloseMenu")

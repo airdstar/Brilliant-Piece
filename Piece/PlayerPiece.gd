@@ -2,7 +2,6 @@ extends MoveablePiece
 class_name PlayerPiece
 
 @export var classType : ClassResource
-@export var type : String
 
 var level : int = 1
 var maxSoul : int 
@@ -11,7 +10,7 @@ var actions : Array[ActionResource]
 @export var items : Array[ItemResource]
 
 func _ready():
-	#Add check for saves
+	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
 	setData()
 
 func setData():
@@ -19,8 +18,7 @@ func setData():
 	health = maxHealth
 	maxSoul = classType.startingSoul
 	soul = maxSoul
-	for n in range(5):
-		actions.append(classType.actions.actions[n])
+	actions = classType.startingActions
 	
 	var s = ResourceLoader.load(classType.associatedScene)
 	s = s.instantiate()

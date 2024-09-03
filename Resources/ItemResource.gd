@@ -11,7 +11,7 @@ class_name ItemResource
 
 @export var useAmount : int
 var amountUsed = useAmount
-@export var itemRange : int = 5
+@export var itemRange : int = 10
 
 @export_category("Basic Stats")
 @export var damage : int

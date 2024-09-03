@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PieceTypeResource" load_steps=2 format=3 uid="uid://6atx1sk3iako"]
+
+[ext_resource type="Script" path="res://Resources/PieceTypeResource.gd" id="1_h7psa"]
+
+[resource]
+script = ExtResource("1_h7psa")
+typeName = "Queen"
+movementCount = 3
+movementAngle = "Both"

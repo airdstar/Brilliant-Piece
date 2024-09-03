@@ -3,18 +3,19 @@ extends Control
 var highlightedOption = 0
 var actions
 var growing := true
-var lowestOpacity := 0.1
-var additionalOpacity : float
+var lowestOpacity : float = 0.1
+var additionalOpacity : float = 0.0
+@onready var highlight = $TextureRect/Highlight
 @onready var options = $Options
+@onready var actionLabels : Array[Label] = [$Options/actionLabel1, $Options/actionLabel2, $Options/actionLabel3, $Options/actionLabel4, $Options/actionLabel5]
 
 func _ready():
 	actions = get_parent().get_parent().get_parent().player.actions
-	$Options/Label.text = actions[0].name
-	$Options/Label2.text = actions[1].name
-	$Options/Label3.text = actions[2].name
-	$Options/Label4.text = actions[3].name
-	$Options/Label5.text = actions[4].name
-
+	for n in range(5):
+		if actions.size() - 1 >= n:
+			actionLabels[n].text = actions[n].name
+		else:
+			actionLabels[n].text = "- EMPTY -"
 
 func _process(_delta):
 	if growing:
@@ -32,22 +33,42 @@ func _process(_delta):
 			highlightedOption = 4
 		else:
 			highlightedOption -= 1
-		$TextureRect/Highlight.position = Vector2(4,4 + (24 * highlightedOption))
+		setHighlightPos()
 
 	elif Input.is_action_just_pressed("Backward"):
 		if highlightedOption == 4:
 			highlightedOption = 0
 		else:
 			highlightedOption += 1
-		$TextureRect/Highlight.position = Vector2(4,4 + (24 * highlightedOption))
+		setHighlightPos()
 	
 	if Input.is_action_just_pressed("Select"):
-		get_parent().get_parent().get_parent().inMenu = false
-		get_parent().get_parent().get_parent().action = actions[highlightedOption]
-		get_parent().get_parent().get_parent().showAction()
-		get_parent().get_parent().get_parent().Pointer.visible = true
-		get_parent().queue_free()
+		if actionLabels[highlightedOption].text != "- EMPTY -":
+			get_parent().get_parent().get_parent().inMenu = false
+			get_parent().get_parent().get_parent().action = actions[highlightedOption]
+			get_parent().get_parent().get_parent().showAction()
+			get_parent().get_parent().get_parent().Pointer.visible = true
+			get_parent().queue_free()
 
+func setHighlightPos():
+	match highlightedOption:
+		0:
+			highlight.flip_v = false
+			highlight.texture = load("res://Menu/AttackMenuTopHighlight.png")
+			highlight.position = Vector2(3,3)
+		1:
+			highlight.texture = load("res://Menu/AttackMenuHighlight.png")
+			highlight.position = Vector2(3,28)
+		2:
+			highlight.position = Vector2(3,52)
+		3:
+			highlight.flip_v = false
+			highlight.texture = load("res://Menu/AttackMenuHighlight.png")
+			highlight.position = Vector2(3,76)
+		4:
+			highlight.flip_v = true
+			highlight.texture = load("res://Menu/AttackMenuTopHighlight.png")
+			highlight.position = Vector2(3,99)
 
 func ToggleGrow():
 	growing = !growing

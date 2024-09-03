@@ -16,24 +16,27 @@ class_name EnemyResource
 
 func getType():
 	var amount = type
-	var possibleTypes = []
+	var possibleTypes : Array[PieceTypeResource]
+	var resource
 	if amount >= 32:
 		amount -= 32
-		possibleTypes.append("Queen")
+		possibleTypes.append(load("res://Resources/PieceType Resources/Queen.tres"))
 	if amount >= 16:
 		amount -= 16
-		possibleTypes.append("King")
+		possibleTypes.append(load("res://Resources/PieceType Resources/King.tres"))
 	if amount >= 8:
 		amount -= 8
-		possibleTypes.append("Knight")
+		possibleTypes.append(load("res://Resources/PieceType Resources/Knight.tres"))
 	if amount >= 4:
 		amount -= 4
-		possibleTypes.append("Bishop")
+		resource = ResourceLoader.load("res://Resources/PieceType Resources/Bishop.tres")
+		return resource
+		possibleTypes.append(resource)
 	if amount >= 2:
 		amount -= 2
-		possibleTypes.append("Rook")
+		possibleTypes.append(load("res://Resources/PieceType Resources/Rook.tres"))
 	if amount >= 1:
 		amount -= 1
-		possibleTypes.append("Pawn")
+		possibleTypes.append(load("res://Resources/PieceType Resources/Pawn.tres"))
 	
 	return(possibleTypes[randi_range(0,possibleTypes.size() - 1)])

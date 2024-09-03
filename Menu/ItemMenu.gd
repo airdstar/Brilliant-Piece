@@ -1,6 +1,6 @@
 extends Control
 
-var selectedItemPos := Vector3(0,-1,-5)
+var selectedItemPos := Vector3(0,-1,-4.5)
 var leftItemPos := Vector3(-8,-2,-7.5)
 var rightItemPos := Vector3(8,-2,-7.5)
 var itemCount : int
@@ -10,7 +10,7 @@ var physicalItems : Array[Node3D]
 var itemIndicators : Array[TextureRect]
 
 func _process(_delta: float):
-	$TextureRect/Screen.texture = $SubViewport.get_texture()
+	$MenuTop/Screen.texture = $SubViewport.get_texture()
 	physicalItems[highlightedItem].rotate_y(-0.01)
 	
 	
@@ -58,9 +58,10 @@ func setItems(itemList : Array[ItemResource]):
 				if m == 0:
 					var t = TextureRect.new()
 					t.set_texture(load("res://Menu/ItemHighlight.png"))
-					$TextureRect/Screen.add_child(t)
+					$MenuTop/Screen.add_child(t)
 					t.size = Vector2(4,4)
-					t.position = Vector2(1 + n * 5,1)
+					t.position = Vector2(4 + n * 5,1)
+					itemIndicators.append(t)
 		swapItem()
 
 func swapItem():
@@ -68,15 +69,15 @@ func swapItem():
 		physicalItems[n].position = Vector3(0,200,0)
 	
 	for n in range(itemCount):
-		$TextureRect/Screen.get_child(n).modulate = Color(0.7,0.7,0.7)
+		itemIndicators[n].modulate = Color(0.5,0.5,0.5)
 	
 	physicalItems[highlightedItem].position = selectedItemPos
 	physicalItems[highlightedItem].set_rotation_degrees(Vector3(0,-90,0))
-	$TextureRect/Screen.get_child(highlightedItem).modulate = Color(0,0,0)
+	itemIndicators[highlightedItem].modulate = Color(0.9,0.9,0.9)
 	
-	$TextureRect/NameLabel.text = items[highlightedItem].name
-	$TextureRect/StatsLabel.text = items[highlightedItem].desc
-	$TextureRect/StatsLabel.text += "\n" + items[highlightedItem].itemType
+	$MenuTop/NameLabel.text = items[highlightedItem].name
+	$MenuBottom/StatsLabel.text = items[highlightedItem].desc
+	$MenuBottom/StatsLabel.text += "\n" + items[highlightedItem].itemType
 	
 	if highlightedItem == 0:
 		physicalItems[physicalItems.size() - 1].position = leftItemPos

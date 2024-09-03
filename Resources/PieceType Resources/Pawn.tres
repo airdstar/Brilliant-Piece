@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PieceTypeResource" load_steps=2 format=3 uid="uid://dpnjwi0jf81h2"]
+
+[ext_resource type="Script" path="res://Resources/PieceTypeResource.gd" id="1_fnyac"]
+
+[resource]
+script = ExtResource("1_fnyac")
+typeName = "Pawn"
+movementCount = 1
+movementAngle = "Straight"

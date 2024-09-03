@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PieceTypeResource" load_steps=2 format=3 uid="uid://7liy2ius5ev1"]
+
+[ext_resource type="Script" path="res://Resources/PieceTypeResource.gd" id="1_t7bgd"]
+
+[resource]
+script = ExtResource("1_t7bgd")
+typeName = "Rook"
+movementCount = 3
+movementAngle = "Straight"
