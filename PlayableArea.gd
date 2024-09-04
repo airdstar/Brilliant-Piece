@@ -441,6 +441,19 @@ func findClosestTile(direction : String):
 	if foundTile:
 		highlightTile(foundTile)
 
+func findClosestTileToTarget(target : Vector3, direction : Vector3):
+	var closestTile
+	var smallestVariation
+	for n in range(moving.type.movementCount):
+		var xVar = abs(target.x - (moving.global_position + direction * (n + 1)).x)
+		var zVar = abs(target.z - (moving.global_position + direction * (n + 1)).z)
+		if smallestVariation:
+			pass
+		else:
+			smallestVariation = xVar + zVar
+			
+		
+
 func setPieceOrientation(piece : MoveablePiece, direction : String):
 	match direction:
 		"West":

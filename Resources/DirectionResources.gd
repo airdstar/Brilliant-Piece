@@ -78,13 +78,13 @@ func getOppDirection(dir : String):
 		"SouthEast":
 			return "NorthWest"
 
-func getClosestDirection(start : Vector3, destination : Vector3):
+func getClosestDirection(start : Vector3, target : Vector3):
 	var allDirections = getAllDirections()
 	var closestDirection
 	var smallestVariation
 	for n in range(8):
-		var xVar = abs(destination.x - (start + getDirection(allDirections[n])).x)
-		var zVar = abs(destination.z - (start + getDirection(allDirections[n])).z)
+		var xVar = abs(target.x - (start + getDirection(allDirections[n])).x)
+		var zVar = abs(target.z - (start + getDirection(allDirections[n])).z)
 		if closestDirection:
 			if smallestVariation > xVar + zVar:
 				closestDirection = allDirections[n]
