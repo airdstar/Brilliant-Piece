@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_xv4x0")
 name = "Attack"
+desc = ""
 animationPath = ""
+iconPath = ""
+actionType = "Attack"
 damage = 1
 healing = 0
-range = 1
+armor = 0
 actionDirection = "Both"
+range = 1
 rangeExclusive = true
+canTargetSelf = false
 blockable = false
 knockback = false
-status = ""
-AOE = Vector2(0, 0)
+AOE = 0

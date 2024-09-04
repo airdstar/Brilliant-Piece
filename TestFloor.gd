@@ -7,6 +7,8 @@ var soulUsed : bool = false
 func secondaryReady():
 	generateTiles()
 	openMenu()
+	$EnemyController.setEnemies($EnemyPiece)
+	$EnemyController.setTargets($PlayerPiece)
 
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):

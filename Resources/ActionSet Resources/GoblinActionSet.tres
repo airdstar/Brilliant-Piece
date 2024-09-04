@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ActionSetResource" load_steps=4 format=3 uid="uid://cy8v0vdgs5afa"]
+
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_itotr"]
+[ext_resource type="Resource" uid="uid://0a42lwknko2l" path="res://Resources/Action Resources/DefaultAttack.tres" id="2_5888n"]
+[ext_resource type="Script" path="res://Resources/ActionSetResource.gd" id="2_femye"]
+
+[resource]
+script = ExtResource("2_femye")
+actions = Array[ExtResource("1_itotr")]([ExtResource("2_5888n")])

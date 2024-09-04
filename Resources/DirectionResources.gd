@@ -78,5 +78,30 @@ func getOppDirection(dir : String):
 		"SouthEast":
 			return "NorthWest"
 
-func getApproxDirection():
-	pass
+func getClosestDirection(start : Vector3, destination : Vector3):
+	var allDirections = getAllDirections()
+	var closestDirection
+	var smallestVariation
+	for n in range(8):
+		var xVar = abs(destination.x - (start + getDirection(allDirections[n])).x)
+		var zVar = abs(destination.z - (start + getDirection(allDirections[n])).z)
+		if closestDirection:
+			if smallestVariation > xVar + zVar:
+				closestDirection = allDirections[n]
+				smallestVariation = xVar + zVar
+			elif smallestVariation == xVar + zVar:
+				if (closestDirection == "North" or allDirections[n] == "North"):
+					if (closestDirection == "West" or allDirections[n] == "West"):
+						closestDirection = "NorthWest"
+					elif (closestDirection == "East" or allDirections[n] == "East"):
+						closestDirection = "NorthEast"
+				elif (closestDirection == "South" or allDirections[n] == "South"):
+					if (closestDirection == "West" or allDirections[n] == "West"):
+						closestDirection = "SouthWest"
+					elif (closestDirection == "East" or allDirections[n] == "East"):
+						closestDirection = "SouthEast"
+		else:
+			closestDirection = allDirections[n]
+			smallestVariation = xVar + zVar
+	
+	return closestDirection

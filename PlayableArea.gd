@@ -60,6 +60,9 @@ func _process(_delta):
 				stopShowingOptions()
 				#useItem(highlightedTile)
 				#usedItem()
+			if viewing:
+				viewing = false
+				openMenu()
 		
 		if Input.is_action_just_pressed("Cancel"):
 			if moving:
@@ -78,8 +81,7 @@ func _process(_delta):
 				item = null
 				openMenu()
 	else:
-		#$EnemyController.makeDecision
-		pass
+		$EnemyController.makeDecision()
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
 			handleMovement()
@@ -271,36 +273,7 @@ func movePiece(destination : tile):
 	var startingPos = moving.currentTile
 	var counter : int = 0
 	while(!destinationReached):
-		var allDirections = Directions.getAllStraight()
-		var closestDirection
-		var smallestVariation
-		for n in range(allDirections.size()):
-			var xVar = abs(destination.global_position.x - (moving.currentTile.global_position + Directions.getDirection(allDirections[n])).x)
-			var zVar = abs(destination.global_position.z - (moving.currentTile.global_position + Directions.getDirection(allDirections[n])).z)
-			@warning_ignore("unassigned_variable")
-			if closestDirection:
-				@warning_ignore("unassigned_variable")
-				if smallestVariation > xVar + zVar:
-					closestDirection = allDirections[n]
-					smallestVariation = xVar + zVar
-				elif smallestVariation == xVar + zVar:
-					if (closestDirection == "North" or allDirections[n] == "North"):
-						if (closestDirection == "West" or allDirections[n] == "West"):
-							if lookForTile(moving.currentTile.global_position + Directions.getDirection("NorthWest")):
-								closestDirection = "NorthWest"
-						elif (closestDirection == "East" or allDirections[n] == "East"):
-							if lookForTile(moving.currentTile.global_position + Directions.getDirection("NorthEast")):
-								closestDirection = "NorthEast"
-					elif (closestDirection == "South" or allDirections[n] == "South"):
-						if (closestDirection == "West" or allDirections[n] == "West"):
-							if lookForTile(moving.currentTile.global_position + Directions.getDirection("SouthWest")):
-								closestDirection = "SouthWest"
-						elif (closestDirection == "East" or allDirections[n] == "East"):
-							if lookForTile(moving.currentTile.global_position + Directions.getDirection("SouthEast")):
-								closestDirection = "SouthEast"
-			else:
-				closestDirection = allDirections[n]
-				smallestVariation = xVar + zVar
+		var closestDirection = Directions.getClosestDirection(moving.currentTile.global_position, destination.global_position)
 		
 		if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains:
 			if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains is MoveablePiece:
@@ -357,7 +330,7 @@ func randPlacePiece(piece : MoveablePiece):
 func findMoveableTiles(piece : MoveablePiece, check : bool):
 	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
 	var currentTile
-	var toReturn
+	var toReturn = []
 	for n in range(possibleTiles.size()):
 		if n%2 == 0:
 			if lookForTile(possibleTiles[n]):
