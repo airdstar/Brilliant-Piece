@@ -25,6 +25,7 @@ var action : ActionResource
 var highlightedTile : tile
 
 @onready var tileHolder = $Tiles
+@onready var menuHolder = $Menu
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
 

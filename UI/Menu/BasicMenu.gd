@@ -4,7 +4,8 @@ class_name BasicMenu
 var hasSelectedOption : bool = false
 var optionCount : int
 var highlightedOption : int = 1
-@onready var options = $Options
+var options
+@onready var optionHolder = $Options
 
 func _ready():
 	pass

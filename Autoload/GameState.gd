@@ -20,3 +20,6 @@ var viewing : bool = false
 var item : ItemResource
 var moving : MoveablePiece
 var action : ActionResource
+
+func endTurn():
+	pass

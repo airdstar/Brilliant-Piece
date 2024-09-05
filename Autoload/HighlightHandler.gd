@@ -13,14 +13,30 @@ func _process(_delta):
 	
 	if inputDirection:
 		if !GameState.currentMenu:
-			handle3DMovement(inputDirection)
+			handle3DHighlighting(inputDirection)
 		else:
-			handleMenuMovement(inputDirection)
+			handleMenuHighlighting(inputDirection)
 
-func handleMenuMovement(input : String):
-	pass
+func handleMenuHighlighting(input : String):
+	var menu = GameState.currentMenu
+	
+	if input == "Forward" and !menu.hasSelectedOption:
+		menu.options[menu.highlightedOption - 1].hoverToggle()
+		if menu.highlightedOption < menu.optionCount:
+			menu.highlightedOption += 1
+		else:
+			menu.highlightedOption = 1
+		menu.options[menu.highlightedOption - 1].hoverToggle()
 
-func handle3DMovement(input : String):
+	elif input == "Backward" and !menu.hasSelectedOption:
+		menu.options[menu.highlightedOption - 1].hoverToggle()
+		if menu.highlightedOption > 1:
+			menu.highlightedOption -= 1
+		else:
+			menu.highlightedOption = menu.optionCount
+		menu.options[menu.highlightedOption - 1].hoverToggle()
+
+func handle3DHighlighting(input : String):
 	var rotation = rad_to_deg($Twist.rotation.y)
 	var direction = null
 	
@@ -72,56 +88,53 @@ func findClosestTile(direction : String):
 	var foundTile : tile
 	var searcher : Vector3 = GameState.highlightedTile.global_position
 	var toAdd = DirectionHandler.getPos(direction)
+	var forward = DirectionHandler.getPos(direction)
 	var left = DirectionHandler.getPos(DirectionHandler.getSides(direction)[0])
 	var right = DirectionHandler.getPos(DirectionHandler.getSides(direction)[1])
 	for n in range(4):
 		if !foundTile:
 			searcher += toAdd
-			if !lookForTile(searcher):
-				if !lookForTile(searcher + left):
-					if lookForTile(searcher + right):
-						foundTile = lookForTile(searcher + right)
+			if !TileHandler.TileHandler.lookForTile(searcher):
+				if !TileHandler.lookForTile(searcher + forward):
+					if !TileHandler.lookForTile(searcher + left):
+						if !TileHandler.lookForTile(searcher + right):
+							foundTile = TileHandler.lookForTile(searcher + right)
+					else:
+						foundTile = TileHandler.lookForTile(searcher + left)
 				else:
-					foundTile = lookForTile(searcher + left)
+					foundTile = TileHandler.lookForTile(searcher + forward)
 			else:
-				foundTile = lookForTile(searcher)
+				foundTile = TileHandler.lookForTile(searcher)
 
 	if foundTile:
 		highlightTile(foundTile)
 
 
 func highlightTile(tileToSelect : tile):
-	highlightedTile = tileToSelect
-	setTilePattern()
-	highlightedTile.highlight.visible = true
-	Pointer.position.x = highlightedTile.position.x
-	Pointer.position.z = highlightedTile.position.z
-	Pointer.height = highlightedTile.getPointerPos()
+	var pointer = GameState.currentFloor.Pointer
+	GameState.highlightedTile = tileToSelect
+	TileHandler.setTilePattern()
+	tileToSelect = GameState.highlightedTile
+	tileToSelect.highlight.visible = true
+	pointer.position.x = tileToSelect.position.x
+	pointer.position.z = tileToSelect.position.z
+	Pointer.height = tileToSelect.getPointerPos()
 	$Twist.position.x = Pointer.position.x
 	$Twist.position.z = Pointer.position.z
-	if highlightedTile.moveable:
-		if highlightedTile.contains is EnemyPiece:
-			highlightedTile.setColor("Red")
+	if tileToSelect.moveable:
+		if tileToSelect.contains is EnemyPiece:
+			tileToSelect.setColor("Red")
 			Pointer.setColor("Red")
 		else:
-			highlightedTile.setColor("Blue")
+			tileToSelect.setColor("Blue")
 			Pointer.setColor("Blue")
-	elif highlightedTile.hittable:
-		highlightedTile.setColor("Red")
+	elif tileToSelect.hittable:
+		tileToSelect.setColor("Red")
 		Pointer.setColor("Red")
-		if action:
-			if action.AOE != 0:
-				var pos = DirectionHandler.getAll("Both")
-				for n in range(8):
-					var currentTile = highlightedTile.global_position
-					for m in range(action.AOE):
-						currentTile += DirectionHandler.getPos(pos[n])
-						if lookForTile(currentTile):
-							lookForTile(currentTile).highlight.visible = true
-							lookForTile(currentTile).setColor("Red")
 			
 	else:
-		highlightedTile.setColor("Gray")
+		tileToSelect.setColor("Gray")
 		Pointer.setColor("Gray")
+	
 	
 	displayInfo()
