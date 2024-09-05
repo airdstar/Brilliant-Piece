@@ -11,7 +11,7 @@
 script = ExtResource("1_lnosw")
 className = "Crystal Sage"
 actions = ExtResource("1_3yne0")
-associatedScene = "res://Classes/CrystalSage.tscn"
+associatedModel = "res://Piece/Classes/CrystalSage.blend"
 startingHealth = 6
 startingSoul = 1
 startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_2g06e")])

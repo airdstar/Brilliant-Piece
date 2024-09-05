@@ -7,24 +7,14 @@ class_name PieceTypeResource
 
 func getMoveableTiles(movementStart : Vector3):
 	var toReturn : Array[Vector3]
-	var directions
-	var pos
-	
-	if movementAngle == "Straight" or movementAngle == "L":
-		directions = 4
-		pos = Directions.getAllStraight()
-	elif movementAngle == "Diagonal":
-		directions = 4
-		pos = Directions.getAllDiagonal()
-	elif movementAngle == "Both":
-		directions = 8
-		pos = Directions.getAllDirections()
+	var pos = DirectionHandler.getAll(movementAngle)
+	var directions = pos.size()
 	
 	for n in range(directions):
 		var tileData : Vector3 = movementStart
 		var prevTile : Vector3 = movementStart
 		for m in range(movementCount):
-			tileData += Directions.getDirection(pos[n])
+			tileData += DirectionHandler.getPos(pos[n])
 			toReturn.append(tileData)
 			toReturn.append(prevTile)
 			prevTile = tileData

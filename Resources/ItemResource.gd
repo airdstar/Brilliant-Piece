@@ -20,18 +20,18 @@ var amountUsed = useAmount
 
 func getItemRange(itemStart : Vector3):
 	var toReturn : Array[Vector3]
-	var directions = 8
-	var pos = Directions.getAllDirections()
+	var pos = DirectionHandler.getAll("Both")
+	var directions = pos.size()
 	for n in range(directions):
 		var tileData : Vector3 = itemStart
 		for m in range(itemRange):
-			tileData += Directions.getDirection(pos[n])
+			tileData += DirectionHandler.getPos(pos[n])
 			toReturn.append(tileData)
 			if n < 4:
 				if m > 0:
-					var sides = Directions.getSides(Directions.getAllStraight()[n])
+					var sides = DirectionHandler.getSides(DirectionHandler.getAll("Straight")[n])
 					for l in range(m):
-						toReturn.append(tileData + (Directions.getDirection(sides[0]) * (l + 1)))
-						toReturn.append(tileData + (Directions.getDirection(sides[1]) * (l + 1)))
+						toReturn.append(tileData + (DirectionHandler.getPos(sides[0]) * (l + 1)))
+						toReturn.append(tileData + (DirectionHandler.getPos(sides[1]) * (l + 1)))
 	
 	return toReturn

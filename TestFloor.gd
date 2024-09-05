@@ -5,6 +5,7 @@ var soulUsed : bool = false
 @export var tileAmount : int
 
 func secondaryReady():
+	GameState.currentFloor = self
 	generateTiles()
 	openMenu()
 	$EnemyController.setEnemies($EnemyPiece)
@@ -18,6 +19,7 @@ func secondaryProcess(_delta):
 		get_tree().reload_current_scene()
 
 func generateTiles():
+	var totalTiles
 	for n in range(tileAmount):
 		var cantPlace = true
 		var tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
@@ -36,5 +38,6 @@ func generateTiles():
 			if goodForNow:
 				cantPlace = false
 				$Tiles.add_child(tileToAdd)
+	GameState.allFloorTiles = totalTiles
 	randPlacePiece($PlayerPiece)
 	randPlacePiece($EnemyPiece)

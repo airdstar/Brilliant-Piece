@@ -19,24 +19,26 @@ func makeDecision():
 func findBestMovement(target : MoveablePiece, possibleMovement, piece : EnemyPiece, behavior : String):
 	match behavior:
 		"Approach":
-			var closestTileDirection = Directions.getClosestDirection(piece.currentTile.global_position, target.currentTile.global_position)
+			var closestTileDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, target.currentTile.global_position)
 			var closestExists := false
 			for n in range(possibleMovement.size()):
-				if possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + Directions.getDirection(closestTileDirection)):
+				if possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(closestTileDirection)):
 					area.moving = piece
-					var closestTile = area.findClosestTileToTarget(target.currentTile.position, Directions.getDirection(closestTileDirection))
+					var closestTile = area.findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(closestTileDirection))
 					area.movePiece(closestTile)
 					area.usedMove()
 					closestExists = true
 			if !closestExists:
 				for n in range(possibleMovement.size()):
-					if possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + Directions.getSides(Directions.getDirection(closestTileDirection))[0]):
+					if possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[0])):
 						area.moving = piece
-						area.movePiece(possibleMovement[n])
+						var closestTile = area.findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[0]))
+						area.movePiece(closestTile)
 						area.usedMove()
-					elif possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + Directions.getSides(Directions.getDirection(closestTileDirection))[1]):
+					elif possibleMovement[n] == area.lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[1])):
 						area.moving = piece
-						area.movePiece(possibleMovement[n])
+						var closestTile = area.findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[1]))
+						area.movePiece(closestTile)
 						area.usedMove()
 
 

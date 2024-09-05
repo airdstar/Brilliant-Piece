@@ -18,8 +18,15 @@ config/icon="res://LOGO.png"
 
 [autoload]
 
-PlayerData="*res://Resources/PlayerData.gd"
-Directions="*res://Resources/DirectionResources.gd"
+Global="*res://Autoload/Global.gd"
+PlayerData="*res://Autoload/PlayerData.gd"
+GameState="*res://Autoload/GameState.gd"
+AudioManager="*res://Autoload/AudioManager.gd"
+DirectionHandler="*res://Autoload/DirectionHandler.gd"
+MovementHandler="*res://Autoload/MovementHandler.gd"
+TileHandler="*res://Autoload/TileHandler.gd"
+HighlightHandler="*res://Autoload/HighlightHandler.gd"
+EnemyHandler="*res://Autoload/EnemyHandler.gd"
 
 [display]
 

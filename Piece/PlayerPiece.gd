@@ -20,7 +20,7 @@ func setData():
 	soul = maxSoul
 	actions = classType.startingActions
 	
-	var s = ResourceLoader.load(classType.associatedScene)
+	var s = ResourceLoader.load(classType.associatedModel)
 	s = s.instantiate()
 	add_child(s)
 

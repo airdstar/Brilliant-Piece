@@ -17,7 +17,6 @@ var playerTurn : bool = true
 var actionUsed : bool = false
 var moveUsed : bool = false
 
-
 var viewing : bool = false
 var item : ItemResource
 var moving : MoveablePiece
@@ -25,6 +24,7 @@ var action : ActionResource
 
 var highlightedTile : tile
 
+@onready var tileHolder = $Tiles
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
 
@@ -129,11 +129,11 @@ func highlightTile(tileToSelect : tile):
 		Pointer.setColor("Red")
 		if action:
 			if action.AOE != 0:
-				var pos = Directions.getAllDirections()
+				var pos = DirectionHandler.getAll("Both")
 				for n in range(8):
 					var currentTile = highlightedTile.global_position
 					for m in range(action.AOE):
-						currentTile += Directions.getDirection(pos[n])
+						currentTile += DirectionHandler.getPos(pos[n])
 						if lookForTile(currentTile):
 							lookForTile(currentTile).highlight.visible = true
 							lookForTile(currentTile).setColor("Red")
@@ -200,7 +200,7 @@ func endTurn():
 
 func openMenu():
 	inMenu = true
-	menu = preload("res://Menu/BasicMenu.tscn").instantiate()
+	menu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
 	$Menu.add_child(menu)
 	menu.addOptions(moveUsed, actionUsed)
 	menu.position = Vector2(360,325)
@@ -238,11 +238,11 @@ func useAction(destination : tile):
 	destination.actionUsed(action)
 	#AOE function
 	if action.AOE != 0:
-		var pos = Directions.getAllDirections()
+		var pos = DirectionHandler.getAll("Both")
 		for n in range(8):
 			var currentTile = destination.global_position
 			for m in range(action.AOE):
-				currentTile += Directions.getDirection(pos[n])
+				currentTile += DirectionHandler.getPos(pos[n])
 				if lookForTile(currentTile):
 					lookForTile(currentTile).actionUsed(action)
 	setTilePattern()
@@ -273,14 +273,14 @@ func movePiece(destination : tile):
 	var startingPos = moving.currentTile
 	var counter : int = 0
 	while(!destinationReached):
-		var closestDirection = Directions.getClosestDirection(moving.currentTile.global_position, destination.global_position)
-		
-		if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains:
-			if lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains is MoveablePiece:
-				pushPiece(lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).contains, closestDirection)
+		var closestDirection = DirectionHandler.getClosestDirection(moving.currentTile.global_position, destination.global_position)
+		var closestTile = lookForTile(moving.currentTile.global_position + DirectionHandler.getPos(closestDirection))
+		if closestTile.contains:
+			if closestTile.contains is MoveablePiece:
+				pushPiece(closestTile.contains, closestDirection)
 		moving.previousTile = moving.currentTile
 		moving.previousTile.contains = null
-		lookForTile(moving.currentTile.global_position + Directions.getDirection(closestDirection)).setPiece(moving)
+		closestTile.setPiece(moving)
 		setPieceOrientation(moving, closestDirection)
 		if moving is PlayerPiece:
 			highlightTile(moving.currentTile)
@@ -301,8 +301,9 @@ func movePiece(destination : tile):
 			print("ERROR")
 
 func pushPiece(piece : MoveablePiece, direction : String):
-	if lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)):
-		lookForTile(piece.currentTile.global_position + Directions.getDirection(direction)).setPiece(piece)
+	var currentTile = lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(direction))
+	if currentTile:
+		currentTile.setPiece(piece)
 		@warning_ignore("integer_division")
 		if int(piece.maxHealth / 10) < 1:
 			piece.damage(1)
@@ -338,10 +339,13 @@ func findMoveableTiles(piece : MoveablePiece, check : bool):
 		else:
 			if currentTile:
 				if (lookForTile(possibleTiles[n]) and lookForTile(possibleTiles[n]).moveable) or possibleTiles[n] == piece.currentTile.global_position:
-					if check:
-						toReturn.append(currentTile)
+					if lookForTile(possibleTiles[n]).contains is MoveablePiece and lookForTile(possibleTiles[n]).contains != piece:
+						pass
 					else:
-						setMoveable(currentTile)
+						if check:
+							toReturn.append(currentTile)
+						else:
+							setMoveable(currentTile)
 			currentTile = null
 	if check:
 		return toReturn
@@ -423,9 +427,9 @@ func handleMovement():
 func findClosestTile(direction : String):
 	var foundTile : tile
 	var searcher : Vector3 = highlightedTile.global_position
-	var toAdd = Directions.getDirection(direction)
-	var left = Directions.getDirection(Directions.getSides(direction)[0])
-	var right = Directions.getDirection(Directions.getSides(direction)[1])
+	var toAdd = DirectionHandler.getPos(direction)
+	var left = DirectionHandler.getPos(DirectionHandler.getSides(direction)[0])
+	var right = DirectionHandler.getPos(DirectionHandler.getSides(direction)[1])
 	for n in range(4):
 		if !foundTile:
 			searcher += toAdd
@@ -448,11 +452,16 @@ func findClosestTileToTarget(target : Vector3, direction : Vector3):
 		var xVar = abs(target.x - (moving.global_position + direction * (n + 1)).x)
 		var zVar = abs(target.z - (moving.global_position + direction * (n + 1)).z)
 		if smallestVariation:
-			pass
+			if smallestVariation > xVar + zVar:
+				if lookForTile(moving.currentTile.global_position + direction * (n + 1)):
+					smallestVariation = xVar + zVar
+					closestTile = lookForTile(moving.currentTile.global_position + direction * (n + 1))
 		else:
-			smallestVariation = xVar + zVar
-			
-		
+			if lookForTile(moving.currentTile.global_position + direction * (n + 1)):
+				smallestVariation = xVar + zVar
+				closestTile = lookForTile(moving.currentTile.global_position + direction * (n + 1))
+	
+	return closestTile
 
 func setPieceOrientation(piece : MoveablePiece, direction : String):
 	match direction:
