@@ -26,7 +26,7 @@ func generateTiles():
 		var allTiles = $Tiles.get_children()
 		if allTiles.size() == 0:
 			$Tiles.add_child(tileToAdd)
-			
+			totalTiles.append(tileToAdd)
 			cantPlace = false
 		while cantPlace:
 			tileToAdd.position.x += randi_range(-1,1)
@@ -38,6 +38,7 @@ func generateTiles():
 			if goodForNow:
 				cantPlace = false
 				$Tiles.add_child(tileToAdd)
+				totalTiles.append(tileToAdd)
 	GameState.allFloorTiles = totalTiles
 	randPlacePiece($PlayerPiece)
 	randPlacePiece($EnemyPiece)

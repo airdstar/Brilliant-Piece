@@ -9,6 +9,7 @@ var highlightedTile : tile
 var playerPiece : PlayerPiece
 var neutralPieces : Array[MoveablePiece]
 var enemyPiece : Array[EnemyPiece]
+var enemyBehaviors : Array[String]
 
 var playerTurn : bool = true
 var actionUsed : bool = false
