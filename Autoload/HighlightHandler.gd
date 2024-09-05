@@ -1,10 +1,30 @@
 extends Node
 
-func handleMovement():
+func _process(_delta):
+	var inputDirection : String
+	if Input.is_action_just_pressed("Left"):
+		inputDirection = "Left"
+	elif Input.is_action_just_pressed("Right"):
+		inputDirection = "Right"
+	elif Input.is_action_just_pressed("Forward"):
+		inputDirection = "Forward"
+	elif Input.is_action_just_pressed("Backward"):
+		inputDirection = "Backward"
+	
+	if inputDirection:
+		if !GameState.currentMenu:
+			handle3DMovement(inputDirection)
+		else:
+			handleMenuMovement(inputDirection)
+
+func handleMenuMovement(input : String):
+	pass
+
+func handle3DMovement(input : String):
 	var rotation = rad_to_deg($Twist.rotation.y)
 	var direction = null
 	
-	if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right"):
+	if input == "Left" or input == "Right":
 		if rotation > -172.5 and rotation < -97.5:
 			direction = "South"
 		elif rotation >= -97.5 and rotation <= -82.5:
@@ -22,10 +42,10 @@ func handleMovement():
 		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
 			direction = "SouthWest"
 		
-		if Input.is_action_just_pressed("Right"):
+		if input == "Right":
 			direction = DirectionHandler.getOppDirection(direction)
 			
-	elif Input.is_action_just_pressed("Backward") or Input.is_action_just_pressed("Forward"):
+	elif input == "Backward" or input == "Forward":
 		if rotation > -172.5 and rotation < -97.5:
 			direction = "East"
 		elif rotation >= -97.5 and rotation <= -82.5:
@@ -43,7 +63,7 @@ func handleMovement():
 		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
 			direction = "SouthEast"
 		
-		if Input.is_action_just_pressed("Forward"):
+		if input == "Forward":
 			direction = DirectionHandler.getOppDirection(direction)
 			
 	findClosestTile(direction)
