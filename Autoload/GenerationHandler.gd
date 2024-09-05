@@ -23,9 +23,19 @@ func generateFloor():
 				totalTiles.append(tileToAdd)
 	GameState.allFloorTiles = totalTiles
 
-func lookForTile(pos : Vector3):
-	var allTiles = GameState.allFloorTiles
-	for n in range(allTiles.size()):
-		if allTiles[n].global_position == pos:
-			return allTiles[n]
-	return null
+func generatePlayer():
+	var player = GameState.playerPiece
+	player = preload("res://Piece/PlayerPiece.tscn").instantiate()
+	player.classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
+	player.type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
+	GameState.currentFloor.add_child(player)
+
+func generateEnemies():
+	var enemyArray
+	for n in range(1):
+		enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
+		enemyArray[n].enemyType = ResourceLoader.load("res://Resources/Enemy Resources/Goblin.tres")
+		GameState.currentFloor.add_child(enemyArray[n])
+
+func placePieces():
+	pass

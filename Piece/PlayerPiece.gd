@@ -10,7 +10,6 @@ var actions : Array[ActionResource]
 @export var items : Array[ItemResource]
 
 func _ready():
-	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
 	setData()
 
 func setData():

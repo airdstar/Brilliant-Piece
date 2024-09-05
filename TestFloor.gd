@@ -6,6 +6,10 @@ var soulUsed : bool = false
 
 func secondaryReady():
 	GameState.currentFloor = self
+	GenerationHandler.generateFloor()
+	GenerationHandler.generatePlayer()
+	GenerationHandler.generateEnemies()
+	GenerationHandler.placePieces()
 	generateTiles()
 	openMenu()
 	$EnemyController.setEnemies($EnemyPiece)

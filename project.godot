@@ -27,6 +27,7 @@ MovementHandler="*res://Autoload/MovementHandler.gd"
 TileHandler="*res://Autoload/TileHandler.gd"
 HighlightHandler="*res://Autoload/HighlightHandler.gd"
 EnemyHandler="*res://Autoload/EnemyHandler.gd"
+GenerationHandler="*res://Autoload/GenerationHandler.gd"
 
 [display]
 

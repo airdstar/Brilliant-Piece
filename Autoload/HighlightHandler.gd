@@ -50,7 +50,7 @@ func handleMovement():
 
 func findClosestTile(direction : String):
 	var foundTile : tile
-	var searcher : Vector3 = highlightedTile.global_position
+	var searcher : Vector3 = GameState.highlightedTile.global_position
 	var toAdd = DirectionHandler.getPos(direction)
 	var left = DirectionHandler.getPos(DirectionHandler.getSides(direction)[0])
 	var right = DirectionHandler.getPos(DirectionHandler.getSides(direction)[1])
