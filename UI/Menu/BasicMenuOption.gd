@@ -64,10 +64,6 @@ func setOptionType(optionType : String):
 	type = optionType
 	label.text = optionType
 
-func hoverToggle():
-	highlight.visible = !highlight.visible
-	hovered = !hovered
-
 func selectToggle():
 	selected = !selected
 

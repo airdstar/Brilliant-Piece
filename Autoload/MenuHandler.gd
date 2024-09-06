@@ -1,7 +1,7 @@
 extends Node
 
 func _process(_delta):
-	if GameState.currentMenu:
+	if GameState.currentMenu != null:
 		if Input.is_action_just_pressed("Select"):
 			select()
 		elif Input.is_action_just_pressed("Cancel"):

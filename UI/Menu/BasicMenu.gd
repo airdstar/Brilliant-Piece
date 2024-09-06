@@ -12,10 +12,7 @@ func _ready():
 
 func _process(_delta):
 	
-	if Input.is_action_just_pressed("Cancel") and hasSelectedOption:
-		options.get_child(highlightedOption).selectToggle()
-		hasSelectedOption = false
-	elif Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
+	if Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
 		$AnimationPlayer.play("CloseMenu")
 		await get_tree().create_timer(0.2).timeout
 		get_parent().get_parent().inMenu = false
@@ -58,7 +55,7 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 					toAdd.setOptionType("Action")
 				elif !moveCheck:
 					toAdd.setOptionType("Move")
-				toAdd.hoverToggle()
+				hoverToggle()
 			1:
 				if !actionCheck and !moveCheck:
 					toAdd.setOptionType("Move")
@@ -73,6 +70,10 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 				prevPos += Vector2(0,-1)
 			prevPos += Vector2(0,-26)
 		toAdd.position = prevPos
+
+func hoverToggle():
+	options[highlightedOption].highlight.visible = !options[highlightedOption].highlight.visible
+	options[highlightedOption].hovered = !options[highlightedOption].hovered
 
 func selectedOption():
 	match options[highlightedOption].type:

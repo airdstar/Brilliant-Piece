@@ -27,20 +27,20 @@ func handleMenuHighlighting(input : String):
 				"Backward":
 					input = "Forward"
 		if input == "Forward" and !menu.hasSelectedOption:
-			menu.options[menu.highlightedOption].hoverToggle()
+			menu.hoverToggle()
 			if menu.highlightedOption < menu.optionCount - 1:
 				menu.highlightedOption += 1
 			else:
 				menu.highlightedOption = 0
-			menu.options[menu.highlightedOption].hoverToggle()
+			menu.hoverToggle()
 
 		elif input == "Backward" and !menu.hasSelectedOption:
-			menu.options[menu.highlightedOption].hoverToggle()
+			menu.hoverToggle()
 			if menu.highlightedOption > 0:
 				menu.highlightedOption -= 1
 			else:
 				menu.highlightedOption = menu.optionCount - 1
-			menu.options[menu.highlightedOption].hoverToggle()
+			menu.hoverToggle()
 
 func handle3DHighlighting(input : String):
 	var rotation = rad_to_deg(GameState.currentFloor.cameraBase.rotation.y)

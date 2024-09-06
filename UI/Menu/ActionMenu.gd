@@ -2,13 +2,14 @@ extends Control
 class_name ActionMenu
 
 var highlightedOption = 0
+var optionCount = 5
 var actions
 var growing := true
 var lowestOpacity : float = 0.1
 var additionalOpacity : float = 0.0
 var hasSelectedOption := false
 @onready var highlight = $TextureRect/Highlight
-@onready var options = $Options
+@onready var optionHolder = $Options
 @onready var actionLabels : Array[Label] = [$Options/actionLabel1, $Options/actionLabel2, $Options/actionLabel3, $Options/actionLabel4, $Options/actionLabel5]
 
 func _ready():
