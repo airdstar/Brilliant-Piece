@@ -3,9 +3,9 @@ extends Node
 func _process(_delta):
 	if GameState.currentMenu:
 		if Input.is_action_just_pressed("Select"):
-			pass
+			select()
 		elif Input.is_action_just_pressed("Cancel"):
-			pass
+			closeMenu()
 
 
 func openMenu():
@@ -19,4 +19,7 @@ func openMenu():
 	HighlightHandler.highlightTile(GameState.playerFloorTile)
 
 func closeMenu():
+	pass
+
+func select():
 	pass

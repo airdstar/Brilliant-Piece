@@ -112,29 +112,28 @@ func findClosestTile(direction : String):
 
 func highlightTile(tileToSelect : tile):
 	var pointer = GameState.currentFloor.Pointer
+	var cameraBase = GameState.currentFloor.cameraBase
 	GameState.highlightedTile = tileToSelect
 	TileHandler.setTilePattern()
 	tileToSelect = GameState.highlightedTile
 	tileToSelect.highlight.visible = true
-	pointer.position.x = tileToSelect.position.x
-	pointer.position.z = tileToSelect.position.z
-	Pointer.height = tileToSelect.getPointerPos()
-	$Twist.position.x = Pointer.position.x
-	$Twist.position.z = Pointer.position.z
+	pointer.position = Vector3(tileToSelect.position.x, pointer.position.y, tileToSelect.position.z)
+	pointer.height = tileToSelect.getPointerPos()
+	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
 	if tileToSelect.moveable:
 		if tileToSelect.contains is EnemyPiece:
 			tileToSelect.setColor("Red")
-			Pointer.setColor("Red")
+			pointer.setColor("Red")
 		else:
 			tileToSelect.setColor("Blue")
-			Pointer.setColor("Blue")
+			pointer.setColor("Blue")
 	elif tileToSelect.hittable:
 		tileToSelect.setColor("Red")
-		Pointer.setColor("Red")
+		pointer.setColor("Red")
 			
 	else:
 		tileToSelect.setColor("Gray")
-		Pointer.setColor("Gray")
+		pointer.setColor("Gray")
 	
 	
-	displayInfo()
+	#displayInfo()

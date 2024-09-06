@@ -2,7 +2,7 @@ extends Node
 
 var currentFloor : Floor
 
-var allFloorTiles : Array[tile]
+var allFloorTiles 
 var playerFloorTile : tile
 var highlightedTile : tile
 

@@ -28,6 +28,7 @@ var highlightedTile : tile
 @onready var menuHolder = $Menu
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
+@onready var cameraBase = $Twist
 
 func _ready():
 	secondaryReady()

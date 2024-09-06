@@ -1,7 +1,7 @@
 extends Node
 
 func generateFloor():
-	var totalTiles
+	var totalTiles = []
 	for n in range(100):
 		var cantPlace = true
 		var tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
@@ -57,8 +57,9 @@ func placePieces():
 		
 		if pieceCount != 0:
 			while (pieceCount != amountPlaced):
+				print(n)
 				var piecePos = GameState.allFloorTiles[randi_range(0, GameState.allFloorTiles.size() - 1)]
-				if piecePos.contains:
+				if !piecePos.contains:
 					if n != 0:
 						piecePos.setPiece(piece[amountPlaced])
 						amountPlaced += 1
@@ -66,3 +67,4 @@ func placePieces():
 						piecePos.setPiece(piece)
 						HighlightHandler.highlightTile(piecePos)
 						GameState.playerFloorTile = piecePos
+						amountPlaced += 1

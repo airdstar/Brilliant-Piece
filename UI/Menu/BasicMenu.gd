@@ -4,7 +4,7 @@ class_name BasicMenu
 var hasSelectedOption : bool = false
 var optionCount : int
 var highlightedOption : int = 1
-var options
+var options = []
 @onready var optionHolder = $Options
 
 func _ready():
@@ -59,7 +59,7 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 	var prevPos = Vector2(0,0)
 	for n in range(optionCount):
 		var toAdd = preload("res://UI/Menu/BasicMenuOption.tscn").instantiate()
-		options.add_child(toAdd)
+		optionHolder.add_child(toAdd)
 		if n != optionCount - 1 and n == 0:
 			toAdd.SetSprite(1)
 		elif n == optionCount - 1 and n != 0:

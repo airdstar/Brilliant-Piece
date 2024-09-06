@@ -11,7 +11,6 @@ func secondaryReady():
 	GenerationHandler.generateEnemies()
 	GenerationHandler.placePieces()
 	MenuHandler.openMenu()
-	openMenu()
 	$EnemyController.setEnemies($EnemyPiece)
 	$EnemyController.setTargets($PlayerPiece)
 
