@@ -9,7 +9,8 @@ func _process(_delta):
 				if GameState.currentMenu.hasSelectedOption:
 					GameState.currentMenu.options[GameState.currentMenu.highlightedOption - 1].selectToggle()
 					GameState.currentMenu.hasSelectedOption = false
-			closeMenu()
+				else:
+					closeMenu()
 	elif Input.is_action_just_pressed("Cancel"):
 		openMenu()
 
@@ -34,8 +35,20 @@ func select():
 	var currentMenu = GameState.currentMenu
 	if currentMenu is BasicMenu:
 		currentMenu.hasSelectedOption = true
-		currentMenu.options[currentMenu.highlightedOption - 1].selectToggle()
+		currentMenu.options[currentMenu.highlightedOption].selectToggle()
 		currentMenu.selectedOption()
 	elif currentMenu is ActionMenu:
-		pass
-		
+		GameState.action = GameState.currentMenu.actions[GameState.currentMenu.highlightedOption]
+		TileHandler.showAction()
+		GameState.currentFloor.Pointer.visible = true
+		closeMenu()
+		queue_free()
+
+
+func unselect():
+	var currentMenu = GameState.currentMenu
+	if currentMenu is BasicMenu:
+		if currentMenu.hasSelectedOption:
+			currentMenu.hasSelectedOption = false
+			currentMenu.options[currentMenu.highlightedOption].selectToggle()
+		currentMenu.selectedOption()

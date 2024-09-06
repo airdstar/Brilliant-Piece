@@ -19,22 +19,28 @@ func _process(_delta):
 
 func handleMenuHighlighting(input : String):
 	var menu = GameState.currentMenu
-	
-	if input == "Forward" and !menu.hasSelectedOption:
-		menu.options[menu.highlightedOption - 1].hoverToggle()
-		if menu.highlightedOption < menu.optionCount:
-			menu.highlightedOption += 1
-		else:
-			menu.highlightedOption = 1
-		menu.options[menu.highlightedOption - 1].hoverToggle()
+	if menu is BasicMenu or menu is ActionMenu:
+		if menu is ActionMenu:
+			match input:
+				"Forward":
+					input = "Backward"
+				"Backward":
+					input = "Forward"
+		if input == "Forward" and !menu.hasSelectedOption:
+			menu.options[menu.highlightedOption].hoverToggle()
+			if menu.highlightedOption < menu.optionCount - 1:
+				menu.highlightedOption += 1
+			else:
+				menu.highlightedOption = 0
+			menu.options[menu.highlightedOption].hoverToggle()
 
-	elif input == "Backward" and !menu.hasSelectedOption:
-		menu.options[menu.highlightedOption - 1].hoverToggle()
-		if menu.highlightedOption > 1:
-			menu.highlightedOption -= 1
-		else:
-			menu.highlightedOption = menu.optionCount
-		menu.options[menu.highlightedOption - 1].hoverToggle()
+		elif input == "Backward" and !menu.hasSelectedOption:
+			menu.options[menu.highlightedOption].hoverToggle()
+			if menu.highlightedOption > 0:
+				menu.highlightedOption -= 1
+			else:
+				menu.highlightedOption = menu.optionCount - 1
+			menu.options[menu.highlightedOption].hoverToggle()
 
 func handle3DHighlighting(input : String):
 	var rotation = rad_to_deg(GameState.currentFloor.cameraBase.rotation.y)
@@ -108,7 +114,6 @@ func findClosestTile(direction : String):
 
 	if foundTile:
 		highlightTile(foundTile)
-
 
 func highlightTile(tileToSelect : tile):
 	var pointer = GameState.currentFloor.Pointer

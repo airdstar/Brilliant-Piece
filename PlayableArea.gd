@@ -6,7 +6,6 @@ var twist : float
 
 
 var inMenu : bool = false
-var menu : BasicMenu
 
 var playerTile : tile
 
@@ -193,14 +192,7 @@ func endTurn():
 		$StaticHUD/TurnHUD/TurnOutline/Turn.modulate = Color(0.63,0.72,0.86)
 
 func openMenu():
-	inMenu = true
-	menu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
-	$Menu.add_child(menu)
-	menu.addOptions(moveUsed, actionUsed)
-	menu.position = Vector2(360,325)
-	menu.showMenu(true)
-	Pointer.visible = false
-	highlightTile(playerTile)
+	pass
 
 func setMoveable(moveableTile : tile):
 	moveableTile.moveable = true

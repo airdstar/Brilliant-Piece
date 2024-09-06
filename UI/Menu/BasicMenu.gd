@@ -3,7 +3,7 @@ class_name BasicMenu
 
 var hasSelectedOption : bool = false
 var optionCount : int
-var highlightedOption : int = 1
+var highlightedOption : int = 0
 var options = []
 @onready var optionHolder = $Options
 
@@ -13,7 +13,7 @@ func _ready():
 func _process(_delta):
 	
 	if Input.is_action_just_pressed("Cancel") and hasSelectedOption:
-		options.get_child(highlightedOption - 1).selectToggle()
+		options.get_child(highlightedOption).selectToggle()
 		hasSelectedOption = false
 	elif Input.is_action_just_pressed("Cancel") and !hasSelectedOption:
 		$AnimationPlayer.play("CloseMenu")
@@ -75,20 +75,18 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 		toAdd.position = prevPos
 
 func selectedOption():
-	match options[highlightedOption - 1].type:
+	match options[highlightedOption].type:
 		"Move":
 			$AnimationPlayer.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			get_parent().get_parent().moving = get_parent().get_parent().player
-			get_parent().get_parent().inMenu = false
-			get_parent().get_parent().Pointer.visible = true
-			get_parent().get_parent().findMoveableTiles(get_parent().get_parent().moving, false)
-			get_parent().get_parent().camera.position = Vector3(5,5,5)
-			get_parent().get_parent().camera.rotation = Vector3(deg_to_rad(-40),deg_to_rad(40),0)
+			GameState.moving = GameState.playerPiece
+			GameState.currentFloor.Pointer.visible = true
+			get_parent().get_parent().findMoveableTiles(GameState.moving, false)
 			queue_free()
 		"Action":
 			$MenuSelect.play()
 			var toAdd = preload("res://UI/Menu/ActionMenu.tscn").instantiate()
+			GameState.currentMenu = toAdd
 			add_child(toAdd)
 			toAdd.position.y += 30
 			toAdd.position.x -= 4

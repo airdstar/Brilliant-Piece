@@ -24,6 +24,7 @@ func _process(_delta):
 		additionalOpacity += 0.001
 	else:
 		additionalOpacity -= 0.001
+	
 	if hovered:
 		if !selected:
 			highlight.modulate = Color(1,1,1,lowestOpacity + additionalOpacity)
