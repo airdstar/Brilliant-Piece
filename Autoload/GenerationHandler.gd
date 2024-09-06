@@ -57,7 +57,6 @@ func placePieces():
 		
 		if pieceCount != 0:
 			while (pieceCount != amountPlaced):
-				print(n)
 				var piecePos = GameState.allFloorTiles[randi_range(0, GameState.allFloorTiles.size() - 1)]
 				if !piecePos.contains:
 					if n != 0:

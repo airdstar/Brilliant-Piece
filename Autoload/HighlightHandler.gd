@@ -37,7 +37,7 @@ func handleMenuHighlighting(input : String):
 		menu.options[menu.highlightedOption - 1].hoverToggle()
 
 func handle3DHighlighting(input : String):
-	var rotation = rad_to_deg($Twist.rotation.y)
+	var rotation = rad_to_deg(GameState.currentFloor.cameraBase.rotation.y)
 	var direction = null
 	
 	if input == "Left" or input == "Right":
@@ -94,7 +94,7 @@ func findClosestTile(direction : String):
 	for n in range(4):
 		if !foundTile:
 			searcher += toAdd
-			if !TileHandler.TileHandler.lookForTile(searcher):
+			if !TileHandler.lookForTile(searcher):
 				if !TileHandler.lookForTile(searcher + forward):
 					if !TileHandler.lookForTile(searcher + left):
 						if !TileHandler.lookForTile(searcher + right):

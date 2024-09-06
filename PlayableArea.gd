@@ -8,10 +8,7 @@ var twist : float
 var inMenu : bool = false
 var menu : BasicMenu
 
-@onready var player : PlayerPiece = $PlayerPiece
 var playerTile : tile
-
-@onready var enemies : EnemyPiece = $EnemyPiece
 
 var playerTurn : bool = true
 var actionUsed : bool = false
@@ -26,14 +23,13 @@ var highlightedTile : tile
 
 @onready var tileHolder = $Tiles
 @onready var menuHolder = $Menu
+
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D
 @onready var cameraBase = $Twist
 
 func _ready():
 	secondaryReady()
-	player.death.connect(self.playerDeath)
-	setTilePattern()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func secondaryReady():
@@ -45,8 +41,6 @@ func _process(_delta):
 	
 	if playerTurn:
 		
-		if !menu and !action and !moving and !viewing and !item:
-			openMenu()
 		
 		if Input.is_action_just_pressed("Select"):
 			if moving and highlightedTile.moveable:
@@ -75,9 +69,6 @@ func _process(_delta):
 				stopShowingOptions()
 				action = null
 				openMenu()
-			if viewing:
-				viewing = false
-				openMenu()
 			if item:
 				stopShowingOptions()
 				item = null
@@ -86,7 +77,8 @@ func _process(_delta):
 		$EnemyController.makeDecision()
 	if !inMenu:
 		if Input.is_action_just_pressed("Left") or Input.is_action_just_pressed("Right") or Input.is_action_just_pressed("Forward") or Input.is_action_just_pressed("Backward"):
-			handleMovement()
+			#handleMovement()
+			pass
 	
 	secondaryProcess(_delta)
 	cameraControls()

@@ -11,26 +11,6 @@ func _ready():
 	pass
 
 func _process(_delta):
-	if Input.is_action_just_pressed("Forward") and !hasSelectedOption:
-		options.get_child(highlightedOption - 1).hoverToggle()
-		if highlightedOption < optionCount:
-			highlightedOption += 1
-		else:
-			highlightedOption = 1
-		options.get_child(highlightedOption - 1).hoverToggle()
-
-	elif Input.is_action_just_pressed("Backward") and !hasSelectedOption:
-		options.get_child(highlightedOption - 1).hoverToggle()
-		if highlightedOption > 1:
-			highlightedOption -= 1
-		else:
-			highlightedOption = optionCount
-		options.get_child(highlightedOption - 1).hoverToggle()
-
-	if Input.is_action_just_pressed("Select") and !hasSelectedOption:
-		options.get_child(highlightedOption - 1).selectToggle()
-		hasSelectedOption = true
-		selectedOption()
 	
 	if Input.is_action_just_pressed("Cancel") and hasSelectedOption:
 		options.get_child(highlightedOption - 1).selectToggle()
@@ -59,6 +39,7 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 	var prevPos = Vector2(0,0)
 	for n in range(optionCount):
 		var toAdd = preload("res://UI/Menu/BasicMenuOption.tscn").instantiate()
+		options.append(toAdd)
 		optionHolder.add_child(toAdd)
 		if n != optionCount - 1 and n == 0:
 			toAdd.SetSprite(1)
@@ -94,7 +75,7 @@ func addOptions(moveCheck : bool, actionCheck : bool):
 		toAdd.position = prevPos
 
 func selectedOption():
-	match options.get_child(highlightedOption - 1).type:
+	match options[highlightedOption - 1].type:
 		"Move":
 			$AnimationPlayer.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout

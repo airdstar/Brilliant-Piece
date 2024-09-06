@@ -1,4 +1,5 @@
 extends Control
+class_name ActionMenu
 
 var highlightedOption = 0
 var actions
@@ -10,7 +11,7 @@ var additionalOpacity : float = 0.0
 @onready var actionLabels : Array[Label] = [$Options/actionLabel1, $Options/actionLabel2, $Options/actionLabel3, $Options/actionLabel4, $Options/actionLabel5]
 
 func _ready():
-	actions = get_parent().get_parent().get_parent().player.actions
+	actions = GameState.playerPiece.actions
 	for n in range(5):
 		if actions.size() - 1 >= n:
 			actionLabels[n].text = actions[n].name

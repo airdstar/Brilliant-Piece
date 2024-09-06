@@ -11,8 +11,6 @@ func secondaryReady():
 	GenerationHandler.generateEnemies()
 	GenerationHandler.placePieces()
 	MenuHandler.openMenu()
-	$EnemyController.setEnemies($EnemyPiece)
-	$EnemyController.setTargets($PlayerPiece)
 
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):
