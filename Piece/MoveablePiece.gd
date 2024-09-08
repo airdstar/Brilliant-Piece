@@ -34,3 +34,22 @@ func heal(healingAmount : int):
 	health += healingAmount
 	if health >= maxHealth:
 		health = maxHealth
+
+func setPieceOrientation(dir : String):
+	match dir:
+		"West":
+			global_rotation.y = deg_to_rad(0)
+		"SouthWest":
+			global_rotation.y = deg_to_rad(45)
+		"South":
+			global_rotation.y = deg_to_rad(90)
+		"SouthEast":
+			global_rotation.y = deg_to_rad(135)
+		"East":
+			global_rotation.y = deg_to_rad(180)
+		"NorthEast":
+			global_rotation.y = deg_to_rad(-135)
+		"North":
+			global_rotation.y = deg_to_rad(-90)
+		"NorthWest":
+			global_rotation.y = deg_to_rad(-45)

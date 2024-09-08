@@ -1,0 +1,180 @@
+[gd_scene load_steps=15 format=3 uid="uid://bdr4d7j2lkvsg"]
+
+[ext_resource type="Texture2D" uid="uid://bcwfc204nf0kq" path="res://UI/MoveOutline.png" id="1_m1oxk"]
+[ext_resource type="Script" path="res://UI/HUD.gd" id="1_ymfxc"]
+[ext_resource type="Texture2D" uid="uid://cxk0hte4oqp8b" path="res://UI/Move.png" id="2_qrgm3"]
+[ext_resource type="Texture2D" uid="uid://bcpngx4i8c3ye" path="res://UI/ActionOutline.png" id="3_f03j1"]
+[ext_resource type="Texture2D" uid="uid://cekq2o6q2updg" path="res://UI/Action.png" id="4_n408o"]
+[ext_resource type="Texture2D" uid="uid://civ372syou2x6" path="res://UI/TurnOutline.png" id="5_3wc1a"]
+[ext_resource type="Texture2D" uid="uid://deo1msgydtcbb" path="res://UI/Turn.png" id="6_ko3ij"]
+[ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://UI/Portrait.png" id="7_xdbhw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cvnof"]
+font_size = 19
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_780ey"]
+font_size = 19
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uouik"]
+font_size = 19
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_42dsp"]
+default_font_size = 19
+RichTextLabel/constants/outline_size = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqgg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b6ckj"]
+material = SubResource("StandardMaterial3D_jcqgg")
+size = Vector3(8, 8, 0.5)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ymfxc")
+
+[node name="TurnHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 967.0
+offset_top = 10.0
+offset_right = 1015.0
+offset_bottom = 58.0
+
+[node name="MoveOutline" type="TextureRect" parent="TurnHUD"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 51.0
+offset_right = 19.0
+offset_bottom = 67.0
+texture = ExtResource("1_m1oxk")
+
+[node name="Move" type="TextureRect" parent="TurnHUD/MoveOutline"]
+modulate = Color(0.63, 0.72, 0.86, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("2_qrgm3")
+
+[node name="ActionOutline" type="TextureRect" parent="TurnHUD"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 51.0
+offset_right = 44.0
+offset_bottom = 67.0
+texture = ExtResource("3_f03j1")
+
+[node name="Action" type="TextureRect" parent="TurnHUD/ActionOutline"]
+modulate = Color(0.631373, 0.721569, 0.858824, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("4_n408o")
+
+[node name="TurnOutline" type="TextureRect" parent="TurnHUD"]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+texture = ExtResource("5_3wc1a")
+
+[node name="Turn" type="TextureRect" parent="TurnHUD/TurnOutline"]
+modulate = Color(0.631373, 0.721569, 0.858824, 1)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_ko3ij")
+
+[node name="Status" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 148.0
+offset_right = 404.0
+offset_bottom = 182.0
+
+[node name="NameLabel" type="Label" parent="Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 23.0
+offset_bottom = 27.0
+text = "hi"
+label_settings = SubResource("LabelSettings_cvnof")
+
+[node name="TypeLabel" type="Label" parent="Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 30.0
+offset_right = 96.0
+offset_bottom = 58.0
+text = "hi"
+label_settings = SubResource("LabelSettings_780ey")
+
+[node name="LevelLabel" type="Label" parent="Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 60.0
+offset_right = 23.0
+offset_bottom = 88.0
+text = "hi"
+label_settings = SubResource("LabelSettings_uouik")
+
+[node name="HealthLabel" type="RichTextLabel" parent="Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 90.0
+offset_right = 214.0
+offset_bottom = 118.0
+theme = SubResource("Theme_42dsp")
+bbcode_enabled = true
+text = "hi"
+scroll_active = false
+
+[node name="SoulLabel" type="RichTextLabel" parent="Status"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 120.0
+offset_right = 214.0
+offset_bottom = 148.0
+theme = SubResource("Theme_42dsp")
+bbcode_enabled = true
+text = "hi"
+scroll_active = false
+
+[node name="Portrait" type="TextureRect" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 148.0
+offset_bottom = 148.0
+texture = ExtResource("7_xdbhw")
+
+[node name="PortraitBackground" type="TextureRect" parent="Portrait"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 124.0
+offset_bottom = 124.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(120, 120)
+
+[node name="Portrait" type="Node3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Portrait"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+fov = 60.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Portrait/Camera3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Portrait/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = SubResource("BoxMesh_b6ckj")

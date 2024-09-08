@@ -29,6 +29,8 @@ HighlightHandler="*res://Autoload/HighlightHandler.gd"
 EnemyHandler="*res://Autoload/EnemyHandler.gd"
 GenerationHandler="*res://Autoload/GenerationHandler.gd"
 MenuHandler="*res://Autoload/MenuHandler.gd"
+InterfaceHandler="*res://Autoload/InterfaceHandler.gd"
+ActionHandler="*res://Autoload/ActionHandler.gd"
 
 [display]
 

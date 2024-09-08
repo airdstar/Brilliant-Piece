@@ -15,11 +15,13 @@ var playerTurn : bool = true
 var actionUsed : bool = false
 var moveUsed : bool = false
 
-var currentMenu
+var currentMenu = null
 var viewing : bool = false
-var item : ItemResource
-var moving : MoveablePiece
-var action : ActionResource
+var item : ItemResource = null
+var moving : MoveablePiece = null
+var action : ActionResource = null
 
 func endTurn():
-	pass
+	playerTurn = !playerTurn
+	actionUsed = false
+	moveUsed = false

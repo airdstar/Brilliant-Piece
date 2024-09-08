@@ -135,10 +135,8 @@ func highlightTile(tileToSelect : tile):
 	elif tileToSelect.hittable:
 		tileToSelect.setColor("Red")
 		pointer.setColor("Red")
-			
 	else:
 		tileToSelect.setColor("Gray")
 		pointer.setColor("Gray")
 	
-	
-	#displayInfo()
+	InterfaceHandler.displayInfo()

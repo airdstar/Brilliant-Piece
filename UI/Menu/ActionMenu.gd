@@ -1,23 +1,23 @@
-extends Control
+extends Menu
 class_name ActionMenu
 
-var highlightedOption = 0
-var optionCount = 5
-var actions
 var growing := true
 var lowestOpacity : float = 0.1
 var additionalOpacity : float = 0.0
-var hasSelectedOption := false
 @onready var highlight = $TextureRect/Highlight
-@onready var optionHolder = $Options
 @onready var actionLabels : Array[Label] = [$Options/actionLabel1, $Options/actionLabel2, $Options/actionLabel3, $Options/actionLabel4, $Options/actionLabel5]
 
-func _ready():
-	actions = GameState.playerPiece.actions
-	for n in range(5):
-		if actions.size() - 1 >= n:
-			actionLabels[n].text = actions[n].name
+func addOptions():
+	optionCount = 5
+	options = GameState.playerPiece.actions
+	for n in range(optionCount):
+		if options.size() - 1 >= n:
+			if options[n] != null:
+				actionLabels[n].text = options[n].name
+			else:
+				actionLabels[n].text = "- EMPTY -"
 		else:
+			options.append(null)
 			actionLabels[n].text = "- EMPTY -"
 
 func _process(_delta):
@@ -28,16 +28,13 @@ func _process(_delta):
 	
 	$TextureRect/Highlight.modulate = Color(1,1,1,lowestOpacity + additionalOpacity)
 	
-	if Input.is_action_just_pressed("Cancel"):
-		queue_free()
-	
-	if Input.is_action_just_pressed("Select"):
-		if actionLabels[highlightedOption].text != "- EMPTY -":
-			get_parent().get_parent().get_parent().inMenu = false
-			get_parent().get_parent().get_parent().action = actions[highlightedOption]
-			get_parent().get_parent().get_parent().showAction()
-			get_parent().get_parent().get_parent().Pointer.visible = true
-			get_parent().queue_free()
+
+func selectOption():
+	if options[highlightedOption] != null:
+		GameState.action = options[highlightedOption]
+		TileHandler.showAction()
+		GameState.currentFloor.Pointer.visible = true
+		MenuHandler.fullyCloseMenu()
 
 func hoverToggle():
 	match highlightedOption:

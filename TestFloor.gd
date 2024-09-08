@@ -6,6 +6,7 @@ var soulUsed : bool = false
 
 func secondaryReady():
 	GameState.currentFloor = self
+	InterfaceHandler.HUD = $Menu/HUD
 	GenerationHandler.generateFloor()
 	GenerationHandler.generatePlayer()
 	GenerationHandler.generateEnemies()
