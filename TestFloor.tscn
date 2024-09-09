@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=8 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
 [ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_uhgei"]
 [ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="4_75t5u"]
+[ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://EnemyController.tscn" id="4_eawrr"]
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
 [ext_resource type="Shader" path="res://Shaders/RetroPixel.gdshader" id="6_q66eq"]
 
@@ -39,10 +40,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Background" parent="." instance=ExtResource("5_f853j")]
 
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(320, 240)
-render_target_update_mode = 4
+[node name="Enemy Controller" parent="." instance=ExtResource("4_eawrr")]
 
 [node name="StaticHUD" type="CanvasLayer" parent="."]
 layer = 2
