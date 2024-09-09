@@ -14,6 +14,7 @@ func _process(_delta):
 			else:
 				closeMenu()
 	elif Input.is_action_just_pressed("Cancel"):
+		TileHandler.stopShowing()
 		openMenu()
 
 func openMenu():
@@ -27,21 +28,23 @@ func closeMenu():
 	GameState.currentMenu.animation.play("CloseMenu")
 	await get_tree().create_timer(0.2).timeout
 	var holder = GameState.currentMenu
-	if GameState.currentMenu.get_parent() is Menu:
-		GameState.currentMenu = GameState.currentMenu.get_parent()
-		GameState.currentMenu.hasSelectedOption = false
-		GameState.currentMenu.options[GameState.currentMenu.highlightedOption].selectToggle()
-	else:
-		GameState.currentFloor.Pointer.visible = true
-	holder.queue_free()
+	if holder != null:
+		if GameState.currentMenu.get_parent() is Menu:
+			GameState.currentMenu = GameState.currentMenu.get_parent()
+			GameState.currentMenu.hasSelectedOption = false
+			GameState.currentMenu.options[GameState.currentMenu.highlightedOption].selectToggle()
+		else:
+			GameState.currentFloor.Pointer.visible = true
+		holder.queue_free()
 
 func fullyCloseMenu():
 	while GameState.currentMenu != null:
 		if !GameState.currentMenu.get_parent() is Menu:
-			GameState.currentMenu.animation.play("CloseMenu")
-			await get_tree().create_timer(0.2).timeout
-			GameState.currentMenu.queue_free()
-			GameState.currentMenu = null
+			GameState.currentMenu.animation.play("SelectCloseMenu")
+			await get_tree().create_timer(0.1).timeout
+			if GameState.currentMenu != null:
+				GameState.currentMenu.queue_free()
+				GameState.currentMenu = null
 		else:
 			GameState.currentMenu = GameState.currentMenu.get_parent()
 	GameState.currentFloor.Pointer.visible = true

@@ -10,6 +10,8 @@ var actions : Array[ActionResource]
 @export var items : Array[ItemResource]
 
 func _ready():
+	items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
+	items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
 	setData()
 
 func setData():

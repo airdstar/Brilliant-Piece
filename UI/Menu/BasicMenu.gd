@@ -56,8 +56,6 @@ func selectOption():
 		"Move":
 			animation.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			GameState.moving = GameState.playerPiece
-			GameState.currentFloor.Pointer.visible = true
 			TileHandler.showMovement()
 			queue_free()
 		"Action":
@@ -69,7 +67,5 @@ func selectOption():
 			GameState.endTurn()
 			queue_free()
 		"Items":
-			#$MenuSelect.play()
 			var toAdd = preload("res://UI/Menu/ItemMenu.tscn").instantiate()
-			toAdd.setItems(get_parent().get_parent().player.items)
 			add_child(toAdd)

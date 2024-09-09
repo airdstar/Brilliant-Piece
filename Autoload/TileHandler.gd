@@ -20,19 +20,27 @@ func setTilePattern():
 			allTiles[n].setColor("Orange")
 
 func showAction():
-	var possibleTile = GameState.action.getActionRange(GameState.playerPiece.currentTile.global_position)
-	for n in range(possibleTile.size()):
-		if lookForTile(possibleTile[n]):
-			lookForTile(possibleTile[n]).hittable = true
-			lookForTile(possibleTile[n]).setColor("Orange")
+	var possibleTiles = GameState.action.getActionRange(GameState.playerPiece.currentTile.global_position)
+	for n in range(possibleTiles.size()):
+		if lookForTile(possibleTiles[n]):
+			lookForTile(possibleTiles[n]).hittable = true
+			lookForTile(possibleTiles[n]).setColor("Orange")
 
 func showMovement():
+	GameState.moving = GameState.playerPiece
+	GameState.currentFloor.Pointer.visible = true
 	var possibleMovement = MovementHandler.findMoveableTiles(GameState.moving)
 	for n in range(possibleMovement.size()):
 		if possibleMovement[n].contains is EnemyPiece:
 			possibleMovement[n].setColor("Orange")
 		else:
 			possibleMovement[n].setColor("Blue")
+
+func showItem():
+	var possibleTiles = GameState.item.getItemRange(GameState.playerPiece.currentTile.global_position)
+	for n in range(possibleTiles.size()):
+		if lookForTile(possibleTiles[n]):
+			lookForTile(possibleTiles[n]).setColor("Orange")
 
 func stopShowing():
 	var allTiles = GameState.allFloorTiles

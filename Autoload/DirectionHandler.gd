@@ -1,106 +1,84 @@
 extends Node
 
-func getPos(dir : String):
-	match dir:
-		"North":
-			return Vector3(0,0,1)
-		"NorthWest":
-			return Vector3(1,0,1)
-		"West":
-			return Vector3(1,0,0)
-		"SouthWest":
-			return Vector3(1,0,-1)
-		"South":
-			return Vector3(0,0,-1)
-		"SouthEast":
-			return Vector3(-1,0,-1)
-		"East":
-			return Vector3(-1,0,0)
-		"NorthEast":
-			return Vector3(-1,0,1)
+enum Direction {
+	NORTH,
+	NORTHWEST,
+	WEST,
+	SOUTHWEST,
+	SOUTH,
+	SOUTHEAST,
+	EAST,
+	NORTHEAST
+}
 
-func getDiagonals(dir : String):
-	match dir:
-		"North":
-			return ["NorthWest", "NorthEast"]
-		"West":
-			return ["SouthWest", "NorthWest"]
-		"South":
-			return ["SouthEast", "SouthWest"]
-		"East":
-			return ["NorthEast", "SouthEast"]
+var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Direction.WEST,
+								   Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST,
+								   Direction.EAST, Direction.NORTHEAST]
 
-func getSides(dir : String):
-	match dir:
-		"North":
-			return ["West", "East"]
-		"West":
-			return ["South", "North"]
-		"South":
-			return ["East", "West"]
-		"East":
-			return ["North", "South"]
-		"NorthWest":
-			return ["West", "North"]
-		"NorthEast":
-			return ["North", "East"]
-		"SouthWest":
-			return ["South", "West"]
-		"SouthEast":
-			return ["East", "South"]
+func getPos(dir : Direction):
+	var toReturn : Vector3 = Vector3.ZERO
+	if dir == 0 or dir == 1 or dir == 7:
+		toReturn += Vector3(0,0,1)
+	elif dir == 3 or dir == 4 or dir == 5:
+		toReturn += Vector3(0,0,-1)
+	
+	if dir == 1 or dir == 2 or dir == 3:
+		toReturn += Vector3(1,0,0)
+	elif dir == 5 or dir == 6 or dir == 7:
+		toReturn += Vector3(-1,0,0)
+	
+	return toReturn
+
+func getDiagonals(dir : Direction):
+	if dir == 0:
+		return [dirArray[dir + 1], dirArray[7]]
+	else:
+		return [dirArray[dir + 1], dirArray[dir - 1]]
+
+func getSides(dir : Direction):
+	if dir%2 == 0:
+		if dir != 0:
+			return [dirArray[dir + 2], dirArray[dir - 2]]
+		else:
+			return [dirArray[dir + 2], dirArray[6]]
+	else:
+		if dir != 7:
+			return [dirArray[dir + 1], dirArray[dir - 1]]
+		else:
+			return [dirArray[0], dirArray[dir - 1]]
 
 func getAll(dir : String):
 	match dir:
 		"Straight", "Cone", "L":
-			return ["North", "West", "South", "East"]
+			return [dirArray[0], dirArray[2], dirArray[4], dirArray[6]]
 		"Diagonal":
-			return ["NorthWest", "SouthWest", "SouthEast", "NorthEast"]
+			return [dirArray[1], dirArray[3], dirArray[5], dirArray[7]]
 		"Both", "Circle", "Square":
-			return ["North", "West", "South", "East", "NorthWest", "SouthWest", "SouthEast", "NorthEast"]
+			return dirArray
 
-func getOppDirection(dir : String):
-	match dir:
-		"North":
-			return "South"
-		"West":
-			return "East"
-		"South":
-			return "North"
-		"East":
-			return "West"
-		"NorthWest":
-			return "SouthEast"
-		"NorthEast":
-			return "SouthWest"
-		"SouthWest":
-			return "NorthEast"
-		"SouthEast":
-			return "NorthWest"
+func getOppDirection(dir : Direction):
+	if dir < 4:
+		return dirArray[dir + 4]
+	else:
+		return dirArray[dir - 4]
 
 func getClosestDirection(start : Vector3, target : Vector3):
-	var allDirections = getAll("Both")
-	var closestDirection
-	var smallestVariation
+	var closestDirection : Direction
+	var smallestVariation : int
 	for n in range(8):
-		var xVar = abs(target.x - (start + getPos(allDirections[n])).x)
-		var zVar = abs(target.z - (start + getPos(allDirections[n])).z)
+		var xVar = abs(target.x - (start + getPos(dirArray[n])).x)
+		var zVar = abs(target.z - (start + getPos(dirArray[n])).z)
 		if closestDirection:
 			if smallestVariation > xVar + zVar:
-				closestDirection = allDirections[n]
+				closestDirection = dirArray[n]
 				smallestVariation = xVar + zVar
 			elif smallestVariation == xVar + zVar:
-				if (closestDirection == "North" or allDirections[n] == "North"):
-					if (closestDirection == "West" or allDirections[n] == "West"):
-						closestDirection = "NorthWest"
-					elif (closestDirection == "East" or allDirections[n] == "East"):
-						closestDirection = "NorthEast"
-				elif (closestDirection == "South" or allDirections[n] == "South"):
-					if (closestDirection == "West" or allDirections[n] == "West"):
-						closestDirection = "SouthWest"
-					elif (closestDirection == "East" or allDirections[n] == "East"):
-						closestDirection = "SouthEast"
+				if (closestDirection == 0 or dirArray[n] == 0) and (closestDirection == 6 or dirArray[n] == 6):
+					closestDirection = 6
+				else:
+					closestDirection = (closestDirection + dirArray[n])
 		else:
-			closestDirection = allDirections[n]
+			closestDirection = dirArray[n]
 			smallestVariation = xVar + zVar
 	
 	return closestDirection

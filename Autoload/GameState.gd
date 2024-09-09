@@ -16,7 +16,6 @@ var actionUsed : bool = false
 var moveUsed : bool = false
 
 var currentMenu = null
-var viewing : bool = false
 var item : ItemResource = null
 var moving : MoveablePiece = null
 var action : ActionResource = null
@@ -25,3 +24,8 @@ func endTurn():
 	playerTurn = !playerTurn
 	actionUsed = false
 	moveUsed = false
+	InterfaceHandler.endedTurn()
+	if playerTurn:
+		MenuHandler.openMenu()
+	else:
+		currentFloor.Pointer.visible = true

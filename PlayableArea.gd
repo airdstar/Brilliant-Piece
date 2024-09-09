@@ -84,19 +84,6 @@ func highlightTile(tileToSelect : tile):
 							#lookForTile(currentTile).highlight.visible = true
 							#lookForTile(currentTile).setColor("Red")
 
-func endTurn():
-	playerTurn = !playerTurn
-	actionUsed = false
-	moveUsed = false
-	if !playerTurn:
-		Pointer.visible = true
-		$StaticHUD/TurnHUD/MoveOutline/Move.modulate = Color(0.86,0.63,0.72)
-		$StaticHUD/TurnHUD/ActionOutline/Action.modulate = Color(0.86,0.63,0.72)
-		$StaticHUD/TurnHUD/TurnOutline/Turn.modulate = Color(0.86,0.63,0.72)
-	else:
-		$StaticHUD/TurnHUD/MoveOutline/Move.modulate = Color(0.63,0.72,0.86)
-		$StaticHUD/TurnHUD/ActionOutline/Action.modulate = Color(0.63,0.72,0.86)
-		$StaticHUD/TurnHUD/TurnOutline/Turn.modulate = Color(0.63,0.72,0.86)
 
 func openMenu():
 	pass

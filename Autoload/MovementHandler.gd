@@ -42,7 +42,7 @@ func movePiece(destination : tile):
 			print("ERROR")
 	GameState.moving = null
 
-func pushPiece(piece : MoveablePiece, direction : String):
+func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):
 	var currentTile = TileHandler.lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(direction))
 	if currentTile:
 		currentTile.setPiece(piece)

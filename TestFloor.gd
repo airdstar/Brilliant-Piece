@@ -15,7 +15,7 @@ func secondaryReady():
 
 func secondaryProcess(_delta):
 	if Input.is_action_just_pressed("Test"):
-		endTurn()
+		GameState.endTurn()
 	
 	if Input.is_action_just_pressed("Reload"):
 		get_tree().reload_current_scene()
