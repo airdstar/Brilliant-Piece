@@ -5,7 +5,7 @@ class_name ItemResource
 @export var name : String
 @export var desc : String
 @export var associatedModel : String
-@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Ammo") var itemType : String
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement") var itemType : String
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
 
 
@@ -17,6 +17,12 @@ var amountUsed = useAmount
 @export var damage : int
 @export var healing : int
 @export var armor : int
+@export var status : StatusResource
+@export var hazard : HazardResource
+
+func _ready():
+	if !associatedModel:
+		associatedModel = "res://Item/Base.blend"
 
 func getItemRange(itemStart : Vector3):
 	var toReturn : Array[Vector3]

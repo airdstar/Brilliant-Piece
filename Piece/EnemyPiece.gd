@@ -11,6 +11,6 @@ func _ready():
 func setData():
 	pieceName = enemyType.name
 	level = randi_range(enemyType.minLevel,enemyType.maxLevel)
-	maxHealth = enemyType.maxHealth + int(enemyType.maxHealth * level * 0.5)
+	maxHealth = enemyType.baseHealth + int(enemyType.baseHealth * level * 0.5)
 	health = maxHealth
 	type = enemyType.getType()

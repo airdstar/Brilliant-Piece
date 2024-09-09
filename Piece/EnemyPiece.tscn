@@ -6,10 +6,13 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_83i58"]
 height = 1.0
 
-[node name="PlayablePiece" type="Node3D"]
+[node name="EnemyPiece" type="Node3D"]
 script = ExtResource("1_v20ax")
 enemyType = ExtResource("2_3qjjj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Model" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 mesh = SubResource("CylinderMesh_83i58")
+skeleton = NodePath("../..")

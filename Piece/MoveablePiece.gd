@@ -5,6 +5,7 @@ var type : PieceTypeResource
 var maxHealth : int
 var health : int
 var armor : int
+@onready var modelHolder = $Model
 
 signal death
 
@@ -35,21 +36,21 @@ func heal(healingAmount : int):
 	if health >= maxHealth:
 		health = maxHealth
 
-func setPieceOrientation(dir : String):
+func setPieceOrientation(dir : DirectionHandler.Direction):
 	match dir:
-		"West":
+		2:
 			global_rotation.y = deg_to_rad(0)
-		"SouthWest":
+		3:
 			global_rotation.y = deg_to_rad(45)
-		"South":
+		4:
 			global_rotation.y = deg_to_rad(90)
-		"SouthEast":
+		5:
 			global_rotation.y = deg_to_rad(135)
-		"East":
+		6:
 			global_rotation.y = deg_to_rad(180)
-		"NorthEast":
+		7:
 			global_rotation.y = deg_to_rad(-135)
-		"North":
+		0:
 			global_rotation.y = deg_to_rad(-90)
-		"NorthWest":
+		1:
 			global_rotation.y = deg_to_rad(-45)

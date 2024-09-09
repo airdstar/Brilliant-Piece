@@ -9,7 +9,7 @@ class_name EnemyResource
 
 
 @export_category("Stats")
-@export var maxHealth : int
+@export var baseHealth : int
 @export var attacks : ActionSetResource
 @export var maxLevel : int
 @export var minLevel : int

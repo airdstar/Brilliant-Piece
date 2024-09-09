@@ -82,21 +82,21 @@ func handle3DHighlighting(input : String):
 			
 	elif input == "Backward" or input == "Forward":
 		if rotation > -172.5 and rotation < -97.5:
-			direction = "East"
+			direction = DirectionHandler.dirArray[6]
 		elif rotation >= -97.5 and rotation <= -82.5:
-			direction = "NorthEast"
+			direction = DirectionHandler.dirArray[7]
 		elif rotation > -82.5 and rotation < -7.5:
-			direction = "North"
+			direction = DirectionHandler.dirArray[0]
 		elif rotation >= -7.5 and rotation <= 7.5:
-			direction = "NorthWest"
+			direction = DirectionHandler.dirArray[1]
 		elif rotation > 7.5 and rotation < 82.5:
-			direction = "West"
+			direction = DirectionHandler.dirArray[2]
 		elif rotation >= 82.5 and rotation <= 97.5:
-			direction = "SouthWest"
+			direction = DirectionHandler.dirArray[3]
 		elif rotation > 97.5 and rotation < 172.5:
-			direction = "South"
+			direction = DirectionHandler.dirArray[4]
 		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
-			direction = "SouthEast"
+			direction = DirectionHandler.dirArray[5]
 		
 		if input == "Forward":
 			direction = DirectionHandler.getOppDirection(direction)

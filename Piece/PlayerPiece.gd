@@ -7,9 +7,10 @@ var level : int = 1
 var maxSoul : int 
 var soul : int 
 var actions : Array[ActionResource]
-@export var items : Array[ItemResource]
+var items : Array[ItemResource]
 
 func _ready():
+	#Items must be loaded in through ready
 	items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
 	items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
 	setData()
@@ -23,7 +24,7 @@ func setData():
 	
 	var s = ResourceLoader.load(classType.associatedModel)
 	s = s.instantiate()
-	add_child(s)
+	modelHolder.add_child(s)
 
 func levelUp():
 	pass

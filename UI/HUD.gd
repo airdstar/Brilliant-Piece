@@ -22,7 +22,7 @@ func updatePortrait():
 	if currentlySelected != null:
 		$SubViewport/Portrait.remove_child(currentlySelected)
 	$Portrait.visible = true
-	currentlySelected = GameState.highlightedTile.contains.duplicate()
+	currentlySelected = GameState.highlightedTile.contains.modelHolder.duplicate()
 	$SubViewport/Portrait.add_child(currentlySelected)
 	currentlySelected.global_position = $SubViewport/Portrait.global_position
 	currentlySelected.global_rotation.y = deg_to_rad(-90)

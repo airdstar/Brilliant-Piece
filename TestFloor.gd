@@ -1,10 +1,7 @@
 extends PlayableArea
 class_name Floor
 
-var soulUsed : bool = false
-@export var tileAmount : int
-
-func secondaryReady():
+func _ready():
 	GameState.currentFloor = self
 	InterfaceHandler.HUD = $Menu/HUD
 	GenerationHandler.generateFloor()
@@ -12,10 +9,16 @@ func secondaryReady():
 	GenerationHandler.generateEnemies()
 	GenerationHandler.placePieces()
 	MenuHandler.openMenu()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func secondaryProcess(_delta):
+func _process(_delta : float):
+	if Input.is_action_just_pressed("Exit"):
+		get_tree().quit()
+	
 	if Input.is_action_just_pressed("Test"):
 		GameState.endTurn()
 	
 	if Input.is_action_just_pressed("Reload"):
 		get_tree().reload_current_scene()
+
+	cameraControls()

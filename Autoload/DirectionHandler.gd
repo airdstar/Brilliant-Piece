@@ -37,10 +37,13 @@ func getDiagonals(dir : Direction):
 
 func getSides(dir : Direction):
 	if dir%2 == 0:
-		if dir != 0:
-			return [dirArray[dir + 2], dirArray[dir - 2]]
-		else:
+		if dir == 0:
 			return [dirArray[dir + 2], dirArray[6]]
+		elif dir == 6:
+			return [dirArray[0], dirArray[dir - 2]]
+		else:
+			return [dirArray[dir + 2], dirArray[dir - 2]]
+			
 	else:
 		if dir != 7:
 			return [dirArray[dir + 1], dirArray[dir - 1]]

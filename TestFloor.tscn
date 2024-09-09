@@ -22,7 +22,6 @@ shader_parameter/lens_distortion_strength = 0.005
 
 [node name="Base" type="Node3D"]
 script = ExtResource("1_snloc")
-tileAmount = 100
 
 [node name="Twist" type="Node3D" parent="."]
 
