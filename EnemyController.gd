@@ -12,15 +12,15 @@ func makeDecision():
 		var bestMovement
 		for n in range(GameState.enemyPieces.size()):
 			possibleTiles = MovementHandler.findMoveableTiles(GameState.enemyPieces[n])
-			print(possibleTiles.size())
 			findBestMovement(GameState.playerPiece, GameState.enemyPieces[n], "Approach")
 
 func findBestMovement(target : MoveablePiece, piece : EnemyPiece, behavior : String):
 	match behavior:
 		"Approach":
 			var closestTileDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, target.currentTile.global_position)
-			print(closestTileDirection)
+			#print(closestTileDirection)
 			var closestExists := false
+			GameState.moving = piece
 			for n in range(possibleTiles.size()):
 				if GameState.moving != null:
 					if possibleTiles[n] == findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(closestTileDirection)):

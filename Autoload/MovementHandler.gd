@@ -11,10 +11,10 @@ func movePiece(destination : tile):
 	var destinationReached : bool = false
 	var startingPos = GameState.moving.currentTile
 	var counter : int = 0
+	var closestDirection = DirectionHandler.getClosestDirection(GameState.moving.currentTile.global_position, destination.global_position)
 	while(!destinationReached):
-		var closestDirection = DirectionHandler.getClosestDirection(GameState.moving.currentTile.global_position, destination.global_position)
 		var closestTile = TileHandler.lookForTile(GameState.moving.currentTile.global_position + DirectionHandler.getPos(closestDirection))
-		print(closestDirection)
+		#print(closestDirection)
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
