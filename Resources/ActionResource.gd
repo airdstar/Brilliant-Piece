@@ -18,9 +18,9 @@ class_name ActionResource
 
 @export_category("Targeting")
 @export_enum("Straight", "Diagonal", "Both", "Cone", "Circle", "Square") var actionDirection : String
-@export var range : int
-@export var rangeExclusive : bool #Does it only hit that range
-@export var canTargetSelf : bool
+@export var actionRange : int = 1
+@export var rangeExclusive : bool = false   #Does it only hit that range
+@export var canTargetSelf : bool = false
 
 @export_category("Other")
 @export var blockable : bool
@@ -34,7 +34,7 @@ func getActionRange(actionStart : Vector3):
 	
 	for n in range(directions):
 		var tileData : Vector3 = actionStart
-		for m in range(range):
+		for m in range(actionRange):
 			tileData += DirectionHandler.getPos(pos[n])
 			if !rangeExclusive:
 				toReturn.append(tileData)

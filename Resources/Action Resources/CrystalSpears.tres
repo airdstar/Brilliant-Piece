@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_fookx")
 name = "Crystal Spears"
+desc = ""
 animationPath = ""
+iconPath = ""
+actionType = ""
 damage = 2
 healing = 0
-range = 3
+armor = 0
 actionDirection = "Both"
+actionRange = 5
 rangeExclusive = false
+canTargetSelf = false
 blockable = false
 knockback = false
-status = ""
-AOE = Vector2(3, 3)
+AOE = 0
