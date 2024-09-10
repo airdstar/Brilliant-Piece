@@ -1,26 +1,18 @@
 extends Node
 
 func generateFloor():
+	var heightMap = Image.load_from_file("res://Tile/Generation attempt.png")
 	var totalTiles = []
-	for n in range(100):
-		var cantPlace = true
-		var tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
-		var allTiles = GameState.currentFloor.tileHolder.get_children()
-		if allTiles.size() == 0:
-			GameState.currentFloor.tileHolder.add_child(tileToAdd)
-			totalTiles.append(tileToAdd)
-			cantPlace = false
-		while cantPlace:
-			tileToAdd.position.x += randi_range(-1,1)
-			tileToAdd.position.z += randi_range(-1,1)
-			var goodForNow = true
-			for m in range(allTiles.size()):
-				if tileToAdd.position == allTiles[m].position:
-					goodForNow = false
-			if goodForNow:
-				cantPlace = false
+	var tileToAdd
+	
+	for n in range(heightMap.get_size().x):
+		for m in range(heightMap.get_size().y):
+			if heightMap.get_pixel(n,m) != Color(0,0,0,1):
+				tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
 				GameState.currentFloor.tileHolder.add_child(tileToAdd)
 				totalTiles.append(tileToAdd)
+				tileToAdd.global_position = Vector3(n - int(heightMap.get_size().x / 2), tileToAdd.global_position.y, m - int(heightMap.get_size().y / 2))
+	
 	GameState.allFloorTiles = totalTiles
 
 func generatePlayer():
