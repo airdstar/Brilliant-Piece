@@ -138,16 +138,20 @@ func highlightTile(tileToSelect : tile):
 	pointer.position = Vector3(tileToSelect.position.x, pointer.position.y, tileToSelect.position.z)
 	pointer.height = tileToSelect.getPointerPos()
 	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
-	if tileToSelect.moveable:
-		if tileToSelect.contains is EnemyPiece:
+	if GameState.playerTurn:
+		if tileToSelect.moveable:
+			if tileToSelect.contains is EnemyPiece:
+				tileToSelect.setColor("Red")
+				pointer.setColor("Red")
+			else:
+				tileToSelect.setColor("Blue")
+				pointer.setColor("Blue")
+		elif tileToSelect.hittable:
 			tileToSelect.setColor("Red")
 			pointer.setColor("Red")
 		else:
-			tileToSelect.setColor("Blue")
-			pointer.setColor("Blue")
-	elif tileToSelect.hittable:
-		tileToSelect.setColor("Red")
-		pointer.setColor("Red")
+			tileToSelect.setColor("Gray")
+			pointer.setColor("Gray")
 	else:
 		tileToSelect.setColor("Gray")
 		pointer.setColor("Gray")

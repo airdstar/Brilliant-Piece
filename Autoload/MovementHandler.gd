@@ -5,7 +5,6 @@ func _process(_delta: float):
 		if Input.is_action_just_pressed("Select"):
 			if GameState.highlightedTile.moveable:
 				movePiece(GameState.highlightedTile)
-				InterfaceHandler.usedMovement()
 
 func movePiece(destination : tile):
 	TileHandler.stopShowing()
@@ -15,9 +14,9 @@ func movePiece(destination : tile):
 	while(!destinationReached):
 		var closestDirection = DirectionHandler.getClosestDirection(GameState.moving.currentTile.global_position, destination.global_position)
 		var closestTile = TileHandler.lookForTile(GameState.moving.currentTile.global_position + DirectionHandler.getPos(closestDirection))
+		print(closestDirection)
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
-				pass
 				pushPiece(closestTile.contains, closestDirection)
 		GameState.moving.previousTile = GameState.moving.currentTile
 		GameState.moving.previousTile.contains = null
@@ -28,9 +27,12 @@ func movePiece(destination : tile):
 		if GameState.moving.currentTile == destination:
 			if GameState.moving is PlayerPiece:
 				GameState.playerFloorTile = destination
-				MenuHandler.openMenu()
+				InterfaceHandler.usedMovement()
 				InterfaceHandler.displayInfo()
 				GameState.currentFloor.Pointer.height = GameState.highlightedTile.getPointerPos()
+				await get_tree().create_timer(0.01).timeout
+				MenuHandler.openMenu()
+				
 			destinationReached = true
 		else:
 			await get_tree().create_timer(0.3).timeout
@@ -55,7 +57,6 @@ func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):
 	else:
 		@warning_ignore("integer_division")
 		piece.damage(5 + int(piece.maxHealth / 4))
-		piece.queue_free()
 
 func findMoveableTiles(piece : MoveablePiece):
 	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
@@ -70,6 +71,7 @@ func findMoveableTiles(piece : MoveablePiece):
 				if (TileHandler.lookForTile(possibleTiles[n]) and TileHandler.lookForTile(possibleTiles[n]).moveable) or possibleTiles[n] == piece.currentTile.global_position:
 					if TileHandler.lookForTile(possibleTiles[n]).contains is not MoveablePiece or TileHandler.lookForTile(possibleTiles[n]).contains == piece:
 						toReturn.append(currentTile)
-						currentTile.moveable = true
+						if piece is PlayerPiece:
+							currentTile.moveable = true
 			currentTile = null
 	return toReturn

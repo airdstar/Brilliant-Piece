@@ -79,7 +79,7 @@ func getClosestDirection(start : Vector3, target : Vector3):
 				if (closestDirection == 0 or dirArray[n] == 0) and (closestDirection == 6 or dirArray[n] == 6):
 					closestDirection = 6
 				else:
-					closestDirection = (closestDirection + dirArray[n])
+					closestDirection = ((closestDirection + dirArray[n]) / 2)
 		else:
 			closestDirection = dirArray[n]
 			smallestVariation = xVar + zVar

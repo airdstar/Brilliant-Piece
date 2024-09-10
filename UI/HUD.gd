@@ -26,9 +26,9 @@ func updatePortrait():
 	$SubViewport/Portrait.add_child(currentlySelected)
 	currentlySelected.global_position = $SubViewport/Portrait.global_position
 	currentlySelected.global_rotation.y = deg_to_rad(-90)
-	if currentlySelected is PlayerPiece:
+	if GameState.highlightedTile.contains is PlayerPiece:
 		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.63,0.72,0.86))
-	elif currentlySelected is EnemyPiece:
+	elif GameState.highlightedTile.contains is EnemyPiece:
 		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.86,0.63,0.72))
 	$Portrait/PortraitBackground.texture = $SubViewport.get_texture()
 

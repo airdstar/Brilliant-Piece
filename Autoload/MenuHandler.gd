@@ -14,8 +14,9 @@ func _process(_delta):
 			else:
 				closeMenu()
 	elif Input.is_action_just_pressed("Cancel"):
-		TileHandler.stopShowing()
-		openMenu()
+		if GameState.playerTurn:
+			TileHandler.stopShowing()
+			openMenu()
 
 func openMenu():
 	if GameState.currentMenu == null:
