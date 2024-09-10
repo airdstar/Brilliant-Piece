@@ -1,7 +1,8 @@
 extends Node
 
 func generateFloor():
-	var heightMap = Image.load_from_file("res://Tile/Generation attempt.png")
+	var imagePath : String = "res://Tile/Generation attempt.png"
+	var heightMap = Image.load_from_file(imagePath)
 	var totalTiles = []
 	var tileToAdd
 	

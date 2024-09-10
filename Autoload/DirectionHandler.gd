@@ -67,11 +67,11 @@ func getOppDirection(dir : Direction):
 
 func getClosestDirection(start : Vector3, target : Vector3):
 	var closestDirection : Direction
-	var smallestVariation : int
+	var smallestVariation : int = 100
 	for n in range(8):
 		var xVar = abs(target.x - (start + getPos(dirArray[n])).x)
 		var zVar = abs(target.z - (start + getPos(dirArray[n])).z)
-		if closestDirection:
+		if smallestVariation != 100:
 			if smallestVariation > xVar + zVar:
 				closestDirection = dirArray[n]
 				smallestVariation = xVar + zVar

@@ -5,7 +5,6 @@ var possibleTiles
 func _process(_delta: float):
 	if !GameState.playerTurn:
 		makeDecision()
-		pass
 
 func makeDecision():
 	if !GameState.moveUsed:
@@ -18,7 +17,7 @@ func findBestMovement(target : MoveablePiece, piece : EnemyPiece, behavior : Str
 	match behavior:
 		"Approach":
 			var closestTileDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, target.currentTile.global_position)
-			#print(closestTileDirection)
+			print(closestTileDirection)
 			var closestExists := false
 			GameState.moving = piece
 			for n in range(possibleTiles.size()):
