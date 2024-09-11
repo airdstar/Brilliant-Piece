@@ -23,8 +23,8 @@ class_name ActionResource
 @export var canTargetSelf : bool = false
 
 @export_category("Other")
-@export var blockable : bool
-@export var knockback : bool
+@export var obstructable : bool
+@export var effect : EffectResource
 @export var AOE : int
 
 func getActionRange(actionStart : Vector3):

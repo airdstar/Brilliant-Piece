@@ -1,6 +1,8 @@
 extends Node
 
 var possibleTiles
+var tileValueHolder : Array[int]
+var tileSearched : Array[bool]
 
 func _process(_delta: float):
 	if !GameState.playerTurn:
@@ -16,40 +18,41 @@ func makeDecision():
 func findBestMovement(target : MoveablePiece, piece : EnemyPiece, behavior : String):
 	match behavior:
 		"Approach":
-			var closestTileDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, target.currentTile.global_position)
-			print(closestTileDirection)
-			var closestExists := false
 			GameState.moving = piece
-			for n in range(possibleTiles.size()):
-				if GameState.moving != null:
-					if possibleTiles[n] == findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(closestTileDirection)):
-						MovementHandler.movePiece(possibleTiles[n])
-						InterfaceHandler.usedMovement()
-						closestExists = true
-			if !closestExists:
-				for n in range(possibleTiles.size()):
-					if GameState.moving != null:
-						if possibleTiles[n] == findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[0])):
-							MovementHandler.movePiece(possibleTiles[n])
-							InterfaceHandler.usedMovement()
-						elif possibleTiles[n] == findClosestTileToTarget(target.currentTile.position, DirectionHandler.getPos(DirectionHandler.getSides(closestTileDirection)[1])):
-							MovementHandler.movePiece(possibleTiles[n])
-							InterfaceHandler.usedMovement()
+			MovementHandler.movePiece(findClosestTileToTarget(target.currentTile.global_position))
+			GameState.endTurn()
 
-func findClosestTileToTarget(target : Vector3, direction : Vector3):
-	var closestTile
-	var smallestVariation
-	for n in range(GameState.moving.type.movementCount):
-		var xVar = abs(target.x - (GameState.moving.global_position + direction * (n + 1)).x)
-		var zVar = abs(target.z - (GameState.moving.global_position + direction * (n + 1)).z)
-		if smallestVariation:
-			if smallestVariation > xVar + zVar:
-				if TileHandler.lookForTile(GameState.moving.currentTile.global_position + direction * (n + 1)):
-					smallestVariation = xVar + zVar
-					closestTile = TileHandler.lookForTile(GameState.moving.currentTile.global_position + direction * (n + 1))
-		else:
-			if TileHandler.lookForTile(GameState.moving.currentTile.global_position + direction * (n + 1)):
-				smallestVariation = xVar + zVar
-				closestTile = TileHandler.lookForTile(GameState.moving.currentTile.global_position + direction * (n + 1))
-	
-	return closestTile
+func findClosestTileToTarget(target : Vector3):
+	for n in range(GameState.allFloorTiles.size()):
+		tileValueHolder.append(100)
+		tileSearched.append(false)
+		if TileHandler.lookForTile(target) == GameState.allFloorTiles[n]:
+			tileValueHolder[n] = 0
+			tileSearched[n] = true
+	checkNearbyTiles(target, 1)
+	var lowestDistance : int = 100
+	var lowestDistanceAmount : int = 100
+	for n in range(possibleTiles.size()):
+		for m in range(GameState.allFloorTiles.size()):
+			if GameState.allFloorTiles[m] == possibleTiles[n]:
+				if lowestDistance != 100:
+					if lowestDistanceAmount > tileValueHolder[m]:
+						lowestDistance = m
+						lowestDistanceAmount = tileValueHolder[m]
+				else:
+					lowestDistance = m
+					lowestDistanceAmount = tileValueHolder[m]
+	return GameState.allFloorTiles[lowestDistance]
+
+func checkNearbyTiles(currentTile : Vector3, currentDistance : int):
+	var foundATile : bool = false
+	for n in range(4):
+		for m in range(GameState.allFloorTiles.size()):
+			if TileHandler.lookForTile(currentTile + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[n])) == GameState.allFloorTiles[m]:
+				if !tileSearched[m]:
+					tileValueHolder[m] = currentDistance
+					tileSearched[m] = true
+					foundATile = true
+					checkNearbyTiles(currentTile + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[n]), currentDistance + 1)
+	if !foundATile:
+		return
