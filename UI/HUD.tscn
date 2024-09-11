@@ -159,6 +159,7 @@ offset_bottom = 148.0
 texture = ExtResource("7_xdbhw")
 
 [node name="PortraitBackground" type="TextureRect" parent="Portrait"]
+z_index = -1
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
