@@ -1,10 +1,8 @@
 extends Node
 
 func lookForTile(pos : Vector3):
-	var allTiles = GameState.allFloorTiles
-	for n in range(allTiles.size()):
-		if allTiles[n].global_position == pos:
-			return allTiles[n]
+	if GameState.allFloorTileLocations.has(pos):
+		return GameState.allFloorTiles[GameState.allFloorTileLocations.find(pos)]
 	return null
 
 func setTilePattern():
@@ -47,10 +45,4 @@ func stopShowing():
 	for n in range(allTiles.size()):
 		allTiles[n].hittable = false
 		allTiles[n].moveable = false
-		if allTiles[n] == GameState.highlightedTile:
-			allTiles[n].setColor("Gray")
-		else:
-			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
-				allTiles[n].setColor("Black")
-			else:
-				allTiles[n].setColor("White")
+	setTilePattern()

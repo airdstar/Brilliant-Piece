@@ -17,9 +17,7 @@ func movePiece(destination : tile):
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
-		GameState.moving.previousTile = GameState.moving.currentTile
-		GameState.moving.previousTile.contains = null
-		closestTile.setPiece(GameState.moving)
+		closestTile.setPiece(GameState.moving, closestDirection)
 		GameState.moving.setPieceOrientation(closestDirection)
 		if GameState.moving is PlayerPiece:
 			HighlightHandler.highlightTile(GameState.moving.currentTile)

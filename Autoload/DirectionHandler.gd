@@ -18,14 +18,14 @@ var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Directi
 func getPos(dir : Direction):
 	var toReturn : Vector3 = Vector3.ZERO
 	if dir == 0 or dir == 1 or dir == 7:
-		toReturn += Vector3(0,0,1)
+		toReturn.z = 1
 	elif dir == 3 or dir == 4 or dir == 5:
-		toReturn += Vector3(0,0,-1)
+		toReturn.z = -1
 	
 	if dir == 1 or dir == 2 or dir == 3:
-		toReturn += Vector3(1,0,0)
+		toReturn.x = 1
 	elif dir == 5 or dir == 6 or dir == 7:
-		toReturn += Vector3(-1,0,0)
+		toReturn.x = -1
 	
 	return toReturn
 

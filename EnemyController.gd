@@ -3,13 +3,12 @@ extends Node
 var MovementThread : Thread
 var MovementSemaphore: Semaphore
 var MovementMutex : Mutex
-var exitMovement : bool = false
 
 var ActionThread : Thread
 var ActionSemaphore: Semaphore
 var ActionMutex: Mutex
-var exitAction : bool = false
 
+var exit_thread : bool = false
 
 var possibleTiles
 var tileValueHolder : Array[int]
@@ -91,14 +90,15 @@ func getMovementData():
 		MovementSemaphore.wait()
 		
 		MovementMutex.lock()
-		var should_exit = exitMovement
+		var should_exit = exit_thread
 		MovementMutex.unlock()
 
 		if should_exit:
 			break
 		
 		MovementMutex.lock()
-		pass
+		for n in range (GameState.enemyPieces.size()):
+			findBestMovement(GameState.playerPiece, GameState.enemyPieces[0], "Approach")
 		MovementMutex.unlock()
 
 func getActionData():
@@ -106,7 +106,7 @@ func getActionData():
 		ActionSemaphore.wait()
 		
 		ActionMutex.lock()
-		var should_exit = exitAction
+		var should_exit = exit_thread
 		ActionMutex.unlock()
 
 		if should_exit:
@@ -118,12 +118,11 @@ func getActionData():
 
 func _exit_tree():
 	MovementMutex.lock()
-	exitMovement = true 
 	MovementMutex.unlock()
-	
 	ActionMutex.lock()
-	exitAction = true 
 	ActionMutex.unlock()
+	
+	exit_thread = true 
 	
 	MovementSemaphore.post()
 	ActionSemaphore.post()

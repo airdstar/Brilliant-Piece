@@ -4,6 +4,7 @@ func generateFloor():
 	var imagePath : String = "res://Tile/Generation attempt.png"
 	var heightMap = Image.load_from_file(imagePath)
 	var totalTiles = []
+	var totalTilesPos = []
 	var tileToAdd
 	
 	for n in range(heightMap.get_size().x):
@@ -11,9 +12,11 @@ func generateFloor():
 			if heightMap.get_pixel(n,m) != Color(0,0,0,1):
 				tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
 				GameState.currentFloor.tileHolder.add_child(tileToAdd)
-				totalTiles.append(tileToAdd)
 				tileToAdd.global_position = Vector3(n - int(heightMap.get_size().x / 2), tileToAdd.global_position.y, m - int(heightMap.get_size().y / 2))
+				totalTiles.append(tileToAdd)
+				totalTilesPos.append(tileToAdd.global_position)
 	
+	GameState.allFloorTileLocations = totalTilesPos
 	GameState.allFloorTiles = totalTiles
 
 func generatePlayer():

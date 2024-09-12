@@ -37,6 +37,9 @@ func ToggleGrow():
 	growing = !growing
 
 func setPiece(piece : Piece):
+	if piece.currentTile:
+		piece.previousTile = piece.currentTile
+		piece.previousTile.contains = null
 	contains = piece
 	piece.currentTile = self
 	contains.global_position = piecePos + self.global_position
