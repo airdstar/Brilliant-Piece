@@ -5,9 +5,6 @@ func _ready():
 	GameState.currentFloor = self
 	InterfaceHandler.HUD = $Menu/HUD
 	GenerationHandler.generateFloor()
-	GenerationHandler.generatePlayer()
-	GenerationHandler.generateEnemies()
-	GenerationHandler.placePieces()
 	MenuHandler.openMenu()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 

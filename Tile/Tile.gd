@@ -5,10 +5,9 @@ var piecePos : Vector3 = Vector3(0,0.3,0)
 var pointerPos : float = 1.5
 var pointerPosBlocked : int = 2
 
-var pointerHeight
 var moveable := false
 var hittable := false
-var material := StandardMaterial3D.new()
+
 var contains : Piece
 var obstructed := false
 
@@ -20,8 +19,7 @@ var growing := true
 
 
 func _ready():
-	tileBase.material_override = material
-	pointerHeight = [pointerPos, pointerPosBlocked]
+	tileBase.material_override = StandardMaterial3D.new()
 
 func _process(_delta):
 	if growing:
@@ -36,13 +34,14 @@ func _process(_delta):
 func ToggleGrow():
 	growing = !growing
 
-func setPiece(piece : Piece):
+func setPiece(piece : Piece, dir : DirectionHandler.Direction):
 	if piece.currentTile:
 		piece.previousTile = piece.currentTile
 		piece.previousTile.contains = null
 	contains = piece
 	piece.currentTile = self
 	contains.global_position = piecePos + self.global_position
+	piece.setPieceOrientation(dir)
 
 func actionUsed(action : ActionResource):
 	if contains:
@@ -50,24 +49,9 @@ func actionUsed(action : ActionResource):
 
 func getPointerPos():
 	if contains:
-		return pointerHeight[1]
+		return 2
 	else:
-		return pointerHeight[0]
+		return 1.5
 
-func setColor(color : String):
-	match color:
-		"White":
-			tileBase.material_override.set_albedo(Color(1,1,1))
-		"Black":
-			tileBase.material_override.set_albedo(Color(0,0,0))
-		"Gray":
-			tileBase.material_override.set_albedo(Color(0.5,0.5,0.5))
-		"Blue":
-			tileBase.material_override.set_albedo(Color(0.63,0.72,0.86))
-		"Green":
-			tileBase.material_override.set_albedo(Color(0.63,0.86,0.72))
-		"Red":
-			tileBase.material_override.set_albedo(Color(0.86,0.63,0.72))
-		"Orange":
-			tileBase.material_override.set_albedo(Color(0.86,0.72,0.63))
-	
+func setColor(color : Color):
+	tileBase.material_override.set_albedo(color)

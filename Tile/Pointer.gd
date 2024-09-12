@@ -5,6 +5,12 @@ var up = true
 var height : float
 var bobAmount : float
 
+@onready var top = $Top
+@onready var bottom = $Bottom
+
+func _ready():
+	pass
+
 func _process(delta):
 	if bob:
 		match up:
@@ -15,23 +21,9 @@ func _process(delta):
 	position.y = height
 	position.y += bobAmount * delta
 
-func setColor(color : String):
-	match color:
-		"Gray":
-			$Top.mesh.material.set_albedo(Color(0.5,0.5,0.5))
-			$Bottom.mesh.material.set_albedo(Color(0.5,0.5,0.5))
-		"Blue":
-			$Top.mesh.material.set_albedo(Color(0.63,0.72,0.86))
-			$Bottom.mesh.material.set_albedo(Color(0.63,0.72,0.86))
-		"Green":
-			$Top.mesh.material.set_albedo(Color(0.63,0.86,0.72))
-			$Bottom.mesh.material.set_albedo(Color(0.63,0.86,0.72))
-		"Red":
-			$Top.mesh.material.set_albedo(Color(0.86,0.63,0.72))
-			$Bottom.mesh.material.set_albedo(Color(0.86,0.63,0.72))
-		"Orange":
-			$Top.mesh.material.set_albedo(Color(0.86,0.72,0.63))
-			$Bottom.mesh.material.set_albedo(Color(0.86,0.72,0.63))
+func setColor(color : Color):
+	top.mesh.material.set_albedo(color)
+	bottom.mesh.material.set_albedo(color)
 
 func StartBob():
 	up = !up

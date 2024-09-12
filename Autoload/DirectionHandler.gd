@@ -15,19 +15,15 @@ var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Directi
 								   Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST,
 								   Direction.EAST, Direction.NORTHEAST]
 
-func getPos(dir : Direction):
-	var toReturn : Vector3 = Vector3.ZERO
-	if dir == 0 or dir == 1 or dir == 7:
-		toReturn.z = 1
-	elif dir == 3 or dir == 4 or dir == 5:
-		toReturn.z = -1
+var dirDict : Dictionary
+
+func _ready():
+	var dirPosArray : Array[Vector3] = [Vector3(0,0,1), Vector3(1,0,1), Vector3(1,0,0), Vector3(1,0,-1),
+										Vector3(0,0,-1), Vector3(-1,0,-1), Vector3(-1,0,0), Vector3(-1,0,1)]
 	
-	if dir == 1 or dir == 2 or dir == 3:
-		toReturn.x = 1
-	elif dir == 5 or dir == 6 or dir == 7:
-		toReturn.x = -1
+	var dirRotationArray : Array[int] = [-90, -45, 0, 45, 90, 135, 180, -135]
 	
-	return toReturn
+	dirDict = {"PosData" : dirPosArray, "RotData" : dirRotationArray}
 
 func getDiagonals(dir : Direction):
 	if dir == 0:
@@ -69,8 +65,8 @@ func getClosestDirection(start : Vector3, target : Vector3):
 	var closestDirection : Direction
 	var smallestVariation : int = 100
 	for n in range(8):
-		var xVar = abs(target.x - (start + getPos(dirArray[n])).x)
-		var zVar = abs(target.z - (start + getPos(dirArray[n])).z)
+		var xVar = abs(target.x - (start + dirDict["PosData"][n]).x)
+		var zVar = abs(target.z - (start + dirDict["PosData"][n]).z)
 		if smallestVariation != 100:
 			if smallestVariation > xVar + zVar:
 				closestDirection = dirArray[n]

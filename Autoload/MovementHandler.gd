@@ -4,41 +4,29 @@ func _process(_delta: float):
 	if GameState.moving != null:
 		if Input.is_action_just_pressed("Select"):
 			if GameState.highlightedTile.moveable:
-				movePiece(GameState.highlightedTile)
+				movePiece(GameState.highlightedTile, GameState.moving)
 
-func movePiece(destination : tile):
+func movePiece(destination : tile, piece : MoveablePiece):
 	TileHandler.stopShowing()
 	var destinationReached : bool = false
-	var startingPos = GameState.moving.currentTile
-	var counter : int = 0
-	var closestDirection = DirectionHandler.getClosestDirection(GameState.moving.currentTile.global_position, destination.global_position)
+	var closestDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, destination.global_position)
 	while(!destinationReached):
-		var closestTile = TileHandler.lookForTile(GameState.moving.currentTile.global_position + DirectionHandler.getPos(closestDirection))
+		var closestTile = TileHandler.lookForTile(piece.currentTile.global_position + DirectionHandler.dirDict["PosData"][closestDirection])
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
 		closestTile.setPiece(GameState.moving, closestDirection)
-		GameState.moving.setPieceOrientation(closestDirection)
-		if GameState.moving is PlayerPiece:
-			HighlightHandler.highlightTile(GameState.moving.currentTile)
 		if GameState.moving.currentTile == destination:
+			destinationReached = true
 			if GameState.moving is PlayerPiece:
-				GameState.playerFloorTile = destination
 				InterfaceHandler.usedMovement()
 				InterfaceHandler.displayInfo()
 				GameState.currentFloor.Pointer.height = GameState.highlightedTile.getPointerPos()
 				await get_tree().create_timer(0.01).timeout
 				MenuHandler.openMenu()
-				
-			destinationReached = true
+			
 		else:
 			await get_tree().create_timer(0.3).timeout
-		
-		counter += 1
-		if counter == 10:
-			destinationReached = true
-			startingPos.setPiece(GameState.moving)
-			print("ERROR")
 	GameState.moving = null
 
 func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):

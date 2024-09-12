@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" path="res://Tile/Tile.gd" id="1_bu18m"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_fohnx"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_1jdkn"]
+size = Vector2(1, 1)
+center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84bxu"]
 transparency = 1
@@ -36,7 +38,7 @@ script = ExtResource("1_bu18m")
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_fohnx")
+mesh = SubResource("PlaneMesh_1jdkn")
 
 [node name="Highlight" type="MeshInstance3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525501, 0)

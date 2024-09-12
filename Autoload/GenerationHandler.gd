@@ -16,8 +16,11 @@ func generateFloor():
 				totalTiles.append(tileToAdd)
 				totalTilesPos.append(tileToAdd.global_position)
 	
-	GameState.allFloorTileLocations = totalTilesPos
-	GameState.allFloorTiles = totalTiles
+	GameState.tileDict = {"Tiles" : totalTiles, "TilePos" : totalTilesPos}
+	
+	generatePlayer()
+	generateEnemies()
+	placePieces()
 
 func generatePlayer():
 	var player
@@ -53,13 +56,12 @@ func placePieces():
 		
 		if pieceCount != 0:
 			while (pieceCount != amountPlaced):
-				var piecePos = GameState.allFloorTiles[randi_range(0, GameState.allFloorTiles.size() - 1)]
+				var piecePos = GameState.tileDict["Tiles"][randi_range(0, GameState.tileDict["Tiles"].size() - 1)]
 				if !piecePos.contains:
 					if n != 0:
-						piecePos.setPiece(piece[amountPlaced])
+						piecePos.setPiece(piece[amountPlaced], DirectionHandler.dirArray[2])
 						amountPlaced += 1
 					else:
-						piecePos.setPiece(piece)
+						piecePos.setPiece(piece, DirectionHandler.dirArray[2])
 						HighlightHandler.highlightTile(piecePos)
-						GameState.playerFloorTile = piecePos
 						amountPlaced += 1

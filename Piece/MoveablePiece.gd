@@ -1,6 +1,9 @@
 extends Piece
 class_name MoveablePiece
 
+var previousTile : tile
+var currentTile : tile
+
 var type : PieceTypeResource
 var maxHealth : int
 var health : int
@@ -37,20 +40,4 @@ func heal(healingAmount : int):
 		health = maxHealth
 
 func setPieceOrientation(dir : DirectionHandler.Direction):
-	match dir:
-		2:
-			global_rotation.y = deg_to_rad(0)
-		3:
-			global_rotation.y = deg_to_rad(45)
-		4:
-			global_rotation.y = deg_to_rad(90)
-		5:
-			global_rotation.y = deg_to_rad(135)
-		6:
-			global_rotation.y = deg_to_rad(180)
-		7:
-			global_rotation.y = deg_to_rad(-135)
-		0:
-			global_rotation.y = deg_to_rad(-90)
-		1:
-			global_rotation.y = deg_to_rad(-45)
+	global_rotation.y = deg_to_rad(DirectionHandler.dirDict["RotData"][dir])
