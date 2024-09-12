@@ -16,6 +16,5 @@ actionDirection = "Circle"
 actionRange = 4
 rangeExclusive = false
 canTargetSelf = false
-blockable = false
-knockback = false
+obstructable = false
 AOE = 1

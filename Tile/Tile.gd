@@ -1,6 +1,10 @@
 extends Node3D
 class_name tile
 
+var piecePos : Vector3 = Vector3(0,0.3,0)
+var pointerPos : float = 1.5
+var pointerPosBlocked : int = 2
+
 var pointerHeight
 var moveable := false
 var hittable := false
@@ -9,14 +13,15 @@ var contains : Piece
 var obstructed := false
 
 @onready var highlight := $Base/Highlight
+@onready var tileBase := $Base
 var lowestOpacity := 0.2
 var additionalOpacity : float
 var growing := true
 
 
 func _ready():
-	$Base.material_override = material
-	pointerHeight = [$PointerPos.position.y, $PointerPosBlocked.position.y]
+	tileBase.material_override = material
+	pointerHeight = [pointerPos, pointerPosBlocked]
 
 func _process(_delta):
 	if growing:
@@ -34,7 +39,7 @@ func ToggleGrow():
 func setPiece(piece : Piece):
 	contains = piece
 	piece.currentTile = self
-	contains.global_position = $PiecePos.global_position
+	contains.global_position = piecePos + self.global_position
 
 func actionUsed(action : ActionResource):
 	if contains:
@@ -49,17 +54,17 @@ func getPointerPos():
 func setColor(color : String):
 	match color:
 		"White":
-			$Base.material_override.set_albedo(Color(1,1,1))
+			tileBase.material_override.set_albedo(Color(1,1,1))
 		"Black":
-			$Base.material_override.set_albedo(Color(0,0,0))
+			tileBase.material_override.set_albedo(Color(0,0,0))
 		"Gray":
-			$Base.material_override.set_albedo(Color(0.5,0.5,0.5))
+			tileBase.material_override.set_albedo(Color(0.5,0.5,0.5))
 		"Blue":
-			$Base.material_override.set_albedo(Color(0.63,0.72,0.86))
+			tileBase.material_override.set_albedo(Color(0.63,0.72,0.86))
 		"Green":
-			$Base.material_override.set_albedo(Color(0.63,0.86,0.72))
+			tileBase.material_override.set_albedo(Color(0.63,0.86,0.72))
 		"Red":
-			$Base.material_override.set_albedo(Color(0.86,0.63,0.72))
+			tileBase.material_override.set_albedo(Color(0.86,0.63,0.72))
 		"Orange":
-			$Base.material_override.set_albedo(Color(0.86,0.72,0.63))
+			tileBase.material_override.set_albedo(Color(0.86,0.72,0.63))
 	
