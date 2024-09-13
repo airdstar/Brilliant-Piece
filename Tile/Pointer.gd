@@ -1,9 +1,6 @@
 extends Node3D
 
-var bob = true
-var up = true
-var height : float
-var bobAmount : float
+var up : bool = true
 
 @onready var top = $Top
 @onready var bottom = $Bottom
@@ -11,27 +8,18 @@ var bobAmount : float
 func _ready():
 	pass
 
-func _process(delta):
-	if bob:
-		match up:
-			true:
-				bobAmount += 0.1
-			false:
-				bobAmount -= 0.1
-	position.y = height
-	position.y += bobAmount * delta
-
 func setColor(color : Color):
 	top.mesh.material.set_albedo(color)
 	bottom.mesh.material.set_albedo(color)
 
-func StartBob():
+func SwitchBob():
+	var topTween = create_tween()
+	var bottomTween = create_tween()
+	if up:
+		topTween.tween_property(top,"position",Vector3(0,0.1 + 0.165,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+		bottomTween.tween_property(bottom,"position",Vector3(0,0.1 - 0.246,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	else:
+		topTween.tween_property(top,"position",Vector3(0,0 + 0.165,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+		bottomTween.tween_property(bottom,"position",Vector3(0,0 - 0.246,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	
 	up = !up
-	bob = true
-	$StartTimer.stop()
-	$StopTimer.start()
-
-func StopBob():
-	bob = false
-	$StartTimer.start()
-	$StopTimer.stop()

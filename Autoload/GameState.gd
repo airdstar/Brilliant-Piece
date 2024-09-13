@@ -4,8 +4,6 @@ var currentFloor : Floor
 
 var tileDict : Dictionary
 
-var highlightedTile : tile
-
 var playerPiece : PlayerPiece
 var neutralPieces : Array[MoveablePiece]
 var enemyPieces : Array[EnemyPiece]

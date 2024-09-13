@@ -27,12 +27,7 @@ transform = Transform3D(0.3, 0, 0, 0, -0.25, 4.52987e-08, 0, -3.7749e-08, -0.3, 
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_80x6k")
 
-[node name="StopTimer" type="Timer" parent="."]
-wait_time = 0.7
+[node name="SwitchTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="StartTimer" type="Timer" parent="."]
-wait_time = 0.05
-
-[connection signal="timeout" from="StopTimer" to="." method="StopBob"]
-[connection signal="timeout" from="StartTimer" to="." method="StartBob"]
+[connection signal="timeout" from="SwitchTimer" to="." method="SwitchBob"]

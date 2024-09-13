@@ -30,8 +30,7 @@ func _process(_delta):
 	if highlight.visible:
 		highlight.mesh.material.set_albedo(Color(1,1,1,lowestOpacity + additionalOpacity))
 
-
-func ToggleGrow():
+func SwitchHighlight():
 	growing = !growing
 
 func setPiece(piece : Piece, dir : DirectionHandler.Direction):

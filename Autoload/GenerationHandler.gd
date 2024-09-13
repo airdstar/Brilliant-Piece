@@ -16,7 +16,10 @@ func generateFloor():
 				totalTiles.append(tileToAdd)
 				totalTilesPos.append(tileToAdd.global_position)
 	
-	GameState.tileDict = {"Tiles" : totalTiles, "TilePos" : totalTilesPos}
+	var blankArray = []
+	var blankValue
+	
+	GameState.tileDict = {"Tiles" : totalTiles, "iTiles" : blankArray, "TilePos" : totalTilesPos, "hTile" : blankValue}
 	
 	generatePlayer()
 	generateEnemies()

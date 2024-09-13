@@ -30,9 +30,8 @@ class_name ActionResource
 func getActionRange(actionStart : Vector3):
 	var toReturn : Array[Vector3]
 	var pos = DirectionHandler.getAll(actionDirection)
-	var directions = pos.size()
 	
-	for n in range(directions):
+	for n in range(pos.size()):
 		var tileData : Vector3 = actionStart
 		for m in range(actionRange):
 			tileData += DirectionHandler.getPos(pos[n])

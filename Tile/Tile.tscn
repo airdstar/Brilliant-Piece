@@ -62,7 +62,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 mesh = SubResource("BoxMesh_vt17k")
 
 [node name="HighlightTimer" type="Timer" parent="."]
-wait_time = 0.6
 autostart = true
 
-[connection signal="timeout" from="HighlightTimer" to="." method="ToggleGrow"]
+[connection signal="timeout" from="HighlightTimer" to="." method="SwitchHighlight"]

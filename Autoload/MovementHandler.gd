@@ -21,7 +21,6 @@ func movePiece(destination : tile, piece : MoveablePiece):
 			if GameState.moving is PlayerPiece:
 				InterfaceHandler.usedMovement()
 				InterfaceHandler.displayInfo()
-				GameState.currentFloor.Pointer.height = GameState.highlightedTile.getPointerPos()
 				await get_tree().create_timer(0.01).timeout
 				MenuHandler.openMenu()
 			

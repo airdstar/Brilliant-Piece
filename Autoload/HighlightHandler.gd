@@ -130,24 +130,22 @@ func findClosestTile(direction : DirectionHandler.Direction):
 func highlightTile(tileToSelect : tile):
 	var pointer = GameState.currentFloor.Pointer
 	var cameraBase = GameState.currentFloor.cameraBase
-	GameState.highlightedTile = tileToSelect
+	GameState.tileDict["hTile"] = tileToSelect
 	TileHandler.setTilePattern()
-	tileToSelect = GameState.highlightedTile
 	tileToSelect.highlight.visible = true
-	pointer.position = Vector3(tileToSelect.position.x, pointer.position.y, tileToSelect.position.z)
-	pointer.height = tileToSelect.getPointerPos()
+	pointer.position = Vector3(tileToSelect.position.x, tileToSelect.getPointerPos(), tileToSelect.position.z)
 	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
 	if GameState.playerTurn:
-		if tileToSelect.moveable:
+		if GameState.tileDict["iTiles"].has(tileToSelect):
 			if tileToSelect.contains is EnemyPiece:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])
-			else:
+			elif GameState.moving:
 				tileToSelect.setColor(Global.colorDict["Blue"])
 				pointer.setColor(Global.colorDict["Blue"])
-		elif tileToSelect.hittable:
-			tileToSelect.setColor(Global.colorDict["Red"])
-			pointer.setColor(Global.colorDict["Red"])
+			elif GameState.action:
+				tileToSelect.setColor(Global.colorDict["Red"])
+				pointer.setColor(Global.colorDict["Red"])
 		else:
 			tileToSelect.setColor(Global.colorDict["Gray"])
 			pointer.setColor(Global.colorDict["Gray"])
