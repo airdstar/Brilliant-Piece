@@ -7,7 +7,8 @@ func _process(_delta: float):
 				movePiece(GameState.tileDict["hTile"], GameState.moving)
 
 func movePiece(destination : tile, piece : MoveablePiece):
-	TileHandler.stopShowing()
+	if piece is PlayerPiece:
+		TileHandler.stopShowing()
 	var destinationReached : bool = false
 	var closestDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, destination.global_position)
 	while(!destinationReached):

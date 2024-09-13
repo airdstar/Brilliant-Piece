@@ -28,6 +28,7 @@ func _ready():
 
 func makeDecision():
 	if !GameState.moveUsed:
+		possibleTiles = MovementHandler.findMoveableTiles(GameState.pieceDict["Enemy"]["Piece"][0])
 		MovementSemaphore.post()
 
 func findBestMovement(target : Vector3, piece : EnemyPiece, behavior : String):
@@ -45,6 +46,7 @@ func findClosestTileToTarget(target : Vector3):
 			tileValueHolder[n] = 0
 	
 	var possibleDirections : Array[Vector3] = []
+	print(target)
 	for n in range(4):
 		if DirectionHandler.dirDict["PosData"].has(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]]):
 			possibleDirections.append(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]])
@@ -52,6 +54,7 @@ func findClosestTileToTarget(target : Vector3):
 	
 	var lowestDistance = 200
 	var closestTile
+	
 	
 	return closestTile
 
@@ -62,7 +65,7 @@ func checkNearbyTiles(allTiles : Array[Vector3], currentDistance : int):
 		if tileValueHolder[currentTileNum] > currentDistance:
 			tileValueHolder[currentTileNum] = currentDistance
 			foundATile = true
-			if !GameState.tileDict["Tiles"][currentTileNum].contains == GameState.enemyPieces[0]:
+			if GameState.tileDict["Tiles"][currentTileNum].contains != GameState.pieceDict["Enemy"]["Piece"][0]:
 				var possibleDirections : Array[Vector3] = []
 				for m in range(4):
 					if DirectionHandler.dirDict["PosData"].has(allTiles[n] + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[m]]):

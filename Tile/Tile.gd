@@ -44,9 +44,9 @@ func setPiece(piece : Piece, dir : DirectionHandler.Direction):
 	piece.currentTile = self
 	
 	if piece is PlayerPiece:
-		GameState.pieceDict["Player"]["Position"] = piece.global_position
+		GameState.pieceDict["Player"]["Position"] = global_position
 	elif piece is EnemyPiece:
-		GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] = piece.global_position
+		GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] = global_position
 		
 	
 

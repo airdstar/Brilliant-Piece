@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0rs8wca01dop"]
+
+[ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_uhgei"]
+[ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="4_75t5u"]
+[ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://EnemyController.tscn" id="4_eawrr"]
+[ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]
+[ext_resource type="Shader" path="res://Shaders/RetroPixel.gdshader" id="6_q66eq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cq68s"]
+shader = ExtResource("6_q66eq")
+shader_parameter/shake = 0.0
+shader_parameter/noiseQuality = 0.1
+shader_parameter/noiseIntensity = 0.001
+shader_parameter/offsetIntensity = 0.0
+shader_parameter/colorOffsetIntensity = 0.1
+shader_parameter/pixelSize = 500.0
+shader_parameter/grainIntensity = 0.01
+shader_parameter/use_overlay = false
+shader_parameter/use_lens_distortion = true
+shader_parameter/overlay_color = Color(1, 1, 1, 10)
+shader_parameter/lens_distortion_strength = 0.005
+
+[node name="Base" type="Node3D"]
+script = ExtResource("1_snloc")
+
+[node name="Twist" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Twist"]
+transform = Transform3D(0.766044, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642788, -0.492404, 0.586824, 5, 5, 5)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Twist/Camera3D"]
+light_energy = 2.0
+spot_range = 30.0
+
+[node name="Pointer" parent="." instance=ExtResource("3_uhgei")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Background" parent="." instance=ExtResource("5_f853j")]
+
+[node name="EnemyController" parent="." instance=ExtResource("4_eawrr")]
+
+[node name="Menu" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="HUD" parent="Menu" instance=ExtResource("4_75t5u")]
+
+[node name="Effects" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Effects"]
+material = SubResource("ShaderMaterial_cq68s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
