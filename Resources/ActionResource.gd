@@ -30,18 +30,18 @@ class_name ActionResource
 func getActionRange(actionStart : Vector3):
 	var toReturn : Array[Vector3]
 	var pos = DirectionHandler.getAll(actionDirection)
-	
+	var tileData : Vector3
 	for n in range(pos.size()):
-		var tileData : Vector3 = actionStart
+		tileData = actionStart
 		for m in range(actionRange):
-			tileData += DirectionHandler.getPos(pos[n])
+			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
 			if !rangeExclusive:
 				toReturn.append(tileData)
 				if n < 4:
 					if (actionDirection == "Cone" or actionDirection == "Circle") and m > 0:
 						var sides = DirectionHandler.getSides(DirectionHandler.getAll("Straight")[n])
 						for l in range(m):
-							toReturn.append(tileData + (DirectionHandler.getPos(sides[0]) * (l + 1)))
-							toReturn.append(tileData + (DirectionHandler.getPos(sides[1]) * (l + 1)))
+							toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[0] * (l + 1)]))
+							toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[1] * (l + 1)]))
 	
 	return toReturn

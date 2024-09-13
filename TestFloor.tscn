@@ -36,15 +36,9 @@ spot_range = 30.0
 [node name="Pointer" parent="." instance=ExtResource("3_uhgei")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="Tiles" type="Node3D" parent="."]
-
 [node name="Background" parent="." instance=ExtResource("5_f853j")]
 
 [node name="Enemy Controller" parent="." instance=ExtResource("4_eawrr")]
-
-[node name="StaticHUD" type="CanvasLayer" parent="."]
-layer = 2
-follow_viewport_enabled = true
 
 [node name="Menu" type="CanvasLayer" parent="."]
 layer = 3

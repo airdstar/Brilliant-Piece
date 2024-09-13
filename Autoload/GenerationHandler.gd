@@ -11,7 +11,7 @@ func generateFloor():
 		for m in range(heightMap.get_size().y):
 			if heightMap.get_pixel(n,m) != Color(0,0,0,1):
 				tileToAdd = preload("res://Tile/Tile.tscn").instantiate()
-				GameState.currentFloor.tileHolder.add_child(tileToAdd)
+				GameState.currentFloor.add_child(tileToAdd)
 				tileToAdd.global_position = Vector3(n - int(heightMap.get_size().x / 2), tileToAdd.global_position.y, m - int(heightMap.get_size().y / 2))
 				totalTiles.append(tileToAdd)
 				totalTilesPos.append(tileToAdd.global_position)

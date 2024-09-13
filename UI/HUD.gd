@@ -22,18 +22,18 @@ func updatePortrait():
 	if currentlySelected != null:
 		$SubViewport/Portrait.remove_child(currentlySelected)
 	$Portrait.visible = true
-	currentlySelected = GameState.highlightedTile.contains.modelHolder.duplicate()
+	currentlySelected = GameState.tileDict["hTile"].contains.modelHolder.duplicate()
 	$SubViewport/Portrait.add_child(currentlySelected)
 	currentlySelected.global_position = $SubViewport/Portrait.global_position
 	currentlySelected.global_rotation.y = deg_to_rad(-90)
-	if GameState.highlightedTile.contains is PlayerPiece:
+	if GameState.tileDict["hTile"].contains is PlayerPiece:
 		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.63,0.72,0.86))
-	elif GameState.highlightedTile.contains is EnemyPiece:
+	elif GameState.tileDict["hTile"].contains is EnemyPiece:
 		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.86,0.63,0.72))
 	$Portrait/PortraitBackground.texture = $SubViewport.get_texture()
 
 func updateLabels():
-	var piece = GameState.highlightedTile.contains
+	var piece = GameState.tileDict["hTile"].contains
 	textLabels[0].text = piece.pieceName
 	textLabels[1].text = piece.type.typeName
 	textLabels[2].text = "Enemy lvl " + str(piece.level)

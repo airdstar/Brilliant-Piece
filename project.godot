@@ -30,6 +30,7 @@ GenerationHandler="*res://Autoload/GenerationHandler.gd"
 MenuHandler="*res://Autoload/MenuHandler.gd"
 InterfaceHandler="*res://Autoload/InterfaceHandler.gd"
 ActionHandler="*res://Autoload/ActionHandler.gd"
+ItemHandler="*res://Autoload/ItemHandler.gd"
 
 [display]
 

@@ -27,8 +27,7 @@ func _ready():
 func getItemRange(itemStart : Vector3):
 	var toReturn : Array[Vector3]
 	var pos = DirectionHandler.getAll("Both")
-	var directions = pos.size()
-	for n in range(directions):
+	for n in range(8):
 		var tileData : Vector3 = itemStart
 		for m in range(itemRange):
 			tileData += DirectionHandler.getPos(pos[n])

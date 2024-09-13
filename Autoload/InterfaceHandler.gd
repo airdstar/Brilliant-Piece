@@ -3,7 +3,7 @@ extends Node
 var HUD
 
 func displayInfo():
-	if GameState.highlightedTile.contains is MoveablePiece:
+	if GameState.tileDict["hTile"].contains is MoveablePiece:
 		HUD.showPieceInfo()
 		HUD.updatePortrait()
 		HUD.updateLabels()

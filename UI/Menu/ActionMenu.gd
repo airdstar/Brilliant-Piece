@@ -34,8 +34,7 @@ func _process(_delta):
 func selectOption():
 	if options[highlightedOption] != null:
 		GameState.action = options[highlightedOption]
-		TileHandler.showAction()
-		GameState.currentFloor.Pointer.visible = true
+		TileHandler.show("Action")
 		MenuHandler.fullyCloseMenu()
 
 func hoverToggle():

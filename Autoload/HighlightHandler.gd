@@ -105,7 +105,7 @@ func handle3DHighlighting(input : String):
 
 func findClosestTile(direction : DirectionHandler.Direction):
 	var foundTile : tile
-	var searcher : Vector3 = GameState.highlightedTile.global_position
+	var searcher : Vector3 = GameState.tileDict["hTile"].global_position
 	var forward = DirectionHandler.dirDict["PosData"][direction]
 	var left = DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[0]]
 	var right = DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[1]]

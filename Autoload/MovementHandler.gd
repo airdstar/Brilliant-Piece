@@ -3,7 +3,7 @@ extends Node
 func _process(_delta: float):
 	if GameState.moving != null:
 		if Input.is_action_just_pressed("Select"):
-			if GameState.highlightedTile.moveable:
+			if GameState.tileDict["iTiles"].has(GameState.tileDict["hTile"]):
 				movePiece(GameState.highlightedTile, GameState.moving)
 
 func movePiece(destination : tile, piece : MoveablePiece):

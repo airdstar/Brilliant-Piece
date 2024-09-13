@@ -3,9 +3,8 @@ extends Node
 func _process(_delta: float):
 	if GameState.action != null:
 		if Input.is_action_just_pressed("Select"):
-			if GameState.highlightedTile.hittable:
-				useAction(GameState.highlightedTile)
-				MenuHandler.openMenu()
+			if GameState.tileDict["iTiles"].has(GameState.tileDict["hTile"]):
+				useAction(GameState.tileDict["hTile"])
 
 func useAction(destination : tile):
 	TileHandler.stopShowing()
@@ -22,3 +21,6 @@ func useAction(destination : tile):
 	TileHandler.setTilePattern()
 	GameState.action = null
 	InterfaceHandler.usedAction()
+
+func findActionTiles(piecePos : Vector3):
+	return GameState.action.getActionRange(piecePos)

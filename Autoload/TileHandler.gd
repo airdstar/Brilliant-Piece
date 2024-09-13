@@ -9,40 +9,27 @@ func setTilePattern():
 	var allTiles = GameState.tileDict["Tiles"]
 	for n in range(allTiles.size()):
 		allTiles[n].highlight.visible = false
-		if GameState.highlightedTile != allTiles[n] and !allTiles[n].moveable and !allTiles[n].hittable:
+		if GameState.tileDict["hTile"] != allTiles[n] and !GameState.tileDict["iTiles"].has(allTiles[n]):
 			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
 				allTiles[n].setColor(Global.colorDict["Black"])
 			else:
 				allTiles[n].setColor(Global.colorDict["White"])
-		if allTiles[n].hittable or (allTiles[n].moveable and allTiles[n].contains is EnemyPiece):
+		if GameState.tileDict["iTiles"].has(allTiles[n]) and GameState.action:
 			allTiles[n].setColor(Global.colorDict["Orange"])
 
-func showAction():
-	var possibleTiles = GameState.action.getActionRange(GameState.playerPiece.currentTile.global_position)
-	for n in range(possibleTiles.size()):
-		if lookForTile(possibleTiles[n]):
-			lookForTile(possibleTiles[n]).hittable = true
-			lookForTile(possibleTiles[n]).setColor(Global.colorDict["Orange"])
-
-func showMovement():
-	GameState.moving = GameState.playerPiece
+func show(type : String):
 	GameState.currentFloor.Pointer.visible = true
-	var possibleMovement = MovementHandler.findMoveableTiles(GameState.moving)
-	for n in range(possibleMovement.size()):
-		if possibleMovement[n].contains is EnemyPiece:
-			possibleMovement[n].setColor(Global.colorDict["Orange"])
-		else:
-			possibleMovement[n].setColor(Global.colorDict["Blue"])
+	var possibleTiles
+	match type:
+		"Movement":
+			possibleTiles = MovementHandler.findMoveableTiles(GameState.moving)
+		"Action":
+			possibleTiles = ActionHandler.findActionTiles(GameState.playerPiece.currentTile.global_position)
+		"Item":
+			possibleTiles = ItemHandler.findItemTiles(GameState.item)
+	GameState.tileDict["iTiles"] = possibleTiles
 
-func showItem():
-	var possibleTiles = GameState.item.getItemRange(GameState.playerPiece.currentTile.global_position)
-	for n in range(possibleTiles.size()):
-		if lookForTile(possibleTiles[n]):
-			lookForTile(possibleTiles[n]).setColor(Global.colorDict["Orange"])
 
 func stopShowing():
-	var allTiles = GameState.tileDict["Tiles"]
-	for n in range(allTiles.size()):
-		allTiles[n].hittable = false
-		allTiles[n].moveable = false
+	GameState.tileDict["iTiles"].clear()
 	setTilePattern()

@@ -4,7 +4,6 @@ class_name PlayableArea
 var mouse_sensitivity := 0.0005
 var twist : float
 
-@onready var tileHolder = $Tiles
 @onready var menuHolder = $Menu
 
 @onready var Pointer = $Pointer
