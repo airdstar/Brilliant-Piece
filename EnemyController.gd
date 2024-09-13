@@ -10,7 +10,7 @@ var ActionMutex: Mutex
 
 var exit_thread : bool = false
 
-var possibleTiles
+var possibleTiles = []
 var tileValueHolder : Array[int]
 
 func _ready():
@@ -25,62 +25,48 @@ func _ready():
 	MovementThread.start(getMovementData)
 	ActionThread.start(getActionData)
 
-func _process(_delta: float):
-	if !GameState.playerTurn:
-		makeDecision()
 
 func makeDecision():
 	if !GameState.moveUsed:
-		for n in range(GameState.enemyPieces.size()):
-			possibleTiles = MovementHandler.findMoveableTiles(GameState.enemyPieces[n])
-			#MovementThread.start(findBestMovement.bind(GameState.playerPiece, GameState.enemyPieces[n], "Approach"))
+		MovementSemaphore.post()
 
 func findBestMovement(target : MoveablePiece, piece : EnemyPiece, behavior : String):
 	match behavior:
 		"Approach":
-			#GameState.moving = piece
-			call_deferred("findClosestTileToTarget", target.currentTile.global_position)
-			#MovementHandler.movePiece(findClosestTileToTarget(target.currentTile.global_position))
-			#GameState.endTurn()
+			findClosestTileToTarget(target.currentTile.global_position)
 
 func findClosestTileToTarget(target : Vector3):
-	for n in range(GameState.allFloorTiles.size()):
-		if tileValueHolder.size() != GameState.allFloorTiles.size():
+	for n in range(GameState.tileDict["Tiles"].size()):
+		if tileValueHolder.size() != GameState.tileDict["Tiles"].size():
 			tileValueHolder.append(200)
 		else:
 			tileValueHolder[n] = 200
-		if TileHandler.lookForTile(target) == GameState.allFloorTiles[n]:
+		if TileHandler.lookForTile(target) == GameState.tileDict["Tiles"][n]:
 			tileValueHolder[n] = 0
 	
 	var possibleDirections : Array[Vector3] = []
 	for n in range(4):
-		if TileHandler.lookForTile(target + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[n])):
-			possibleDirections.append(target + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[n]))
-	call_deferred_thread_group("checkNearbyTiles", possibleDirections, 1)
+		if DirectionHandler.dirDict["PosData"].has(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]]):
+			possibleDirections.append(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]])
+	checkNearbyTiles(possibleDirections, 1)
 	
 	var lowestDistance = 200
 	var closestTile
-	for n in range(possibleTiles.size()):
-		var currentTileNum = GameState.allFloorTiles.find(possibleTiles[n])
-		if tileValueHolder[currentTileNum] < lowestDistance:
-			print("hi")
-			lowestDistance = tileValueHolder[currentTileNum]
-			closestTile = possibleTiles[n]
 	
 	return closestTile
 
 func checkNearbyTiles(allTiles : Array[Vector3], currentDistance : int):
 	var foundATile : bool = false
 	for n in range(allTiles.size()):
-		var currentTileNum = GameState.allFloorTiles.find(TileHandler.lookForTile(allTiles[n]))
+		var currentTileNum = GameState.tileDict["Tiles"].find(TileHandler.lookForTile(allTiles[n]))
 		if tileValueHolder[currentTileNum] > currentDistance:
 			tileValueHolder[currentTileNum] = currentDistance
 			foundATile = true
-			if !GameState.allFloorTiles[currentTileNum].contains == GameState.enemyPieces[0]:
+			if !GameState.tileDict["Tiles"][currentTileNum].contains == GameState.enemyPieces[0]:
 				var possibleDirections : Array[Vector3] = []
 				for m in range(4):
-					if TileHandler.lookForTile(allTiles[n] + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[m])):
-						possibleDirections.append(allTiles[n] + DirectionHandler.getPos(DirectionHandler.getAll("Straight")[m]))
+					if DirectionHandler.dirDict["PosData"].has(allTiles[n] + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[m]]):
+						possibleDirections.append(allTiles[n] + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[m]])
 				checkNearbyTiles(possibleDirections, currentDistance + 1)
 	if !foundATile:
 		return

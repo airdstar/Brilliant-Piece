@@ -4,7 +4,7 @@ func _process(_delta: float):
 	if GameState.moving != null:
 		if Input.is_action_just_pressed("Select"):
 			if GameState.tileDict["iTiles"].has(GameState.tileDict["hTile"]):
-				movePiece(GameState.highlightedTile, GameState.moving)
+				movePiece(GameState.tileDict["hTile"], GameState.moving)
 
 func movePiece(destination : tile, piece : MoveablePiece):
 	TileHandler.stopShowing()
@@ -52,10 +52,11 @@ func findMoveableTiles(piece : MoveablePiece):
 				currentTile = TileHandler.lookForTile(possibleTiles[n])
 		else:
 			if currentTile:
-				if (TileHandler.lookForTile(possibleTiles[n]) and TileHandler.lookForTile(possibleTiles[n]).moveable) or possibleTiles[n] == piece.currentTile.global_position:
-					if TileHandler.lookForTile(possibleTiles[n]).contains is not MoveablePiece or TileHandler.lookForTile(possibleTiles[n]).contains == piece:
-						toReturn.append(currentTile)
-						if piece is PlayerPiece:
-							currentTile.moveable = true
+				if TileHandler.lookForTile(possibleTiles[n]):
+					if (GameState.tileDict["iTiles"].has(TileHandler.lookForTile(possibleTiles[n])) or possibleTiles[n] == piece.currentTile.global_position):
+						if TileHandler.lookForTile(possibleTiles[n]).contains is not MoveablePiece or TileHandler.lookForTile(possibleTiles[n]).contains == piece:
+							toReturn.append(currentTile)
+							if piece is MoveablePiece:
+								GameState.tileDict["iTiles"].append(currentTile)
 			currentTile = null
 	return toReturn

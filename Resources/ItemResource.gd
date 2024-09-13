@@ -4,7 +4,7 @@ class_name ItemResource
 @export_category("General")
 @export var name : String
 @export var desc : String
-@export var associatedModel : String
+@export var associatedModel : String = "res://Item/Base.blend"
 @export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement") var itemType : String
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
 
@@ -30,13 +30,12 @@ func getItemRange(itemStart : Vector3):
 	for n in range(8):
 		var tileData : Vector3 = itemStart
 		for m in range(itemRange):
-			tileData += DirectionHandler.getPos(pos[n])
-			toReturn.append(tileData)
+			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
 			if n < 4:
 				if m > 0:
 					var sides = DirectionHandler.getSides(DirectionHandler.getAll("Straight")[n])
 					for l in range(m):
-						toReturn.append(tileData + (DirectionHandler.getPos(sides[0]) * (l + 1)))
-						toReturn.append(tileData + (DirectionHandler.getPos(sides[1]) * (l + 1)))
+						toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[0]] * (l + 1)))
+						toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[1]] * (l + 1)))
 	
 	return toReturn

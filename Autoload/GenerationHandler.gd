@@ -32,13 +32,19 @@ func generatePlayer():
 	player.type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
 	GameState.currentFloor.add_child(player)
 	GameState.playerPiece = player
+	GameState.playerDict = {"Piece" : player,
+							"Position" : player.global_position}
 
 func generateEnemies():
 	var enemyArray = GameState.enemyPieces
+	var enemyPositions : Array[Vector3]
 	for n in range(1):
 		enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 		enemyArray[n].enemyType = ResourceLoader.load("res://Resources/Enemy Resources/Goblin.tres")
 		GameState.currentFloor.add_child(enemyArray[n])
+	
+	GameState.enemyDict = {"Piece" : enemyArray,
+							"Position" : enemyPositions}
 
 func placePieces():
 	var piece

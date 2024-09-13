@@ -14,8 +14,11 @@ func setTilePattern():
 				allTiles[n].setColor(Global.colorDict["Black"])
 			else:
 				allTiles[n].setColor(Global.colorDict["White"])
-		if GameState.tileDict["iTiles"].has(allTiles[n]) and GameState.action:
-			allTiles[n].setColor(Global.colorDict["Orange"])
+		if GameState.tileDict["iTiles"].has(allTiles[n]):
+			if GameState.action:
+				allTiles[n].setColor(Global.colorDict["Orange"])
+			elif GameState.moving:
+				allTiles[n].setColor(Global.colorDict["Blue"])
 
 func show(type : String):
 	GameState.currentFloor.Pointer.visible = true
@@ -26,10 +29,14 @@ func show(type : String):
 		"Action":
 			possibleTiles = ActionHandler.findActionTiles(GameState.playerPiece.currentTile.global_position)
 		"Item":
-			possibleTiles = ItemHandler.findItemTiles(GameState.item)
+			possibleTiles = ItemHandler.findItemTiles(GameState.playerPiece.currentTile.global_position)
 	GameState.tileDict["iTiles"] = possibleTiles
+	setTilePattern()
 
 
 func stopShowing():
 	GameState.tileDict["iTiles"].clear()
+	GameState.action = null
+	GameState.moving = null
+	GameState.item = null
 	setTilePattern()

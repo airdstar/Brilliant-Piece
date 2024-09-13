@@ -6,7 +6,7 @@
 script = ExtResource("1_hwn35")
 name = "Medkit"
 desc = "Heal yourself (or others)"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Healing"
 usableOn = 3
 useAmount = 2

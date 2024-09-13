@@ -6,7 +6,7 @@
 script = ExtResource("1_phq1o")
 name = "Swiftness Potion"
 desc = "Apply swiftness to yourself"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Status"
 usableOn = 1
 useAmount = 2

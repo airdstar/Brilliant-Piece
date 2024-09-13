@@ -6,7 +6,7 @@
 script = ExtResource("1_jxqjj")
 name = "Heavyduty Fan"
 desc = "Place this and anyone in its way will be blown off the board"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Hazard"
 usableOn = 4
 useAmount = 1

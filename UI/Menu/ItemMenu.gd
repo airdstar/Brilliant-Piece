@@ -37,8 +37,7 @@ func addOptions():
 
 func selectOption():
 	GameState.item = options[highlightedOption]
-	TileHandler.showItem()
-	GameState.currentFloor.Pointer.visible = true
+	TileHandler.show("Item")
 	MenuHandler.fullyCloseMenu()
 
 func swapItem():

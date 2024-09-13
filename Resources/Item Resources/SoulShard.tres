@@ -6,7 +6,7 @@
 script = ExtResource("1_aesya")
 name = "Soul Shard"
 desc = "Regain 1 soul"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Status"
 usableOn = 1
 useAmount = 1

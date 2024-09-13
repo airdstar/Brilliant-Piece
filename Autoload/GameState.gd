@@ -4,6 +4,14 @@ var currentFloor : Floor
 
 var tileDict : Dictionary
 
+var playerDict : Dictionary
+var neutralDict : Dictionary
+var enemyDict : Dictionary
+
+var pieceDict : Dictionary = {"Player" : playerDict,
+								"Neutral" : neutralDict,
+								"Enemy" : enemyDict}
+
 var playerPiece : PlayerPiece
 var neutralPieces : Array[MoveablePiece]
 var enemyPieces : Array[EnemyPiece]
@@ -27,3 +35,4 @@ func endTurn():
 		MenuHandler.openMenu()
 	else:
 		currentFloor.Pointer.visible = true
+		currentFloor.enemyController.makeDecision()

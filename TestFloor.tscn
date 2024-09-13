@@ -38,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Background" parent="." instance=ExtResource("5_f853j")]
 
-[node name="Enemy Controller" parent="." instance=ExtResource("4_eawrr")]
+[node name="EnemyController" parent="." instance=ExtResource("4_eawrr")]
 
 [node name="Menu" type="CanvasLayer" parent="."]
 layer = 3

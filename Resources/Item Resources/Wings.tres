@@ -6,7 +6,7 @@
 script = ExtResource("1_jno63")
 name = "Wings"
 desc = "Move to a tile of your choice"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Movement"
 usableOn = 4
 useAmount = 1

@@ -6,7 +6,7 @@
 script = ExtResource("1_qb3h1")
 name = "Regeneration Orb"
 desc = "Place an orb that applies regen when near"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Hazard"
 usableOn = 4
 useAmount = 0

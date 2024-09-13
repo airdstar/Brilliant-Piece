@@ -6,7 +6,7 @@
 script = ExtResource("1_27hdm")
 name = "Sticky Goo"
 desc = "Stops movement if touched"
-associatedModel = ""
+associatedModel = "res://Item/Base.blend"
 itemType = "Hazard"
 usableOn = 4
 useAmount = 3

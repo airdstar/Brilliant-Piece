@@ -5,9 +5,6 @@ var piecePos : Vector3 = Vector3(0,0.3,0)
 var pointerPos : float = 1.5
 var pointerPosBlocked : int = 2
 
-var moveable := false
-var hittable := false
-
 var contains : Piece
 var obstructed := false
 

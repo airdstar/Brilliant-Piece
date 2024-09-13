@@ -13,6 +13,8 @@ func _ready():
 	#Items must be loaded in through ready
 	items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
 	items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
+	items.append(ResourceLoader.load("res://Resources/Item Resources/IceCube.tres"))
+	items.append(ResourceLoader.load("res://Resources/Item Resources/RegenOrb.tres"))
 	setData()
 
 func setData():
