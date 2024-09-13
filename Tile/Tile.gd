@@ -35,13 +35,18 @@ func ToggleGrow():
 	growing = !growing
 
 func setPiece(piece : Piece, dir : DirectionHandler.Direction):
+	contains = piece
+	piece.setPieceOrientation(dir)
 	if piece.currentTile:
 		piece.previousTile = piece.currentTile
 		piece.previousTile.contains = null
-	contains = piece
+		var tween = create_tween()
+		tween.tween_property(piece, "global_position", piecePos + self.global_position, 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	else:
+		contains.global_position = piecePos + self.global_position
+	
 	piece.currentTile = self
-	contains.global_position = piecePos + self.global_position
-	piece.setPieceOrientation(dir)
+	
 
 func actionUsed(action : ActionResource):
 	if contains:
