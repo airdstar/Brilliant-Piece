@@ -15,10 +15,10 @@ func movePiece(destination : tile, piece : MoveablePiece):
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
-		closestTile.setPiece(GameState.moving, closestDirection)
-		if GameState.moving.currentTile == destination:
+		closestTile.setPiece(piece, closestDirection)
+		if piece.currentTile == destination:
 			destinationReached = true
-			if GameState.moving is PlayerPiece:
+			if piece is PlayerPiece:
 				InterfaceHandler.usedMovement()
 				InterfaceHandler.displayInfo()
 				await get_tree().create_timer(0.01).timeout

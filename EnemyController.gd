@@ -30,10 +30,10 @@ func makeDecision():
 	if !GameState.moveUsed:
 		MovementSemaphore.post()
 
-func findBestMovement(target : MoveablePiece, piece : EnemyPiece, behavior : String):
+func findBestMovement(target : Vector3, piece : EnemyPiece, behavior : String):
 	match behavior:
 		"Approach":
-			findClosestTileToTarget(target.currentTile.global_position)
+			MovementHandler.movePiece(findClosestTileToTarget(target), piece)
 
 func findClosestTileToTarget(target : Vector3):
 	for n in range(GameState.tileDict["Tiles"].size()):
@@ -83,8 +83,8 @@ func getMovementData():
 			break
 		
 		MovementMutex.lock()
-		for n in range (GameState.enemyPieces.size()):
-			findBestMovement(GameState.playerPiece, GameState.enemyPieces[0], "Approach")
+		for n in range (GameState.pieceDict["Enemy"]["Piece"].size()):
+			findBestMovement(GameState.pieceDict["Player"]["Position"], GameState.pieceDict["Enemy"]["Piece"][n], GameState.pieceDict["Enemy"]["Behavior"][n])
 		MovementMutex.unlock()
 
 func getActionData():

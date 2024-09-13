@@ -23,7 +23,7 @@ func openMenu():
 		GameState.currentMenu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
 		GameState.currentFloor.menuHolder.add_child(GameState.currentMenu)
 		GameState.currentFloor.Pointer.visible = false
-		HighlightHandler.highlightTile(GameState.playerPiece.currentTile)
+		HighlightHandler.highlightTile(GameState.pieceDict["Player"]["Piece"].currentTile)
 
 func closeMenu():
 	GameState.currentMenu.animation.play("CloseMenu")

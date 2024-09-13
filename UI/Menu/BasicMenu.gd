@@ -56,7 +56,7 @@ func selectOption():
 		"Move":
 			animation.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			GameState.moving = GameState.playerPiece
+			GameState.moving = GameState.pieceDict["Player"]["Piece"]
 			TileHandler.show("Movement")
 			queue_free()
 		"Action":
