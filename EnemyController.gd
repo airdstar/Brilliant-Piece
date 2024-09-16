@@ -1,120 +1,69 @@
 extends Node
 
-var MovementThread : Thread
-var MovementSemaphore: Semaphore
-var MovementMutex : Mutex
-
-var ActionThread : Thread
-var ActionSemaphore: Semaphore
-var ActionMutex: Mutex
-
-var exit_thread : bool = false
-
 var possibleTiles = []
-var tileValueHolder : Array[int]
-
-func _ready():
-	MovementThread = Thread.new()
-	MovementSemaphore = Semaphore.new()
-	MovementMutex = Mutex.new()
-	
-	ActionThread = Thread.new()
-	ActionSemaphore = Semaphore.new()
-	ActionMutex = Mutex.new()
-	
-	MovementThread.start(getMovementData)
-	ActionThread.start(getActionData)
-
 
 func makeDecision():
 	if !GameState.moveUsed:
-		possibleTiles = MovementHandler.findMoveableTiles(GameState.pieceDict["Enemy"]["Piece"][0])
-		MovementSemaphore.post()
+		findBestMovement(GameState.pieceDict["Player"]["Position"], GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
+		GameState.endTurn()
+		
 
 func findBestMovement(target : Vector3, piece : EnemyPiece, behavior : String):
+	possibleTiles = MovementHandler.findMoveableTiles(piece)
 	match behavior:
 		"Approach":
-			MovementHandler.movePiece(findClosestTileToTarget(target), piece)
+			MovementHandler.movePiece(findClosestTileToTarget(target, piece), piece)
+		"Away":
+			MovementHandler.movePiece(findFurthestTileFromTarget(target, piece), piece)
 
-func findClosestTileToTarget(target : Vector3):
-	for n in range(GameState.tileDict["Tiles"].size()):
-		if tileValueHolder.size() != GameState.tileDict["Tiles"].size():
-			tileValueHolder.append(200)
-		else:
-			tileValueHolder[n] = 200
-		if TileHandler.lookForTile(target) == GameState.tileDict["Tiles"][n]:
-			tileValueHolder[n] = 0
+func findClosestTileToTarget(target : Vector3, piece : EnemyPiece):
+	var piecePos = GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)]
+	var orderedDirections = DirectionHandler.orderClosestDirections(DirectionHandler.getAll(piece.type.movementAngle), piecePos, target)
+	var direction = orderedDirections[0]
+	if piece.prevDirection == direction:
+		direction = orderedDirections[1]
+	piece.prevDirection = -1
+	var prefDirection = direction
+	if !GameState.tileDict["TilePos"].has(piecePos + DirectionHandler.dirDict["PosData"][direction]):
+		var foundPath : bool = false
+		var counter = 1
+		while !foundPath:
+			if GameState.tileDict["TilePos"].has(piecePos + DirectionHandler.dirDict["PosData"][direction] + (DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[0]]) * (1 + counter)):
+				if GameState.tileDict["TilePos"].has(piecePos + (DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[0]]) * (1 + counter)):
+					foundPath = true
+					direction = DirectionHandler.getSides(direction)[0]
+			elif GameState.tileDict["TilePos"].has(piecePos + DirectionHandler.dirDict["PosData"][direction] + (DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[1]]) * (1 + counter)):
+				if GameState.tileDict["TilePos"].has(piecePos + (DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[1]]) * (1 + counter)):
+					foundPath = true
+					direction = DirectionHandler.getSides(direction)[1]
+			counter += 1
 	
-	var possibleDirections : Array[Vector3] = []
-	print(target)
-	for n in range(4):
-		if DirectionHandler.dirDict["PosData"].has(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]]):
-			possibleDirections.append(target + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[n]])
-	checkNearbyTiles(possibleDirections, 1)
-	
-	var lowestDistance = 200
-	var closestTile
-	
-	
+	var closestTile : tile = TileHandler.lookForTile(piecePos + (DirectionHandler.dirDict["PosData"][direction]))
+	var stopMovement : bool = false
+	var smallestDistance = 200
+	for n in range(piece.type.movementCount):
+		if !stopMovement:
+			var xVar = abs(target.x - (piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n))).x)
+			var zVar = abs(target.z - (piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n))).z)
+			if smallestDistance != 200:
+				if prefDirection != direction:
+					if GameState.tileDict["TilePos"].has(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n)) + (DirectionHandler.dirDict["PosData"][prefDirection])):
+						stopMovement = true
+						piece.prevDirection = DirectionHandler.getOppDirection(direction)
+					if GameState.tileDict["TilePos"].has(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n))):
+						closestTile = TileHandler.lookForTile(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n)))
+						
+						
+				else:
+					if smallestDistance > xVar + zVar:
+						if GameState.tileDict["TilePos"].has(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n))):
+							closestTile = TileHandler.lookForTile(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n)))
+							smallestDistance = xVar + zVar
+				
+			else:
+				closestTile = TileHandler.lookForTile(piecePos + (DirectionHandler.dirDict["PosData"][direction] * (1 + n)))
+				smallestDistance = xVar + zVar
 	return closestTile
 
-func checkNearbyTiles(allTiles : Array[Vector3], currentDistance : int):
-	var foundATile : bool = false
-	for n in range(allTiles.size()):
-		var currentTileNum = GameState.tileDict["Tiles"].find(TileHandler.lookForTile(allTiles[n]))
-		if tileValueHolder[currentTileNum] > currentDistance:
-			tileValueHolder[currentTileNum] = currentDistance
-			foundATile = true
-			if GameState.tileDict["Tiles"][currentTileNum].contains != GameState.pieceDict["Enemy"]["Piece"][0]:
-				var possibleDirections : Array[Vector3] = []
-				for m in range(4):
-					if DirectionHandler.dirDict["PosData"].has(allTiles[n] + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[m]]):
-						possibleDirections.append(allTiles[n] + DirectionHandler.dirDict["PosData"][DirectionHandler.getAll("Straight")[m]])
-				checkNearbyTiles(possibleDirections, currentDistance + 1)
-	if !foundATile:
-		return
-
-func getMovementData():
-	while true:
-		MovementSemaphore.wait()
-		
-		MovementMutex.lock()
-		var should_exit = exit_thread
-		MovementMutex.unlock()
-
-		if should_exit:
-			break
-		
-		MovementMutex.lock()
-		for n in range (GameState.pieceDict["Enemy"]["Piece"].size()):
-			findBestMovement(GameState.pieceDict["Player"]["Position"], GameState.pieceDict["Enemy"]["Piece"][n], GameState.pieceDict["Enemy"]["Behavior"][n])
-		MovementMutex.unlock()
-
-func getActionData():
-	while true:
-		ActionSemaphore.wait()
-		
-		ActionMutex.lock()
-		var should_exit = exit_thread
-		ActionMutex.unlock()
-
-		if should_exit:
-			break
-		
-		ActionMutex.lock()
-		pass
-		ActionMutex.unlock()
-
-func _exit_tree():
-	MovementMutex.lock()
-	MovementMutex.unlock()
-	ActionMutex.lock()
-	ActionMutex.unlock()
-	
-	exit_thread = true 
-	
-	MovementSemaphore.post()
-	ActionSemaphore.post()
-	
-	MovementThread.wait_to_finish()
-	ActionThread.wait_to_finish()
+func findFurthestTileFromTarget(target : Vector3, piece : EnemyPiece):
+	pass

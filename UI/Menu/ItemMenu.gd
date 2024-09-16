@@ -14,7 +14,7 @@ func _process(_delta: float):
 	physicalItems[highlightedOption].rotate_y(-0.01)
 
 func addOptions():
-	options = GameState.playerPiece.items
+	options = GameState.pieceDict["Player"]["Piece"].items
 	itemCount = options.size()
 	if itemCount > 0:
 		var loopAmount = 4 - itemCount

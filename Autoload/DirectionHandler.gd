@@ -23,7 +23,10 @@ func _ready():
 	
 	var dirRotationArray : Array[int] = [-90, -45, 0, 45, 90, 135, 180, -135]
 	
-	dirDict = {"PosData" : dirPosArray, "RotData" : dirRotationArray}
+	var xArray = [dirArray[1], dirArray[2], dirArray[3], dirArray[5], dirArray[6], dirArray[7]]
+	var zArray = [dirArray[0], dirArray[1], dirArray[3], dirArray[4], dirArray[5], dirArray[7]]
+	
+	dirDict = {"PosData" : dirPosArray, "RotData" : dirRotationArray, "xData" : xArray, "zData" : zArray}
 
 func getDiagonals(dir : Direction):
 	if dir == 0:
@@ -65,19 +68,52 @@ func getClosestDirection(start : Vector3, target : Vector3):
 	var closestDirection : Direction
 	var smallestVariation : int = 100
 	for n in range(8):
-		var xVar = abs(target.x - (start + dirDict["PosData"][n]).x)
-		var zVar = abs(target.z - (start + dirDict["PosData"][n]).z)
-		if smallestVariation != 100:
-			if smallestVariation > xVar + zVar:
+		var counter = 0
+		var sameDirection = true
+		while sameDirection:
+			var xVar = abs(target.x - (start + (dirDict["PosData"][n] * (1 + counter))).x)
+			var zVar = abs(target.z - (start + (dirDict["PosData"][n] * (1 + counter))).z)
+			if smallestVariation != 200:
+				if smallestVariation > xVar + zVar:
+					closestDirection = dirArray[n]
+					smallestVariation = xVar + zVar
+					sameDirection = false
+				elif smallestVariation == xVar + zVar:
+					counter += 1
+				else:
+					sameDirection = false
+			else:
 				closestDirection = dirArray[n]
 				smallestVariation = xVar + zVar
-			elif smallestVariation == xVar + zVar:
-				if (closestDirection == 0 or dirArray[n] == 0) and (closestDirection == 6 or dirArray[n] == 6):
-					closestDirection = 6
-				else:
-					closestDirection = ((closestDirection + dirArray[n]) / 2)
-		else:
-			closestDirection = dirArray[n]
-			smallestVariation = xVar + zVar
+				sameDirection = false
 	
 	return closestDirection
+
+func orderClosestDirections(dir : Array, start : Vector3, target : Vector3):
+	var toReturn : Array[Direction]
+	var remain = dir
+	for m in range(dir.size()):
+		var smallestVariation : int = 200
+		var closestDirection
+		for n in range(remain.size()):
+			var counter = 0
+			var sameDirection = true
+			while sameDirection:
+				var xVar = abs(target.x - (start + (dirDict["PosData"][remain[n]] * (1 + counter))).x)
+				var zVar = abs(target.z - (start + (dirDict["PosData"][remain[n]] * (1 + counter))).z)
+				if smallestVariation != 200:
+					if smallestVariation > xVar + zVar:
+						closestDirection = remain[n]
+						smallestVariation = xVar + zVar
+						sameDirection = false
+					elif smallestVariation == xVar + zVar:
+						counter += 1
+					else:
+						sameDirection = false
+				else:
+					closestDirection = remain[n]
+					smallestVariation = xVar + zVar
+					sameDirection = false
+		remain.erase(closestDirection)
+		toReturn.append(closestDirection)
+	return toReturn

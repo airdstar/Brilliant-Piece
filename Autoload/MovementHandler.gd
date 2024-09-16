@@ -7,12 +7,21 @@ func _process(_delta: float):
 				movePiece(GameState.tileDict["hTile"], GameState.moving)
 
 func movePiece(destination : tile, piece : MoveablePiece):
+	var destinationReached : bool = false
+	var closestDirection
+	var destinationPos = GameState.tileDict["TilePos"][GameState.tileDict["Tiles"].find(destination)]
 	if piece is PlayerPiece:
 		TileHandler.stopShowing()
-	var destinationReached : bool = false
-	var closestDirection = DirectionHandler.getClosestDirection(piece.currentTile.global_position, destination.global_position)
+		closestDirection = DirectionHandler.getClosestDirection(GameState.pieceDict["Player"]["Position"], destinationPos)
+	elif piece is EnemyPiece:
+		closestDirection = DirectionHandler.getClosestDirection(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)], destinationPos)
 	while(!destinationReached):
-		var closestTile = TileHandler.lookForTile(piece.currentTile.global_position + DirectionHandler.dirDict["PosData"][closestDirection])
+		var closestTile
+		if piece is PlayerPiece:
+			closestTile = TileHandler.lookForTile(GameState.pieceDict["Player"]["Position"] + DirectionHandler.dirDict["PosData"][closestDirection])
+		elif piece is EnemyPiece:
+			closestTile = TileHandler.lookForTile(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] + DirectionHandler.dirDict["PosData"][closestDirection])
+		
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
@@ -30,9 +39,13 @@ func movePiece(destination : tile, piece : MoveablePiece):
 	GameState.moving = null
 
 func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):
-	var currentTile = TileHandler.lookForTile(piece.currentTile.global_position + DirectionHandler.getPos(direction))
+	var currentTile
+	if piece is PlayerPiece:
+		currentTile = TileHandler.lookForTile(GameState.pieceDict["Player"]["Position"] + DirectionHandler.dirDict["PosData"][direction])
+	elif piece is EnemyPiece:
+		currentTile = TileHandler.lookForTile(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] + DirectionHandler.dirDict["PosData"][direction])
 	if currentTile:
-		currentTile.setPiece(piece)
+		currentTile.setPiece(piece, direction)
 		@warning_ignore("integer_division")
 		if int(piece.maxHealth / 10) < 1:
 			piece.damage(1)

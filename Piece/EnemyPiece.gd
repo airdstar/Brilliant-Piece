@@ -4,6 +4,7 @@ class_name EnemyPiece
 @export var enemyType : EnemyResource
 
 var level : int
+var prevDirection : DirectionHandler.Direction
 
 func _ready():
 	setData()

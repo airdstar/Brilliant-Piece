@@ -27,9 +27,9 @@ func show(type : String):
 		"Movement":
 			possibleTiles = MovementHandler.findMoveableTiles(GameState.moving)
 		"Action":
-			possibleTiles = ActionHandler.findActionTiles(GameState.playerPiece.currentTile.global_position)
+			possibleTiles = ActionHandler.findActionTiles(GameState.pieceDict["Player"]["Position"])
 		"Item":
-			possibleTiles = ItemHandler.findItemTiles(GameState.playerPiece.currentTile.global_position)
+			possibleTiles = ItemHandler.findItemTiles(GameState.pieceDict["Player"]["Position"])
 	GameState.tileDict["iTiles"] = possibleTiles
 	setTilePattern()
 
