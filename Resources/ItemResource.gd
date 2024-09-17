@@ -31,11 +31,28 @@ func getItemRange(itemStart : Vector3):
 		var tileData : Vector3 = itemStart
 		for m in range(itemRange):
 			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
-			if n < 4:
-				if m > 0:
-					var sides = DirectionHandler.getSides(DirectionHandler.getAll("Straight")[n])
-					for l in range(m):
-						toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[0]] * (l + 1)))
-						toReturn.append(tileData + (DirectionHandler.dirDict["PosData"][sides[1]] * (l + 1)))
+			toReturn.append(tileData)
+			if n % 2 == 0:
+				var counter = m
+				while counter > 0:
+					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * counter)
+					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * counter)
+					counter -= 1
 	
 	return toReturn
+
+func getUsable():
+	var amount = usableOn
+	var possibleUses = []
+
+	if amount >= 4:
+		amount -= 4
+		possibleUses.append("Tile")
+	if amount >= 2:
+		amount -= 2
+		possibleUses.append("Enemy")
+	if amount >= 1:
+		amount -= 1
+		possibleUses.append("Self")
+	
+	return possibleUses

@@ -36,5 +36,17 @@ func getActionRange(actionStart : Vector3):
 		for m in range(actionRange):
 			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
 			toReturn.append(tileData)
-	
+			if actionDirection == "Cone":
+				var counter = m
+				while counter > 1:
+					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * (counter / 2))
+					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * (counter / 2))
+					counter -= 2
+			elif actionDirection == "Square":
+				if n % 2 == 0:
+					var counter = m
+					while counter > 0:
+						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * counter)
+						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * counter)
+						counter -= 1
 	return toReturn

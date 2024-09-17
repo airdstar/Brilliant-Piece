@@ -19,6 +19,10 @@ func setTilePattern():
 				allTiles[n].setColor(Global.colorDict["Orange"])
 			elif GameState.moving:
 				allTiles[n].setColor(Global.colorDict["Blue"])
+				if allTiles[n].contains is EnemyPiece:
+					allTiles[n].setColor(Global.colorDict["Orange"])
+			elif GameState.item:
+				allTiles[n].setColor(Global.colorDict["Green"])
 
 func show(type : String):
 	GameState.currentFloor.Pointer.visible = true
