@@ -4,3 +4,7 @@
 
 [node name="Enemy Controller" type="Node"]
 script = ExtResource("1_tqpcw")
+
+[node name="MovementNode" type="Node" parent="."]
+
+[node name="ActionNode" type="Node" parent="."]

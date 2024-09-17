@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LayerResource" load_steps=4 format=3 uid="uid://djqj3mu1wxwlv"]
+
+[ext_resource type="Script" path="res://Resources/LayerResource.gd" id="1_0bro7"]
+[ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_e1cnl"]
+[ext_resource type="Resource" uid="uid://dfjb6if6vtt3e" path="res://Resources/Enemy Resources/Goblin.tres" id="2_7hstu"]
+
+[resource]
+script = ExtResource("1_0bro7")
+layerName = "Start"
+possibleEnemies = Array[ExtResource("1_e1cnl")]([ExtResource("2_7hstu")])
+possibleLayouts = Array[String](["res://Floor/Layouts/Start1.png", "res://Floor/Layouts/Start2.png"])
+maxPossibleEnemies = 2
+minPossibleEnemies = 1

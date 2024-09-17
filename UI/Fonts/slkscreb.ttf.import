@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://h7d85xfrjorx"
-path="res://.godot/imported/Perfect DOS VGA 437 Win.ttf-fe14a6f19e7be773898a775dce7cc487.fontdata"
+uid="uid://bhakx8ye3tu6q"
+path="res://.godot/imported/slkscreb.ttf-72eaa4cac2e1bb30315443d013b1a409.fontdata"
 
 [deps]
 
-source_file="res://Perfect DOS VGA 437 Win.ttf"
-dest_files=["res://.godot/imported/Perfect DOS VGA 437 Win.ttf-fe14a6f19e7be773898a775dce7cc487.fontdata"]
+source_file="res://UI/Fonts/slkscreb.ttf"
+dest_files=["res://.godot/imported/slkscreb.ttf-72eaa4cac2e1bb30315443d013b1a409.fontdata"]
 
 [params]
 

@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://UI/Menu/ItemMenu.gd" id="1_l64w7"]
 [ext_resource type="Texture2D" uid="uid://d2pe2p630dptw" path="res://UI/Menu/ItemMenuTop.png" id="3_eox7t"]
 [ext_resource type="Texture2D" uid="uid://cnsr6c6kh3cx5" path="res://UI/Menu/ItemMenuBottom.png" id="4_gv7t6"]
-[ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://slkscrb.ttf" id="5_6faio"]
-[ext_resource type="FontFile" uid="uid://mq727r4s71cw" path="res://slkscr.ttf" id="6_7p2o2"]
+[ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://UI/Fonts/slkscrb.ttf" id="5_6faio"]
+[ext_resource type="FontFile" uid="uid://mq727r4s71cw" path="res://UI/Fonts/slkscr.ttf" id="6_7p2o2"]
 [ext_resource type="AudioStream" uid="uid://cxtbm4issc77h" path="res://UI/Menu/MenuExit.mp3" id="6_gx0ux"]
 [ext_resource type="AudioStream" uid="uid://dwu6p5o0ru4ha" path="res://UI/Menu/MenuSelect.mp3" id="7_fljc6"]
 

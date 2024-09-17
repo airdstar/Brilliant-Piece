@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://mq727r4s71cw"
-path="res://.godot/imported/slkscr.ttf-282312b21d846f2bc507f6e4b19826ea.fontdata"
+uid="uid://cghsk2v1crb1d"
+path="res://.godot/imported/slkscre.ttf-6ba219d613f890f4455527c43a282657.fontdata"
 
 [deps]
 
-source_file="res://slkscr.ttf"
-dest_files=["res://.godot/imported/slkscr.ttf-282312b21d846f2bc507f6e4b19826ea.fontdata"]
+source_file="res://UI/Fonts/slkscre.ttf"
+dest_files=["res://.godot/imported/slkscre.ttf-6ba219d613f890f4455527c43a282657.fontdata"]
 
 [params]
 

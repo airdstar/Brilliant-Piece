@@ -39,5 +39,9 @@ func heal(healingAmount : int):
 	if health >= maxHealth:
 		health = maxHealth
 
+func addArmor(armorAmount : int):
+	if armor == 0:
+		armor = armorAmount
+
 func setPieceOrientation(dir : DirectionHandler.Direction):
 	global_rotation.y = deg_to_rad(DirectionHandler.dirDict["RotData"][dir])

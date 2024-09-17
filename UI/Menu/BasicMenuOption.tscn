@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://UI/Menu/BasicMenuOption.gd" id="1_xgm12"]
 [ext_resource type="Texture2D" uid="uid://bl4lul4in1520" path="res://UI/Menu/MenuFullHighlight.png" id="3_8r2mk"]
-[ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://slkscrb.ttf" id="3_qt8eu"]
+[ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://UI/Fonts/slkscrb.ttf" id="3_qt8eu"]
 [ext_resource type="Texture2D" uid="uid://cfxswvfsju0iu" path="res://UI/Menu/MenuFull.png" id="4_sm4se"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_r2ckk"]

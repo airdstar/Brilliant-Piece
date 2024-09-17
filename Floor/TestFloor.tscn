@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c0rs8wca01dop"]
 
-[ext_resource type="Script" path="res://TestFloor.gd" id="1_snloc"]
-[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Tile/Pointer.tscn" id="3_uhgei"]
+[ext_resource type="Script" path="res://Floor/TestFloor.gd" id="1_snloc"]
+[ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Floor/Tile/Pointer.tscn" id="3_uhgei"]
 [ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="4_75t5u"]
 [ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://EnemyController.tscn" id="4_eawrr"]
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://FloorBackground.tscn" id="5_f853j"]

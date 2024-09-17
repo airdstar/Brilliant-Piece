@@ -28,8 +28,8 @@ func movePiece(destination : tile, piece : MoveablePiece):
 		closestTile.setPiece(piece, closestDirection)
 		if piece.currentTile == destination:
 			destinationReached = true
+			InterfaceHandler.usedMovement()
 			if piece is PlayerPiece:
-				InterfaceHandler.usedMovement()
 				InterfaceHandler.displayInfo()
 				await get_tree().create_timer(0.01).timeout
 				MenuHandler.openMenu()
@@ -70,7 +70,7 @@ func findMoveableTiles(piece : MoveablePiece):
 					if (GameState.tileDict["iTiles"].has(TileHandler.lookForTile(possibleTiles[n])) or possibleTiles[n] == piece.currentTile.global_position):
 						if TileHandler.lookForTile(possibleTiles[n]).contains is not MoveablePiece or TileHandler.lookForTile(possibleTiles[n]).contains == piece:
 							toReturn.append(currentTile)
-							if piece is MoveablePiece:
+							if piece is PlayerPiece:
 								GameState.tileDict["iTiles"].append(currentTile)
 			currentTile = null
 	return toReturn

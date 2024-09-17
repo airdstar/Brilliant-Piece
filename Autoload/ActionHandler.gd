@@ -13,6 +13,8 @@ func useAction(destination : tile):
 	TileHandler.setTilePattern()
 	GameState.action = null
 	InterfaceHandler.usedAction()
+	if GameState.playerTurn:
+		MenuHandler.openMenu()
 
 func findActionTiles(piecePos : Vector3):
 	var possibleTiles = GameState.action.getActionRange(piecePos)

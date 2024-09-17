@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bhakx8ye3tu6q"
-path="res://.godot/imported/slkscreb.ttf-2efde5988b08cc46e76a70fcc2692f6a.fontdata"
+uid="uid://dx20v27am082"
+path="res://.godot/imported/basis33.ttf-10417e6ca4050886e5d7ce068192e8d0.fontdata"
 
 [deps]
 
-source_file="res://slkscreb.ttf"
-dest_files=["res://.godot/imported/slkscreb.ttf-2efde5988b08cc46e76a70fcc2692f6a.fontdata"]
+source_file="res://UI/Fonts/basis33.ttf"
+dest_files=["res://.godot/imported/basis33.ttf-10417e6ca4050886e5d7ce068192e8d0.fontdata"]
 
 [params]
 

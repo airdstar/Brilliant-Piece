@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvfan37wt26q1"
-path="res://.godot/imported/Generation Test.png-6f1e000133eb68eb463dba4941d80077.ctex"
+uid="uid://c6h426568t2mt"
+path="res://.godot/imported/Start2.png-3abf53593944aebfb613d31bbc0ff035.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile/Generation Test.png"
-dest_files=["res://.godot/imported/Generation Test.png-6f1e000133eb68eb463dba4941d80077.ctex"]
+source_file="res://Floor/Layouts/Start2.png"
+dest_files=["res://.godot/imported/Start2.png-3abf53593944aebfb613d31bbc0ff035.ctex"]
 
 [params]
 

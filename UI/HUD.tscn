@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdr4d7j2lkvsg"]
+[gd_scene load_steps=13 format=3 uid="uid://bdr4d7j2lkvsg"]
 
 [ext_resource type="Texture2D" uid="uid://bcwfc204nf0kq" path="res://UI/MoveOutline.png" id="1_m1oxk"]
 [ext_resource type="Script" path="res://UI/HUD.gd" id="1_ymfxc"]
@@ -8,25 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://civ372syou2x6" path="res://UI/TurnOutline.png" id="5_3wc1a"]
 [ext_resource type="Texture2D" uid="uid://deo1msgydtcbb" path="res://UI/Turn.png" id="6_ko3ij"]
 [ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://UI/Portrait.png" id="7_xdbhw"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_cvnof"]
-font_size = 19
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_780ey"]
-font_size = 19
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_uouik"]
-font_size = 19
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Theme" id="Theme_42dsp"]
-default_font_size = 19
-RichTextLabel/constants/outline_size = 10
+[ext_resource type="Theme" uid="uid://b3m5cx7w8nya8" path="res://UI/HUD.tres" id="8_037fx"]
+[ext_resource type="Texture2D" uid="uid://buisvcwrhy2q0" path="res://UI/FloorInfo.png" id="8_ysboo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqgg"]
 
@@ -47,9 +30,9 @@ script = ExtResource("1_ymfxc")
 [node name="TurnHUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 967.0
+offset_left = 10.0
 offset_top = 10.0
-offset_right = 1015.0
+offset_right = 58.0
 offset_bottom = 58.0
 
 [node name="MoveOutline" type="TextureRect" parent="TurnHUD"]
@@ -95,67 +78,43 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("6_ko3ij")
 
-[node name="Status" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 20.0
-offset_top = 148.0
-offset_right = 404.0
-offset_bottom = 182.0
-
-[node name="NameLabel" type="Label" parent="Status"]
+[node name="Floor_Player" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 5.0
-offset_right = 23.0
-offset_bottom = 27.0
-text = "hi"
-label_settings = SubResource("LabelSettings_cvnof")
+offset_left = 822.0
+offset_top = 10.0
+offset_right = 1014.0
+offset_bottom = 69.0
+texture = ExtResource("8_ysboo")
 
-[node name="TypeLabel" type="Label" parent="Status"]
+[node name="FloorInfo" type="RichTextLabel" parent="Floor_Player"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 30.0
-offset_right = 96.0
-offset_bottom = 58.0
-text = "hi"
-label_settings = SubResource("LabelSettings_780ey")
-
-[node name="LevelLabel" type="Label" parent="Status"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 60.0
-offset_right = 23.0
-offset_bottom = 88.0
-text = "hi"
-label_settings = SubResource("LabelSettings_uouik")
-
-[node name="HealthLabel" type="RichTextLabel" parent="Status"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 90.0
-offset_right = 214.0
-offset_bottom = 118.0
-theme = SubResource("Theme_42dsp")
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 189.0
+offset_bottom = 57.0
+theme = ExtResource("8_037fx")
 bbcode_enabled = true
-text = "hi"
+text = "[center]Floor 0
+test"
 scroll_active = false
 
-[node name="SoulLabel" type="RichTextLabel" parent="Status"]
+[node name="MoneySoul" type="RichTextLabel" parent="Floor_Player"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 120.0
-offset_right = 214.0
-offset_bottom = 148.0
-theme = SubResource("Theme_42dsp")
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 126.0
+theme = ExtResource("8_037fx")
 bbcode_enabled = true
-text = "hi"
-scroll_active = false
+text = " 0 [img]res://UI/Coin.png[/img]
+ 0 [img]res://UI/Soul.png[/img]"
+text_direction = 2
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 148.0
-offset_bottom = 148.0
+offset_left = 10.0
+offset_top = 630.0
+offset_right = 138.0
+offset_bottom = 758.0
 texture = ExtResource("7_xdbhw")
 
 [node name="PortraitBackground" type="TextureRect" parent="Portrait"]
@@ -165,6 +124,52 @@ offset_left = 4.0
 offset_top = 4.0
 offset_right = 124.0
 offset_bottom = 124.0
+
+[node name="Status" type="Control" parent="Portrait"]
+anchors_preset = 0
+offset_left = 128.0
+offset_top = 13.0
+offset_right = 128.0
+offset_bottom = 13.0
+
+[node name="NameLabel" type="RichTextLabel" parent="Portrait/Status"]
+layout_mode = 0
+offset_right = 209.0
+offset_bottom = 28.0
+theme = ExtResource("8_037fx")
+bbcode_enabled = true
+text = " hi"
+scroll_active = false
+
+[node name="TypeLabel" type="RichTextLabel" parent="Portrait/Status"]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 209.0
+offset_bottom = 55.0
+theme = ExtResource("8_037fx")
+bbcode_enabled = true
+text = " hi"
+scroll_active = false
+
+[node name="LevelLabel" type="RichTextLabel" parent="Portrait/Status"]
+layout_mode = 0
+offset_top = 54.0
+offset_right = 209.0
+offset_bottom = 82.0
+theme = ExtResource("8_037fx")
+bbcode_enabled = true
+text = " hi"
+scroll_active = false
+
+[node name="HealthLabel" type="RichTextLabel" parent="Portrait/Status"]
+layout_mode = 0
+offset_top = 81.0
+offset_right = 209.0
+offset_bottom = 109.0
+theme = ExtResource("8_037fx")
+bbcode_enabled = true
+text = " hi"
+scroll_active = false
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(120, 120)
