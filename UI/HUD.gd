@@ -10,6 +10,10 @@ func _ready():
 func updateTurn():
 	pass
 
+
+func updateCoin():
+	pass
+
 func showPieceInfo():
 	$Portrait.visible = true
 

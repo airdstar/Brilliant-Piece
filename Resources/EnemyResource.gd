@@ -13,6 +13,7 @@ class_name EnemyResource
 @export var attacks : ActionSetResource
 @export var maxLevel : int
 @export var minLevel : int
+@export var expAmount : int
 
 func getType():
 	var amount = type

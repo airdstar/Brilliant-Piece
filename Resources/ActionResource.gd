@@ -4,7 +4,6 @@ class_name ActionResource
 @export_category("General")
 @export var name : String
 @export var desc : String
-@export var animationPath : String
 @export var iconPath : String
 
 @export_category("Basic Stats")

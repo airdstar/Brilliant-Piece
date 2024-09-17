@@ -3,30 +3,32 @@ class_name PlayerPiece
 
 @export var classType : ClassResource
 
-var level : int = 1
-var maxSoul : int 
-var soul : int 
-var actions : Array[ActionResource]
-var items : Array[ItemResource]
 
 func _ready():
 	#Items must be loaded in through ready
-	items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
-	items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
-	items.append(ResourceLoader.load("res://Resources/Item Resources/IceCube.tres"))
-	items.append(ResourceLoader.load("res://Resources/Item Resources/RegenOrb.tres"))
+	
+	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
+	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
+	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/IceCube.tres"))
+	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/RegenOrb.tres"))
 	setData()
 
+func loadData():
+	pass
+
 func setData():
+	level = 1
 	maxHealth = classType.startingHealth
 	health = maxHealth
-	maxSoul = classType.startingSoul
-	soul = maxSoul
-	actions = classType.startingActions
+	PlayerData.actions = classType.startingActions
+	PlayerData.maxHealth = maxHealth
+	PlayerData.health = health
+	
 	
 	var s = ResourceLoader.load(classType.associatedModel)
 	s = s.instantiate()
 	modelHolder.add_child(s)
 
-func levelUp():
-	pass
+func updateData():
+	level = PlayerData.level
+	

@@ -5,6 +5,7 @@ var previousTile : tile
 var currentTile : tile
 
 var type : PieceTypeResource
+var level : int
 var maxHealth : int
 var health : int
 var armor : int
@@ -20,6 +21,8 @@ func actionUsed(action : ActionResource):
 		damage(action.damage)
 	if action.healing:
 		heal(action.healing)
+	
+	PlayerData.update()
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:
@@ -32,7 +35,7 @@ func damage(damageAmount : int):
 	health -= damageAmount
 	if health <= 0:
 		health = 0
-		death.emit()
+		death.emit(self)
 
 func heal(healingAmount : int):
 	health += healingAmount

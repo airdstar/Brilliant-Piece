@@ -11,7 +11,7 @@ var additionalOpacity : float = 0.0
 
 func addOptions():
 	optionCount = 5
-	options = GameState.pieceDict["Player"]["Piece"].actions
+	options = PlayerData.actions
 	for n in range(optionCount):
 		if options.size() - 1 >= n:
 			if options[n] != null:

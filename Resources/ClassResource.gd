@@ -8,5 +8,4 @@ class_name ClassResource
 
 @export_category("Starting")
 @export var startingHealth : int
-@export var startingSoul : int
 @export var startingActions : Array[ActionResource]
