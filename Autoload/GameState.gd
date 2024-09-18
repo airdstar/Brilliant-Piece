@@ -17,8 +17,7 @@ var action : ActionResource = null
 
 func _ready():
 	var blankVar
-	pieceDict = {"Player" : blankVar,
-				"Neutral" : blankVar,
+	pieceDict = {"Neutral" : blankVar,
 				"Enemy" : blankVar}
 
 func endTurn():

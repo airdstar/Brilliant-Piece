@@ -2,7 +2,7 @@ extends Control
 
 var currentlySelected = null
 @onready var turnHUD : Array[TextureRect] = [$TurnHUD/MoveOutline/Move, $TurnHUD/ActionOutline/Action, $TurnHUD/TurnOutline/Turn]
-@onready var textLabels = [$Portrait/Status/NameLabel, $Portrait/Status/TypeLabel, $Portrait/Status/LevelLabel, $Portrait/Status/HealthLabel]
+@onready var textLabels = [$Portrait/Status/NameLabel, $Portrait/Status/TypeLabel, $Portrait/Status/HealthLabel]
 
 func _ready():
 	pass
@@ -36,13 +36,8 @@ func updatePortrait():
 
 func updateLabels():
 	var piece = GameState.tileDict["hTile"].contains
-	textLabels[0].text = " " + piece.pieceName
+	textLabels[0].text = " " + piece.pieceName + " lvl " + str(piece.level)
 	textLabels[1].text = " " + piece.type.typeName
-	textLabels[2].text = " Enemy lvl " + str(piece.level)
-	textLabels[3].text = " [img]res://UI/Heart.png[/img] " + str(piece.health) + "/" + str(piece.maxHealth)
-	#textLabels[4].text = ""
+	textLabels[2].text = " [img]res://UI/Heart.png[/img] " + str(piece.health) + "/" + str(piece.maxHealth)
 	if piece.armor > 0:
 		textLabels[3].text += "   [img]res://UI/Armor.png[/img] " + str(piece.armor)
-	if piece is PlayerPiece:
-		textLabels[2].text = " " + str(piece.classType.className) + " lvl " + str(piece.level) 
-		#textLabels[4].text = "[img]res://UI/Soul.png[/img] " + str(piece.soul) + "/" + str(piece.maxSoul)

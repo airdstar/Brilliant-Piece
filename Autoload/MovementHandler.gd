@@ -12,13 +12,13 @@ func movePiece(destination : tile, piece : MoveablePiece):
 	var destinationPos = GameState.tileDict["TilePos"][GameState.tileDict["Tiles"].find(destination)]
 	if piece is PlayerPiece:
 		TileHandler.stopShowing()
-		closestDirection = DirectionHandler.getClosestDirection(GameState.pieceDict["Player"]["Position"], destinationPos)
+		closestDirection = DirectionHandler.getClosestDirection(PlayerData.playerInfo.currentPos, destinationPos)
 	elif piece is EnemyPiece:
 		closestDirection = DirectionHandler.getClosestDirection(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)], destinationPos)
 	while(!destinationReached):
 		var closestTile
 		if piece is PlayerPiece:
-			closestTile = TileHandler.lookForTile(GameState.pieceDict["Player"]["Position"] + DirectionHandler.dirDict["PosData"][closestDirection])
+			closestTile = TileHandler.lookForTile(PlayerData.playerInfo.currentPos + DirectionHandler.dirDict["PosData"][closestDirection])
 		elif piece is EnemyPiece:
 			closestTile = TileHandler.lookForTile(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] + DirectionHandler.dirDict["PosData"][closestDirection])
 		
@@ -41,7 +41,7 @@ func movePiece(destination : tile, piece : MoveablePiece):
 func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):
 	var currentTile
 	if piece is PlayerPiece:
-		currentTile = TileHandler.lookForTile(GameState.pieceDict["Player"]["Position"] + DirectionHandler.dirDict["PosData"][direction])
+		currentTile = TileHandler.lookForTile(PlayerData.playerInfo.currentPos + DirectionHandler.dirDict["PosData"][direction])
 	elif piece is EnemyPiece:
 		currentTile = TileHandler.lookForTile(GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] + DirectionHandler.dirDict["PosData"][direction])
 	if currentTile:

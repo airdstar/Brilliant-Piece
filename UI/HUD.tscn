@@ -151,16 +151,6 @@ bbcode_enabled = true
 text = " hi"
 scroll_active = false
 
-[node name="LevelLabel" type="RichTextLabel" parent="Portrait/Status"]
-layout_mode = 0
-offset_top = 54.0
-offset_right = 209.0
-offset_bottom = 82.0
-theme = ExtResource("8_037fx")
-bbcode_enabled = true
-text = " hi"
-scroll_active = false
-
 [node name="HealthLabel" type="RichTextLabel" parent="Portrait/Status"]
 layout_mode = 0
 offset_top = 81.0

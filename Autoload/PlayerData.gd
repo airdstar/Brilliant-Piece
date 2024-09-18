@@ -1,44 +1,41 @@
 extends Node
 
-var save_path := "user://PlayerData.save"
+var save_path := "res://PlayerData.tres"
 
-var classType : ClassResource
-var pieceType : String
+var playerInfo : PlayerInfo = PlayerInfo.new()
 
-var level : int = 1
-var expAmount : int
+var playerPiece : PlayerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
 
-var maxHealth : int
-var health : int
-var armor : int
+func loadInfo():
+	if ResourceLoader.exists(save_path):
+		playerInfo = load(save_path)
+		playerPiece.loadData()
+	else:
+		print("error")
+		playerPiece.setData()
 
-var actions : Array[ActionResource]
-var items : Array[ItemResource]
-
-var coins : int = 0
-var soul : int = 0
-
-func Save():
-	pass
-
-func Load():
-	pass
+func saveInfo():
+	print("Saved info")
+	ResourceSaver.save(playerInfo, save_path)
 
 func updateData():
-	health = GameState.pieceDict["Player"]["Piece"].health
-	maxHealth = GameState.pieceDict["Player"]["Piece"].maxHealth
-	armor = GameState.pieceDict["Player"]["Piece"].armor
-	pieceType = GameState.pieceDict["Player"]["Piece"].pieceType
-	classType = GameState.pieceDict["Player"]["Piece"].classType
+	playerInfo.health = playerPiece.health
+	playerInfo.maxHealth = playerPiece.maxHealth
+	playerInfo.armor = playerPiece.armor
+	
+	playerInfo.pieceType = playerPiece.type
+	playerInfo.classType = playerPiece.classType
 
 func levelUp():
-	level += 1
-	
-	GameState.pieceDict["Player"]["Piece"].updateData()
+	playerInfo.level += 1
+	print("Leveled up!")
+	playerPiece.updateData()
 	gainExp(0)
 
 func gainExp(amount : int):
-	expAmount += amount
-	if expAmount >= Global.expArray[level - 1]:
-		expAmount -= Global.expArray[level - 1]
+	if amount != 0:
+		playerInfo.expAmount += amount
+		print("Gained " + str(amount) + " exp!")
+	if playerInfo.expAmount >= Global.expArray[playerInfo.level - 1]:
+		playerInfo.expAmount -= Global.expArray[playerInfo.level - 1]
 		levelUp()

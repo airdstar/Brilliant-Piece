@@ -11,10 +11,11 @@ var itemIndicators : Array[TextureRect]
 
 func _process(_delta: float):
 	$MenuTop/Screen.texture = $SubViewport.get_texture()
-	physicalItems[highlightedOption].rotate_y(-0.01)
+	if itemCount != 0:
+		physicalItems[highlightedOption].rotate_y(-0.01)
 
 func addOptions():
-	options = PlayerData.items
+	options = PlayerData.playerInfo.items
 	itemCount = options.size()
 	if itemCount > 0:
 		var loopAmount = 4 - itemCount

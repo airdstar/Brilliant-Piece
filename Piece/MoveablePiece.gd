@@ -22,7 +22,7 @@ func actionUsed(action : ActionResource):
 	if action.healing:
 		heal(action.healing)
 	
-	PlayerData.update()
+	PlayerData.updateData()
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:
@@ -33,6 +33,7 @@ func damage(damageAmount : int):
 		damageAmount = 0
 	
 	health -= damageAmount
+	
 	if health <= 0:
 		health = 0
 		death.emit(self)

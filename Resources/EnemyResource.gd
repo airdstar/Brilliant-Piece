@@ -10,10 +10,11 @@ class_name EnemyResource
 
 @export_category("Stats")
 @export var baseHealth : int
-@export var attacks : ActionSetResource
+@export var actions : ActionSetResource
 @export var maxLevel : int
 @export var minLevel : int
 @export var expAmount : int
+@export var itemPool : ItemPoolResource
 
 func getType():
 	var amount = type

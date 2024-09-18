@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=2 format=3 uid="uid://dfjb6if6vtt3e"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://dfjb6if6vtt3e"]
 
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_ibghg"]
+[ext_resource type="Resource" uid="uid://cqjhudg8pugow" path="res://Resources/ItemPool Resources/GoblinItems.tres" id="1_y3bbf"]
 
 [resource]
 script = ExtResource("1_ibghg")
@@ -11,4 +12,5 @@ type = 2
 baseHealth = 10
 maxLevel = 4
 minLevel = 1
-expAmount = 3
+expAmount = 10
+itemPool = ExtResource("1_y3bbf")

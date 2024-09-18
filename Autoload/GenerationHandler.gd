@@ -27,14 +27,8 @@ func generateFloor():
 	placePieces()
 
 func generatePlayer():
-	var player
-	player = preload("res://Piece/PlayerPiece.tscn").instantiate()
-	player.classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
-	player.type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
-	GameState.currentFloor.add_child(player)
-	var playerDict : Dictionary = {"Piece" : player,
-									"Position" : player.global_position}
-	GameState.pieceDict["Player"] = playerDict
+	GameState.currentFloor.add_child(PlayerData.playerPiece)
+	PlayerData.playerInfo.currentPos = PlayerData.playerPiece.global_position
 
 func generateEnemies():
 	var enemyArray = []
@@ -42,10 +36,12 @@ func generateEnemies():
 	var behaviorArray : Array[String]
 	for n in range(1):
 		enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
-		enemyArray[n].enemyType = ResourceLoader.load("res://Resources/Enemy Resources/Goblin.tres")
-		GameState.currentFloor.add_child(enemyArray[n])
+		var piece = enemyArray[n]
+		piece.enemyType = ResourceLoader.load("res://Resources/Enemy Resources/Goblin.tres")
+		GameState.currentFloor.add_child(piece)
 		behaviorArray.append("Approach")
-		enemyPositions.append(enemyArray[n].global_position)
+		enemyPositions.append(piece.global_position)
+		piece.death.connect(GameState.currentFloor.pieceDeath)
 	
 	var enemyDict : Dictionary = {"Piece" : enemyArray,
 								"Position" : enemyPositions,
@@ -60,7 +56,7 @@ func placePieces():
 		amountPlaced = 0
 		match n:
 			0:
-				piece = GameState.pieceDict["Player"]["Piece"]
+				piece = PlayerData.playerPiece
 				pieceCount = 1
 			1:
 				#piece = GameState.pieceDict["Neutral"]["Piece"]

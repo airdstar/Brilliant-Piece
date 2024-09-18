@@ -6,7 +6,6 @@
 script = ExtResource("1_tta0d")
 name = "Crystal Drop"
 desc = ""
-animationPath = ""
 iconPath = ""
 actionType = "Attack"
 damage = 20

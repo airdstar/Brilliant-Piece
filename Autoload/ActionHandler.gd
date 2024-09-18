@@ -7,8 +7,8 @@ func _process(_delta: float):
 				useAction(GameState.tileDict["hTile"])
 
 func useAction(destination : tile):
-	TileHandler.stopShowing()
 	destination.actionUsed(GameState.action)
+	TileHandler.stopShowing()
 
 	TileHandler.setTilePattern()
 	GameState.action = null

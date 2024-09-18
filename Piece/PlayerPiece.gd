@@ -1,34 +1,47 @@
 extends MoveablePiece
 class_name PlayerPiece
 
-@export var classType : ClassResource
-
+var classType : ClassResource
+var dataLoad = true
 
 func _ready():
-	#Items must be loaded in through ready
-	
-	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/Bomb.tres"))
-	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/Cone.tres"))
-	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/IceCube.tres"))
-	PlayerData.items.append(ResourceLoader.load("res://Resources/Item Resources/RegenOrb.tres"))
-	setData()
+	if dataLoad:
+		PlayerData.loadInfo()
+	else:
+		setData()
 
 func loadData():
-	pass
+	type = PlayerData.playerInfo.pieceType
+	classType = PlayerData.playerInfo.classType
+	
+	level = PlayerData.playerInfo.level
+	
+	health = PlayerData.playerInfo.health
+	maxHealth = PlayerData.playerInfo.maxHealth
+	armor = PlayerData.playerInfo.armor
+	
+	loadModel()
 
 func setData():
+	classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
+	pieceName = classType.className
+	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
 	level = 1
 	maxHealth = classType.startingHealth
 	health = maxHealth
-	PlayerData.actions = classType.startingActions
-	PlayerData.maxHealth = maxHealth
-	PlayerData.health = health
 	
+	PlayerData.playerInfo.actions = classType.startingActions
+	PlayerData.playerInfo.items.clear()
+	PlayerData.playerInfo.maxHealth = maxHealth
+	PlayerData.playerInfo.health = health
 	
+	loadModel()
+
+func loadModel():
 	var s = ResourceLoader.load(classType.associatedModel)
 	s = s.instantiate()
 	modelHolder.add_child(s)
 
 func updateData():
-	level = PlayerData.level
+	level = PlayerData.playerInfo.level
 	
