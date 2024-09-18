@@ -16,11 +16,11 @@ func _process(_delta : float):
 	if Input.is_action_just_pressed("Exit"):
 		get_tree().quit()
 	
-	if Input.is_action_just_pressed("Test"):
+	if Input.is_action_just_pressed("Save"):
 		PlayerData.saveInfo()
 	
-	if Input.is_action_just_pressed("Reload"):
-		get_tree().reload_current_scene()
+	if Input.is_action_just_pressed("Reset"):
+		PlayerData.resetInfo()
 
 	cameraControls()
 

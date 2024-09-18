@@ -34,6 +34,8 @@ func setData():
 	PlayerData.playerInfo.items.clear()
 	PlayerData.playerInfo.maxHealth = maxHealth
 	PlayerData.playerInfo.health = health
+	#PlayerData.playerInfo.newInfo = false
+	
 	
 	loadModel()
 

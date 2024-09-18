@@ -1,6 +1,8 @@
 extends Resource
 class_name PlayerInfo
 
+@export var newInfo : bool = true
+
 @export var currentPos : Vector3
 
 @export var classType : ClassResource

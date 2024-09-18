@@ -1,6 +1,6 @@
 extends Node
 
-var save_path := "res://PlayerData.tres"
+var save_path := "res://Run Info/PlayerData.tres"
 
 var playerInfo : PlayerInfo = PlayerInfo.new()
 
@@ -9,7 +9,11 @@ var playerPiece : PlayerPiece = preload("res://Piece/PlayerPiece.tscn").instanti
 func loadInfo():
 	if ResourceLoader.exists(save_path):
 		playerInfo = load(save_path)
-		playerPiece.loadData()
+		if !playerInfo.newInfo:
+			playerPiece.loadData()
+		else:
+			print("New data created")
+			playerPiece.setData()
 	else:
 		print("error")
 		playerPiece.setData()
@@ -17,6 +21,10 @@ func loadInfo():
 func saveInfo():
 	print("Saved info")
 	ResourceSaver.save(playerInfo, save_path)
+
+func resetInfo():
+	print("Reset info")
+	ResourceSaver.save(PlayerInfo.new(), save_path)
 
 func updateData():
 	playerInfo.health = playerPiece.health
@@ -39,3 +47,6 @@ func gainExp(amount : int):
 	if playerInfo.expAmount >= Global.expArray[playerInfo.level - 1]:
 		playerInfo.expAmount -= Global.expArray[playerInfo.level - 1]
 		levelUp()
+	else:
+		if playerInfo.expAmount != 0:
+			print(str(Global.expArray[playerInfo.level - 1] - amount) + " exp until next level")

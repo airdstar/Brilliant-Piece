@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="PlayerInfo" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_co6yh"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/CrystalDrop.tres" id="2_jtscd"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/CrystalSpears.tres" id="3_46yky"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/LightBeam.tres" id="4_26a0k"]
+[ext_resource type="Script" path="res://Resources/ItemResource.gd" id="5_k6rwp"]
+[ext_resource type="Script" path="res://Run Info/PlayerInfo.gd" id="6_m0yvp"]
+
+[resource]
+script = ExtResource("6_m0yvp")
+newInfo = true
+currentPos = Vector3(-5, 0, 3)
+level = 1
+expAmount = 0
+maxHealth = 6
+health = 6
+armor = 0
+actions = Array[ExtResource("1_co6yh")]([ExtResource("2_jtscd"), ExtResource("3_46yky"), ExtResource("4_26a0k")])
+items = Array[ExtResource("5_k6rwp")]([])
+coins = 0
+soul = 0
