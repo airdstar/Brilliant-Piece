@@ -23,6 +23,7 @@ func loadData():
 	loadModel()
 
 func setData():
+	PlayerData.playerInfo = PlayerInfo.new()
 	classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
 	pieceName = classType.className
 	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
@@ -34,7 +35,6 @@ func setData():
 	PlayerData.playerInfo.items.clear()
 	PlayerData.playerInfo.maxHealth = maxHealth
 	PlayerData.playerInfo.health = health
-	#PlayerData.playerInfo.newInfo = false
 	
 	
 	loadModel()

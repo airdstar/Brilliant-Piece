@@ -9,10 +9,11 @@ var playerPiece : PlayerPiece = preload("res://Piece/PlayerPiece.tscn").instanti
 func loadInfo():
 	if ResourceLoader.exists(save_path):
 		playerInfo = load(save_path)
-		if !playerInfo.newInfo:
+		if !playerInfo.isNew:
+			print("Loaded info")
 			playerPiece.loadData()
 		else:
-			print("New data created")
+			print("No info found")
 			playerPiece.setData()
 	else:
 		print("error")
@@ -20,7 +21,9 @@ func loadInfo():
 
 func saveInfo():
 	print("Saved info")
+	playerInfo.isNew = false
 	ResourceSaver.save(playerInfo, save_path)
+	
 
 func resetInfo():
 	print("Reset info")
