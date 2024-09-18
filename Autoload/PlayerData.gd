@@ -21,7 +21,6 @@ func loadInfo():
 
 func saveInfo():
 	print("Saved info")
-	playerInfo.isNew = false
 	ResourceSaver.save(playerInfo, save_path)
 	
 

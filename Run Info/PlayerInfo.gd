@@ -2,6 +2,7 @@ extends Resource
 class_name PlayerInfo
 
 @export var currentPos : Vector3
+@export var currentFloorNum : int = 0
 
 @export var classType : ClassResource
 @export var pieceType : PieceTypeResource
@@ -18,4 +19,4 @@ class_name PlayerInfo
 @export var coins : int = 0
 @export var soul : int = 0
 
-var isNew : bool = true
+@export var isNew : bool = true

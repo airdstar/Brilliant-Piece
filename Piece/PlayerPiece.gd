@@ -2,17 +2,15 @@ extends MoveablePiece
 class_name PlayerPiece
 
 var classType : ClassResource
-var dataLoad = true
 
 func _ready():
-	if dataLoad:
-		PlayerData.loadInfo()
-	else:
-		setData()
+	PlayerData.loadInfo()
+	self.death.connect(GameState.currentFloor.pieceDeath)
 
 func loadData():
 	type = PlayerData.playerInfo.pieceType
 	classType = PlayerData.playerInfo.classType
+	pieceName = classType.className
 	
 	level = PlayerData.playerInfo.level
 	
@@ -20,10 +18,15 @@ func loadData():
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
 	
+	if PlayerData.playerInfo.currentFloorNum == GameState.currentFloor.floorNum:
+		print("Position Loaded")
+		TileHandler.lookForTile(PlayerData.playerInfo.currentPos).setPiece(self, 2)
+		HighlightHandler.highlightTile(currentTile)
+	
 	loadModel()
 
 func setData():
-	PlayerData.playerInfo = PlayerInfo.new()
+	PlayerData.playerInfo.isNew = false
 	classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
 	pieceName = classType.className
 	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
@@ -35,6 +38,8 @@ func setData():
 	PlayerData.playerInfo.items.clear()
 	PlayerData.playerInfo.maxHealth = maxHealth
 	PlayerData.playerInfo.health = health
+	PlayerData.playerInfo.classType = classType
+	PlayerData.playerInfo.pieceType = type
 	
 	
 	loadModel()

@@ -22,26 +22,23 @@ func generateFloor():
 	
 	GameState.tileDict = {"Tiles" : totalTiles, "iTiles" : blankArray, "TilePos" : totalTilesPos, "hTile" : blankValue}
 	
-	generatePlayer()
+	GameState.currentFloor.add_child(PlayerData.playerPiece)
+
 	generateEnemies()
 	placePieces()
-
-func generatePlayer():
-	GameState.currentFloor.add_child(PlayerData.playerPiece)
-	PlayerData.playerInfo.currentPos = PlayerData.playerPiece.global_position
 
 func generateEnemies():
 	var enemyArray = []
 	var enemyPositions : Array[Vector3]
 	var behaviorArray : Array[String]
-	for n in range(1):
+	for n in randi_range(GameState.currentFloor.layerData.minPossibleEnemies, GameState.currentFloor.layerData.maxPossibleEnemies):
 		enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
-		var piece = enemyArray[n]
-		piece.enemyType = ResourceLoader.load("res://Resources/Enemy Resources/Goblin.tres")
-		GameState.currentFloor.add_child(piece)
+		enemyArray[n].enemyType = GameState.currentFloor.layerData.possibleEnemies[
+								  randi_range(0, GameState.currentFloor.layerData.possibleEnemies.size() - 1)]
+		GameState.currentFloor.add_child(enemyArray[n])
 		behaviorArray.append("Approach")
-		enemyPositions.append(piece.global_position)
-		piece.death.connect(GameState.currentFloor.pieceDeath)
+		enemyPositions.append(enemyArray[n].global_position)
+		enemyArray[n].death.connect(GameState.currentFloor.pieceDeath)
 	
 	var enemyDict : Dictionary = {"Piece" : enemyArray,
 								"Position" : enemyPositions,
@@ -52,16 +49,13 @@ func placePieces():
 	var piece
 	var pieceCount : int
 	var amountPlaced : int
-	for n in range(3):
+	for n in range(2):
 		amountPlaced = 0
 		match n:
 			0:
-				piece = PlayerData.playerPiece
-				pieceCount = 1
-			1:
 				#piece = GameState.pieceDict["Neutral"]["Piece"]
 				pieceCount = 0
-			2:
+			1:
 				piece = GameState.pieceDict["Enemy"]["Piece"]
 				pieceCount = piece.size()
 		
@@ -69,10 +63,6 @@ func placePieces():
 			while (pieceCount != amountPlaced):
 				var piecePos = GameState.tileDict["Tiles"][randi_range(0, GameState.tileDict["Tiles"].size() - 1)]
 				if !piecePos.contains:
-					if n != 0:
-						piecePos.setPiece(piece[amountPlaced], DirectionHandler.dirArray[2])
-						amountPlaced += 1
-					else:
-						piecePos.setPiece(piece, DirectionHandler.dirArray[2])
-						HighlightHandler.highlightTile(piecePos)
-						amountPlaced += 1
+					piecePos.setPiece(piece[amountPlaced], DirectionHandler.dirArray[2])
+					amountPlaced += 1
+	

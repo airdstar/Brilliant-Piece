@@ -1,5 +1,7 @@
 extends Node
 
+var tileDict : Dictionary
+
 func lookForTile(pos : Vector3):
 	if GameState.tileDict["TilePos"].has(pos):
 		return GameState.tileDict["Tiles"][GameState.tileDict["TilePos"].find(pos)]

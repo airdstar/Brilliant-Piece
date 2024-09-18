@@ -1,21 +1,28 @@
-[gd_resource type="Resource" script_class="PlayerInfo" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="PlayerInfo" load_steps=10 format=3 uid="uid://ce8dmitf5kgkc"]
 
-[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_cflyb"]
-[ext_resource type="Resource" path="res://Resources/Action Resources/CrystalDrop.tres" id="2_ekd52"]
-[ext_resource type="Resource" path="res://Resources/Action Resources/CrystalSpears.tres" id="3_0f8wp"]
-[ext_resource type="Resource" path="res://Resources/Action Resources/LightBeam.tres" id="4_33ssx"]
-[ext_resource type="Script" path="res://Resources/ItemResource.gd" id="5_yfrrk"]
-[ext_resource type="Script" path="res://Run Info/PlayerInfo.gd" id="6_ukf0q"]
+[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_84n5f"]
+[ext_resource type="Resource" uid="uid://da62gojgkabpy" path="res://Resources/Action Resources/CrystalDrop.tres" id="2_vxajf"]
+[ext_resource type="Resource" uid="uid://clk1n28hr60dc" path="res://Resources/Action Resources/CrystalSpears.tres" id="3_m7wji"]
+[ext_resource type="Resource" uid="uid://cdyj2x074vkwb" path="res://Resources/Action Resources/LightBeam.tres" id="4_gq2ym"]
+[ext_resource type="Resource" uid="uid://lvfi5wwrr7or" path="res://Resources/Class Resources/CrystalSage.tres" id="5_20gl8"]
+[ext_resource type="Script" path="res://Resources/ItemResource.gd" id="5_o2h2t"]
+[ext_resource type="Script" path="res://Run Info/PlayerInfo.gd" id="6_heqbo"]
+[ext_resource type="Resource" uid="uid://b4751svhw4qc" path="res://Resources/Item Resources/StickyGoo.tres" id="7_3jehw"]
+[ext_resource type="Resource" uid="uid://6atx1sk3iako" path="res://Resources/PieceType Resources/Queen.tres" id="7_r2j5l"]
 
 [resource]
-script = ExtResource("6_ukf0q")
-currentPos = Vector3(-4, 0, 0)
-level = 1
+script = ExtResource("6_heqbo")
+currentPos = Vector3(-2, 0, 2)
+currentFloorNum = 0
+classType = ExtResource("5_20gl8")
+pieceType = ExtResource("7_r2j5l")
+level = 2
 expAmount = 0
 maxHealth = 6
 health = 6
 armor = 0
-actions = Array[ExtResource("1_cflyb")]([ExtResource("2_ekd52"), ExtResource("3_0f8wp"), ExtResource("4_33ssx")])
-items = Array[ExtResource("5_yfrrk")]([])
+actions = Array[ExtResource("1_84n5f")]([ExtResource("2_vxajf"), ExtResource("3_m7wji"), ExtResource("4_gq2ym"), null, null])
+items = Array[ExtResource("5_o2h2t")]([ExtResource("7_3jehw")])
 coins = 0
 soul = 0
+isNew = false
