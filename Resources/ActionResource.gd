@@ -24,7 +24,7 @@ class_name ActionResource
 @export_category("Other")
 @export var obstructable : bool
 @export var effect : EffectResource
-@export var AOE : int
+@export var AOE : AOEResource
 
 func getActionRange(actionStart : Vector3):
 	var toReturn : Array[Vector3]

@@ -3,7 +3,7 @@
 [ext_resource type="Shader" path="res://Shaders/gaussian-blur.gdshader" id="1_aftgu"]
 [ext_resource type="Shader" path="res://Shaders/pp_band-dither.gdshader" id="2_i10mf"]
 [ext_resource type="Texture2D" uid="uid://b6kcbughmhco" path="res://Shaders/psxdither.png" id="3_605bp"]
-[ext_resource type="PackedScene" uid="uid://c0rs8wca01dop" path="res://Floor/TestFloor.tscn" id="4_jswh1"]
+[ext_resource type="PackedScene" uid="uid://c0rs8wca01dop" path="res://Floor/Floor.tscn" id="4_jswh1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m8opu"]
 shader = ExtResource("1_aftgu")

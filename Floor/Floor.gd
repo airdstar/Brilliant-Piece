@@ -4,12 +4,15 @@ class_name Floor
 var floorNum : int = 0
 var layerData : LayerResource
 
+var enemies : Array[EnemyPiece]
+var neutrals : Array
+
 func _ready():
 	getLayerData()
 	GameState.currentFloor = self
 	InterfaceHandler.HUD = $Menu/HUD
 	FloorData.loadInfo()
-	MenuHandler.openMenu()
+	InterfaceHandler.openMenu()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(_delta : float):

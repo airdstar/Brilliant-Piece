@@ -4,7 +4,7 @@ var save_path := "res://Run Info/FloorData.tres"
 
 var floorInfo : FloorInfo = FloorInfo.new()
 
-var justCreated : bool = true
+var floor : Floor = preload("res://Floor/Floor.tscn").instantiate()
 
 func loadInfo():
 	if ResourceLoader.exists(save_path):

@@ -6,7 +6,6 @@
 script = ExtResource("1_fookx")
 name = "Crystal Spears"
 desc = ""
-animationPath = ""
 iconPath = ""
 actionType = ""
 damage = 2
@@ -17,4 +16,3 @@ actionRange = 5
 rangeExclusive = false
 canTargetSelf = false
 obstructable = false
-AOE = 0

@@ -1,10 +1,14 @@
 extends Node
 
 func _process(_delta: float):
-	if GameState.moving != null:
-		if Input.is_action_just_pressed("Select"):
-			if GameState.tileDict["iTiles"].has(GameState.tileDict["hTile"]):
+	if Input.is_action_just_pressed("Select"):
+		if GameState.tileDict["iTiles"].has(GameState.tileDict["hTile"]):
+			if GameState.moving != null:
 				movePiece(GameState.tileDict["hTile"], GameState.moving)
+			elif GameState.action != null:
+				useAction(GameState.tileDict["hTile"])
+			elif GameState.item != null:
+				useItem(GameState.tileDict["hTile"])
 
 func movePiece(destination : tile, piece : MoveablePiece):
 	var destinationReached : bool = false
@@ -32,7 +36,7 @@ func movePiece(destination : tile, piece : MoveablePiece):
 			if piece is PlayerPiece:
 				InterfaceHandler.displayInfo()
 				await get_tree().create_timer(0.01).timeout
-				MenuHandler.openMenu()
+				InterfaceHandler.openMenu()
 			
 		else:
 			await get_tree().create_timer(0.3).timeout
@@ -56,6 +60,19 @@ func pushPiece(piece : MoveablePiece, direction : DirectionHandler.Direction):
 		@warning_ignore("integer_division")
 		piece.damage(5 + int(piece.maxHealth / 4))
 
+func useAction(destination : tile):
+	destination.actionUsed(GameState.action)
+	TileHandler.stopShowing()
+
+	TileHandler.setTilePattern()
+	GameState.action = null
+	InterfaceHandler.usedAction()
+	if GameState.playerTurn:
+		InterfaceHandler.openMenu()
+
+func useItem(destination : tile):
+	GameState.item = null
+
 func findMoveableTiles(piece : MoveablePiece):
 	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
 	var currentTile
@@ -73,4 +90,27 @@ func findMoveableTiles(piece : MoveablePiece):
 							if piece is PlayerPiece:
 								GameState.tileDict["iTiles"].append(currentTile)
 			currentTile = null
+	return toReturn
+
+func findActionTiles(piecePos : Vector3):
+	var possibleTiles = GameState.action.getActionRange(piecePos)
+	var toReturn = []
+	for n in range(possibleTiles.size()):
+		if TileHandler.lookForTile(possibleTiles[n]):
+			toReturn.append(TileHandler.lookForTile(possibleTiles[n]))
+	return toReturn
+
+func findItemTiles(piecePos : Vector3):
+	var possibleTiles = GameState.item.getItemRange(piecePos)
+	var toReturn = []
+	var usableOn = GameState.item.getUsable()
+	for n in range(possibleTiles.size()):
+		if TileHandler.lookForTile(possibleTiles[n]):
+			if usableOn.has("Self") and TileHandler.lookForTile(possibleTiles[n]).contains is PlayerPiece:
+				toReturn.append(TileHandler.lookForTile(possibleTiles[n]))
+			elif usableOn.has("Enemy") and TileHandler.lookForTile(possibleTiles[n]).contains is EnemyPiece:
+				toReturn.append(TileHandler.lookForTile(possibleTiles[n]))
+			elif usableOn.has("Tile") and !TileHandler.lookForTile(possibleTiles[n]).contains:
+				toReturn.append(TileHandler.lookForTile(possibleTiles[n]))
+		
 	return toReturn

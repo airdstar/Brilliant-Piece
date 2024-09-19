@@ -5,13 +5,14 @@
 [resource]
 script = ExtResource("1_fo6t0")
 name = "Light Beam"
-animationPath = ""
+desc = ""
+iconPath = ""
+actionType = ""
 damage = 3
 healing = 0
-range = 7
+armor = 0
 actionDirection = "Diagonal"
+actionRange = 1
 rangeExclusive = false
-blockable = false
-knockback = false
-status = ""
-AOE = Vector2(0, 0)
+canTargetSelf = false
+obstructable = false

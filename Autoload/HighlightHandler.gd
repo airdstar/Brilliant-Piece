@@ -146,6 +146,11 @@ func highlightTile(tileToSelect : tile):
 			elif GameState.action:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])
+				if GameState.action.AOE:
+					var possibleTiles = GameState.action.AOE.getAOE(tileToSelect.global_position, DirectionHandler.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
+					for n in range(possibleTiles.size()):
+						if TileHandler.lookForTile(possibleTiles[n]):
+							TileHandler.lookForTile(possibleTiles[n]).setColor(Global.colorDict["Red"])
 		else:
 			tileToSelect.setColor(Global.colorDict["Gray"])
 			pointer.setColor(Global.colorDict["Gray"])

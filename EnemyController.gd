@@ -7,14 +7,13 @@ func makeDecision():
 		#findBestMovement(PlayerData.playerInfo.currentPos, GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
 		GameState.endTurn()
 		
-
 func findBestMovement(target : Vector3, piece : EnemyPiece, behavior : String):
-	possibleTiles = MovementHandler.findMoveableTiles(piece)
+	possibleTiles = InteractionHandler.findMoveableTiles(piece)
 	match behavior:
 		"Approach":
-			MovementHandler.movePiece(findClosestTileToTarget(target, piece), piece)
+			InteractionHandler.movePiece(findClosestTileToTarget(target, piece), piece)
 		"Away":
-			MovementHandler.movePiece(findFurthestTileFromTarget(target, piece), piece)
+			InteractionHandler.movePiece(findFurthestTileFromTarget(target, piece), piece)
 
 func findClosestTileToTarget(target : Vector3, piece : EnemyPiece):
 	var piecePos = GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)]

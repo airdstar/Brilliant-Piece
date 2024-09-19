@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Brilliant Piece"
-run/main_scene="res://Floor/TestFloor.tscn"
+run/main_scene="res://Floor/Floor.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://LOGO.png"
@@ -24,14 +24,11 @@ FloorData="*res://Autoload/FloorData.gd"
 AudioManager="*res://Autoload/AudioManager.gd"
 GameState="*res://Autoload/GameState.gd"
 DirectionHandler="*res://Autoload/DirectionHandler.gd"
-MovementHandler="*res://Autoload/MovementHandler.gd"
 TileHandler="*res://Autoload/TileHandler.gd"
 HighlightHandler="*res://Autoload/HighlightHandler.gd"
 GenerationHandler="*res://Autoload/GenerationHandler.gd"
-MenuHandler="*res://Autoload/MenuHandler.gd"
 InterfaceHandler="*res://Autoload/InterfaceHandler.gd"
-ActionHandler="*res://Autoload/ActionHandler.gd"
-ItemHandler="*res://Autoload/ItemHandler.gd"
+InteractionHandler="*res://Autoload/InteractionHandler.gd"
 
 [display]
 

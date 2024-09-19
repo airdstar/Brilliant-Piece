@@ -31,11 +31,11 @@ func show(type : String):
 	var possibleTiles
 	match type:
 		"Movement":
-			possibleTiles = MovementHandler.findMoveableTiles(GameState.moving)
+			possibleTiles = InteractionHandler.findMoveableTiles(GameState.moving)
 		"Action":
-			possibleTiles = ActionHandler.findActionTiles(PlayerData.playerInfo.currentPos)
+			possibleTiles = InteractionHandler.findActionTiles(PlayerData.playerInfo.currentPos)
 		"Item":
-			possibleTiles = ItemHandler.findItemTiles(PlayerData.playerInfo.currentPos)
+			possibleTiles = InteractionHandler.findItemTiles(PlayerData.playerInfo.currentPos)
 	GameState.tileDict["iTiles"] = possibleTiles
 	setTilePattern()
 

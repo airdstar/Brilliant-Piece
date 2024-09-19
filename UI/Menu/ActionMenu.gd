@@ -35,7 +35,7 @@ func selectOption():
 	if options[highlightedOption] != null:
 		GameState.action = options[highlightedOption]
 		TileHandler.show("Action")
-		MenuHandler.fullyCloseMenu()
+		InterfaceHandler.fullyCloseMenu()
 
 func hoverToggle():
 	match highlightedOption:

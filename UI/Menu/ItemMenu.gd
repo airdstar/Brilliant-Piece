@@ -39,7 +39,7 @@ func addOptions():
 func selectOption():
 	GameState.item = options[highlightedOption]
 	TileHandler.show("Item")
-	MenuHandler.fullyCloseMenu()
+	InterfaceHandler.fullyCloseMenu()
 
 func swapItem():
 	for n in range(physicalItems.size()):

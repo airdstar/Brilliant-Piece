@@ -2,7 +2,7 @@ extends Node
 
 func generateFloor():
 	
-	if !FloorData.justCreated:
+	if !FloorData.floorInfo.isNew:
 		pass
 	
 	var layerDataHolder = GameState.currentFloor.layerData
@@ -37,40 +37,45 @@ func generateFloor():
 	placePieces(playerStarts, enemyStarts)
 
 func generateEnemies():
-	var enemyArray = []
-	var enemyPositions : Array[Vector3]
-	var behaviorArray : Array[String]
-	for n in randi_range(GameState.currentFloor.layerData.minPossibleEnemies, GameState.currentFloor.layerData.maxPossibleEnemies):
-		enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
-		enemyArray[n].enemyType = GameState.currentFloor.layerData.possibleEnemies[
-								  randi_range(0, GameState.currentFloor.layerData.possibleEnemies.size() - 1)]
-		GameState.currentFloor.add_child(enemyArray[n])
-		behaviorArray.append("Approach")
-		enemyPositions.append(enemyArray[n].global_position)
-		enemyArray[n].death.connect(GameState.currentFloor.pieceDeath)
 	
-	var enemyDict : Dictionary = {"Piece" : enemyArray,
-								"Position" : enemyPositions,
-								"Behavior" : behaviorArray}
-	GameState.pieceDict["Enemy"] = enemyDict
+	if FloorData.floorInfo.isNew:
+		var enemyArray = []
+		var enemyPositions : Array[Vector3]
+		var behaviorArray : Array[String]
+		for n in randi_range(GameState.currentFloor.layerData.minPossibleEnemies, GameState.currentFloor.layerData.maxPossibleEnemies):
+			enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
+			enemyArray[n].enemyType = GameState.currentFloor.layerData.possibleEnemies[
+									  randi_range(0, GameState.currentFloor.layerData.possibleEnemies.size() - 1)]
+			GameState.currentFloor.add_child(enemyArray[n])
+			behaviorArray.append("Approach")
+			enemyPositions.append(enemyArray[n].global_position)
+			enemyArray[n].death.connect(GameState.currentFloor.pieceDeath)
+		
+		var enemyDict : Dictionary = {"Piece" : enemyArray,
+									"Position" : enemyPositions,
+									"Behavior" : behaviorArray}
+		GameState.pieceDict["Enemy"] = enemyDict
+	else:
+		pass
 
 func placePieces(playerStarts, enemyStarts):
 	
-	if !FloorData.justCreated:
-		pass
+	if !FloorData.floorInfo.isNew:
+		TileHandler.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
+		HighlightHandler.highlightTile(PlayerData.playerPiece.currentTile)
+		
+		
 	else:
-		var playerStart = playerStarts[randi_range(0, playerStarts.size() - 1)]
-		playerStart.setPiece(PlayerData.playerPiece, 2)
-		HighlightHandler.highlightTile(playerStart)
-	
-	for n in range(GameState.pieceDict["Enemy"]["Piece"].size()):
-		if !FloorData.justCreated:
-			pass
-		else:
+		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
+		HighlightHandler.highlightTile(PlayerData.playerPiece.currentTile)
+		
+		for n in range(GameState.pieceDict["Enemy"]["Piece"].size()):
 			var tileEmpty = false
 			while !tileEmpty:
 				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
 				if !enemyStart.contains:
 					tileEmpty = true
 					enemyStart.setPiece(GameState.pieceDict["Enemy"]["Piece"][n], 2)
+	
+	
 					

@@ -1,6 +1,15 @@
-[gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://da62gojgkabpy"]
+[gd_resource type="Resource" script_class="ActionResource" load_steps=4 format=3 uid="uid://da62gojgkabpy"]
 
+[ext_resource type="Script" path="res://Resources/AOEResource.gd" id="1_0032r"]
 [ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_tta0d"]
+
+[sub_resource type="Resource" id="Resource_hr3t1"]
+script = ExtResource("1_0032r")
+name = "Herro"
+AOEdirection = "Sides"
+trailType = "None"
+AOErange = 2
+trailRange = 10
 
 [resource]
 script = ExtResource("1_tta0d")
@@ -16,4 +25,4 @@ actionRange = 4
 rangeExclusive = false
 canTargetSelf = false
 obstructable = false
-AOE = 1
+AOE = SubResource("Resource_hr3t1")
