@@ -24,6 +24,16 @@ shader_parameter/lens_distortion_strength = 0.005
 [node name="Base" type="Node3D"]
 script = ExtResource("1_sippj")
 
+[node name="StateHandler" type="Node" parent="."]
+
+[node name="TileHandler" type="Node" parent="."]
+
+[node name="HighlightHandler" type="Node" parent="."]
+
+[node name="InteractionHandler" type="Node" parent="."]
+
+[node name="DirectionHandler" type="Node" parent="."]
+
 [node name="Twist" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Twist"]
@@ -40,14 +50,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="EnemyController" parent="." instance=ExtResource("4_5gqdi")]
 
-[node name="InterfaceHandler" type="Node" parent="."]
-
-[node name="InteractionHandler" type="Node" parent="."]
-
 [node name="Menu" type="CanvasLayer" parent="."]
 layer = 3
 
 [node name="HUD" parent="Menu" instance=ExtResource("5_0rph0")]
+
+[node name="InterfaceHandler" type="Node" parent="Menu"]
 
 [node name="Effects" type="CanvasLayer" parent="."]
 
