@@ -70,9 +70,10 @@ func getClosestDirection(start : Vector3, target : Vector3):
 	for n in range(8):
 		var counter = 0
 		var sameDirection = true
+		var helper = start + dirDict["PosData"][n]
 		while sameDirection:
-			var xVar = abs(target.x - (start + (dirDict["PosData"][n] * (1 + counter))).x)
-			var zVar = abs(target.z - (start + (dirDict["PosData"][n] * (1 + counter))).z)
+			var xVar = abs(target.x - (helper + (dirDict["PosData"][n] * (1 + counter))).x)
+			var zVar = abs(target.z - (helper + (dirDict["PosData"][n] * (1 + counter))).z)
 			if smallestVariation != 200:
 				if smallestVariation > xVar + zVar:
 					closestDirection = dirArray[n]
