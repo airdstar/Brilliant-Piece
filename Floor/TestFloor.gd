@@ -8,7 +8,7 @@ func _ready():
 	getLayerData()
 	GameState.currentFloor = self
 	InterfaceHandler.HUD = $Menu/HUD
-	GenerationHandler.generateFloor()
+	FloorData.loadInfo()
 	MenuHandler.openMenu()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -34,3 +34,9 @@ func pieceDeath(piece : MoveablePiece):
 	if piece is EnemyPiece:
 		PlayerData.gainExp(piece.enemyType.expAmount)
 		PlayerData.playerInfo.items.append(piece.enemyType.itemPool.items[randi_range(0, piece.enemyType.itemPool.items.size() - 1)])
+		piece.currentTile.contains = null
+		var pieceNum = GameState.pieceDict["Enemy"]["Piece"].find(piece)
+		GameState.pieceDict["Enemy"]["Piece"].remove_at(pieceNum)
+		GameState.pieceDict["Enemy"]["Behavior"].remove_at(pieceNum)
+		GameState.pieceDict["Enemy"]["Position"].remove_at(pieceNum)
+		piece.queue_free()

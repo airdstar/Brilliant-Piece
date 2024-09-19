@@ -4,7 +4,7 @@ var possibleTiles = []
 
 func makeDecision():
 	if !GameState.moveUsed:
-		findBestMovement(PlayerData.playerInfo.currentPos, GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
+		#findBestMovement(PlayerData.playerInfo.currentPos, GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
 		GameState.endTurn()
 		
 

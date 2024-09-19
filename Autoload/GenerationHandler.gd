@@ -1,31 +1,40 @@
 extends Node
 
 func generateFloor():
+	
+	if !FloorData.justCreated:
+		pass
+	
 	var layerDataHolder = GameState.currentFloor.layerData
 	var imagePath : String = layerDataHolder.possibleLayouts[randi_range(0, layerDataHolder.possibleLayouts.size() - 1)]
 	var heightMap = Image.load_from_file(imagePath)
 	var totalTiles = []
 	var totalTilesPos = []
 	var tileToAdd
+	var playerStarts = []
+	var enemyStarts = []
 	
 	for n in range(heightMap.get_size().x):
 		for m in range(heightMap.get_size().y):
-			if heightMap.get_pixel(n,m) != Color(0,0,0,1):
+			if heightMap.get_pixel(n,m) != Color8(0,0,0):
 				tileToAdd = preload("res://Floor/Tile/Tile.tscn").instantiate()
 				GameState.currentFloor.add_child(tileToAdd)
 				tileToAdd.global_position = Vector3(n - int(heightMap.get_size().x / 2), tileToAdd.global_position.y, m - int(heightMap.get_size().y / 2))
 				totalTiles.append(tileToAdd)
 				totalTilesPos.append(tileToAdd.global_position)
+				if heightMap.get_pixel(n,m) == Color8(100,150,200):
+					playerStarts.append(tileToAdd)
+				elif heightMap.get_pixel(n,m) == Color8(200,100,100):
+					enemyStarts.append(tileToAdd)
 	
-	var blankArray = []
-	var blankValue
-	
-	GameState.tileDict = {"Tiles" : totalTiles, "iTiles" : blankArray, "TilePos" : totalTilesPos, "hTile" : blankValue}
+	GameState.tileDict = {"Tiles" : totalTiles, "iTiles" : [], "TilePos" : totalTilesPos, "hTile" : []}
 	
 	GameState.currentFloor.add_child(PlayerData.playerPiece)
-
+	
+	
+	
 	generateEnemies()
-	placePieces()
+	placePieces(playerStarts, enemyStarts)
 
 func generateEnemies():
 	var enemyArray = []
@@ -45,24 +54,23 @@ func generateEnemies():
 								"Behavior" : behaviorArray}
 	GameState.pieceDict["Enemy"] = enemyDict
 
-func placePieces():
-	var piece
-	var pieceCount : int
-	var amountPlaced : int
-	for n in range(2):
-		amountPlaced = 0
-		match n:
-			0:
-				#piece = GameState.pieceDict["Neutral"]["Piece"]
-				pieceCount = 0
-			1:
-				piece = GameState.pieceDict["Enemy"]["Piece"]
-				pieceCount = piece.size()
-		
-		if pieceCount != 0:
-			while (pieceCount != amountPlaced):
-				var piecePos = GameState.tileDict["Tiles"][randi_range(0, GameState.tileDict["Tiles"].size() - 1)]
-				if !piecePos.contains:
-					piecePos.setPiece(piece[amountPlaced], DirectionHandler.dirArray[2])
-					amountPlaced += 1
+func placePieces(playerStarts, enemyStarts):
 	
+	if !FloorData.justCreated:
+		pass
+	else:
+		var playerStart = playerStarts[randi_range(0, playerStarts.size() - 1)]
+		playerStart.setPiece(PlayerData.playerPiece, 2)
+		HighlightHandler.highlightTile(playerStart)
+	
+	for n in range(GameState.pieceDict["Enemy"]["Piece"].size()):
+		if !FloorData.justCreated:
+			pass
+		else:
+			var tileEmpty = false
+			while !tileEmpty:
+				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
+				if !enemyStart.contains:
+					tileEmpty = true
+					enemyStart.setPiece(GameState.pieceDict["Enemy"]["Piece"][n], 2)
+					

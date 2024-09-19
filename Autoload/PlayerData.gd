@@ -37,18 +37,21 @@ func updateData():
 	playerInfo.classType = playerPiece.classType
 
 func levelUp():
+	playerInfo.maxHealth += Global.levelDict["health"][playerInfo.level - 1]
+	playerInfo.health += Global.levelDict["health"][playerInfo.level - 1]
 	playerInfo.level += 1
 	print("Leveled up!")
 	playerPiece.updateData()
 	gainExp(0)
 
 func gainExp(amount : int):
-	if amount != 0:
-		playerInfo.expAmount += amount
-		print("Gained " + str(amount) + " exp!")
-	if playerInfo.expAmount >= Global.expArray[playerInfo.level - 1]:
-		playerInfo.expAmount -= Global.expArray[playerInfo.level - 1]
-		levelUp()
-	else:
-		if playerInfo.expAmount != 0:
-			print(str(Global.expArray[playerInfo.level - 1] - amount) + " exp until next level")
+	if playerInfo.level != 20:
+		if amount != 0:
+			playerInfo.expAmount += amount
+			print("Gained " + str(amount) + " exp!")
+		if playerInfo.expAmount >= Global.levelDict["exp"][playerInfo.level - 1]:
+			playerInfo.expAmount -= Global.levelDict["exp"][playerInfo.level - 1]
+			levelUp()
+		else:
+			if playerInfo.expAmount != 0:
+				print(str(Global.levelDict["exp"][playerInfo.level - 1] - amount) + " exp until next level")

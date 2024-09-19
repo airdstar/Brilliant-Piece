@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fkaj1xnx5wjr"]
+
+[ext_resource type="Script" path="res://Piece/PlayerPiece.gd" id="1_5b7hp"]
+
+[node name="PlayerPiece" type="Node3D"]
+script = ExtResource("1_5b7hp")
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(0.425, 0, 0, 0, 0.425, 0, 0, 0, 0.425, 0, 0, 0)

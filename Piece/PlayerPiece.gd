@@ -18,11 +18,6 @@ func loadData():
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
 	
-	if PlayerData.playerInfo.currentFloorNum == GameState.currentFloor.floorNum:
-		print("Position Loaded")
-		TileHandler.lookForTile(PlayerData.playerInfo.currentPos).setPiece(self, 2)
-		HighlightHandler.highlightTile(currentTile)
-	
 	loadModel()
 
 func setData():
@@ -51,4 +46,7 @@ func loadModel():
 
 func updateData():
 	level = PlayerData.playerInfo.level
+	health = PlayerData.playerInfo.health
+	maxHealth = PlayerData.playerInfo.maxHealth
+	armor = PlayerData.playerInfo.armor
 	
