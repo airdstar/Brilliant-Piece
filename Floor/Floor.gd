@@ -15,7 +15,7 @@ func _process(_delta : float):
 		Handlers.SH.saveState()
 	
 	if Input.is_action_just_pressed("Reset"):
-		PlayerData.resetInfo()
+		Handlers.SH.resetState()
 
 	cameraControls()
 
@@ -24,8 +24,9 @@ func pieceDeath(piece : MoveablePiece):
 		PlayerData.gainExp(piece.enemyType.expAmount)
 		PlayerData.playerInfo.items.append(piece.enemyType.itemPool.items[randi_range(0, piece.enemyType.itemPool.items.size() - 1)])
 		piece.currentTile.contains = null
-		#var pieceNum = GameState.pieceDict["Enemy"]["Piece"].find(piece)
-		#GameState.pieceDict["Enemy"]["Piece"].remove_at(pieceNum)
-		#GameState.pieceDict["Enemy"]["Behavior"].remove_at(pieceNum)
-		#GameState.pieceDict["Enemy"]["Position"].remove_at(pieceNum)
+		
+		var pieceNum = FloorData.floor.enemies.find(piece)
+		FloorData.floor.enemies.remove_at(pieceNum)
+		FloorData.floorInfo.enemies.remove_at(pieceNum)
+		
 		piece.queue_free()

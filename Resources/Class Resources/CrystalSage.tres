@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Resources/ActionResource.gd" id="3_3at3e"]
 [ext_resource type="Resource" uid="uid://da62gojgkabpy" path="res://Resources/Action Resources/CrystalDrop.tres" id="4_lqujx"]
 [ext_resource type="Resource" uid="uid://clk1n28hr60dc" path="res://Resources/Action Resources/CrystalSpears.tres" id="5_n6db3"]
-[ext_resource type="Resource" uid="uid://cdyj2x074vkwb" path="res://Resources/Action Resources/LightBeam.tres" id="6_2g06e"]
+[ext_resource type="Resource" uid="uid://ch1iy5jb0igbg" path="res://Resources/Action Resources/SpikedArmor.tres" id="6_1uao1"]
 
 [resource]
 script = ExtResource("1_lnosw")
@@ -13,4 +13,4 @@ className = "Crystal Sage"
 actions = ExtResource("1_3yne0")
 associatedModel = "res://Piece/Classes/CrystalSage.blend"
 startingHealth = 6
-startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_2g06e")])
+startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_1uao1")])

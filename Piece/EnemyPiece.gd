@@ -1,7 +1,7 @@
 extends MoveablePiece
 class_name EnemyPiece
 
-@export var enemyType : EnemyResource
+var enemyType : EnemyResource
 
 var prevDirection : int
 
@@ -38,3 +38,9 @@ func loadData(pieceNum : int):
 	armor = FloorData.floorInfo.enemies[pieceNum].armor
 	
 	#loadModel(ResourceLoader.load(enemyType.associatedModel))
+
+func updateData():
+	level = PlayerData.playerInfo.level
+	health = PlayerData.playerInfo.health
+	maxHealth = PlayerData.playerInfo.maxHealth
+	armor = PlayerData.playerInfo.armor

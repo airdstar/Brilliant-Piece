@@ -5,14 +5,14 @@
 [resource]
 script = ExtResource("1_xv4x0")
 name = "Attack"
-desc = ""
-iconPath = ""
+desc = null
+iconPath = null
 actionType = "Attack"
 damage = 1
-healing = 0
-armor = 0
+healing = null
+armor = null
 actionDirection = "Both"
-actionRange = 1
+actionRange = null
 rangeExclusive = true
-canTargetSelf = false
-obstructable = false
+usableOn = 6
+obstructable = null

@@ -7,7 +7,7 @@ func _ready():
 	Handlers = FloorData.floor.Handlers
 
 func makeDecision():
-	if !FloorData.floor.Handlers.SH.moveUsed:
+	if !FloorData.floorInfo.moveUsed:
 		#findBestMovement(PlayerData.playerInfo.currentPos, GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
 		FloorData.floor.Handlers.SH.endTurn()
 		
@@ -65,6 +65,3 @@ func findClosestTileToTarget(target : Vector3, piece : EnemyPiece):
 				closestTile = Handlers.TH.lookForTile(piecePos + (Handlers.DH.dirDict["PosData"][direction] * (1 + n)))
 				smallestDistance = xVar + zVar
 	return closestTile
-
-func findFurthestTileFromTarget(target : Vector3, piece : EnemyPiece):
-	pass

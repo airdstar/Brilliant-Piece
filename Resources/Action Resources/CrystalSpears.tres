@@ -5,14 +5,14 @@
 [resource]
 script = ExtResource("1_fookx")
 name = "Crystal Spears"
-desc = ""
-iconPath = ""
-actionType = ""
+desc = null
+iconPath = null
+actionType = null
 damage = 2
-healing = 0
-armor = 0
+healing = null
+armor = null
 actionDirection = "Cone"
 actionRange = 5
-rangeExclusive = false
-canTargetSelf = false
-obstructable = false
+rangeExclusive = null
+usableOn = 6
+obstructable = null

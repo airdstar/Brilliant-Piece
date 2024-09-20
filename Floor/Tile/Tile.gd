@@ -46,9 +46,7 @@ func setPiece(piece : Piece, dir : int):
 	if piece is PlayerPiece:
 		PlayerData.playerInfo.currentPos = global_position
 	elif piece is EnemyPiece:
-		#FloorData.floor.enemies.find(piece)
-		pass
-		
+		FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos = global_position
 	
 
 func actionUsed(action : ActionResource):

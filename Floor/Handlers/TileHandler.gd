@@ -26,17 +26,14 @@ func setTilePattern():
 			elif mH.SH.item:
 				allTiles[n].setColor(Global.colorDict["Green"])
 
-func show(type : String):
+func show():
 	FloorData.floor.Pointer.visible = true
-	var possibleTiles
-	match type:
-		"Movement":
-			possibleTiles = mH.IH.findMoveableTiles(mH.SH.actingPiece)
-		"Action":
-			possibleTiles = mH.IH.findActionTiles(PlayerData.playerInfo.currentPos)
-		"Item":
-			possibleTiles = mH.IH.findItemTiles(PlayerData.playerInfo.currentPos)
-	tileDict["iTiles"] = possibleTiles
+	if mH.SH.moving:
+		tileDict["iTiles"] = mH.IH.findMoveableTiles(mH.SH.actingPiece)
+	elif mH.SH.action:
+		tileDict["iTiles"] = mH.IH.findActionTiles(PlayerData.playerInfo.currentPos)
+	elif mH.SH.item:
+		tileDict["iTiles"] = mH.IH.findItemTiles(PlayerData.playerInfo.currentPos)
 	setTilePattern()
 
 

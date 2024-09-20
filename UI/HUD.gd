@@ -39,4 +39,4 @@ func updateLabels():
 	textLabels[1].text = " " + piece.type.typeName
 	textLabels[2].text = " [img]res://UI/Heart.png[/img] " + str(piece.health) + "/" + str(piece.maxHealth)
 	if piece.armor > 0:
-		textLabels[3].text += "   [img]res://UI/Armor.png[/img] " + str(piece.armor)
+		textLabels[2].text += "   [img]res://UI/Armor.png[/img] " + str(piece.armor)

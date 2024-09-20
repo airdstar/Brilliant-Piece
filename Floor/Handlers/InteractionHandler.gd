@@ -67,11 +67,15 @@ func useAction(destination : tile):
 	mH.TH.setTilePattern()
 	mH.SH.action = null
 	mH.UH.usedAction()
-	if mH.SH.playerTurn:
+	if FloorData.floorInfo.playerTurn:
 		mH.UH.openMenu()
 
 func useItem(destination : tile):
+	mH.TH.stopShowing()
+	mH.TH.setTilePattern()
 	mH.SH.item = null
+	if FloorData.floorInfo.playerTurn:
+		mH.UH.openMenu()
 
 func findMoveableTiles(piece : MoveablePiece):
 	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
@@ -104,11 +108,11 @@ func findItemTiles(piecePos : Vector3):
 	var possibleTiles = mH.SH.item.getItemRange(piecePos)
 	var toReturn = []
 	var usableOn = mH.SH.item.getUsable()
+	if usableOn.has("Self"):
+		toReturn.append(mH.SH.actingPiece.currentTile)
 	for n in range(possibleTiles.size()):
 		if mH.TH.lookForTile(possibleTiles[n]):
-			if usableOn.has("Self") and mH.TH.lookForTile(possibleTiles[n]).contains is PlayerPiece:
-				toReturn.append(mH.TH.lookForTile(possibleTiles[n]))
-			elif usableOn.has("Enemy") and mH.TH.lookForTile(possibleTiles[n]).contains is EnemyPiece:
+			if usableOn.has("Enemy") and mH.TH.lookForTile(possibleTiles[n]).contains is EnemyPiece:
 				toReturn.append(mH.TH.lookForTile(possibleTiles[n]))
 			elif usableOn.has("Tile") and !mH.TH.lookForTile(possibleTiles[n]).contains:
 				toReturn.append(mH.TH.lookForTile(possibleTiles[n]))

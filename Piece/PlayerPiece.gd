@@ -38,7 +38,6 @@ func setData():
 	
 	loadModel(ResourceLoader.load(classType.associatedModel))
 
-
 func updateData():
 	level = PlayerData.playerInfo.level
 	health = PlayerData.playerInfo.health

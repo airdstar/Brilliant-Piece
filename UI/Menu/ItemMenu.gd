@@ -38,7 +38,8 @@ func addOptions():
 
 func selectOption():
 	FloorData.floor.Handlers.SH.item = options[highlightedOption]
-	FloorData.floor.Handlers.TH.show("Item")
+	FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
+	FloorData.floor.Handlers.TH.show()
 	FloorData.floor.Handlers.UH.fullyCloseMenu()
 
 func swapItem():

@@ -30,9 +30,9 @@ script = ExtResource("1_ymfxc")
 [node name="TurnHUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 10.0
+offset_left = 966.0
 offset_top = 10.0
-offset_right = 58.0
+offset_right = 1014.0
 offset_bottom = 58.0
 
 [node name="MoveOutline" type="TextureRect" parent="TurnHUD"]
@@ -80,10 +80,10 @@ texture = ExtResource("6_ko3ij")
 
 [node name="Floor_Player" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 822.0
-offset_top = 10.0
-offset_right = 1014.0
-offset_bottom = 69.0
+offset_left = 760.0
+offset_top = 15.0
+offset_right = 952.0
+offset_bottom = 74.0
 texture = ExtResource("8_ysboo")
 
 [node name="FloorInfo" type="RichTextLabel" parent="Floor_Player"]
@@ -100,21 +100,22 @@ scroll_active = false
 
 [node name="MoneySoul" type="RichTextLabel" parent="Floor_Player"]
 layout_mode = 0
-offset_top = 64.0
-offset_right = 192.0
-offset_bottom = 126.0
+offset_left = -203.0
+offset_top = 5.0
+offset_right = -11.0
+offset_bottom = 67.0
 theme = ExtResource("8_037fx")
 bbcode_enabled = true
-text = " 0 [img]res://UI/Coin.png[/img]
- 0 [img]res://UI/Soul.png[/img]"
+text = " [img]res://UI/Coin.png[/img] 0 
+ [img]res://UI/Soul.png[/img] 0 "
 text_direction = 2
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 630.0
+offset_top = 10.0
 offset_right = 138.0
-offset_bottom = 758.0
+offset_bottom = 138.0
 texture = ExtResource("7_xdbhw")
 
 [node name="PortraitBackground" type="TextureRect" parent="Portrait"]
@@ -158,7 +159,7 @@ offset_right = 209.0
 offset_bottom = 109.0
 theme = ExtResource("8_037fx")
 bbcode_enabled = true
-text = " hi"
+text = " [img]res://UI/Heart.png[/img] hi"
 scroll_active = false
 
 [node name="SubViewport" type="SubViewport" parent="."]

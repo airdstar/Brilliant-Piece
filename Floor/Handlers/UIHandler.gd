@@ -16,7 +16,7 @@ func _process(_delta):
 			else:
 				closeMenu()
 	elif Input.is_action_just_pressed("Cancel"):
-		if mH.SH.playerTurn:
+		if FloorData.floorInfo.playerTurn:
 			mH.TH.stopShowing()
 			openMenu()
 
@@ -54,7 +54,6 @@ func fullyCloseMenu():
 	FloorData.floor.Pointer.visible = true
 
 func unselect():
-	var currentMenu = currentMenu
 	if currentMenu is BasicMenu:
 		if currentMenu.hasSelectedOption:
 			currentMenu.hasSelectedOption = false
@@ -69,17 +68,22 @@ func displayInfo():
 	else:
 		FloorData.floor.HUD.hidePieceInfo()
 
-func endedTurn():
+func setTurnColors():
 	for n in range(3):
-		if mH.SH.playerTurn:
+		if FloorData.floorInfo.playerTurn:
 			FloorData.floor.HUD.turnHUD[n].modulate = Color(0.63,0.72,0.86)
 		else:
 			FloorData.floor.HUD.turnHUD[n].modulate = Color(0.86,0.63,0.72)
+	if FloorData.floorInfo.actionUsed:
+		FloorData.floor.HUD.turnHUD[1].modulate = Color(0.5,0.5,0.5)
+	if FloorData.floorInfo.moveUsed:
+		FloorData.floor.HUD.turnHUD[0].modulate = Color(0.5,0.5,0.5)
+	
 
 func usedAction():
 	FloorData.floor.HUD.turnHUD[1].modulate = Color(0.5,0.5,0.5)
-	mH.SH.actionUsed = true
+	FloorData.floorInfo.actionUsed = true
 
 func usedMovement():
 	FloorData.floor.HUD.turnHUD[0].modulate = Color(0.5,0.5,0.5)
-	mH.SH.moveUsed = true
+	FloorData.floorInfo.moveUsed = true

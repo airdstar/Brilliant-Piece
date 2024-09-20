@@ -135,14 +135,14 @@ func highlightTile(tileToSelect : tile):
 	tileToSelect.highlight.visible = true
 	pointer.position = Vector3(tileToSelect.position.x, tileToSelect.getPointerPos(), tileToSelect.position.z)
 	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
-	if mH.SH.playerTurn:
+	if FloorData.floorInfo.playerTurn:
 		if mH.TH.tileDict["iTiles"].has(tileToSelect):
-			if tileToSelect.contains is EnemyPiece:
-				tileToSelect.setColor(Global.colorDict["Red"])
-				pointer.setColor(Global.colorDict["Red"])
-			elif mH.SH.moving:
+			if mH.SH.moving:
 				tileToSelect.setColor(Global.colorDict["Blue"])
 				pointer.setColor(Global.colorDict["Blue"])
+				if tileToSelect.contains is EnemyPiece:
+					tileToSelect.setColor(Global.colorDict["Red"])
+					pointer.setColor(Global.colorDict["Red"])
 			elif mH.SH.action:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])

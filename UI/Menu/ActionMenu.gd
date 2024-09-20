@@ -34,7 +34,8 @@ func _process(_delta):
 func selectOption():
 	if options[highlightedOption] != null:
 		FloorData.floor.Handlers.SH.action = options[highlightedOption]
-		FloorData.floor.Handlers.TH.show("Action")
+		FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
+		FloorData.floor.Handlers.TH.show()
 		FloorData.floor.Handlers.UH.fullyCloseMenu()
 
 func hoverToggle():

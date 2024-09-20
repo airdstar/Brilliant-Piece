@@ -1,20 +1,16 @@
 extends Handler
 
-var playerTurn : bool = true
-var actionUsed : bool = false
-var moveUsed : bool = false
-
 var actingPiece : MoveablePiece
 var moving : bool = false
 var item : ItemResource = null
 var action : ActionResource = null
 
 func endTurn():
-	playerTurn = !playerTurn
-	actionUsed = false
-	moveUsed = false
-	mH.UH.endedTurn()
-	if playerTurn:
+	FloorData.floorInfo.playerTurn = !FloorData.floorInfo.playerTurn
+	FloorData.floorInfo.actionUsed = false
+	FloorData.floorInfo.moveUsed = false
+	mH.UH.setTurnColors()
+	if FloorData.floorInfo.playerTurn:
 		mH.UH.openMenu()
 	else:
 		FloorData.floor.Pointer.visible = true
@@ -26,3 +22,7 @@ func saveState():
 
 func loadState():
 	FloorData.loadInfo()
+
+func resetState():
+	FloorData.resetInfo()
+	PlayerData.resetInfo()

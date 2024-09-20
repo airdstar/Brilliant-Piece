@@ -15,6 +15,7 @@ func loadInfo():
 		if !floorInfo.isNew:
 			print("Loaded info")
 			floor.Handlers.GH.generateFloor()
+			floor.Handlers.UH.setTurnColors()
 		else:
 			print("No info found")
 			setData()
@@ -25,7 +26,14 @@ func loadInfo():
 func saveInfo():
 	print("Saved info")
 	ResourceSaver.save(floorInfo, save_path)
-	
+
+
+func updateData():
+	for n in range(floorInfo.enemies.size()):
+		floorInfo.enemies[n].maxHealth = floor.enemies[n].maxHealth
+		floorInfo.enemies[n].health = floor.enemies[n].health
+		floorInfo.enemies[n].armor = floor.enemies[n].armor
+
 
 func resetInfo():
 	print("Reset info")

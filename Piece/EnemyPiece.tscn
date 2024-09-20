@@ -1,14 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlu6bkktlk1o"]
+[gd_scene load_steps=3 format=3 uid="uid://dlu6bkktlk1o"]
 
 [ext_resource type="Script" path="res://Piece/EnemyPiece.gd" id="1_v20ax"]
-[ext_resource type="Resource" uid="uid://dfjb6if6vtt3e" path="res://Resources/Enemy Resources/Goblin.tres" id="2_3qjjj"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_83i58"]
 height = 1.0
 
 [node name="EnemyPiece" type="Node3D"]
 script = ExtResource("1_v20ax")
-enemyType = ExtResource("2_3qjjj")
 
 [node name="Model" type="Node3D" parent="."]
 

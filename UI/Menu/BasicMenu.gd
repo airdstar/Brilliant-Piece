@@ -5,10 +5,10 @@ func addOptions():
 	optionCount = 2
 	var move = false
 	var action = false
-	if !FloorData.floor.Handlers.SH.moveUsed:
+	if !FloorData.floorInfo.moveUsed:
 		optionCount += 1
 		move = true
-	if !FloorData.floor.Handlers.SH.actionUsed:
+	if !FloorData.floorInfo.actionUsed:
 		optionCount += 1
 		action = true
 	var prevPos = Vector2(0,0)
@@ -62,7 +62,7 @@ func selectOption():
 			await get_tree().create_timer(0.1).timeout
 			FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
 			FloorData.floor.Handlers.SH.moving = true
-			FloorData.floor.Handlers.TH.show("Movement")
+			FloorData.floor.Handlers.TH.show()
 			queue_free()
 		"Action":
 			var toAdd = preload("res://UI/Menu/ActionMenu.tscn").instantiate()

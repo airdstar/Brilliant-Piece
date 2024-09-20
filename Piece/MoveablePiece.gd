@@ -25,8 +25,11 @@ func actionUsed(action : ActionResource):
 		damage(action.damage)
 	if action.healing:
 		heal(action.healing)
+	if action.armor:
+		addArmor(action.armor)
 	
 	PlayerData.updateData()
+	FloorData.updateData()
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:
@@ -40,16 +43,28 @@ func damage(damageAmount : int):
 	
 	if health <= 0:
 		health = 0
+		PlayerData.updateData()
+		FloorData.updateData()
 		death.emit(self)
+	
+	PlayerData.updateData()
+	FloorData.updateData()
+	
 
 func heal(healingAmount : int):
 	health += healingAmount
 	if health >= maxHealth:
 		health = maxHealth
+	
+	PlayerData.updateData()
+	FloorData.updateData()
 
 func addArmor(armorAmount : int):
 	if armor == 0:
 		armor = armorAmount
+	
+	PlayerData.updateData()
+	FloorData.updateData()
 
 func setPieceOrientation(dir : int):
 	global_rotation.y = deg_to_rad(90)
