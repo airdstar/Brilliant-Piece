@@ -26,17 +26,17 @@ func _ready():
 
 func getItemRange(itemStart : Vector3):
 	var toReturn : Array[Vector3]
-	var pos = DirectionHandler.getAll("Both")
+	var pos = FloorData.floor.Handlers.DH.getAll("Both")
 	for n in range(8):
 		var tileData : Vector3 = itemStart
 		for m in range(itemRange):
-			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
+			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
 			toReturn.append(tileData)
 			if n % 2 == 0:
 				var counter = m
 				while counter > 0:
-					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * counter)
-					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * counter)
+					toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * counter)
+					toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * counter)
 					counter -= 1
 	
 	return toReturn

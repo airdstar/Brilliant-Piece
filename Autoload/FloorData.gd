@@ -4,7 +4,10 @@ var save_path := "res://Run Info/FloorData.tres"
 
 var floorInfo : FloorInfo = FloorInfo.new()
 
-var floor : Floor = preload("res://Floor/Floor.tscn").instantiate()
+var floor : Floor
+
+func _ready():
+	pass
 
 func loadInfo():
 	if ResourceLoader.exists(save_path):
@@ -16,6 +19,7 @@ func loadInfo():
 			print("No info found")
 			setData()
 	else:
+		print("Path not found")
 		setData()
 
 func saveInfo():
@@ -28,4 +32,4 @@ func resetInfo():
 	ResourceSaver.save(FloorInfo.new(), save_path)
 
 func setData():
-	GenerationHandler.generateFloor()
+	floor.Handlers.GH.generateFloor()

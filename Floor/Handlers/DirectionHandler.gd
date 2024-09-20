@@ -1,4 +1,4 @@
-extends Node
+extends Handler
 
 enum Direction {
 	NORTH,
@@ -11,10 +11,6 @@ enum Direction {
 	NORTHEAST
 }
 
-var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Direction.WEST,
-								   Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST,
-								   Direction.EAST, Direction.NORTHEAST]
-
 var dirDict : Dictionary
 
 func _ready():
@@ -23,46 +19,49 @@ func _ready():
 	
 	var dirRotationArray : Array[int] = [-90, -45, 0, 45, 90, 135, 180, -135]
 	
-	var xArray = [dirArray[1], dirArray[2], dirArray[3], dirArray[5], dirArray[6], dirArray[7]]
-	var zArray = [dirArray[0], dirArray[1], dirArray[3], dirArray[4], dirArray[5], dirArray[7]]
+	var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Direction.WEST,
+								   Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST,
+								   Direction.EAST, Direction.NORTHEAST]
 	
-	dirDict = {"PosData" : dirPosArray, "RotData" : dirRotationArray, "xData" : xArray, "zData" : zArray}
+	dirDict = {"Direction" : dirArray, "PosData" : dirPosArray, "RotData" : dirRotationArray}
+	
+	mH = get_parent()
 
 func getDiagonals(dir : Direction):
 	if dir == 0:
-		return [dirArray[dir + 1], dirArray[7]]
+		return [dirDict["Direction"][dir + 1], dirDict["Direction"][7]]
 	else:
-		return [dirArray[dir + 1], dirArray[dir - 1]]
+		return [dirDict["Direction"][dir + 1], dirDict["Direction"][dir - 1]]
 
 func getSides(dir : Direction):
 	if dir%2 == 0:
 		if dir == 0:
-			return [dirArray[dir + 2], dirArray[6]]
+			return [dirDict["Direction"][dir + 2], dirDict["Direction"][6]]
 		elif dir == 6:
-			return [dirArray[0], dirArray[dir - 2]]
+			return [dirDict["Direction"][0], dirDict["Direction"][dir - 2]]
 		else:
-			return [dirArray[dir + 2], dirArray[dir - 2]]
+			return [dirDict["Direction"][dir + 2], dirDict["Direction"][dir - 2]]
 			
 	else:
 		if dir != 7:
-			return [dirArray[dir + 1], dirArray[dir - 1]]
+			return [dirDict["Direction"][dir + 1], dirDict["Direction"][dir - 1]]
 		else:
-			return [dirArray[0], dirArray[dir - 1]]
+			return [dirDict["Direction"][0], dirDict["Direction"][dir - 1]]
 
 func getAll(dir : String):
 	match dir:
 		"Straight", "Cone", "L":
-			return [dirArray[0], dirArray[2], dirArray[4], dirArray[6]]
+			return [dirDict["Direction"][0], dirDict["Direction"][2], dirDict["Direction"][4], dirDict["Direction"][6]]
 		"Diagonal":
-			return [dirArray[1], dirArray[3], dirArray[5], dirArray[7]]
+			return [dirDict["Direction"][1], dirDict["Direction"][3], dirDict["Direction"][5], dirDict["Direction"][7]]
 		"Both", "Circle", "Square":
-			return dirArray
+			return dirDict["Direction"]
 
 func getOppDirection(dir : Direction):
 	if dir < 4:
-		return dirArray[dir + 4]
+		return dirDict["Direction"][dir + 4]
 	else:
-		return dirArray[dir - 4]
+		return dirDict["Direction"][dir - 4]
 
 func getClosestDirection(start : Vector3, target : Vector3):
 	var closestDirection : Direction
@@ -76,7 +75,7 @@ func getClosestDirection(start : Vector3, target : Vector3):
 			var zVar = abs(target.z - (helper + (dirDict["PosData"][n] * (1 + counter))).z)
 			if smallestVariation != 200:
 				if smallestVariation > xVar + zVar:
-					closestDirection = dirArray[n]
+					closestDirection = dirDict["Direction"][n]
 					smallestVariation = xVar + zVar
 					sameDirection = false
 				elif smallestVariation == xVar + zVar:
@@ -84,7 +83,7 @@ func getClosestDirection(start : Vector3, target : Vector3):
 				else:
 					sameDirection = false
 			else:
-				closestDirection = dirArray[n]
+				closestDirection = dirDict["Direction"][n]
 				smallestVariation = xVar + zVar
 				sameDirection = false
 	

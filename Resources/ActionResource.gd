@@ -28,24 +28,24 @@ class_name ActionResource
 
 func getActionRange(actionStart : Vector3):
 	var toReturn : Array[Vector3]
-	var pos = DirectionHandler.getAll(actionDirection)
+	var pos = FloorData.floor.Handlers.DH.getAll(actionDirection)
 	var tileData : Vector3
 	for n in range(pos.size()):
 		tileData = actionStart
 		for m in range(actionRange):
-			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
+			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
 			toReturn.append(tileData)
 			if actionDirection == "Cone":
 				var counter = m
 				while counter > 1:
-					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * (counter / 2))
-					toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * (counter / 2))
+					toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * (counter / 2))
+					toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * (counter / 2))
 					counter -= 2
 			elif actionDirection == "Square":
 				if n % 2 == 0:
 					var counter = m
 					while counter > 0:
-						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * counter)
-						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * counter)
+						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * counter)
+						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * counter)
 						counter -= 1
 	return toReturn

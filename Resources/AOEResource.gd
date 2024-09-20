@@ -12,21 +12,21 @@ func getAOE(AOEstart : Vector3, relativeDir : int):
 	var toReturn : Array[Vector3]
 	var pos
 	if AOEdirection != "Sides":
-		pos = DirectionHandler.getAll(AOEdirection)
+		pos = FloorData.floor.Handlers.DH.getAll(AOEdirection)
 	else:
-		pos = DirectionHandler.getSides(relativeDir)
+		pos = FloorData.floor.Handlers.DH.getSides(relativeDir)
 	var tileData : Vector3
 	for n in range(pos.size()):
 		tileData = AOEstart
 		for m in range(AOErange):
-			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
+			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
 			toReturn.append(tileData)
 			if AOEdirection == "Square":
 				if n % 2 == 0:
 					var counter = m
 					while counter > 0:
-						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[0]] * counter)
-						toReturn.append(tileData + DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(pos[n])[1]] * counter)
+						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * counter)
+						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * counter)
 						counter -= 1
 	for n in range(trailRange):
 		pass

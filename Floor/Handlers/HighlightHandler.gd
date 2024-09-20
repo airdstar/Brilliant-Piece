@@ -1,4 +1,4 @@
-extends Node
+extends Handler
 
 func _process(_delta):
 	var inputDirection : String
@@ -12,13 +12,13 @@ func _process(_delta):
 		inputDirection = "Backward"
 	
 	if inputDirection:
-		if !GameState.currentMenu:
+		if !mH.UH.currentMenu:
 			handle3DHighlighting(inputDirection)
 		else:
 			handleMenuHighlighting(inputDirection)
 
 func handleMenuHighlighting(input : String):
-	var menu = GameState.currentMenu
+	var menu = mH.UH.currentMenu
 	if menu is BasicMenu or menu is ActionMenu:
 		if menu is ActionMenu:
 			match input:
@@ -56,101 +56,101 @@ func handleMenuHighlighting(input : String):
 			menu.swapItem()
 
 func handle3DHighlighting(input : String):
-	var rotation = rad_to_deg(GameState.currentFloor.cameraBase.rotation.y)
+	var rotation = rad_to_deg(FloorData.floor.cameraBase.rotation.y)
 	var direction = null
 	
 	if input == "Left" or input == "Right":
 		if rotation > -172.5 and rotation < -97.5:
-			direction = DirectionHandler.dirArray[4]
+			direction = mH.DH.dirDict["Direction"][4]
 		elif rotation >= -97.5 and rotation <= -82.5:
-			direction = DirectionHandler.dirArray[5]
+			direction = mH.DH.dirDict["Direction"][5]
 		elif rotation > -82.5 and rotation < -7.5:
-			direction = DirectionHandler.dirArray[6]
+			direction = mH.DH.dirDict["Direction"][6]
 		elif rotation >= -7.5 and rotation <= 7.5:
-			direction = DirectionHandler.dirArray[7]
+			direction = mH.DH.dirDict["Direction"][7]
 		elif rotation > 7.5 and rotation < 82.5:
-			direction = DirectionHandler.dirArray[0]
+			direction = mH.DH.dirDict["Direction"][0]
 		elif rotation >= 82.5 and rotation <= 97.5:
-			direction = DirectionHandler.dirArray[1]
+			direction = mH.DH.dirDict["Direction"][1]
 		elif rotation > 97.5 and rotation < 172.5:
-			direction = DirectionHandler.dirArray[2]
+			direction = mH.DH.dirDict["Direction"][2]
 		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
-			direction = DirectionHandler.dirArray[3]
+			direction = mH.DH.dirDict["Direction"][3]
 		
 		if input == "Right":
-			direction = DirectionHandler.getOppDirection(direction)
+			direction = mH.DH.getOppDirection(direction)
 			
 	elif input == "Backward" or input == "Forward":
 		if rotation > -172.5 and rotation < -97.5:
-			direction = DirectionHandler.dirArray[6]
+			direction = mH.DH.dirDict["Direction"][6]
 		elif rotation >= -97.5 and rotation <= -82.5:
-			direction = DirectionHandler.dirArray[7]
+			direction = mH.DH.dirDict["Direction"][7]
 		elif rotation > -82.5 and rotation < -7.5:
-			direction = DirectionHandler.dirArray[0]
+			direction = mH.DH.dirDict["Direction"][0]
 		elif rotation >= -7.5 and rotation <= 7.5:
-			direction = DirectionHandler.dirArray[1]
+			direction = mH.DH.dirDict["Direction"][1]
 		elif rotation > 7.5 and rotation < 82.5:
-			direction = DirectionHandler.dirArray[2]
+			direction = mH.DH.dirDict["Direction"][2]
 		elif rotation >= 82.5 and rotation <= 97.5:
-			direction = DirectionHandler.dirArray[3]
+			direction = mH.DH.dirDict["Direction"][3]
 		elif rotation > 97.5 and rotation < 172.5:
-			direction = DirectionHandler.dirArray[4]
+			direction = mH.DH.dirDict["Direction"][4]
 		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
-			direction = DirectionHandler.dirArray[5]
+			direction = mH.DH.dirDict["Direction"][5]
 		
 		if input == "Forward":
-			direction = DirectionHandler.getOppDirection(direction)
+			direction = mH.DH.getOppDirection(direction)
 			
 	findClosestTile(direction)
 
-func findClosestTile(direction : DirectionHandler.Direction):
+func findClosestTile(direction : int):
 	var foundTile : tile
-	var searcher : Vector3 = GameState.tileDict["hTile"].global_position
-	var forward = DirectionHandler.dirDict["PosData"][direction]
-	var left = DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[0]]
-	var right = DirectionHandler.dirDict["PosData"][DirectionHandler.getSides(direction)[1]]
+	var searcher : Vector3 = mH.TH.tileDict["hTile"].global_position
+	var forward = mH.DH.dirDict["PosData"][direction]
+	var left = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[0]]
+	var right = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[1]]
 	for n in range(4):
 		if !foundTile:
 			searcher += forward
-			if !TileHandler.lookForTile(searcher):
-				if !TileHandler.lookForTile(searcher + forward):
-					if !TileHandler.lookForTile(searcher + left):
-						if !TileHandler.lookForTile(searcher + right):
-							foundTile = TileHandler.lookForTile(searcher + right)
+			if !mH.TH.lookForTile(searcher):
+				if !mH.TH.lookForTile(searcher + forward):
+					if !mH.TH.lookForTile(searcher + left):
+						if !mH.TH.lookForTile(searcher + right):
+							foundTile = mH.TH.lookForTile(searcher + right)
 					else:
-						foundTile = TileHandler.lookForTile(searcher + left)
+						foundTile = mH.TH.lookForTile(searcher + left)
 				else:
-					foundTile = TileHandler.lookForTile(searcher + forward)
+					foundTile = mH.TH.lookForTile(searcher + forward)
 			else:
-				foundTile = TileHandler.lookForTile(searcher)
+				foundTile = mH.TH.lookForTile(searcher)
 
 	if foundTile:
 		highlightTile(foundTile)
 
 func highlightTile(tileToSelect : tile):
-	var pointer = GameState.currentFloor.Pointer
-	var cameraBase = GameState.currentFloor.cameraBase
-	GameState.tileDict["hTile"] = tileToSelect
-	TileHandler.setTilePattern()
+	var pointer = FloorData.floor.Pointer
+	var cameraBase = FloorData.floor.cameraBase
+	mH.TH.tileDict["hTile"] = tileToSelect
+	mH.TH.setTilePattern()
 	tileToSelect.highlight.visible = true
 	pointer.position = Vector3(tileToSelect.position.x, tileToSelect.getPointerPos(), tileToSelect.position.z)
 	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
-	if GameState.playerTurn:
-		if GameState.tileDict["iTiles"].has(tileToSelect):
+	if mH.SH.playerTurn:
+		if mH.TH.tileDict["iTiles"].has(tileToSelect):
 			if tileToSelect.contains is EnemyPiece:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])
-			elif GameState.moving:
+			elif mH.SH.moving:
 				tileToSelect.setColor(Global.colorDict["Blue"])
 				pointer.setColor(Global.colorDict["Blue"])
-			elif GameState.action:
+			elif mH.SH.action:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])
-				if GameState.action.AOE:
-					var possibleTiles = GameState.action.AOE.getAOE(tileToSelect.global_position, DirectionHandler.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
+				if mH.SH.action.AOE:
+					var possibleTiles = mH.SH.action.AOE.getAOE(tileToSelect.global_position, mH.DH.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
 					for n in range(possibleTiles.size()):
-						if TileHandler.lookForTile(possibleTiles[n]):
-							TileHandler.lookForTile(possibleTiles[n]).setColor(Global.colorDict["Red"])
+						if mH.TH.lookForTile(possibleTiles[n]):
+							mH.TH.lookForTile(possibleTiles[n]).setColor(Global.colorDict["Red"])
 		else:
 			tileToSelect.setColor(Global.colorDict["Gray"])
 			pointer.setColor(Global.colorDict["Gray"])
@@ -158,4 +158,4 @@ func highlightTile(tileToSelect : tile):
 		tileToSelect.setColor(Global.colorDict["Gray"])
 		pointer.setColor(Global.colorDict["Gray"])
 	
-	InterfaceHandler.displayInfo()
+	mH.UH.displayInfo()

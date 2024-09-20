@@ -5,7 +5,11 @@ var mouse_sensitivity := 0.0005
 var twist : float
 
 @onready var enemyController = $EnemyController
+
+@onready var Handlers = $FloorHandlers
+
 @onready var menuHolder = $Menu
+@onready var HUD = $Menu/HUD
 
 @onready var Pointer = $Pointer
 @onready var camera = $Twist/Camera3D

@@ -8,7 +8,7 @@ var options = []
 @onready var animation = $AnimationPlayer
 
 func _ready():
-	GameState.currentMenu = self
+	FloorData.floor.Handlers.UH.currentMenu = self
 	addOptions()
 
 func addOptions():

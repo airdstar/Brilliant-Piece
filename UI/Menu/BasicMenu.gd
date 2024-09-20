@@ -3,10 +3,14 @@ class_name BasicMenu
 
 func addOptions():
 	optionCount = 2
-	if !GameState.moveUsed:
+	var move = false
+	var action = false
+	if !FloorData.floor.Handlers.SH.moveUsed:
 		optionCount += 1
-	if !GameState.actionUsed:
+		move = true
+	if !FloorData.floor.Handlers.SH.actionUsed:
 		optionCount += 1
+		action = true
 	var prevPos = Vector2(0,0)
 	for n in range(optionCount):
 		var toAdd = preload("res://UI/Menu/BasicMenuOption.tscn").instantiate()
@@ -25,13 +29,13 @@ func addOptions():
 		
 		match n:
 			0:
-				if !GameState.actionUsed:
+				if action:
 					toAdd.setOptionType("Action")
-				elif !GameState.moveUsed:
+				elif move:
 					toAdd.setOptionType("Move")
 				hoverToggle()
 			1:
-				if !GameState.actionUsed and !GameState.moveUsed:
+				if action and move:
 					toAdd.setOptionType("Move")
 		
 		if n > 0 and n < optionCount - 1:
@@ -56,8 +60,9 @@ func selectOption():
 		"Move":
 			animation.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			GameState.moving = PlayerData.playerPiece
-			TileHandler.show("Movement")
+			FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
+			FloorData.floor.Handlers.SH.moving = true
+			FloorData.floor.Handlers.TH.show("Movement")
 			queue_free()
 		"Action":
 			var toAdd = preload("res://UI/Menu/ActionMenu.tscn").instantiate()
@@ -65,7 +70,7 @@ func selectOption():
 		"End":
 			animation.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			GameState.endTurn()
+			FloorData.floor.Handlers.SH.endTurn()
 			queue_free()
 		"Items":
 			var toAdd = preload("res://UI/Menu/ItemMenu.tscn").instantiate()

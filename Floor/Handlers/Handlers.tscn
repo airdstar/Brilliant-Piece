@@ -1,0 +1,34 @@
+[gd_scene load_steps=9 format=3 uid="uid://bpg2vyee60md7"]
+
+[ext_resource type="Script" path="res://Floor/Handlers/Handlers.gd" id="1_l3wu7"]
+[ext_resource type="Script" path="res://Floor/Handlers/DirectionHandler.gd" id="1_r6053"]
+[ext_resource type="Script" path="res://Floor/Handlers/GenerationHandler.gd" id="2_uj6s4"]
+[ext_resource type="Script" path="res://Floor/Handlers/HighlightHandler.gd" id="3_10u3w"]
+[ext_resource type="Script" path="res://Floor/Handlers/InteractionHandler.gd" id="4_6yxp4"]
+[ext_resource type="Script" path="res://Floor/Handlers/UIHandler.gd" id="5_mmjj1"]
+[ext_resource type="Script" path="res://Floor/Handlers/StateHandler.gd" id="6_4wu62"]
+[ext_resource type="Script" path="res://Floor/Handlers/TileHandler.gd" id="7_12ipr"]
+
+[node name="FloorHandlers" type="Node"]
+script = ExtResource("1_l3wu7")
+
+[node name="DirectionHandler" type="Node" parent="."]
+script = ExtResource("1_r6053")
+
+[node name="GenerationHandler" type="Node" parent="."]
+script = ExtResource("2_uj6s4")
+
+[node name="HighlightHandler" type="Node" parent="."]
+script = ExtResource("3_10u3w")
+
+[node name="InteractionHandler" type="Node" parent="."]
+script = ExtResource("4_6yxp4")
+
+[node name="UIHandler" type="Node" parent="."]
+script = ExtResource("5_mmjj1")
+
+[node name="StateHandler" type="Node" parent="."]
+script = ExtResource("6_4wu62")
+
+[node name="TileHandler" type="Node" parent="."]
+script = ExtResource("7_12ipr")

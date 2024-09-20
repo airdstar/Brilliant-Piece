@@ -7,13 +7,13 @@ class_name PieceTypeResource
 
 func getMoveableTiles(movementStart : Vector3):
 	var toReturn : Array[Vector3]
-	var pos = DirectionHandler.getAll(movementAngle)
+	var pos = FloorData.floor.Handlers.DH.getAll(movementAngle)
 	
 	for n in range(pos.size()):
 		var tileData : Vector3 = movementStart
 		var prevTile : Vector3 = movementStart
 		for m in range(movementCount):
-			tileData += DirectionHandler.dirDict["PosData"][pos[n]]
+			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
 			toReturn.append(tileData)
 			toReturn.append(prevTile)
 			prevTile = tileData

@@ -5,7 +5,7 @@ var classType : ClassResource
 
 func _ready():
 	PlayerData.loadInfo()
-	self.death.connect(GameState.currentFloor.pieceDeath)
+	self.death.connect(FloorData.floor.pieceDeath)
 
 func loadData():
 	type = PlayerData.playerInfo.pieceType
@@ -18,7 +18,7 @@ func loadData():
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
 	
-	loadModel()
+	loadModel(ResourceLoader.load(classType.associatedModel))
 
 func setData():
 	PlayerData.playerInfo.isNew = false
@@ -36,13 +36,8 @@ func setData():
 	PlayerData.playerInfo.classType = classType
 	PlayerData.playerInfo.pieceType = type
 	
-	
-	loadModel()
+	loadModel(ResourceLoader.load(classType.associatedModel))
 
-func loadModel():
-	var s = ResourceLoader.load(classType.associatedModel)
-	s = s.instantiate()
-	modelHolder.add_child(s)
 
 func updateData():
 	level = PlayerData.playerInfo.level

@@ -30,7 +30,7 @@ func _process(_delta):
 func SwitchHighlight():
 	growing = !growing
 
-func setPiece(piece : Piece, dir : DirectionHandler.Direction):
+func setPiece(piece : Piece, dir : int):
 	contains = piece
 	piece.setPieceOrientation(dir)
 	if piece.currentTile:
@@ -46,7 +46,8 @@ func setPiece(piece : Piece, dir : DirectionHandler.Direction):
 	if piece is PlayerPiece:
 		PlayerData.playerInfo.currentPos = global_position
 	elif piece is EnemyPiece:
-		GameState.pieceDict["Enemy"]["Position"][GameState.pieceDict["Enemy"]["Piece"].find(piece)] = global_position
+		#FloorData.floor.enemies.find(piece)
+		pass
 		
 	
 

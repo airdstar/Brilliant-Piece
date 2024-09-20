@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cd4hnlrfvcr6h"]
 
-[ext_resource type="Script" path="res://FloorBackground.gd" id="1_0bhey"]
-[ext_resource type="Texture2D" uid="uid://c0owfrdvwxl17" path="res://background.png" id="2_okxpb"]
+[ext_resource type="Script" path="res://Floor/Backgrounds/FloorBackground.gd" id="1_0bhey"]
+[ext_resource type="Texture2D" uid="uid://c0owfrdvwxl17" path="res://Floor/Backgrounds/background.png" id="2_okxpb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uvc75"]
 albedo_texture = ExtResource("2_okxpb")
