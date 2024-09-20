@@ -47,22 +47,31 @@ func generateEnemies():
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].setData(n)
 			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
+	else:
+		for n in range(FloorData.floorInfo.enemies.size()):
+			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
+			FloorData.floor.add_child(FloorData.floor.enemies[n])
+			FloorData.floor.enemies[n].loadData(n)
+			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
+			
 
 func placePieces(playerStarts, enemyStarts):
 	
-	if !FloorData.floorInfo.isNew:
-		mH.TH.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
-		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
-		
-		
-	else:
+	if FloorData.floorInfo.isNew:
 		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
 		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
 		
-		for n in range(FloorData.floor.enemies.size()):
+		for n in range(FloorData.floorInfo.enemies.size()):
 			var tileEmpty = false
 			while !tileEmpty:
 				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
 				if !enemyStart.contains:
 					tileEmpty = true
 					enemyStart.setPiece(FloorData.floor.enemies[n], 2)
+	else:
+
+		mH.TH.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
+		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
+		
+		for n in range(FloorData.floorInfo.enemies.size()):
+			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)

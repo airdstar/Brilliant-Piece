@@ -9,4 +9,6 @@ class_name FloorInfo
 @export var enemies : Array[EnemyInfo]
 @export var neutrals : Array
 
+@export var endLocation : Vector3
+
 @export var isNew : bool = true

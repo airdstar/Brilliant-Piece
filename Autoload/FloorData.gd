@@ -14,7 +14,7 @@ func loadInfo():
 		floorInfo = load(save_path)
 		if !floorInfo.isNew:
 			print("Loaded info")
-			#playerPiece.loadData()
+			floor.Handlers.GH.generateFloor()
 		else:
 			print("No info found")
 			setData()
@@ -33,3 +33,4 @@ func resetInfo():
 
 func setData():
 	floor.Handlers.GH.generateFloor()
+	floorInfo.isNew = false

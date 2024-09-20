@@ -13,7 +13,7 @@
 
 [resource]
 script = ExtResource("6_heqbo")
-currentPos = Vector3(-1, 0, -1)
+currentPos = Vector3(-1, 0, -3)
 currentFloorNum = 0
 classType = ExtResource("5_oeekp")
 pieceType = ExtResource("7_7sfki")

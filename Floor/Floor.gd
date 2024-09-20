@@ -12,7 +12,7 @@ func _process(_delta : float):
 		get_tree().quit()
 	
 	if Input.is_action_just_pressed("Save"):
-		PlayerData.saveInfo()
+		Handlers.SH.saveState()
 	
 	if Input.is_action_just_pressed("Reset"):
 		PlayerData.resetInfo()
