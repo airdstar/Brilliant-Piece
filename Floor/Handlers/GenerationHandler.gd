@@ -32,17 +32,16 @@ func generateFloor():
 
 func generateEnemies():
 	if FloorData.floorInfo.isNew:
-		var enemyArray = []
 		var enemyPositions : Array[Vector3]
 		var behaviorArray : Array[String]
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
-			enemyArray.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
-			enemyArray[n].enemyType = FloorData.floorInfo.layerData.possibleEnemies[
+			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
+			FloorData.floor.enemies[n].enemyType = FloorData.floorInfo.layerData.possibleEnemies[
 									  randi_range(0, FloorData.floorInfo.layerData.possibleEnemies.size() - 1)]
-			FloorData.floor.add_child(enemyArray[n])
+			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			behaviorArray.append("Approach")
-			enemyPositions.append(enemyArray[n].global_position)
-			enemyArray[n].death.connect(FloorData.floor.pieceDeath)
+			enemyPositions.append(FloorData.floor.enemies[n].global_position)
+			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
 
 func placePieces(playerStarts, enemyStarts):
 	
