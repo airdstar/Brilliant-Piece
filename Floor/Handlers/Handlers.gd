@@ -7,6 +7,7 @@ extends Node
 @onready var UH = $UIHandler
 @onready var SH = $StateHandler
 @onready var TH = $TileHandler
+@onready var EH = $EnemyHandler
 
 func _ready():
 	pass

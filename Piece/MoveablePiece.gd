@@ -49,7 +49,6 @@ func damage(damageAmount : int):
 	
 	PlayerData.updateData()
 	FloorData.updateData()
-	
 
 func heal(healingAmount : int):
 	health += healingAmount
@@ -66,5 +65,8 @@ func addArmor(armorAmount : int):
 	PlayerData.updateData()
 	FloorData.updateData()
 
+func addStatus(status : StatusResource):
+	pass
+
 func setPieceOrientation(dir : int):
-	global_rotation.y = deg_to_rad(90)
+	global_rotation.y = deg_to_rad(FloorData.floor.Handlers.DH.dirDict["RotData"][dir])

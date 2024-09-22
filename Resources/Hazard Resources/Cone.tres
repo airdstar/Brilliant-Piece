@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HazardResource" load_steps=2 format=3 uid="uid://bvnjer56r3tab"]
+
+[ext_resource type="Script" path="res://Resources/HazardResource.gd" id="1_wt52r"]
+
+[resource]
+script = ExtResource("1_wt52r")
+name = "Cone"
+visible = true
+associatedModel = "res://Item/cone.blend"
+blockade = true
+effectType = "None"

@@ -14,7 +14,7 @@ func endTurn():
 		mH.UH.openMenu()
 	else:
 		FloorData.floor.Pointer.visible = true
-		FloorData.floor.enemyController.makeDecision()
+		FloorData.floor.Handlers.EH.makeDecision()
 
 func saveState():
 	FloorData.saveInfo()

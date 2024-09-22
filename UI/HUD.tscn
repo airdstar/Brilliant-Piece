@@ -159,7 +159,7 @@ offset_right = 209.0
 offset_bottom = 109.0
 theme = ExtResource("8_037fx")
 bbcode_enabled = true
-text = " [img]res://UI/Heart.png[/img] hi"
+text = " [img]res://UI/Heart.png[/img] hi [img]res://UI/Armor.png[/img]"
 scroll_active = false
 
 [node name="SubViewport" type="SubViewport" parent="."]

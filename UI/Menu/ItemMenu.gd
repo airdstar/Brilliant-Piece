@@ -37,10 +37,11 @@ func addOptions():
 		swapItem()
 
 func selectOption():
-	FloorData.floor.Handlers.SH.item = options[highlightedOption]
-	FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
-	FloorData.floor.Handlers.TH.show()
-	FloorData.floor.Handlers.UH.fullyCloseMenu()
+	if itemCount != 0:
+		FloorData.floor.Handlers.SH.item = options[highlightedOption]
+		FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
+		FloorData.floor.Handlers.TH.show()
+		FloorData.floor.Handlers.UH.fullyCloseMenu()
 
 func swapItem():
 	for n in range(physicalItems.size()):

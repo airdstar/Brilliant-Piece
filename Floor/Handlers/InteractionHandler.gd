@@ -71,6 +71,7 @@ func useAction(destination : tile):
 		mH.UH.openMenu()
 
 func useItem(destination : tile):
+	destination.itemUsed(mH.SH.item)
 	mH.TH.stopShowing()
 	mH.TH.setTilePattern()
 	mH.SH.item = null

@@ -7,10 +7,10 @@
 script = ExtResource("1_ibghg")
 name = "Goblin"
 desc = ""
-associatedScene = ""
+associatedModel = "res://Piece/Enemies/Goblin.blend"
 type = 2
-baseHealth = 10
-maxLevel = 4
+baseHealth = 3
+maxLevel = 2
 minLevel = 1
 expAmount = 10
 itemPool = ExtResource("1_y3bbf")

@@ -7,9 +7,6 @@ var currentlySelected = null
 func _ready():
 	pass
 
-func updateTurn():
-	pass
-
 func updateCoin():
 	pass
 

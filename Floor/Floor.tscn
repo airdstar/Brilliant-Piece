@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=8 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://Floor/Floor.gd" id="1_sippj"]
 [ext_resource type="PackedScene" uid="uid://bpg2vyee60md7" path="res://Floor/Handlers/Handlers.tscn" id="2_k2kkp"]
 [ext_resource type="PackedScene" uid="uid://vhhyi3mimwtp" path="res://Floor/Tile/Pointer.tscn" id="2_tdjfv"]
 [ext_resource type="PackedScene" uid="uid://cd4hnlrfvcr6h" path="res://Floor/Backgrounds/FloorBackground.tscn" id="3_c1ywl"]
-[ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://EnemyController.tscn" id="4_5gqdi"]
 [ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="5_0rph0"]
 [ext_resource type="Shader" path="res://Shaders/RetroPixel.gdshader" id="6_gn6wc"]
 
@@ -26,8 +25,6 @@ shader_parameter/lens_distortion_strength = 0.005
 script = ExtResource("1_sippj")
 
 [node name="FloorHandlers" parent="." instance=ExtResource("2_k2kkp")]
-
-[node name="EnemyController" parent="." instance=ExtResource("4_5gqdi")]
 
 [node name="Twist" type="Node3D" parent="."]
 

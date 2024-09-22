@@ -6,6 +6,7 @@ var pointerPos : float = 1.5
 var pointerPosBlocked : int = 2
 
 var contains : Piece
+var hazard : HazardResource
 var obstructed := false
 
 @onready var highlight := $Base/Highlight
@@ -50,8 +51,26 @@ func setPiece(piece : Piece, dir : int):
 	
 
 func actionUsed(action : ActionResource):
-	if contains:
-		contains.actionUsed(action)
+	if contains is MoveablePiece:
+		if action.damage:
+			contains.damage(action.damage)
+		if action.healing:
+			contains.heal(action.healing)
+		if action.armor:
+			contains.addArmor(action.armor)
+
+func itemUsed(item : ItemResource):
+	if contains is MoveablePiece:
+		if item.damage:
+			contains.damage(item.damage)
+		if item.healing:
+			contains.heal(item.healing)
+		if item.armor:
+			contains.addArmor(item.armor)
+	if item.hazard:
+		hazard = item.hazard
+	item.use()
+	
 
 func getPointerPos():
 	if contains:

@@ -9,8 +9,8 @@ class_name ItemResource
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
 
 
-@export var useAmount : int
-var amountUsed = useAmount
+@export var useAmount : int = 1
+var amountUsed : int = 0
 @export var itemRange : int = 10
 
 @export_category("Basic Stats")
@@ -56,3 +56,8 @@ func getUsable():
 		possibleUses.append("Self")
 	
 	return possibleUses
+
+func use():
+	amountUsed += 1
+	if amountUsed == useAmount:
+		PlayerData.playerInfo.items.erase(self)

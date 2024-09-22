@@ -25,7 +25,7 @@ func setData(pieceNum : int):
 	
 	#Determine starting behavior here
 	
-	#loadModel(ResourceLoader.load(enemyType.associatedModel))
+	loadModel(ResourceLoader.load(enemyType.associatedModel))
 
 func loadData(pieceNum : int):
 	type = FloorData.floorInfo.enemies[pieceNum].pieceType
@@ -37,7 +37,7 @@ func loadData(pieceNum : int):
 	maxHealth = FloorData.floorInfo.enemies[pieceNum].maxHealth
 	armor = FloorData.floorInfo.enemies[pieceNum].armor
 	
-	#loadModel(ResourceLoader.load(enemyType.associatedModel))
+	loadModel(ResourceLoader.load(enemyType.associatedModel))
 
 func updateData():
 	level = PlayerData.playerInfo.level

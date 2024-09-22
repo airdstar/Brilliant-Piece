@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://ct2p0kor7elmq"]
 
-[ext_resource type="Script" path="res://EnemyController.gd" id="1_tqpcw"]
+[ext_resource type="Script" path="res://Floor/Handlers/EnemyHandler.gd" id="1_y5b15"]
 
-[node name="Enemy Controller" type="Node"]
-script = ExtResource("1_tqpcw")
+[node name="EnemyHandler" type="Node"]
+script = ExtResource("1_y5b15")
 
 [node name="MovementNode" type="Node" parent="."]
 
