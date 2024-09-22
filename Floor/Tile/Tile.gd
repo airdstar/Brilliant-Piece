@@ -68,9 +68,17 @@ func itemUsed(item : ItemResource):
 		if item.armor:
 			contains.addArmor(item.armor)
 	if item.hazard:
-		hazard = item.hazard
+		setHazard(item.hazard)
 	item.use()
+
+func setHazard(hazardIn : HazardResource):
+	hazard = hazardIn
+	if hazard.blockade:
+		obstructed = true
 	
+	var model = ResourceLoader.load(hazard.associatedModel).instantiate()
+	add_child(model)
+
 
 func getPointerPos():
 	if contains:

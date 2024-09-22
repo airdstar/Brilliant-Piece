@@ -85,7 +85,8 @@ func findMoveableTiles(piece : MoveablePiece):
 	for n in range(possibleTiles.size()):
 		if n%2 == 0:
 			if mH.TH.lookForTile(possibleTiles[n]):
-				currentTile = mH.TH.lookForTile(possibleTiles[n])
+				if !mH.TH.lookForTile(possibleTiles[n]).obstructed:
+					currentTile = mH.TH.lookForTile(possibleTiles[n])
 		else:
 			if currentTile:
 				if mH.TH.lookForTile(possibleTiles[n]):

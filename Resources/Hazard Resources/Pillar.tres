@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HazardResource" load_steps=2 format=3 uid="uid://dw8uenlx7cxx"]
+
+[ext_resource type="Script" path="res://Resources/HazardResource.gd" id="1_q2njl"]
+
+[resource]
+script = ExtResource("1_q2njl")
+name = "Pillar"
+visible = true
+associatedModel = "res://Hazard/Pillar.blend"
+blockade = true
+effectType = "None"

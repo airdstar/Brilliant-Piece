@@ -3,6 +3,7 @@ class_name LayerResource
 
 @export var layerName : String
 @export var possibleEnemies : Array[EnemyResource]
+@export var possibleHazards : Array[HazardResource]
 @export var possibleLayouts : Array[String]
 var usedLayouts : Array[int]
 

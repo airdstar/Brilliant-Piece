@@ -5,6 +5,7 @@ func generateFloor():
 	var totalTilesPos = []
 	var playerStarts = []
 	var enemyStarts = []
+	var hazardLocations = []
 	if FloorData.floorInfo.isNew:
 		var imagePath : String = FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)]
 		var heightMap = Image.load_from_file(imagePath)
@@ -24,6 +25,8 @@ func generateFloor():
 						playerStarts.append(tileToAdd)
 					elif heightMap.get_pixel(n,m) == Color8(200,100,100):
 						enemyStarts.append(tileToAdd)
+					elif heightMap.get_pixel(n,m) == Color8(100,100,100):
+						hazardLocations.append(tileToAdd)
 	else:
 		for n in range(FloorData.floorInfo.tiles.size()):
 			var tileToAdd = preload("res://Floor/Tile/Tile.tscn").instantiate()
@@ -37,6 +40,7 @@ func generateFloor():
 	FloorData.floor.add_child(PlayerData.playerPiece)
 	generateEnemies()
 	placePieces(playerStarts, enemyStarts)
+	placeHazards(hazardLocations)
 
 func generateEnemies():
 	if FloorData.floorInfo.isNew:
@@ -75,3 +79,9 @@ func placePieces(playerStarts, enemyStarts):
 		
 		for n in range(FloorData.floorInfo.enemies.size()):
 			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
+
+func placeHazards(hazardLocations):
+	for n in range(hazardLocations.size()):
+		if randi_range(0,3) == 3:
+			hazardLocations[n].setHazard(FloorData.floorInfo.layerData.possibleHazards[
+									 	randi_range(0, FloorData.floorInfo.layerData.possibleHazards.size() - 1)])
