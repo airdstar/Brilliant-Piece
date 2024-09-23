@@ -76,12 +76,15 @@ func setHazard(hazardIn : HazardResource):
 	if hazard.blockade:
 		obstructed = true
 	
+	FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = hazard
+	
 	var model = ResourceLoader.load(hazard.associatedModel).instantiate()
 	add_child(model)
+	model.position.y += 0.055
 
 
 func getPointerPos():
-	if contains:
+	if contains or obstructed:
 		return 2
 	else:
 		return 1.5

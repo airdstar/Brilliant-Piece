@@ -81,7 +81,12 @@ func placePieces(playerStarts, enemyStarts):
 			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
 
 func placeHazards(hazardLocations):
-	for n in range(hazardLocations.size()):
-		if randi_range(0,3) == 3:
-			hazardLocations[n].setHazard(FloorData.floorInfo.layerData.possibleHazards[
-									 	randi_range(0, FloorData.floorInfo.layerData.possibleHazards.size() - 1)])
+	if FloorData.floorInfo.isNew:
+		for n in range(hazardLocations.size()):
+			if randi_range(0,3) == 3:
+				hazardLocations[n].setHazard(FloorData.floorInfo.layerData.possibleHazards[
+										 	randi_range(0, FloorData.floorInfo.layerData.possibleHazards.size() - 1)])
+	else:
+		for n in range(FloorData.floorInfo.tiles.size()):
+			if FloorData.floorInfo.tiles[n].hazard:
+				FloorData.floor.Handlers.TH.tileDict["Tiles"][n].setHazard(FloorData.floorInfo.tiles[n].hazard)

@@ -7,8 +7,12 @@ var currentlySelected = null
 func _ready():
 	pass
 
-func updateCoin():
-	pass
+
+func showFloorInfo():
+	$Floor_Player.visible = true
+
+func hideFloorInfo():
+	$Floor_Player.visible = false
 
 func showPieceInfo():
 	$Portrait.visible = true

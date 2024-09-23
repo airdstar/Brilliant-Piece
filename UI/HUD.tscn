@@ -79,11 +79,12 @@ offset_bottom = 40.0
 texture = ExtResource("6_ko3ij")
 
 [node name="Floor_Player" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 760.0
-offset_top = 15.0
-offset_right = 952.0
-offset_bottom = 74.0
+offset_left = 416.0
+offset_top = 679.0
+offset_right = 608.0
+offset_bottom = 738.0
 texture = ExtResource("8_ysboo")
 
 [node name="FloorInfo" type="RichTextLabel" parent="Floor_Player"]
@@ -98,16 +99,26 @@ text = "[center]Floor 0
 test"
 scroll_active = false
 
-[node name="MoneySoul" type="RichTextLabel" parent="Floor_Player"]
+[node name="Money" type="RichTextLabel" parent="Floor_Player"]
 layout_mode = 0
-offset_left = -203.0
-offset_top = 5.0
-offset_right = -11.0
-offset_bottom = 67.0
+offset_top = 59.0
+offset_right = 96.0
+offset_bottom = 87.0
 theme = ExtResource("8_037fx")
 bbcode_enabled = true
 text = " [img]res://UI/Coin.png[/img] 0 
- [img]res://UI/Soul.png[/img] 0 "
+"
+text_direction = 1
+
+[node name="Soul" type="RichTextLabel" parent="Floor_Player"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 59.0
+offset_right = 192.0
+offset_bottom = 86.0
+theme = ExtResource("8_037fx")
+bbcode_enabled = true
+text = " [img]res://UI/Soul.png[/img] 0 "
 text_direction = 2
 
 [node name="Portrait" type="TextureRect" parent="."]

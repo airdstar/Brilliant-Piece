@@ -33,6 +33,10 @@ func updateData():
 		floorInfo.enemies[n].maxHealth = floor.enemies[n].maxHealth
 		floorInfo.enemies[n].health = floor.enemies[n].health
 		floorInfo.enemies[n].armor = floor.enemies[n].armor
+	
+	for n in range(floorInfo.tiles.size()):
+		floorInfo.tiles[n].hazard = floor.Handlers.TH.tileDict["Tiles"][n].hazard
+		#floorInfo.tiles[n].status = floor.Handlers.TH.tileDict["Tiles"][n].status
 
 
 func resetInfo():

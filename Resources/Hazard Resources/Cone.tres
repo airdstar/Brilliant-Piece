@@ -6,6 +6,6 @@
 script = ExtResource("1_wt52r")
 name = "Cone"
 visible = true
-associatedModel = "res://Item/cone.blend"
+associatedModel = "res://Hazard/Cone.blend"
 blockade = true
 effectType = "None"
