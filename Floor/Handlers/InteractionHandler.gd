@@ -88,25 +88,6 @@ func useItem(destination : tile):
 	if FloorData.floorInfo.playerTurn:
 		mH.UH.openMenu()
 
-func findMoveableTiles(piece : MoveablePiece):
-	var possibleTiles = piece.type.getMoveableTiles(piece.currentTile.global_position)
-	var currentTile
-	var toReturn = []
-	for n in range(possibleTiles.size()):
-		if n%2 == 0:
-			if mH.TH.lookForTile(possibleTiles[n]):
-				if !mH.TH.lookForTile(possibleTiles[n]).obstructed:
-					currentTile = mH.TH.lookForTile(possibleTiles[n])
-		else:
-			if currentTile:
-				if mH.TH.lookForTile(possibleTiles[n]):
-					if (mH.TH.tileDict["iTiles"].has(mH.TH.lookForTile(possibleTiles[n])) or possibleTiles[n] == piece.currentTile.global_position):
-						if mH.TH.lookForTile(possibleTiles[n]).contains is not MoveablePiece or mH.TH.lookForTile(possibleTiles[n]).contains == piece:
-							toReturn.append(currentTile)
-							if piece is PlayerPiece:
-								mH.TH.tileDict["iTiles"].append(currentTile)
-			currentTile = null
-	return toReturn
 
 func findItemTiles(piecePos : Vector3):
 	var possibleTiles = mH.SH.item.getItemRange(piecePos)

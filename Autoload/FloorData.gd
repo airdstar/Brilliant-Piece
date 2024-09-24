@@ -6,9 +6,6 @@ var floorInfo : FloorInfo = FloorInfo.new()
 
 var floor : Floor
 
-func _ready():
-	pass
-
 func loadInfo():
 	if ResourceLoader.exists(save_path):
 		floorInfo = load(save_path)
@@ -53,17 +50,14 @@ func nextFloor():
 	PlayerData.saveInfo()
 	PlayerData.playerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
 	
-	var newFloor = FloorInfo.new()
-	newFloor.floorNum = PlayerData.playerInfo.currentFloorNum
-	floorInfo = newFloor
-	floorInfo.setLayerInfo()
+	floorInfo = FloorInfo.new()
+	floorInfo.floorNum = PlayerData.playerInfo.currentFloorNum
 	
 	var main = floor.get_parent()
 	floor.queue_free()
 	floor = preload("res://Floor/Floor.tscn").instantiate()
 	main.add_child(floor)
 	
-	floor.Handlers.GH.generateFloor()
-	floorInfo.isNew = false
+	setData()
 	saveInfo()
 	

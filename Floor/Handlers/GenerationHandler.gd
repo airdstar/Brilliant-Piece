@@ -43,12 +43,14 @@ func generateFloor():
 		
 	mH.TH.tileDict = {"Tiles" : totalTiles, "iTiles" : [], "TilePos" : totalTilesPos, "hTile" : []}
 	
-	FloorData.floor.add_child(PlayerData.playerPiece)
-	generateEnemies()
+	generatePieces(playerStarts, enemyStarts)
 	placePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
 
-func generateEnemies():
+func generatePieces(playerStarts, enemyStarts):
+	
+	FloorData.floor.add_child(PlayerData.playerPiece)
+	
 	if FloorData.floorInfo.isNew:
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
@@ -66,6 +68,7 @@ func generateEnemies():
 			
 
 func placePieces(playerStarts, enemyStarts):
+	
 	if FloorData.floorInfo.isNew:
 		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
 		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)

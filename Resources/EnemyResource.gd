@@ -15,6 +15,8 @@ class_name EnemyResource
 @export var minLevel : int
 @export var expAmount : int
 @export var itemPool : ItemPoolResource
+@export var coinDropMin : int
+@export var coinDropMax : int
 
 func getType():
 	var amount = type
