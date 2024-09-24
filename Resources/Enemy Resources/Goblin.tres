@@ -14,3 +14,5 @@ maxLevel = 2
 minLevel = 1
 expAmount = 10
 itemPool = ExtResource("1_y3bbf")
+coinDropMin = 0
+coinDropMax = 0

@@ -8,3 +8,9 @@ var timePassed : int = 0
 
 @export_enum("onEnd", "everyTurn") var statusEffect : String
 @export var effect : EffectResource
+
+func flatValue():
+	return effect.effectStrength
+
+func percentValue():
+	return effect.effectPercent

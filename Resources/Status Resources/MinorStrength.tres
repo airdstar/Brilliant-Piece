@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="StatusResource" load_steps=4 format=3 uid="uid://dei26yjij8rf7"]
+
+[ext_resource type="Script" path="res://Resources/StatusResource.gd" id="1_1jj0s"]
+[ext_resource type="Script" path="res://Resources/EffectResource.gd" id="1_6n501"]
+
+[sub_resource type="Resource" id="Resource_t6q2p"]
+script = ExtResource("1_6n501")
+name = "Strength"
+effectStrength = 2
+effectPercent = 1.0
+damage = true
+heal = false
+stopMovement = false
+disDirection = ""
+nextFloor = false
+delete = false
+
+[resource]
+script = ExtResource("1_1jj0s")
+statusName = "Minor Strength"
+statusType = "Buff"
+duration = 2
+statusEffect = "everyTurn"
+effect = SubResource("Resource_t6q2p")

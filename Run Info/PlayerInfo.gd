@@ -14,6 +14,10 @@ class_name PlayerInfo
 @export var health : int
 @export var armor : int = 0
 
+@export var healthStatus : Array[StatusResource]
+@export var damageStatus : Array[StatusResource]
+@export var otherStatus : Array[StatusResource]
+
 @export var actions : Array[ActionResource]
 @export var items : Array[ItemResource]
 @export var coins : int = 0

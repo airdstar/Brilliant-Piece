@@ -7,9 +7,9 @@ func generateFloor():
 	var enemyStarts = []
 	var hazardLocations = []
 	var possibleEnds = []
+	
 	if FloorData.floorInfo.isNew:
-		var imagePath : String = FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)]
-		var heightMap = Image.load_from_file(imagePath)
+		var heightMap = Image.load_from_file(FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)])
 		var tileToAdd
 		for n in range(heightMap.get_size().x):
 			for m in range(heightMap.get_size().y):
@@ -44,14 +44,16 @@ func generateFloor():
 	mH.TH.tileDict = {"Tiles" : totalTiles, "iTiles" : [], "TilePos" : totalTilesPos, "hTile" : []}
 	
 	generatePieces(playerStarts, enemyStarts)
-	placePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
 
 func generatePieces(playerStarts, enemyStarts):
-	
 	FloorData.floor.add_child(PlayerData.playerPiece)
 	
 	if FloorData.floorInfo.isNew:
+		
+		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
+		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
+		
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.enemies[n].enemyType = FloorData.floorInfo.layerData.possibleEnemies[
@@ -59,34 +61,28 @@ func generatePieces(playerStarts, enemyStarts):
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].setData(n)
 			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
-	else:
-		for n in range(FloorData.floorInfo.enemies.size()):
-			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
-			FloorData.floor.add_child(FloorData.floor.enemies[n])
-			FloorData.floor.enemies[n].loadData(n)
-			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
 			
-
-func placePieces(playerStarts, enemyStarts):
-	
-	if FloorData.floorInfo.isNew:
-		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
-		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
-		
-		for n in range(FloorData.floorInfo.enemies.size()):
 			var tileEmpty = false
 			while !tileEmpty:
 				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
 				if !enemyStart.contains:
 					tileEmpty = true
 					enemyStart.setPiece(FloorData.floor.enemies[n], 2)
+			
+			
 	else:
-
+		
 		mH.TH.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
 		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
 		
 		for n in range(FloorData.floorInfo.enemies.size()):
+			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
+			FloorData.floor.add_child(FloorData.floor.enemies[n])
+			FloorData.floor.enemies[n].loadData(n)
+			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
+			
 			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
+			
 
 func placeHazards(hazardLocations, endLocations):
 	if FloorData.floorInfo.isNew:

@@ -9,6 +9,11 @@ var level : int
 var maxHealth : int
 var health : int
 var armor : int
+
+var healthStatus : Array[StatusResource]
+var damageStatus : Array[StatusResource]
+var otherStatus : Array[StatusResource]
+
 @onready var modelHolder = $Model
 
 signal death
@@ -65,8 +70,20 @@ func addArmor(armorAmount : int):
 	PlayerData.updateData()
 	FloorData.updateData()
 
-func addStatus(status : StatusResource):
-	pass
+func applyStatus(status : StatusResource):
+	if status.effect.effectType == "Health":
+		if !healthStatus.has(status):
+			healthStatus.append(status)
+	elif status.effect.effectType == "Damage":
+		if !damageStatus.has(status):
+			damageStatus.append(status)
+	else:
+		if !otherStatus.has(status):
+			otherStatus.append(status)
+	
+	PlayerData.updateData()
+	FloorData.updateData()
+
 
 func setPieceOrientation(dir : int):
 	global_rotation.y = deg_to_rad(FloorData.floor.Handlers.DH.dirDict["RotData"][dir])

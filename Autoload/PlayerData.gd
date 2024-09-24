@@ -33,6 +33,10 @@ func updateData():
 	playerInfo.maxHealth = playerPiece.maxHealth
 	playerInfo.armor = playerPiece.armor
 	
+	playerInfo.healthStatus = playerPiece.healthStatus
+	playerInfo.damageStatus = playerPiece.damageStatus
+	playerInfo.otherStatus = playerPiece.otherStatus
+	
 	playerInfo.pieceType = playerPiece.type
 	playerInfo.classType = playerPiece.classType
 

@@ -5,8 +5,10 @@
 [resource]
 script = ExtResource("1_ekhlk")
 name = "Sticky"
-damage = 0
-heal = 0
+type = ""
+effectStrength = 1
+effectPercent = 1.0
 stopMovement = true
-disAmount = 0
 disDirection = ""
+nextFloor = false
+delete = false

@@ -20,10 +20,6 @@ var amountUsed : int = 0
 @export var status : StatusResource
 @export var hazard : HazardResource
 
-func _ready():
-	if !associatedModel:
-		associatedModel = "res://Item/Base.blend"
-
 func getItemRange(itemStart : Vector3):
 	var toReturn : Array[Vector3]
 	var pos = FloorData.floor.Handlers.DH.getAll("Both")

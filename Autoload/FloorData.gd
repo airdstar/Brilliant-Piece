@@ -22,6 +22,7 @@ func loadInfo():
 
 func saveInfo():
 	print("Saved info")
+	PlayerData.saveInfo()
 	ResourceSaver.save(floorInfo, save_path)
 
 
@@ -47,7 +48,6 @@ func setData():
 
 func nextFloor():
 	PlayerData.playerInfo.currentFloorNum += 1
-	PlayerData.saveInfo()
 	PlayerData.playerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
 	
 	floorInfo = FloorInfo.new()
