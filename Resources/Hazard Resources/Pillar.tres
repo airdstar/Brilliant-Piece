@@ -9,3 +9,4 @@ visible = true
 associatedModel = "res://Hazard/Pillar.blend"
 blockade = true
 effectType = "None"
+destructable = true

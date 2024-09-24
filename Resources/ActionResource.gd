@@ -16,7 +16,7 @@ class_name ActionResource
 @export var hazard : HazardResource
 
 @export_category("Targeting")
-@export_enum("Straight", "Diagonal", "Both", "Cone", "Circle", "Square") var actionDirection : String
+@export_enum("Straight", "Diagonal", "Both", "Cone", "L") var actionDirection : String
 @export var actionRange : int = 1
 @export var rangeExclusive : bool = false   #Does it only hit that range
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
@@ -27,7 +27,7 @@ class_name ActionResource
 @export var AOE : AOEResource
 
 func getActionRange(actionStart : Vector3):
-	var toReturn : Array[Vector3]
+	var toReturn : Array[tile]
 	var pos = FloorData.floor.Handlers.DH.getAll(actionDirection)
 	var tileData : Vector3
 	var targets = getUsable()
@@ -36,22 +36,28 @@ func getActionRange(actionStart : Vector3):
 	if targets.has("Tile") or targets.has("Enemy"):
 		for n in range(pos.size()):
 			tileData = actionStart
-			for m in range(actionRange):
+			var actionCounter = 1
+			var endSearch = false
+			while !endSearch:
 				tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
-				toReturn.append(tileData)
-				if actionDirection == "Cone":
-					var counter = m
-					while counter > 1:
-						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * (counter / 2))
-						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * (counter / 2))
-						counter -= 2
-				elif actionDirection == "Square":
-					if n % 2 == 0:
-						var counter = m
-						while counter > 0:
-							toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * counter)
-							toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * counter)
-							counter -= 1
+				if FloorData.floor.Handlers.TH.lookForTile(tileData):
+					if obstructable:
+						if !FloorData.floor.Handlers.TH.lookForTile(tileData).obstructed:
+							toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+						else:
+							toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+							endSearch = true
+					else:
+						toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+				else:
+					if obstructable:
+						endSearch = true
+				
+				if actionCounter == actionRange:
+					endSearch = true
+				
+				actionCounter += 1
+				
 	return toReturn
 
 func getUsable():

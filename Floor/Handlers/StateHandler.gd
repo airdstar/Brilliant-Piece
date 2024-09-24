@@ -10,6 +10,7 @@ func endTurn():
 	FloorData.floorInfo.actionUsed = false
 	FloorData.floorInfo.moveUsed = false
 	mH.UH.setTurnColors()
+	mH.TH.checkHazards()
 	if FloorData.floorInfo.playerTurn:
 		mH.UH.openMenu()
 	else:

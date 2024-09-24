@@ -2,7 +2,7 @@ extends Resource
 class_name FloorInfo
 
 @export var floorNum : int = 0
-@export var layerData : LayerResource = ResourceLoader.load("res://Resources/Layer Resources/TestLayer.tres")
+@export var layerData : LayerResource
 
 @export var tiles : Array[TileInfo]
 
@@ -16,3 +16,9 @@ class_name FloorInfo
 @export var endLocation : Vector3
 
 @export var isNew : bool = true
+
+func setLayerInfo():
+	if floorNum == 0:
+		layerData = ResourceLoader.load("res://Resources/Layer Resources/TestLayer.tres")
+	elif floorNum <= 5:
+		layerData = ResourceLoader.load("res://Resources/Layer Resources/StartingLayer.tres")

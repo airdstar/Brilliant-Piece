@@ -44,5 +44,26 @@ func resetInfo():
 	ResourceSaver.save(FloorInfo.new(), save_path)
 
 func setData():
+	floorInfo.setLayerInfo()
 	floor.Handlers.GH.generateFloor()
 	floorInfo.isNew = false
+
+func nextFloor():
+	PlayerData.playerInfo.currentFloorNum += 1
+	PlayerData.saveInfo()
+	PlayerData.playerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
+	
+	var newFloor = FloorInfo.new()
+	newFloor.floorNum = PlayerData.playerInfo.currentFloorNum
+	floorInfo = newFloor
+	floorInfo.setLayerInfo()
+	
+	var main = floor.get_parent()
+	floor.queue_free()
+	floor = preload("res://Floor/Floor.tscn").instantiate()
+	main.add_child(floor)
+	
+	floor.Handlers.GH.generateFloor()
+	floorInfo.isNew = false
+	saveInfo()
+	

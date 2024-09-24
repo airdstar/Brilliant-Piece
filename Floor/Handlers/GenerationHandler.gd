@@ -6,6 +6,7 @@ func generateFloor():
 	var playerStarts = []
 	var enemyStarts = []
 	var hazardLocations = []
+	var possibleEnds = []
 	if FloorData.floorInfo.isNew:
 		var imagePath : String = FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)]
 		var heightMap = Image.load_from_file(imagePath)
@@ -21,12 +22,17 @@ func generateFloor():
 					FloorData.floorInfo.tiles[FloorData.floorInfo.tiles.size() - 1].pos = tileToAdd.global_position
 					totalTiles.append(tileToAdd)
 					totalTilesPos.append(tileToAdd.global_position)
-					if heightMap.get_pixel(n,m) == Color8(100,150,200):
-						playerStarts.append(tileToAdd)
-					elif heightMap.get_pixel(n,m) == Color8(200,100,100):
-						enemyStarts.append(tileToAdd)
-					elif heightMap.get_pixel(n,m) == Color8(100,100,100):
-						hazardLocations.append(tileToAdd)
+					
+					if heightMap.get_pixel(n,m) != Color8(255,255,255):
+						match heightMap.get_pixel(n,m):
+							Color8(100,150,200):
+								playerStarts.append(tileToAdd)
+							Color8(200,100,100):
+								enemyStarts.append(tileToAdd)
+							Color8(100,100,100):
+								hazardLocations.append(tileToAdd)
+							Color8(200,200,200):
+								possibleEnds.append(tileToAdd)
 	else:
 		for n in range(FloorData.floorInfo.tiles.size()):
 			var tileToAdd = preload("res://Floor/Tile/Tile.tscn").instantiate()
@@ -40,7 +46,7 @@ func generateFloor():
 	FloorData.floor.add_child(PlayerData.playerPiece)
 	generateEnemies()
 	placePieces(playerStarts, enemyStarts)
-	placeHazards(hazardLocations)
+	placeHazards(hazardLocations, possibleEnds)
 
 func generateEnemies():
 	if FloorData.floorInfo.isNew:
@@ -60,7 +66,6 @@ func generateEnemies():
 			
 
 func placePieces(playerStarts, enemyStarts):
-	
 	if FloorData.floorInfo.isNew:
 		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
 		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
@@ -80,12 +85,13 @@ func placePieces(playerStarts, enemyStarts):
 		for n in range(FloorData.floorInfo.enemies.size()):
 			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
 
-func placeHazards(hazardLocations):
+func placeHazards(hazardLocations, endLocations):
 	if FloorData.floorInfo.isNew:
 		for n in range(hazardLocations.size()):
 			if randi_range(0,3) == 3:
 				hazardLocations[n].setHazard(FloorData.floorInfo.layerData.possibleHazards[
 										 	randi_range(0, FloorData.floorInfo.layerData.possibleHazards.size() - 1)])
+		endLocations[0].setHazard(ResourceLoader.load("res://Resources/Hazard Resources/FloorEnd.tres"))
 	else:
 		for n in range(FloorData.floorInfo.tiles.size()):
 			if FloorData.floorInfo.tiles[n].hazard:

@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ItemPoolResource" load_steps=5 format=3 uid="uid://cqjhudg8pugow"]
+[gd_resource type="Resource" script_class="ItemPoolResource" load_steps=6 format=3 uid="uid://cqjhudg8pugow"]
 
 [ext_resource type="Script" path="res://Resources/ItemResource.gd" id="1_h2ibt"]
 [ext_resource type="Resource" uid="uid://b7my3408fugrx" path="res://Resources/Item Resources/Cone.tres" id="2_ionee"]
 [ext_resource type="Script" path="res://Resources/ItemPoolResource.gd" id="2_s6dik"]
 [ext_resource type="Resource" uid="uid://bpqi6k6igoh5g" path="res://Resources/Item Resources/Medkit.tres" id="4_a612b"]
+[ext_resource type="Resource" uid="uid://b4751svhw4qc" path="res://Resources/Item Resources/StickyGoo.tres" id="4_gihle"]
 
 [resource]
 script = ExtResource("2_s6dik")
-items = Array[ExtResource("1_h2ibt")]([ExtResource("2_ionee"), ExtResource("4_a612b")])
+items = Array[ExtResource("1_h2ibt")]([ExtResource("2_ionee"), ExtResource("4_a612b"), ExtResource("4_gihle")])

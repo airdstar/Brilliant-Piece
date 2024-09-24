@@ -7,6 +7,7 @@ var pointerPosBlocked : int = 2
 
 var contains : Piece
 var hazard : HazardResource
+var hazardModel
 var obstructed := false
 
 @onready var highlight := $Base/Highlight
@@ -58,6 +59,13 @@ func actionUsed(action : ActionResource):
 			contains.heal(action.healing)
 		if action.armor:
 			contains.addArmor(action.armor)
+	if hazard:
+		if action.damage:
+			if hazard.destructable:
+				FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = null
+				hazard = null
+				obstructed = false
+				hazardModel.queue_free()
 
 func itemUsed(item : ItemResource):
 	if contains is MoveablePiece:
@@ -67,6 +75,13 @@ func itemUsed(item : ItemResource):
 			contains.heal(item.healing)
 		if item.armor:
 			contains.addArmor(item.armor)
+	if hazard:
+		if item.damage:
+			if hazard.destructable:
+				FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = null
+				hazard = null
+				obstructed = false
+				hazardModel.queue_free()
 	if item.hazard:
 		setHazard(item.hazard)
 	item.use()
@@ -78,9 +93,9 @@ func setHazard(hazardIn : HazardResource):
 	
 	FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = hazard
 	
-	var model = ResourceLoader.load(hazard.associatedModel).instantiate()
-	add_child(model)
-	model.position.y += 0.055
+	hazardModel = ResourceLoader.load(hazard.associatedModel).instantiate()
+	add_child(hazardModel)
+	hazardModel.position.y += 0.055
 
 
 func getPointerPos():

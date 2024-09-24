@@ -29,13 +29,12 @@ func setTilePattern():
 func show():
 	FloorData.floor.Pointer.visible = true
 	if mH.SH.moving:
-		tileDict["iTiles"] = mH.IH.findMoveableTiles(mH.SH.actingPiece)
+		tileDict["iTiles"] = PlayerData.playerInfo.pieceType.getMoveableTiles(PlayerData.playerInfo.currentPos)
 	elif mH.SH.action:
-		tileDict["iTiles"] = mH.IH.findActionTiles(PlayerData.playerInfo.currentPos)
+		tileDict["iTiles"] = mH.SH.action.getActionRange(PlayerData.playerInfo.currentPos)
 	elif mH.SH.item:
 		tileDict["iTiles"] = mH.IH.findItemTiles(PlayerData.playerInfo.currentPos)
 	setTilePattern()
-
 
 func stopShowing():
 	tileDict["iTiles"].clear()
@@ -43,3 +42,10 @@ func stopShowing():
 	mH.SH.moving = false
 	mH.SH.item = null
 	setTilePattern()
+
+func checkHazards():
+	if !FloorData.floorInfo.playerTurn:
+		if PlayerData.playerPiece.currentTile.hazard:
+			if PlayerData.playerPiece.currentTile.hazard.effectType == "OnRest":
+				if PlayerData.playerPiece.currentTile.hazard.effect.nextFloor:
+					FloorData.nextFloor()

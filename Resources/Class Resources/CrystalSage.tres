@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ClassResource" load_steps=7 format=3 uid="uid://lvfi5wwrr7or"]
 
-[ext_resource type="Resource" uid="uid://c4texbnwufk0" path="res://Resources/ActionSet Resources/CrystalSageActionSet.tres" id="1_3yne0"]
+[ext_resource type="Resource" uid="uid://c4texbnwufk0" path="res://Resources/Action Resources/ActionSet Resources/CrystalSageActionSet.tres" id="1_3yne0"]
 [ext_resource type="Script" path="res://Resources/ClassResource.gd" id="1_lnosw"]
 [ext_resource type="Script" path="res://Resources/ActionResource.gd" id="3_3at3e"]
 [ext_resource type="Resource" uid="uid://da62gojgkabpy" path="res://Resources/Action Resources/CrystalDrop.tres" id="4_lqujx"]

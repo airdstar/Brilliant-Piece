@@ -18,18 +18,24 @@ func movePiece(destination : tile, piece : MoveablePiece):
 		mH.TH.stopShowing()
 		closestDirection = mH.DH.getClosestDirection(PlayerData.playerInfo.currentPos, destinationPos)
 	elif piece is EnemyPiece:
-		closestDirection = mH.DH.getClosestDirection(mH.SH.pieceDict["Enemy"]["Position"][mH.SH.pieceDict["Enemy"]["Piece"].find(piece)], destinationPos)
+		closestDirection = mH.DH.getClosestDirection(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos, destinationPos)
 	while(!destinationReached):
 		var closestTile
 		if piece is PlayerPiece:
 			closestTile = mH.TH.lookForTile(PlayerData.playerInfo.currentPos + mH.DH.dirDict["PosData"][closestDirection])
 		elif piece is EnemyPiece:
-			closestTile = mH.TH.lookForTile(mH.SH.pieceDict["Enemy"]["Position"][mH.SH.pieceDict["Enemy"]["Piece"].find(piece)] + mH.DH.dirDict["PosData"][closestDirection])
+			closestTile = mH.TH.lookForTile(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos + mH.DH.dirDict["PosData"][closestDirection])
 		
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
 		closestTile.setPiece(piece, closestDirection)
+		
+		if closestTile.hazard:
+			if closestTile.hazard.effectType == "OnTouch":
+				if closestTile.hazard.effect.stopMovement:
+					destination = piece.currentTile
+		
 		if piece.currentTile == destination:
 			destinationReached = true
 			mH.UH.usedMovement()
@@ -48,7 +54,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 	if piece is PlayerPiece:
 		currentTile = mH.TH.lookForTile(PlayerData.playerInfo.currentPos + mH.DH.dirDict["PosData"][direction])
 	elif piece is EnemyPiece:
-		currentTile = mH.TH.lookForTile(mH.SH.pieceDict["Enemy"]["Position"][mH.SH.pieceDict["Enemy"]["Piece"].find(piece)] + mH.DH.dirDict["PosData"][direction])
+		currentTile = mH.TH.lookForTile(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos + mH.DH.dirDict["PosData"][direction])
 	if currentTile:
 		currentTile.setPiece(piece, direction)
 		@warning_ignore("integer_division")
@@ -57,6 +63,10 @@ func pushPiece(piece : MoveablePiece, direction : int):
 		else:
 			@warning_ignore("integer_division")
 			piece.damage(1 + int(piece.maxHealth / 10))
+		
+		if currentTile.hazard:
+			if currentTile.hazard.effectType == "OnTouch":
+				print("hi")
 	else:
 		@warning_ignore("integer_division")
 		piece.damage(5 + int(piece.maxHealth / 4))
@@ -96,14 +106,6 @@ func findMoveableTiles(piece : MoveablePiece):
 							if piece is PlayerPiece:
 								mH.TH.tileDict["iTiles"].append(currentTile)
 			currentTile = null
-	return toReturn
-
-func findActionTiles(piecePos : Vector3):
-	var possibleTiles = mH.SH.action.getActionRange(piecePos)
-	var toReturn = []
-	for n in range(possibleTiles.size()):
-		if mH.TH.lookForTile(possibleTiles[n]):
-			toReturn.append(mH.TH.lookForTile(possibleTiles[n]))
 	return toReturn
 
 func findItemTiles(piecePos : Vector3):
