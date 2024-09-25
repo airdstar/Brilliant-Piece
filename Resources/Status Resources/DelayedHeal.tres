@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="StatusResource" load_steps=4 format=3 uid="uid://yjp0pak7mxhy"]
+
+[ext_resource type="Script" path="res://Resources/StatusResource.gd" id="1_8sp41"]
+[ext_resource type="Script" path="res://Resources/EffectResource.gd" id="1_c066s"]
+
+[sub_resource type="Resource" id="Resource_dvxx1"]
+script = ExtResource("1_c066s")
+name = "Delayed Heal"
+type = "Health"
+effectStrength = 2
+effectPercent = 1.0
+stopMovement = false
+disDirection = ""
+nextFloor = false
+delete = false
+
+[resource]
+script = ExtResource("1_8sp41")
+statusName = "Delayed Heal"
+statusType = "Buff"
+duration = 2
+statusEffect = "onEnd"
+effect = SubResource("Resource_dvxx1")

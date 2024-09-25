@@ -60,7 +60,6 @@ func generatePieces(playerStarts, enemyStarts):
 									  randi_range(0, FloorData.floorInfo.layerData.possibleEnemies.size() - 1)]
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].setData(n)
-			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
 			
 			var tileEmpty = false
 			while !tileEmpty:
@@ -79,7 +78,6 @@ func generatePieces(playerStarts, enemyStarts):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].loadData(n)
-			FloorData.floor.enemies[n].death.connect(FloorData.floor.pieceDeath)
 			
 			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
 			

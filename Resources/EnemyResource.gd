@@ -13,6 +13,8 @@ class_name EnemyResource
 @export var actions : ActionSetResource
 @export var maxLevel : int
 @export var minLevel : int
+
+@export_category("Drops")
 @export var expAmount : int
 @export var itemPool : ItemPoolResource
 @export var coinDropMin : int
@@ -21,7 +23,6 @@ class_name EnemyResource
 func getType():
 	var amount = type
 	var possibleTypes = []
-	var resource
 	if amount >= 32:
 		amount -= 32
 		possibleTypes.append(ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres"))

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ActionSetResource" load_steps=7 format=3 uid="uid://c4texbnwufk0"]
+
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_rice0"]
+[ext_resource type="Resource" uid="uid://da62gojgkabpy" path="res://Resources/Interactable Resources/Action Resources/CrystalDrop.tres" id="2_axnrx"]
+[ext_resource type="Resource" uid="uid://clk1n28hr60dc" path="res://Resources/Interactable Resources/Action Resources/CrystalSpears.tres" id="3_wh3e0"]
+[ext_resource type="Resource" uid="uid://cdyj2x074vkwb" path="res://Resources/Interactable Resources/Action Resources/LightBeam.tres" id="4_l30tl"]
+[ext_resource type="Resource" uid="uid://0a42lwknko2l" path="res://Resources/Interactable Resources/Action Resources/DefaultAttack.tres" id="5_1d4hk"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionSetResource.gd" id="6_pyv7a"]
+
+[resource]
+script = ExtResource("6_pyv7a")
+actions = Array[ExtResource("1_rice0")]([ExtResource("2_axnrx"), ExtResource("3_wh3e0"), ExtResource("4_l30tl"), ExtResource("5_1d4hk"), ExtResource("5_1d4hk")])

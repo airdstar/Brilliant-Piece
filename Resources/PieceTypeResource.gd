@@ -17,7 +17,10 @@ func getMoveableTiles(movementStart : Vector3):
 		while !endSearch:
 			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
 			if FloorData.floor.Handlers.TH.lookForTile(tileData):
-				toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+				if !FloorData.floor.Handlers.TH.lookForTile(tileData).obstructed:
+					toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+				else:
+					endSearch = true
 			else:
 				endSearch = true
 			

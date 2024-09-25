@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://cdyj2x074vkwb"]
 
-[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_fo6t0"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_fo6t0"]
 
 [resource]
 script = ExtResource("1_fo6t0")
+actionDirection = "Diagonal"
+obstructable = null
 name = "Light Beam"
 desc = null
 iconPath = null
-actionType = null
+associatedModel = null
+type = "Damage"
 damage = 3
 healing = null
 armor = null
-actionDirection = "Diagonal"
-actionRange = null
+range = null
 rangeExclusive = null
 usableOn = 6
-obstructable = null

@@ -51,40 +51,42 @@ func setPiece(piece : Piece, dir : int):
 		FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos = global_position
 	
 
-func actionUsed(action : ActionResource):
+func interact():
+	var interactable = FloorData.floor.Handlers.SH.interactable
+	var acting = FloorData.floor.Handlers.SH.actingPiece
+	
 	if contains is MoveablePiece:
-		if action.damage:
-			contains.damage(action.damage)
-		if action.healing:
-			contains.heal(action.healing)
-		if action.armor:
-			contains.addArmor(action.armor)
+		if interactable.damage:
+			if interactable is ActionResource:
+				contains.damage((interactable.damage + acting.flatDamage()) * acting.percentDamage())
+			else:
+				contains.damage(interactable.damage)
+		if interactable.healing:
+			contains.heal(interactable.healing)
+		if interactable.armor:
+			contains.addArmor(interactable.armor)
+		if interactable.status:
+			contains.applyStatus(interactable.status)
+	
 	if hazard:
-		if action.damage:
+		if interactable.damage:
 			if hazard.destructable:
 				FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = null
 				hazard = null
 				obstructed = false
 				hazardModel.queue_free()
-
-func itemUsed(item : ItemResource):
-	if contains is MoveablePiece:
-		if item.damage:
-			contains.damage(item.damage)
-		if item.healing:
-			contains.heal(item.healing)
-		if item.armor:
-			contains.addArmor(item.armor)
-	if hazard:
-		if item.damage:
-			if hazard.destructable:
-				FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = null
-				hazard = null
-				obstructed = false
-				hazardModel.queue_free()
-	if item.hazard:
-		setHazard(item.hazard)
-	item.use()
+	
+	if interactable.hazard:
+		setHazard(interactable.hazard)
+	
+	if interactable is ActionResource:
+		FloorData.floor.HUD.turnHUD[1].modulate = Color(0.5,0.5,0.5)
+		FloorData.floorInfo.actionUsed = true
+	
+	FloorData.floor.Handlers.SH.interactable = null
+	
+	PlayerData.updateData()
+	FloorData.updateData()
 
 func setHazard(hazardIn : HazardResource):
 	hazard = hazardIn

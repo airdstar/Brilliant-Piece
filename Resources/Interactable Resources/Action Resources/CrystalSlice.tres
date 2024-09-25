@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://cbus5s4kx5nod"]
 
-[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_qa83v"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_qa83v"]
 
 [resource]
 script = ExtResource("1_qa83v")
+actionDirection = null
+obstructable = null
 name = "Crystal Slice"
 desc = "Slice nearby enemies"
 iconPath = null
-actionType = "Attack"
+associatedModel = null
+type = "Damage"
 damage = 2
 healing = null
 armor = null
-actionDirection = null
-actionRange = null
+range = null
 rangeExclusive = null
-usableOn = 2
-obstructable = null
+usableOn = null

@@ -18,23 +18,15 @@ var otherStatus : Array[StatusResource]
 
 signal death
 
+func _ready():
+	self.death.connect(FloorData.floor.pieceDeath)
+
 func loadModel(model):
 	model = model.instantiate()
 	modelHolder.add_child(model)
 
-func fall():
-	pass
-
-func actionUsed(action : ActionResource):
-	if action.damage:
-		damage(action.damage)
-	if action.healing:
-		heal(action.healing)
-	if action.armor:
-		addArmor(action.armor)
-	
-	PlayerData.updateData()
-	FloorData.updateData()
+func setPieceOrientation(dir : int):
+	global_rotation.y = deg_to_rad(FloorData.floor.Handlers.DH.dirDict["RotData"][dir])
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:
@@ -71,12 +63,13 @@ func addArmor(armorAmount : int):
 	FloorData.updateData()
 
 func applyStatus(status : StatusResource):
-	if status.effect.effectType == "Health":
+	if status.effect.type == "Health":
 		if !healthStatus.has(status):
 			healthStatus.append(status)
-	elif status.effect.effectType == "Damage":
+	elif status.effect.type == "Damage":
 		if !damageStatus.has(status):
 			damageStatus.append(status)
+			print("hi")
 	else:
 		if !otherStatus.has(status):
 			otherStatus.append(status)
@@ -84,6 +77,16 @@ func applyStatus(status : StatusResource):
 	PlayerData.updateData()
 	FloorData.updateData()
 
+func flatDamage():
+	var toReturn : int = 0
+	for n in range(damageStatus.size()):
+		toReturn += damageStatus[n].effect.effectStrength
 
-func setPieceOrientation(dir : int):
-	global_rotation.y = deg_to_rad(FloorData.floor.Handlers.DH.dirDict["RotData"][dir])
+	return toReturn
+
+func percentDamage():
+	var toReturn : float = 1
+	for n in range(damageStatus.size()):
+		pass
+	
+	return toReturn

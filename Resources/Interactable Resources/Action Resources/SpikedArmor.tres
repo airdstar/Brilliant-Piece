@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://ch1iy5jb0igbg"]
 
-[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_nn3g2"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_nn3g2"]
 
 [resource]
 script = ExtResource("1_nn3g2")
+actionDirection = null
+obstructable = null
 name = "Spiked Armor"
 desc = null
 iconPath = null
-actionType = "Defense"
+associatedModel = null
+type = "Defensive"
 damage = 2
 healing = null
 armor = 5
-actionDirection = null
-actionRange = null
+range = null
 rangeExclusive = null
-usableOn = 1
-obstructable = null
+usableOn = null

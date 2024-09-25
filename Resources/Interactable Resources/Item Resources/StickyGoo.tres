@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://b4751svhw4qc"]
 
-[ext_resource type="Script" path="res://Resources/ItemResource.gd" id="1_27hdm"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ItemResource.gd" id="1_27hdm"]
 [ext_resource type="Resource" uid="uid://dsyo6o0yrnokv" path="res://Resources/Hazard Resources/StickyGoop.tres" id="1_cb454"]
 
 [resource]

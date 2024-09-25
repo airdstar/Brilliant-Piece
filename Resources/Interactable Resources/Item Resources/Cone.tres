@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://b7my3408fugrx"]
 
 [ext_resource type="Resource" uid="uid://bvnjer56r3tab" path="res://Resources/Hazard Resources/Cone.tres" id="1_miu2n"]
-[ext_resource type="Script" path="res://Resources/ItemResource.gd" id="1_w1hld"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ItemResource.gd" id="1_w1hld"]
 
 [resource]
 script = ExtResource("1_w1hld")

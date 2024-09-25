@@ -104,7 +104,7 @@ func handle3DHighlighting(input : String):
 	findClosestTile(direction)
 
 func findClosestTile(direction : int):
-	var foundTile : tile
+	var foundTile : tile = null
 	var searcher : Vector3 = mH.TH.tileDict["hTile"].global_position
 	var forward = mH.DH.dirDict["PosData"][direction]
 	var left = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[0]]
@@ -143,11 +143,11 @@ func highlightTile(tileToSelect : tile):
 				if tileToSelect.contains is EnemyPiece:
 					tileToSelect.setColor(Global.colorDict["Red"])
 					pointer.setColor(Global.colorDict["Red"])
-			elif mH.SH.action:
+			elif mH.SH.interactable:
 				tileToSelect.setColor(Global.colorDict["Red"])
 				pointer.setColor(Global.colorDict["Red"])
-				if mH.SH.action.AOE:
-					var possibleTiles = mH.SH.action.AOE.getAOE(tileToSelect.global_position, mH.DH.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
+				if mH.SH.interactable.AOE:
+					var possibleTiles = mH.SH.interactable.AOE.getAOE(tileToSelect.global_position, mH.DH.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
 					for n in range(possibleTiles.size()):
 						if mH.TH.lookForTile(possibleTiles[n]):
 							mH.TH.lookForTile(possibleTiles[n]).setColor(Global.colorDict["Red"])

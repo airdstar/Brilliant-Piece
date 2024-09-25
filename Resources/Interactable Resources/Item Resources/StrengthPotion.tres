@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bvttii8r4wkgc"]
+
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ItemResource.gd" id="1_vphr5"]
+[ext_resource type="Resource" uid="uid://dei26yjij8rf7" path="res://Resources/Status Resources/MinorStrength.tres" id="2_k2kns"]
+
+[resource]
+script = ExtResource("1_vphr5")
+useAmount = 1
+name = "Strength Potion"
+desc = "Grants +2 damage on hit"
+iconPath = ""
+associatedModel = "res://Item/Base.blend"
+type = "Status"
+damage = 0
+healing = 0
+armor = 0
+status = ExtResource("2_k2kns")
+direction = ""
+iRange = 1
+rangeExclusive = false
+obstructable = false
+usableOn = 1

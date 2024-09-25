@@ -20,7 +20,6 @@ func loadInfo():
 		playerPiece.setData()
 
 func saveInfo():
-	print("Saved info")
 	ResourceSaver.save(playerInfo, save_path)
 	
 

@@ -33,7 +33,7 @@ func _process(_delta):
 
 func selectOption():
 	if options[highlightedOption] != null:
-		FloorData.floor.Handlers.SH.action = options[highlightedOption]
+		FloorData.floor.Handlers.SH.interactable = options[highlightedOption]
 		FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
 		FloorData.floor.Handlers.TH.show()
 		FloorData.floor.Handlers.UH.fullyCloseMenu()

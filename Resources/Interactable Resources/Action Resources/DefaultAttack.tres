@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="ActionResource" load_steps=2 format=3 uid="uid://0a42lwknko2l"]
 
-[ext_resource type="Script" path="res://Resources/ActionResource.gd" id="1_xv4x0"]
+[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_xv4x0"]
 
 [resource]
 script = ExtResource("1_xv4x0")
+actionDirection = "Both"
+obstructable = null
 name = "Attack"
 desc = null
 iconPath = null
-actionType = "Attack"
+associatedModel = null
+type = "Damage"
 damage = 1
 healing = null
 armor = null
-actionDirection = "Both"
-actionRange = null
+range = null
 rangeExclusive = true
 usableOn = 6
-obstructable = null

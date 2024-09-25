@@ -17,30 +17,25 @@ func setTilePattern():
 			else:
 				allTiles[n].setColor(Global.colorDict["White"])
 		if tileDict["iTiles"].has(allTiles[n]):
-			if mH.SH.action:
+			if mH.SH.interactable:
 				allTiles[n].setColor(Global.colorDict["Orange"])
+				allTiles[n].setColor(Global.colorDict["Green"])
 			elif mH.SH.moving:
 				allTiles[n].setColor(Global.colorDict["Blue"])
 				if allTiles[n].contains is EnemyPiece:
 					allTiles[n].setColor(Global.colorDict["Orange"])
-			elif mH.SH.item:
-				allTiles[n].setColor(Global.colorDict["Green"])
 
 func show():
 	FloorData.floor.Pointer.visible = true
 	if mH.SH.moving:
 		tileDict["iTiles"] = PlayerData.playerInfo.pieceType.getMoveableTiles(PlayerData.playerInfo.currentPos)
-	elif mH.SH.action:
-		tileDict["iTiles"] = mH.SH.action.getActionRange(PlayerData.playerInfo.currentPos)
-	elif mH.SH.item:
-		tileDict["iTiles"] = mH.IH.findItemTiles(PlayerData.playerInfo.currentPos)
+	elif mH.SH.interactable:
+		tileDict["iTiles"] = mH.SH.interactable.getTiles(PlayerData.playerInfo.currentPos)
 	setTilePattern()
 
 func stopShowing():
 	tileDict["iTiles"].clear()
-	mH.SH.action = null
 	mH.SH.moving = false
-	mH.SH.item = null
 	setTilePattern()
 
 func checkHazards():

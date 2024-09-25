@@ -22,3 +22,17 @@ func setLayerInfo():
 		layerData = ResourceLoader.load("res://Resources/Layer Resources/TestLayer.tres")
 	elif floorNum <= 5:
 		layerData = ResourceLoader.load("res://Resources/Layer Resources/StartingLayer.tres")
+
+func endTurn():
+	playerTurn = !playerTurn
+	actionUsed = false
+	moveUsed = false
+	
+	FloorData.floor.Handlers.UH.setTurnColors()
+	FloorData.floor.Handlers.TH.checkHazards()
+	
+	if playerTurn:
+		FloorData.floor.Handlers.UH.openMenu()
+	else:
+		FloorData.floor.Pointer.visible = true
+		FloorData.floor.Handlers.EH.makeDecision()

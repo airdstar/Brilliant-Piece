@@ -6,10 +6,9 @@
 [sub_resource type="Resource" id="Resource_t6q2p"]
 script = ExtResource("1_6n501")
 name = "Strength"
+type = "Damage"
 effectStrength = 2
 effectPercent = 1.0
-damage = true
-heal = false
 stopMovement = false
 disDirection = ""
 nextFloor = false
@@ -20,5 +19,5 @@ script = ExtResource("1_1jj0s")
 statusName = "Minor Strength"
 statusType = "Buff"
 duration = 2
-statusEffect = "everyTurn"
+statusEffect = "allTimes"
 effect = SubResource("Resource_t6q2p")

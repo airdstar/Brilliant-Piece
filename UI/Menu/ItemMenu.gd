@@ -38,7 +38,7 @@ func addOptions():
 
 func selectOption():
 	if itemCount != 0:
-		FloorData.floor.Handlers.SH.item = options[highlightedOption]
+		FloorData.floor.Handlers.SH.interactable = options[highlightedOption]
 		FloorData.floor.Handlers.SH.actingPiece = PlayerData.playerPiece
 		FloorData.floor.Handlers.TH.show()
 		FloorData.floor.Handlers.UH.fullyCloseMenu()
@@ -56,7 +56,7 @@ func swapItem():
 	
 	$MenuTop/NameLabel.text = options[highlightedOption].name
 	$MenuBottom/StatsLabel.text = options[highlightedOption].desc
-	$MenuBottom/StatsLabel.text += "\n" + options[highlightedOption].itemType
+	$MenuBottom/StatsLabel.text += "\n" + options[highlightedOption].type
 	
 	if highlightedOption == 0:
 		physicalItems[physicalItems.size() - 1].position = leftItemPos

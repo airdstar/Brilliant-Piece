@@ -70,7 +70,7 @@ func selectOption():
 		"End":
 			animation.play("SelectCloseMenu")
 			await get_tree().create_timer(0.1).timeout
-			FloorData.floor.Handlers.SH.endTurn()
+			FloorData.floorInfo.endTurn()
 			queue_free()
 		"Items":
 			var toAdd = preload("res://UI/Menu/ItemMenu.tscn").instantiate()
