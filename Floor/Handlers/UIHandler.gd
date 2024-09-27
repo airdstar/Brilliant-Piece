@@ -28,6 +28,7 @@ func openMenu():
 		FloorData.floor.Pointer.visible = false
 		FloorData.floor.HUD.showFloorInfo()
 		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
+		FloorData.floor.enemies[0].pathFind()
 
 func closeMenu():
 	currentMenu.animation.play("CloseMenu")

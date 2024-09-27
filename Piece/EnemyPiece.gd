@@ -45,3 +45,9 @@ func updateData():
 	health = PlayerData.playerInfo.health
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
+
+func pathFind():
+	currentTile.setColor(Global.colorDict["Test"])
+	var path : Array[Vector3]
+	var cTile = currentTile + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.orderClosestDirections(FloorData.floor.Handlers.DH.getAll(type.movementAngle), currentTile.global_position, PlayerData.playerInfo.currentPos)[0]]
+	cTile.setColor(Global.colorDict["Test"])

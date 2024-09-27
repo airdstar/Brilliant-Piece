@@ -20,6 +20,7 @@ class_name ActionResource
 @export var rangeExclusive : bool = false   #Does it only hit that range
 @export var obstructable : bool
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
+@export var AOE : AOEResource
 
 
 func getTiles(iStart : Vector3):
@@ -54,3 +55,19 @@ func getTiles(iStart : Vector3):
 				counter += 1
 				
 	return toReturn
+
+func getUsable():
+	var amount = usableOn
+	var possibleUses = []
+
+	if amount >= 4:
+		amount -= 4
+		possibleUses.append("Tile")
+	if amount >= 2:
+		amount -= 2
+		possibleUses.append("Enemy")
+	if amount >= 1:
+		amount -= 1
+		possibleUses.append("Self")
+	
+	return possibleUses

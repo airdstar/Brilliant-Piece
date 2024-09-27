@@ -56,7 +56,6 @@ func swapItem():
 	
 	$MenuTop/NameLabel.text = options[highlightedOption].name
 	$MenuBottom/StatsLabel.text = options[highlightedOption].desc
-	$MenuBottom/StatsLabel.text += "\n" + options[highlightedOption].type
 	
 	if highlightedOption == 0:
 		physicalItems[physicalItems.size() - 1].position = leftItemPos

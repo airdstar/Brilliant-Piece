@@ -91,7 +91,7 @@ func getClosestDirection(start : Vector3, target : Vector3):
 	
 	return closestDirection
 
-func orderClosestDirections(dir : Array[int], start : Vector3, target : Vector3):
+func orderClosestDirections(dir : Array, start : Vector3, target : Vector3):
 	var toReturn : Array[int]
 	var remain = dir
 	for m in range(dir.size()):
