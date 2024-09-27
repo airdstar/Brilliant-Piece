@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bvttii8r4wkgc"]
 
-[ext_resource type="Script" path="res://Resources/Interactable Resources/ItemResource.gd" id="1_vphr5"]
+[ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="1_vphr5"]
 [ext_resource type="Resource" uid="uid://dei26yjij8rf7" path="res://Resources/Status Resources/MinorStrength.tres" id="2_k2kns"]
 
 [resource]

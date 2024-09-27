@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ActionResource" load_steps=4 format=3 uid="uid://da62gojgkabpy"]
 
 [ext_resource type="Script" path="res://Resources/AOEResource.gd" id="1_3jdf4"]
-[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="1_sv0d8"]
+[ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="1_sv0d8"]
 
 [sub_resource type="Resource" id="Resource_kyyaq"]
 script = ExtResource("1_3jdf4")
@@ -12,18 +12,16 @@ trailRange = 10
 
 [resource]
 script = ExtResource("1_sv0d8")
-size = 1
-name = "Crystal Drop"
-desc = ""
 iconPath = ""
-associatedModel = "res://Item/Base.blend"
-type = "Damage"
-damage = 20
-healing = 0
-armor = 0
+actionType = ""
 direction = "Both"
 iRange = 2
 rangeExclusive = false
 obstructable = false
 AOE = SubResource("Resource_kyyaq")
+name = "Crystal Drop"
+desc = ""
 usableOn = 6
+damage = 20
+healing = 0
+armor = 0

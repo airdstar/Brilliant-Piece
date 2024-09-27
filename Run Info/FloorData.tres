@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="FloorInfo" load_steps=112 format=3]
 
 [ext_resource type="Script" path="res://Run Info/EnemyInfo.gd" id="1_nf407"]
-[ext_resource type="Script" path="res://Resources/Interactable Resources/ActionResource.gd" id="2_i4jk8"]
-[ext_resource type="Resource" path="res://Resources/Enemy Resources/Goblin.tres" id="3_1g8xn"]
-[ext_resource type="Resource" path="res://Resources/PieceType Resources/Rook.tres" id="4_5o1jl"]
-[ext_resource type="Resource" path="res://Resources/Layer Resources/TestLayer.tres" id="5_gfao8"]
+[ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="2_i4jk8"]
+[ext_resource type="Resource" uid="uid://dfjb6if6vtt3e" path="res://Resources/Enemy Resources/Goblin.tres" id="3_1g8xn"]
+[ext_resource type="Resource" uid="uid://7liy2ius5ev1" path="res://Resources/PieceType Resources/Rook.tres" id="4_5o1jl"]
+[ext_resource type="Resource" uid="uid://demrvjtysm0ed" path="res://Resources/Layer Resources/TestLayer.tres" id="5_gfao8"]
 [ext_resource type="Script" path="res://Run Info/FloorInfo.gd" id="6_lprk6"]
 [ext_resource type="Script" path="res://Run Info/TileInfo.gd" id="7_nyubx"]
-[ext_resource type="Resource" path="res://Resources/Hazard Resources/Pillar.tres" id="8_1kus6"]
-[ext_resource type="Resource" path="res://Resources/Hazard Resources/FloorEnd.tres" id="9_dhbe8"]
+[ext_resource type="Resource" uid="uid://dw8uenlx7cxx" path="res://Resources/Hazard Resources/Pillar.tres" id="8_1kus6"]
+[ext_resource type="Resource" uid="uid://dxwhrc470wocb" path="res://Resources/Hazard Resources/FloorEnd.tres" id="9_dhbe8"]
 
 [sub_resource type="Resource" id="Resource_gtfgj"]
 script = ExtResource("1_nf407")
