@@ -12,6 +12,6 @@ script = ExtResource("1_0bro7")
 layerName = "Start"
 possibleEnemies = Array[ExtResource("1_e1cnl")]([ExtResource("2_7hstu")])
 possibleHazards = Array[ExtResource("3_tvcog")]([ExtResource("4_7h1fp"), ExtResource("5_j8i7s")])
-possibleLayouts = Array[String](["res://Floor/Layouts/Start1.png", "res://Floor/Layouts/Start2.png"])
+possibleLayouts = Array[String](["res://Floor/Layouts/Start1.png", "res://Floor/Layouts/Start2.png", "res://Floor/Layouts/Start3.png", "res://Floor/Layouts/Start4.png"])
 maxPossibleEnemies = 2
 minPossibleEnemies = 1

@@ -9,8 +9,9 @@ class_name EffectResource
 
 @export_category("Displacement")
 @export var stopMovement : bool
-@export_enum("Forward", "Left", "Right", "Backward") var disDirection : String
+@export_enum("Toward", "Opposite", "Set") var disDirection : String
 
 @export_category("Misc")
 @export var nextFloor : bool
 @export var delete : bool
+@export var item : ItemResource

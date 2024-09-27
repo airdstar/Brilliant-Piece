@@ -4,12 +4,13 @@ var possibleTiles = []
 
 func makeDecision():
 	if !FloorData.floorInfo.moveUsed:
-		#findBestMovement(PlayerData.playerInfo.currentPos, GameState.pieceDict["Enemy"]["Piece"][0], GameState.pieceDict["Enemy"]["Behavior"][0])
+		findBestMovement(PlayerData.playerInfo.currentPos, FloorData.floor.enemies[0])
 		FloorData.floorInfo.endTurn()
 		
-func findBestMovement(target : Vector3, piece : EnemyPiece, behavior : String):
+func findBestMovement(target : Vector3, piece : EnemyPiece):
 	possibleTiles = mH.IH.findMoveableTiles(piece)
-	match behavior:
+	piece.behavior = "Approach"
+	match piece.behavior:
 		"Approach":
 			mH.IH.movePiece(findClosestTileToTarget(target, piece), piece)
 

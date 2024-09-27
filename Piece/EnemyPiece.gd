@@ -2,6 +2,7 @@ extends MoveablePiece
 class_name EnemyPiece
 
 var enemyType : EnemyResource
+var behavior : String
 
 var prevDirection : int
 

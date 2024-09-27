@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemPoolResource" load_steps=4 format=3 uid="uid://cqjhudg8pugow"]
 
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="1_h2ibt"]
-[ext_resource type="Resource" uid="uid://bvttii8r4wkgc" path="res://Resources/Item Resources/Items/StrengthPotion.tres" id="2_rq0fk"]
+[ext_resource type="Resource" uid="uid://bvttii8r4wkgc" path="res://Resources/Item Resources/Consumables/StrengthPotion.tres" id="2_rq0fk"]
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemPoolResource.gd" id="2_s6dik"]
 
 [resource]

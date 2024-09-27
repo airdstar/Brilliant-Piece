@@ -39,6 +39,9 @@ func updateData():
 	playerInfo.pieceType = playerPiece.type
 	playerInfo.classType = playerPiece.classType
 
+func newAction():
+	pass
+
 func levelUp():
 	playerInfo.maxHealth += Global.levelDict["health"][playerInfo.level - 1]
 	playerInfo.health += Global.levelDict["health"][playerInfo.level - 1]

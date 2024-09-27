@@ -1,14 +1,25 @@
 extends Interactable
 class_name ActionResource
 
-#@export var iconPath : String
+@export_category("Extended General")
 @export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var actionType : String
+
+
+@export_category("Basic Stats")
+@export var damage : int
+@export var healing : int
+@export var armor : int
+@export var status : StatusResource
+@export var hazard : HazardResource
+@export var effect : EffectResource
+@export var item : ItemResource
 
 @export_category("Range Variables")
 @export_enum("Straight", "Diagonal", "Both", "Cone", "L") var direction : String
-@export var iRange : int = 1
+@export var iRange : int = 3
 @export var rangeExclusive : bool = false   #Does it only hit that range
 @export var obstructable : bool
+@export_flags("Self", "Enemy", "Tile") var usableOn : int
 
 
 func getTiles(iStart : Vector3):

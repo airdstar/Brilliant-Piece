@@ -1,16 +1,18 @@
 [gd_resource type="Resource" script_class="ClassResource" load_steps=7 format=3 uid="uid://lvfi5wwrr7or"]
 
-[ext_resource type="Resource" uid="uid://c4texbnwufk0" path="res://Resources/Action Resources/ActionSets/CrystalSageActionSet.tres" id="1_3yne0"]
 [ext_resource type="Script" path="res://Resources/ClassResource.gd" id="1_lnosw"]
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="3_3at3e"]
 [ext_resource type="Resource" uid="uid://da62gojgkabpy" path="res://Resources/Action Resources/Actions/CrystalDrop.tres" id="4_lqujx"]
 [ext_resource type="Resource" uid="uid://clk1n28hr60dc" path="res://Resources/Action Resources/Actions/CrystalSpears.tres" id="5_n6db3"]
 [ext_resource type="Resource" uid="uid://ch1iy5jb0igbg" path="res://Resources/Action Resources/Actions/SpikedArmor.tres" id="6_1uao1"]
+[ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="6_iqr2t"]
 
 [resource]
 script = ExtResource("1_lnosw")
 className = "Crystal Sage"
-actions = ExtResource("1_3yne0")
 associatedModel = "res://Piece/Classes/CrystalSage.blend"
 startingHealth = 6
 startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_1uao1")])
+startingItems = Array[ExtResource("6_iqr2t")]([])
+levelingHealthIncrease = Array[int]([2, 0, 0, 0, 0])
+levelingActions = Array[ExtResource("3_3at3e")]([null, null, null, null, null])

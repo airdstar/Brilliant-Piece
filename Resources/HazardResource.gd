@@ -9,8 +9,7 @@ class_name HazardResource
 @export_category("Stats")
 @export var blockade : bool
 @export var destructable : bool = false
-@export_enum("None", "OnTouch", "OnRest") var effectType : String
-
+@export_enum("OnTouch", "OnRest") var effectType : String
 
 @export var AOE : AOEResource
 @export var effect : EffectResource

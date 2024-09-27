@@ -1,6 +1,7 @@
 extends Interactable
 class_name ItemResource
 
+@export_category("Extended General")
 @export var associatedModel : String = "res://Item/Base.blend"
 
 func getTiles(iStart : Vector3):
