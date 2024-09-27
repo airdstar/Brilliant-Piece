@@ -29,6 +29,10 @@ window/size/viewport_width=1024
 window/size/viewport_height=768
 window/size/resizable=false
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/net.yarvis.pixel_pen/plugin.cfg")
+
 [input]
 
 Forward={

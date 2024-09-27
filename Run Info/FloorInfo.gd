@@ -1,7 +1,7 @@
 extends Resource
 class_name FloorInfo
 
-@export var floorNum : int = 0
+@export var floorNum : int = 1
 @export var layerData : LayerResource
 
 @export var tiles : Array[TileInfo]

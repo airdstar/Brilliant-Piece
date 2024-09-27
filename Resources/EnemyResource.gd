@@ -7,7 +7,6 @@ class_name EnemyResource
 @export var associatedModel : String
 @export_flags("Pawn", "Rook", "Bishop", "Knight", "King", "Queen") var type : int
 
-
 @export_category("Stats")
 @export var baseHealth : int
 @export var actions : ActionSetResource

@@ -2,7 +2,7 @@ extends Resource
 class_name PlayerInfo
 
 @export var currentPos : Vector3
-@export var currentFloorNum : int = 0
+@export var currentFloorNum : int = 1
 
 @export var classType : ClassResource
 @export var pieceType : PieceTypeResource
