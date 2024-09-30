@@ -4,10 +4,10 @@ class_name ItemResource
 @export_category("Extended General")
 @export var associatedModel : String = "res://Item/Base.blend"
 
-func getTiles(iStart : Vector3):
+func getTiles(iStart : Vector2i):
 	var toReturn : Array[tile]
 	var pos = FloorData.floor.Handlers.DH.getAll("Both")
-	var tileData : Vector3
+	var tileData : Vector2i
 	if getUsable().has("Self"):
 		toReturn.append(FloorData.floor.Handlers.TH.lookForTile(iStart))
 	if getUsable().has("Enemy") or getUsable().has("Tile"):

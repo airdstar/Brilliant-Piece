@@ -24,6 +24,7 @@ func setLayerInfo():
 	elif floorNum <= 5:
 		layerData = ResourceLoader.load("res://Resources/Layer Resources/Bellcere.tres")
 
+
 func endTurn():
 	playerTurn = !playerTurn
 	actionUsed = false

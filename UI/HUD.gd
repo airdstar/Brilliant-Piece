@@ -14,6 +14,9 @@ func showFloorInfo():
 func hideFloorInfo():
 	$Floor_Player.visible = false
 
+func updateFloorInfo():
+	$Floor_Player/FloorInfo.text = "[center]Floor " + str(FloorData.floorInfo.floorNum) + "\n" + str(FloorData.floorInfo.layerData.layerName)
+
 func showPieceInfo():
 	$Portrait.visible = true
 

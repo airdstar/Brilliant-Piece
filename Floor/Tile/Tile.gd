@@ -38,6 +38,7 @@ func setPiece(piece : Piece, dir : int):
 	contains = piece
 	piece.setPieceOrientation(dir)
 	if piece.rc:
+		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 		var tween = create_tween()
 		tween.tween_property(piece, "global_position", piecePos + self.global_position, 0.2
 							).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)

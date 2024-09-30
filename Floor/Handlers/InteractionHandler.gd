@@ -11,23 +11,30 @@ func _process(_delta: float):
 
 func movePiece(destination : tile):
 	var piece = mH.SH.actingPiece
-	var destinationReached : bool = false
-	var closestDirection = mH.DH.getClosestDirection(piece.rc, destination.rc)
-	var posData = mH.DH.dirDict["PosData"][closestDirection]
 	if piece is PlayerPiece:
 		mH.TH.stopShowing()
+	
+	var closestDirection = mH.DH.getClosestDirection(piece.rc, destination.rc)
+	var posData = mH.DH.dirDict["PosData"][closestDirection]
+	
+	var destinationReached : bool = false
 	while(!destinationReached):
-		var closestTile = FloorData.tiles[piece.rc.x + posData.x][piece.rc.y + posData.y]
+		var closestTile
+		if piece.type.movementAngle != "L":
+			closestTile = FloorData.tiles[piece.rc.x + posData.x][piece.rc.y + posData.y]
+		else:
+			print("um")
 		
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
 				pushPiece(closestTile.contains, closestDirection)
+		
 		closestTile.setPiece(piece, closestDirection)
 		
 		if closestTile.hazard:
 			if closestTile.hazard.effectType == "OnTouch":
 				if closestTile.hazard.effect.stopMovement:
-					destination = piece.currentTile
+					destination.rc = piece.rc
 		
 		if piece.rc == destination.rc:
 			destinationReached = true

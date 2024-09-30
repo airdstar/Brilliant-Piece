@@ -28,7 +28,7 @@ func getTiles(iStart : Vector2i):
 	var pos = FloorData.floor.Handlers.DH.getAll(direction)
 	var tileData : Vector2i
 	if getUsable().has("Self"):
-		toReturn.append(FloorData.floor.Handlers.TH.lookForTile(iStart))
+		toReturn.append(FloorData.tiles[iStart.x][iStart.y])
 	if getUsable().has("Enemy") or getUsable().has("Tile"):
 		for n in range(pos.size()):
 			tileData = iStart
@@ -36,15 +36,17 @@ func getTiles(iStart : Vector2i):
 			var endSearch = false
 			while !endSearch:
 				tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
-				if FloorData.floor.Handlers.TH.lookForTile(tileData):
+				
+				if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
+					endSearch = true
+				
+				if FloorData.tiles[tileData.x][tileData.y] != null:
 					if obstructable:
-						if !FloorData.floor.Handlers.TH.lookForTile(tileData).obstructed:
-							toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
-						else:
-							toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+						if FloorData.tiles[tileData.x][tileData.y].obstructed:
 							endSearch = true
 					else:
-						toReturn.append(FloorData.floor.Handlers.TH.lookForTile(tileData))
+						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
 				else:
 					if obstructable:
 						endSearch = true
