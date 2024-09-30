@@ -23,10 +23,10 @@ class_name ActionResource
 @export var AOE : AOEResource
 
 
-func getTiles(iStart : Vector3):
+func getTiles(iStart : Vector2i):
 	var toReturn : Array[tile]
 	var pos = FloorData.floor.Handlers.DH.getAll(direction)
-	var tileData : Vector3
+	var tileData : Vector2i
 	if getUsable().has("Self"):
 		toReturn.append(FloorData.floor.Handlers.TH.lookForTile(iStart))
 	if getUsable().has("Enemy") or getUsable().has("Tile"):

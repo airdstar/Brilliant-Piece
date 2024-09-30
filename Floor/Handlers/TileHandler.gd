@@ -1,6 +1,8 @@
 extends Handler
 
 var tileDict : Dictionary
+var highlightedTile : tile
+var iTiles : Array[tile]
 
 func lookForTile(pos : Vector3):
 	if tileDict["TilePos"].has(pos):
@@ -8,39 +10,36 @@ func lookForTile(pos : Vector3):
 	return null
 
 func setTilePattern():
-	var allTiles = tileDict["Tiles"]
-	for n in range(allTiles.size()):
-		allTiles[n].highlight.visible = false
-		if tileDict["hTile"] != allTiles[n] and !tileDict["iTiles"].has(allTiles[n]):
-			if (int(allTiles[n].position.x + allTiles[n].position.z)%2 == 1 or int(allTiles[n].position.x + allTiles[n].position.z)%2 == -1):
-				allTiles[n].setColor(Global.colorDict["Black"])
-			else:
-				allTiles[n].setColor(Global.colorDict["White"])
-		if tileDict["iTiles"].has(allTiles[n]):
-			if mH.SH.interactable:
-				allTiles[n].setColor(Global.colorDict["Orange"])
-				allTiles[n].setColor(Global.colorDict["Green"])
-			elif mH.SH.moving:
-				allTiles[n].setColor(Global.colorDict["Blue"])
-				if allTiles[n].contains is EnemyPiece:
-					allTiles[n].setColor(Global.colorDict["Orange"])
+	for n in range(FloorData.floorInfo.rc.x):
+		for m in range(FloorData.floorInfo.rc.y):
+			if FloorData.tiles[n][m] != null:
+				var cTile = FloorData.tiles[n][m]
+				cTile.highlight.visible = false
+				if highlightedTile != cTile:
+					if !iTiles.has(cTile):
+						if (int(cTile.position.x + cTile.position.z)%2 == 1 or int(cTile.position.x + cTile.position.z)%2 == -1):
+							cTile.setColor(Global.colorDict["Black"])
+						else:
+							cTile.setColor(Global.colorDict["White"])
+					else:
+						cTile.setColor(Global.colorDict["Blue"])
 
 func show():
 	FloorData.floor.Pointer.visible = true
 	if mH.SH.moving:
-		tileDict["iTiles"] = PlayerData.playerInfo.pieceType.getMoveableTiles(PlayerData.playerInfo.currentPos)
+		iTiles = PlayerData.playerInfo.pieceType.getMoveableTiles(PlayerData.playerInfo.rc)
 	elif mH.SH.interactable:
-		tileDict["iTiles"] = mH.SH.interactable.getTiles(PlayerData.playerInfo.currentPos)
+		iTiles = mH.SH.interactable.getTiles(PlayerData.playerInfo.rc)
 	setTilePattern()
 
 func stopShowing():
-	tileDict["iTiles"].clear()
-	mH.SH.moving = false
+	iTiles.clear()
 	setTilePattern()
 
 func checkHazards():
 	if !FloorData.floorInfo.playerTurn:
-		if PlayerData.playerPiece.currentTile.hazard:
-			if PlayerData.playerPiece.currentTile.hazard.effectType == "OnRest":
-				if PlayerData.playerPiece.currentTile.hazard.effect.nextFloor:
+		var playerTile = FloorData.tiles[PlayerData.playerPiece.rc.x][PlayerData.playerPiece.rc.y]
+		if playerTile.hazard:
+			if playerTile.hazard.effectType == "OnRest":
+				if playerTile.hazard.effect.nextFloor:
 					FloorData.nextFloor()

@@ -14,8 +14,8 @@ enum Direction {
 var dirDict : Dictionary
 
 func _ready():
-	var dirPosArray : Array[Vector3] = [Vector3(0,0,1), Vector3(1,0,1), Vector3(1,0,0), Vector3(1,0,-1),
-										Vector3(0,0,-1), Vector3(-1,0,-1), Vector3(-1,0,0), Vector3(-1,0,1)]
+	var dirPosArray : Array[Vector2i] = [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
+										Vector2i(0,-1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(-1,1)]
 	
 	var dirRotationArray : Array[int] = [-90, -45, 0, 45, 90, 135, 180, -135]
 	
@@ -63,7 +63,7 @@ func getOppDirection(dir : Direction):
 	else:
 		return dirDict["Direction"][dir - 4]
 
-func getClosestDirection(start : Vector3, target : Vector3):
+func getClosestDirection(start : Vector2i, target : Vector2i):
 	var closestDirection : Direction
 	var smallestVariation : int = 100
 	for n in range(8):
@@ -74,7 +74,7 @@ func getClosestDirection(start : Vector3, target : Vector3):
 			return dirDict["Direction"][n]
 		while sameDirection:
 			var xVar = abs(target.x - (helper + (dirDict["PosData"][n] * (1 + counter))).x)
-			var zVar = abs(target.z - (helper + (dirDict["PosData"][n] * (1 + counter))).z)
+			var zVar = abs(target.y - (helper + (dirDict["PosData"][n] * (1 + counter))).y)
 			if smallestVariation != 200:
 				if smallestVariation > xVar + zVar:
 					closestDirection = dirDict["Direction"][n]

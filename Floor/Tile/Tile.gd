@@ -5,6 +5,8 @@ var piecePos : Vector3 = Vector3(0,0.3,0)
 var pointerPos : float = 1.5
 var pointerPosBlocked : int = 2
 
+var rc : Vector2i
+
 var contains : Piece
 var hazard : HazardResource
 var hazardModel
@@ -35,20 +37,19 @@ func SwitchHighlight():
 func setPiece(piece : Piece, dir : int):
 	contains = piece
 	piece.setPieceOrientation(dir)
-	if piece.currentTile:
-		piece.previousTile = piece.currentTile
-		piece.previousTile.contains = null
+	if piece.rc:
 		var tween = create_tween()
-		tween.tween_property(piece, "global_position", piecePos + self.global_position, 0.2).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		tween.tween_property(piece, "global_position", piecePos + self.global_position, 0.2
+							).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	else:
 		contains.global_position = piecePos + self.global_position
 	
-	piece.currentTile = self
+	piece.rc = rc
 	
 	if piece is PlayerPiece:
-		PlayerData.playerInfo.currentPos = global_position
+		PlayerData.playerInfo.rc = rc
 	elif piece is EnemyPiece:
-		FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos = global_position
+		FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].rc = rc
 	
 
 func interact():
@@ -93,7 +94,7 @@ func setHazard(hazardIn : HazardResource):
 	if hazard.blockade:
 		obstructed = true
 	
-	FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = hazard
+	FloorData.floorInfo.tileInfo[rc.x][rc.y].hazard = hazard
 	
 	hazardModel = ResourceLoader.load(hazard.associatedModel).instantiate()
 	add_child(hazardModel)

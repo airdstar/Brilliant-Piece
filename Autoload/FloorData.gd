@@ -5,6 +5,7 @@ var save_path := "res://Run Info/FloorData.tres"
 var floorInfo : FloorInfo = FloorInfo.new()
 
 var floor : Floor
+var tiles : Array
 
 func loadInfo():
 	if ResourceLoader.exists(save_path):
@@ -32,7 +33,7 @@ func updateData():
 		floorInfo.enemies[n].health = floor.enemies[n].health
 		floorInfo.enemies[n].armor = floor.enemies[n].armor
 	
-	for n in range(floorInfo.tiles.size()):
+	for n in range(floorInfo.tileInfo.size()):
 		floorInfo.tiles[n].hazard = floor.Handlers.TH.tileDict["Tiles"][n].hazard
 		#floorInfo.tiles[n].status = floor.Handlers.TH.tileDict["Tiles"][n].status
 

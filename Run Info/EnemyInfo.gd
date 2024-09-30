@@ -4,7 +4,7 @@ class_name EnemyInfo
 @export var enemyType : EnemyResource
 @export var pieceType : PieceTypeResource
 
-@export var currentPos : Vector3
+@export var rc : Vector2i
 
 @export var level : int = 1
 

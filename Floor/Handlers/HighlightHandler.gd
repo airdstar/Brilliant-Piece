@@ -104,56 +104,69 @@ func handle3DHighlighting(input : String):
 	findClosestTile(direction)
 
 func findClosestTile(direction : int):
-	var foundTile : tile = null
-	var searcher : Vector3 = mH.TH.tileDict["hTile"].global_position
+	var foundTile : Vector2i
+	var rc : Vector2i = mH.TH.highlightedTile.rc
+	
 	var forward = mH.DH.dirDict["PosData"][direction]
 	var left = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[0]]
 	var right = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[1]]
-	for n in range(4):
+	
+	
+	for n in range(12):
 		if !foundTile:
-			searcher += forward
-			if !mH.TH.lookForTile(searcher):
-				if !mH.TH.lookForTile(searcher + forward):
-					if !mH.TH.lookForTile(searcher + left):
-						if !mH.TH.lookForTile(searcher + right):
-							foundTile = mH.TH.lookForTile(searcher + right)
-					else:
-						foundTile = mH.TH.lookForTile(searcher + left)
+			rc += forward
+			
+			if rc.x >= FloorData.floorInfo.rc.x:
+				rc.x = 0
+			elif rc.y >= FloorData.floorInfo.rc.y:
+				rc.y = 0
+			
+			if FloorData.tiles[rc.x][rc.y] == null:
+				
+				if rc.x + forward.x >= FloorData.floorInfo.rc.x:
+					rc.x = 0
+				elif rc.y + forward.y >= FloorData.floorInfo.rc.y:
+					rc.y = 0
+				
+				if FloorData.tiles[rc.x + forward.x][rc.y + forward.y] == null:
+					match randi_range(0,1):
+						0:
+							if rc.x + left.x < FloorData.floorInfo.rc.x and rc.y + left.y < FloorData.floorInfo.rc.y:
+								if FloorData.tiles[rc.x + left.x][rc.y + left.y] == null:
+									if rc.x + right.x < FloorData.floorInfo.rc.x and rc.y + right.y < FloorData.floorInfo.rc.y:
+										if FloorData.tiles[rc.x + right.x][rc.y + right.y] != null:
+											foundTile = Vector2i(rc.x + right.x, rc.y + right.y)
+								else:
+									foundTile = Vector2i(rc.x + left.x, rc.y + left.y)
+						1:
+							if rc.x + right.x < FloorData.floorInfo.rc.x and rc.y + right.y < FloorData.floorInfo.rc.y:
+								if FloorData.tiles[rc.x + right.x][rc.y + right.y] == null:
+									if rc.x + left.x < FloorData.floorInfo.rc.x and rc.y + left.y < FloorData.floorInfo.rc.y:
+										if FloorData.tiles[rc.x + left.x][rc.y + left.y] != null:
+											foundTile = Vector2i(rc.x + left.x, rc.y + left.y)
+								else:
+									foundTile = Vector2i(rc.x + right.x, rc.y + right.y)
 				else:
-					foundTile = mH.TH.lookForTile(searcher + forward)
+					foundTile = Vector2i(rc.x + forward.x, rc.y + forward.y)
 			else:
-				foundTile = mH.TH.lookForTile(searcher)
-
+				foundTile = Vector2i(rc.x, rc.y)
+		else:
+			break
 	if foundTile:
 		highlightTile(foundTile)
 
-func highlightTile(tileToSelect : tile):
+func highlightTile(tPos : Vector2i):
+	var tileToSelect = FloorData.tiles[tPos.x][tPos.y]
 	var pointer = FloorData.floor.Pointer
 	var cameraBase = FloorData.floor.cameraBase
-	mH.TH.tileDict["hTile"] = tileToSelect
+	mH.TH.highlightedTile = tileToSelect
 	mH.TH.setTilePattern()
 	tileToSelect.highlight.visible = true
 	pointer.position = Vector3(tileToSelect.position.x, tileToSelect.getPointerPos(), tileToSelect.position.z)
 	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
 	if FloorData.floorInfo.playerTurn:
-		if mH.TH.tileDict["iTiles"].has(tileToSelect):
-			if mH.SH.moving:
-				tileToSelect.setColor(Global.colorDict["Blue"])
-				pointer.setColor(Global.colorDict["Blue"])
-				if tileToSelect.contains is EnemyPiece:
-					tileToSelect.setColor(Global.colorDict["Red"])
-					pointer.setColor(Global.colorDict["Red"])
-			elif mH.SH.interactable:
-				tileToSelect.setColor(Global.colorDict["Red"])
-				pointer.setColor(Global.colorDict["Red"])
-				if mH.SH.interactable.AOE:
-					var possibleTiles = mH.SH.interactable.AOE.getAOE(tileToSelect.global_position, mH.DH.getClosestDirection(tileToSelect.global_position, PlayerData.playerInfo.currentPos))
-					for n in range(possibleTiles.size()):
-						if mH.TH.lookForTile(possibleTiles[n]):
-							mH.TH.lookForTile(possibleTiles[n]).setColor(Global.colorDict["Red"])
-		else:
-			tileToSelect.setColor(Global.colorDict["Gray"])
-			pointer.setColor(Global.colorDict["Gray"])
+		tileToSelect.setColor(Global.colorDict["Gray"])
+		pointer.setColor(Global.colorDict["Gray"])
 	else:
 		tileToSelect.setColor(Global.colorDict["Gray"])
 		pointer.setColor(Global.colorDict["Gray"])

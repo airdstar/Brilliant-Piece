@@ -1,29 +1,23 @@
 extends Handler
 
 func _process(_delta: float):
-	if Input.is_action_just_pressed("Select"):
-		if mH.TH.tileDict["iTiles"].has(mH.TH.tileDict["hTile"]):
-			if mH.SH.moving == true:
-				movePiece(mH.TH.tileDict["hTile"])
-			elif mH.SH.interactable != null:
-				interact(mH.TH.tileDict["hTile"])
+	if mH.SH.moving == true or mH.SH.interactable != null:
+		if Input.is_action_just_pressed("Select"):
+			if mH.TH.iTiles.has(mH.TH.highlightedTile):
+				if mH.SH.moving == true:
+					movePiece(mH.TH.highlightedTile)
+				elif mH.SH.interactable != null:
+					interact(mH.TH.highlightedTile)
 
 func movePiece(destination : tile):
 	var piece = mH.SH.actingPiece
 	var destinationReached : bool = false
-	var closestDirection
-	var destinationPos = mH.TH.tileDict["TilePos"][mH.TH.tileDict["Tiles"].find(destination)]
+	var closestDirection = mH.DH.getClosestDirection(piece.rc, destination.rc)
+	var posData = mH.DH.dirDict["PosData"][closestDirection]
 	if piece is PlayerPiece:
 		mH.TH.stopShowing()
-		closestDirection = mH.DH.getClosestDirection(PlayerData.playerInfo.currentPos, destinationPos)
-	elif piece is EnemyPiece:
-		closestDirection = mH.DH.getClosestDirection(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos, destinationPos)
 	while(!destinationReached):
-		var closestTile
-		if piece is PlayerPiece:
-			closestTile = mH.TH.lookForTile(PlayerData.playerInfo.currentPos + mH.DH.dirDict["PosData"][closestDirection])
-		elif piece is EnemyPiece:
-			closestTile = mH.TH.lookForTile(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos + mH.DH.dirDict["PosData"][closestDirection])
+		var closestTile = FloorData.tiles[piece.rc.x + posData.x][piece.rc.y + posData.y]
 		
 		if closestTile.contains:
 			if closestTile.contains is MoveablePiece:
@@ -35,7 +29,7 @@ func movePiece(destination : tile):
 				if closestTile.hazard.effect.stopMovement:
 					destination = piece.currentTile
 		
-		if piece.currentTile == destination:
+		if piece.rc == destination.rc:
 			destinationReached = true
 			mH.UH.usedMovement()
 			if piece is PlayerPiece:
@@ -49,11 +43,7 @@ func movePiece(destination : tile):
 	mH.SH.moving = false
 
 func pushPiece(piece : MoveablePiece, direction : int):
-	var currentTile
-	if piece is PlayerPiece:
-		currentTile = mH.TH.lookForTile(PlayerData.playerInfo.currentPos + mH.DH.dirDict["PosData"][direction])
-	elif piece is EnemyPiece:
-		currentTile = mH.TH.lookForTile(FloorData.floorInfo.enemies[FloorData.floor.enemies.find(piece)].currentPos + mH.DH.dirDict["PosData"][direction])
+	var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 	if currentTile:
 		currentTile.setPiece(piece, direction)
 		if int(piece.maxHealth / 10) < 1:

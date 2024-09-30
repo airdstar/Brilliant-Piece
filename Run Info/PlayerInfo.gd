@@ -1,7 +1,7 @@
 extends Resource
 class_name PlayerInfo
 
-@export var currentPos : Vector3
+@export var rc : Vector2i
 @export var currentFloorNum : int = 1
 
 @export var classType : ClassResource

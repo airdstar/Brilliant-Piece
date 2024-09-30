@@ -4,7 +4,8 @@ class_name FloorInfo
 @export var floorNum : int = 1
 @export var layerData : LayerResource
 
-@export var tiles : Array[TileInfo]
+@export var tileInfo : Array
+@export var rc : Vector2i
 
 @export var enemies : Array[EnemyInfo]
 @export var neutrals : Array
@@ -21,7 +22,7 @@ func setLayerInfo():
 	if floorNum == 0:
 		layerData = ResourceLoader.load("res://Resources/Layer Resources/TestLayer.tres")
 	elif floorNum <= 5:
-		layerData = ResourceLoader.load("res://Resources/Layer Resources/StartingLayer.tres")
+		layerData = ResourceLoader.load("res://Resources/Layer Resources/Bellcere.tres")
 
 func endTurn():
 	playerTurn = !playerTurn

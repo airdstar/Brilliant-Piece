@@ -27,8 +27,7 @@ func openMenu():
 		FloorData.floor.menuHolder.add_child(currentMenu)
 		FloorData.floor.Pointer.visible = false
 		FloorData.floor.HUD.showFloorInfo()
-		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
-		FloorData.floor.enemies[0].pathFind()
+		mH.HH.highlightTile(PlayerData.playerPiece.rc)
 
 func closeMenu():
 	currentMenu.animation.play("CloseMenu")
@@ -65,7 +64,7 @@ func unselect():
 		currentMenu.selectedOption()
 
 func displayInfo():
-	if mH.TH.tileDict["hTile"].contains is MoveablePiece:
+	if mH.TH.highlightedTile.contains is MoveablePiece:
 		FloorData.floor.HUD.showPieceInfo()
 		FloorData.floor.HUD.updatePortrait()
 		FloorData.floor.HUD.updateLabels()

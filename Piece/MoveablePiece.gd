@@ -1,8 +1,7 @@
 extends Piece
 class_name MoveablePiece
 
-var previousTile : tile
-var currentTile : tile
+var rc : Vector2i
 
 var type : PieceTypeResource
 var level : int

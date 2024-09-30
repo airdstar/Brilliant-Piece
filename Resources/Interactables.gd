@@ -6,7 +6,7 @@ class_name Interactable
 @export var desc : String
 
 
-func getTiles(iStart : Vector3):
+func getTiles(_iStart : Vector2i):
 	pass
 
 func getUsable():
