@@ -39,20 +39,20 @@ func getTiles(iStart : Vector2i):
 				
 				if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 					endSearch = true
-				
-				if FloorData.tiles[tileData.x][tileData.y] != null:
-					if obstructable:
-						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
-						if FloorData.tiles[tileData.x][tileData.y].obstructed:
-							endSearch = true
-					else:
-						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
 				else:
-					if obstructable:
+					if FloorData.tiles[tileData.x][tileData.y] != null:
+						if obstructable:
+							toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+							if FloorData.tiles[tileData.x][tileData.y].obstructed:
+								endSearch = true
+						else:
+							toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+					else:
+						if obstructable:
+							endSearch = true
+					
+					if counter == iRange:
 						endSearch = true
-				
-				if counter == iRange:
-					endSearch = true
 				
 				counter += 1
 				

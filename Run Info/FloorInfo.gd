@@ -36,5 +36,4 @@ func endTurn():
 	if playerTurn:
 		FloorData.floor.Handlers.UH.openMenu()
 	else:
-		FloorData.floor.Pointer.visible = true
 		FloorData.floor.Handlers.EH.makeDecision()

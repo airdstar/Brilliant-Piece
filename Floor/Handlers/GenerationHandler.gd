@@ -43,6 +43,8 @@ func generateFloor():
 			FloorData.floor.add_child(tileToAdd)
 			tileToAdd.global_position = FloorData.floorInfo.tiles[n].pos
 	
+	mH.TH.setTilePattern()
+	
 	generatePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
 
@@ -52,7 +54,6 @@ func generatePieces(playerStarts, enemyStarts):
 	if FloorData.floorInfo.isNew:
 		
 		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
-		mH.HH.highlightTile(PlayerData.playerPiece.rc)
 		
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())

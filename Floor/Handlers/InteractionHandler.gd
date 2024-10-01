@@ -34,7 +34,6 @@ func movePiece(destination : tile):
 		await get_tree().create_timer(0.01).timeout
 		mH.UH.openMenu()
 			
-	
 	mH.SH.actingPiece = null
 	mH.SH.moving = false
 

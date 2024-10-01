@@ -28,6 +28,7 @@ func saveInfo():
 
 
 func updateData():
+	PlayerData.updateData()
 	for n in range(floorInfo.enemies.size()):
 		floorInfo.enemies[n].maxHealth = floor.enemies[n].maxHealth
 		floorInfo.enemies[n].health = floor.enemies[n].health

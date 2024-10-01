@@ -26,7 +26,6 @@ func openMenu():
 		currentMenu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
 		FloorData.floor.menuHolder.add_child(currentMenu)
 		FloorData.floor.HUD.showFloorInfo()
-		mH.HH.highlightTile(PlayerData.playerPiece.rc)
 
 func closeMenu():
 	currentMenu.animation.play("CloseMenu")
@@ -49,8 +48,6 @@ func fullyCloseMenu():
 				currentMenu = null
 		else:
 			currentMenu = currentMenu.get_parent()
-	FloorData.floor.Pointer.visible = true
-	FloorData.floor.HUD.hideFloorInfo()
 
 func unselect():
 	if currentMenu is BasicMenu:

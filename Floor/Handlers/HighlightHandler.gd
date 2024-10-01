@@ -107,6 +107,7 @@ func findClosestTile(direction : int):
 		highlightTile(foundTile)
 
 func highlightTile(tPos : Vector2i):
+	print(get_stack())
 	var tileToSelect = FloorData.tiles[tPos.x][tPos.y]
 	mH.TH.highlightedTile = tileToSelect
 	mH.TH.setTilePattern()

@@ -38,6 +38,7 @@ func updateData():
 	
 	playerInfo.pieceType = playerPiece.type
 	playerInfo.classType = playerPiece.classType
+	playerInfo.rc = playerPiece.rc
 
 func newAction():
 	pass

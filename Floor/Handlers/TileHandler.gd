@@ -9,14 +9,16 @@ func setTilePattern():
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
 				var cTile = FloorData.tiles[n][m]
-				if highlightedTile != cTile:
-					if !iTiles.has(cTile):
-						if (cTile.rc.x + cTile.rc.y)%2 == 1:
-							cTile.set_color(Global.colorDict["Black"])
-						else:
-							cTile.set_color(Global.colorDict["White"])
+				if !iTiles.has(cTile):
+					if (cTile.rc.x + cTile.rc.y)%2 == 1:
+						cTile.set_color(Global.tileBlackColor[0])
 					else:
+						cTile.set_color(Global.tileWhiteColor[0])
+				else:
+					if mH.SH.moving:
 						cTile.set_color(Global.colorDict["Blue"])
+					elif mH.SH.interactable:
+						cTile.set_color(Global.colorDict["Orange"])
 
 func show():
 	if mH.SH.moving:
