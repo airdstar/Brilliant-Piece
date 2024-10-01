@@ -12,9 +12,7 @@ func _process(_delta):
 		inputDirection = "Backward"
 	
 	if inputDirection:
-		if !mH.UH.currentMenu:
-			handle3DHighlighting(inputDirection)
-		else:
+		if mH.UH.currentMenu:
 			handleMenuHighlighting(inputDirection)
 
 func handleMenuHighlighting(input : String):
@@ -55,53 +53,6 @@ func handleMenuHighlighting(input : String):
 				menu.highlightedOption += 1
 			menu.swapItem()
 
-func handle3DHighlighting(input : String):
-	var rotation = rad_to_deg(FloorData.floor.cameraBase.rotation.y)
-	var direction = null
-	
-	if input == "Left" or input == "Right":
-		if rotation > -172.5 and rotation < -97.5:
-			direction = mH.DH.dirDict["Direction"][4]
-		elif rotation >= -97.5 and rotation <= -82.5:
-			direction = mH.DH.dirDict["Direction"][5]
-		elif rotation > -82.5 and rotation < -7.5:
-			direction = mH.DH.dirDict["Direction"][6]
-		elif rotation >= -7.5 and rotation <= 7.5:
-			direction = mH.DH.dirDict["Direction"][7]
-		elif rotation > 7.5 and rotation < 82.5:
-			direction = mH.DH.dirDict["Direction"][0]
-		elif rotation >= 82.5 and rotation <= 97.5:
-			direction = mH.DH.dirDict["Direction"][1]
-		elif rotation > 97.5 and rotation < 172.5:
-			direction = mH.DH.dirDict["Direction"][2]
-		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
-			direction = mH.DH.dirDict["Direction"][3]
-		
-		if input == "Right":
-			direction = mH.DH.getOppDirection(direction)
-			
-	elif input == "Backward" or input == "Forward":
-		if rotation > -172.5 and rotation < -97.5:
-			direction = mH.DH.dirDict["Direction"][6]
-		elif rotation >= -97.5 and rotation <= -82.5:
-			direction = mH.DH.dirDict["Direction"][7]
-		elif rotation > -82.5 and rotation < -7.5:
-			direction = mH.DH.dirDict["Direction"][0]
-		elif rotation >= -7.5 and rotation <= 7.5:
-			direction = mH.DH.dirDict["Direction"][1]
-		elif rotation > 7.5 and rotation < 82.5:
-			direction = mH.DH.dirDict["Direction"][2]
-		elif rotation >= 82.5 and rotation <= 97.5:
-			direction = mH.DH.dirDict["Direction"][3]
-		elif rotation > 97.5 and rotation < 172.5:
-			direction = mH.DH.dirDict["Direction"][4]
-		elif (rotation >= 172.5 and rotation <= 180) or (rotation >= -180 and rotation <= -172.5):
-			direction = mH.DH.dirDict["Direction"][5]
-		
-		if input == "Forward":
-			direction = mH.DH.getOppDirection(direction)
-			
-	findClosestTile(direction)
 
 func findClosestTile(direction : int):
 	var foundTile : Vector2i
@@ -157,18 +108,11 @@ func findClosestTile(direction : int):
 
 func highlightTile(tPos : Vector2i):
 	var tileToSelect = FloorData.tiles[tPos.x][tPos.y]
-	var pointer = FloorData.floor.Pointer
-	var cameraBase = FloorData.floor.cameraBase
 	mH.TH.highlightedTile = tileToSelect
 	mH.TH.setTilePattern()
-	tileToSelect.highlight.visible = true
-	pointer.position = Vector3(tileToSelect.position.x, tileToSelect.getPointerPos(), tileToSelect.position.z)
-	cameraBase.position = Vector3(tileToSelect.position.x, cameraBase.position.y, tileToSelect.position.z)
 	if FloorData.floorInfo.playerTurn:
-		tileToSelect.setColor(Global.colorDict["Gray"])
-		pointer.setColor(Global.colorDict["Gray"])
+		tileToSelect.set_color(Global.colorDict["Gray"])
 	else:
-		tileToSelect.setColor(Global.colorDict["Gray"])
-		pointer.setColor(Global.colorDict["Gray"])
+		tileToSelect.set_color(Global.colorDict["Gray"])
 	
 	mH.UH.displayInfo()

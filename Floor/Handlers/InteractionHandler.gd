@@ -17,42 +17,31 @@ func movePiece(destination : tile):
 	var closestDirection = mH.DH.getClosestDirection(piece.rc, destination.rc)
 	var posData = mH.DH.dirDict["PosData"][closestDirection]
 	
-	var destinationReached : bool = false
-	while(!destinationReached):
-		var closestTile
-		if piece.type.movementAngle != "L":
-			closestTile = FloorData.tiles[piece.rc.x + posData.x][piece.rc.y + posData.y]
-		else:
-			print("um")
-		
-		if closestTile.contains:
-			if closestTile.contains is MoveablePiece:
-				pushPiece(closestTile.contains, closestDirection)
-		
-		closestTile.setPiece(piece, closestDirection)
-		
-		if closestTile.hazard:
-			if closestTile.hazard.effectType == "OnTouch":
-				if closestTile.hazard.effect.stopMovement:
-					destination.rc = piece.rc
-		
-		if piece.rc == destination.rc:
-			destinationReached = true
-			mH.UH.usedMovement()
-			if piece is PlayerPiece:
-				mH.UH.displayInfo()
-				await get_tree().create_timer(0.01).timeout
-				mH.UH.openMenu()
+	if destination.contains:
+		if destination.contains is MoveablePiece:
+			pushPiece(destination.contains, closestDirection)
+	
+	# Determine tiles that would be touched
+	if destination.hazard:
+		if destination.hazard.effectType == "OnTouch":
+			if destination.hazard.effect.stopMovement:
+				destination.rc = piece.rc
+	
+	destination.setPiece(piece, 1)
+	mH.UH.usedMovement()
+	if piece is PlayerPiece:
+		mH.UH.displayInfo()
+		await get_tree().create_timer(0.01).timeout
+		mH.UH.openMenu()
 			
-		else:
-			await get_tree().create_timer(0.3).timeout
+	
 	mH.SH.actingPiece = null
 	mH.SH.moving = false
 
 func pushPiece(piece : MoveablePiece, direction : int):
 	var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 	if currentTile:
-		currentTile.setPiece(piece, direction)
+		currentTile.setPiece(piece, 1)
 		if int(piece.maxHealth / 10) < 1:
 			piece.damage(1)
 		else:

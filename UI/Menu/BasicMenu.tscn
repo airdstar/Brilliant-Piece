@@ -124,10 +124,8 @@ _data = {
 [node name="BasicMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 360.0
-offset_top = 325.0
-offset_right = 360.0
-offset_bottom = 325.0
+offset_top = 700.0
+offset_bottom = 700.0
 pivot_offset = Vector2(30, 18)
 mouse_filter = 1
 script = ExtResource("1_cedx6")

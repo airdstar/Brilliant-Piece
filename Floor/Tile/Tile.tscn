@@ -14,18 +14,23 @@ offset_right = -992.0
 offset_bottom = -736.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.145098, 0.0941176, 0.101961, 1)
 script = ExtResource("1_bu18m")
 
 [node name="Border" type="TextureRect" parent="."]
+z_index = 1
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 2
 texture = ExtResource("2_qbxm0")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_64e2i")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="mouseHovered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="mouseExited"]

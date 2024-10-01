@@ -1,22 +1,22 @@
 extends Control
 class_name tile
 
+var hovered : bool
 var rc : Vector2i
+
 var contains : Piece
 var hazard : HazardResource
-
 var obstructed := false
 
 func setPiece(piece : Piece, dir : int):
 	contains = piece
-	piece.setPieceOrientation(dir)
 	if piece.rc:
 		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 		var tween = create_tween()
-		tween.tween_property(piece, "global_position", self.global_position, 0.2
+		tween.tween_property(piece, "position", self.position, 0.2
 							).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	else:
-		pass
+		piece.position = position
 	
 	piece.rc = rc
 	
@@ -54,3 +54,12 @@ func setHazard(hazardIn : HazardResource):
 		obstructed = true
 	
 	FloorData.floorInfo.tileInfo[rc.x][rc.y].hazard = hazard
+
+func mouseHovered() -> void:
+	FloorData.floor.Handlers.TH.highlightedTile = self
+	FloorData.floor.Handlers.UH.displayInfo()
+	print("hi")
+
+func mouseExited() -> void:
+	if FloorData.floor.Handlers.TH.highlightedTile == self:
+		FloorData.floor.Handlers.TH.highlightedTile = null

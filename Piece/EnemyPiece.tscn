@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlu6bkktlk1o"]
+[gd_scene load_steps=3 format=3 uid="uid://dlu6bkktlk1o"]
 
+[ext_resource type="Texture2D" uid="uid://ckq3mmjw4tcn4" path="res://Piece/Enemies/Green Cell.png" id="1_15lfj"]
 [ext_resource type="Script" path="res://Piece/EnemyPiece.gd" id="1_v20ax"]
 
-[node name="EnemyPiece" type="Sprite2D"]
+[node name="EnemyPiece" type="TextureRect"]
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_15lfj")
 script = ExtResource("1_v20ax")

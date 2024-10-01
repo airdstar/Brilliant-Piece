@@ -25,7 +25,6 @@ func openMenu():
 		await get_tree().create_timer(0.01).timeout
 		currentMenu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
 		FloorData.floor.menuHolder.add_child(currentMenu)
-		FloorData.floor.Pointer.visible = false
 		FloorData.floor.HUD.showFloorInfo()
 		mH.HH.highlightTile(PlayerData.playerPiece.rc)
 
@@ -38,9 +37,6 @@ func closeMenu():
 			currentMenu = currentMenu.get_parent()
 			currentMenu.hasSelectedOption = false
 			currentMenu.options[currentMenu.highlightedOption].selectToggle()
-		else:
-			FloorData.floor.HUD.hideFloorInfo()
-			FloorData.floor.Pointer.visible = true
 		holder.queue_free()
 
 func fullyCloseMenu():

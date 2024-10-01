@@ -1,11 +1,17 @@
-extends PlayableArea
+extends Node
 class_name Floor
 
 var enemies : Array[EnemyPiece]
 var neutrals : Array
 
+@onready var Handlers = $FloorHandlers
+
+@onready var menuHolder = $Menu
+@onready var HUD = $Menu/HUD
+
+
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 
 func _process(_delta : float):
 	if Input.is_action_just_pressed("Exit"):
@@ -17,7 +23,6 @@ func _process(_delta : float):
 	if Input.is_action_just_pressed("Reset"):
 		Handlers.SH.resetState()
 
-	cameraControls()
 
 func pieceDeath(piece : MoveablePiece):
 	if piece is EnemyPiece:

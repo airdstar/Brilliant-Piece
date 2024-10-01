@@ -1,31 +1,24 @@
 extends Handler
 
-var tileDict : Dictionary
 var highlightedTile : tile
 var iTiles : Array[tile]
 
-func lookForTile(pos : Vector3):
-	if tileDict["TilePos"].has(pos):
-		return tileDict["Tiles"][tileDict["TilePos"].find(pos)]
-	return null
 
 func setTilePattern():
 	for n in range(FloorData.floorInfo.rc.x):
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
 				var cTile = FloorData.tiles[n][m]
-				cTile.highlight.visible = false
 				if highlightedTile != cTile:
 					if !iTiles.has(cTile):
-						if (int(cTile.position.x + cTile.position.z)%2 == 1 or int(cTile.position.x + cTile.position.z)%2 == -1):
-							cTile.setColor(Global.colorDict["Black"])
+						if (cTile.rc.x + cTile.rc.y)%2 == 1:
+							cTile.set_color(Global.colorDict["Black"])
 						else:
-							cTile.setColor(Global.colorDict["White"])
+							cTile.set_color(Global.colorDict["White"])
 					else:
-						cTile.setColor(Global.colorDict["Blue"])
+						cTile.set_color(Global.colorDict["Blue"])
 
 func show():
-	FloorData.floor.Pointer.visible = true
 	if mH.SH.moving:
 		iTiles = PlayerData.playerInfo.pieceType.getMoveableTiles(PlayerData.playerInfo.rc)
 	elif mH.SH.interactable:
