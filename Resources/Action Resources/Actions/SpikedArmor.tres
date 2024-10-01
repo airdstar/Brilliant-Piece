@@ -4,16 +4,14 @@
 
 [resource]
 script = ExtResource("1_nn3g2")
-actionDirection = null
-obstructable = null
-name = "Spiked Armor"
-desc = null
-iconPath = null
-associatedModel = null
-type = "Defensive"
+actionType = ""
 damage = 2
 healing = null
 armor = 5
-range = null
+direction = ""
+iRange = 3
 rangeExclusive = null
-usableOn = null
+obstructable = null
+usableOn = 1
+name = "Spiked Armor"
+desc = null

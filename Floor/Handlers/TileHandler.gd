@@ -18,7 +18,10 @@ func setTilePattern():
 					if mH.SH.moving:
 						cTile.set_color(Global.colorDict["Blue"])
 					elif mH.SH.interactable:
-						cTile.set_color(Global.colorDict["Orange"])
+						if cTile.contains == PlayerData.playerPiece:
+							cTile.set_color(Global.colorDict["Green"])
+						else:
+							cTile.set_color(Global.colorDict["Orange"])
 
 func show():
 	if mH.SH.moving:
