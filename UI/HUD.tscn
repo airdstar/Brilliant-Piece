@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdr4d7j2lkvsg"]
+[gd_scene load_steps=11 format=3 uid="uid://bdr4d7j2lkvsg"]
 
 [ext_resource type="Texture2D" uid="uid://bcwfc204nf0kq" path="res://UI/MoveOutline.png" id="1_m1oxk"]
 [ext_resource type="Script" path="res://UI/HUD.gd" id="1_ymfxc"]
@@ -10,12 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://2a6y3ehkcm4i" path="res://UI/Portrait.png" id="7_xdbhw"]
 [ext_resource type="Theme" uid="uid://b3m5cx7w8nya8" path="res://UI/HUD.tres" id="8_037fx"]
 [ext_resource type="Texture2D" uid="uid://buisvcwrhy2q0" path="res://UI/FloorInfo.png" id="8_ysboo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqgg"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_b6ckj"]
-material = SubResource("StandardMaterial3D_jcqgg")
-size = Vector3(8, 8, 0.5)
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -122,6 +116,7 @@ text = " [img]res://UI/Soul.png[/img] 0 "
 text_direction = 2
 
 [node name="Portrait" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
@@ -172,19 +167,3 @@ theme = ExtResource("8_037fx")
 bbcode_enabled = true
 text = " [img]res://UI/Heart.png[/img] hi [img]res://UI/Armor.png[/img]"
 scroll_active = false
-
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(120, 120)
-
-[node name="Portrait" type="Node3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport/Portrait"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
-fov = 60.0
-
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport/Portrait/Camera3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Portrait/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-mesh = SubResource("BoxMesh_b6ckj")

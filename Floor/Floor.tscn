@@ -13,4 +13,3 @@ script = ExtResource("1_sippj")
 layer = 3
 
 [node name="HUD" parent="Menu" instance=ExtResource("5_0rph0")]
-visible = false

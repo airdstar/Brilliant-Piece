@@ -23,16 +23,6 @@ func showPieceInfo():
 func hidePieceInfo():
 	$Portrait.visible = false
 
-func updatePortrait():
-	if currentlySelected != null:
-		$SubViewport/Portrait.remove_child(currentlySelected)
-	$Portrait.visible = true
-	if FloorData.floor.Handlers.TH.highlightedTile.contains is PlayerPiece:
-		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.63,0.72,0.86))
-	elif FloorData.floor.Handlers.TH.highlightedTile.contains is EnemyPiece:
-		$SubViewport/Portrait/Camera3D/MeshInstance3D.mesh.material.set_albedo(Color(0.86,0.63,0.72))
-	$Portrait/PortraitBackground.texture = $SubViewport.get_texture()
-
 func updateLabels():
 	var piece = FloorData.floor.Handlers.TH.highlightedTile.contains
 	textLabels[0].text = " " + piece.pieceName + " lvl " + str(piece.level)

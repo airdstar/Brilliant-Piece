@@ -62,7 +62,6 @@ func unselect():
 func displayInfo():
 	if mH.TH.highlightedTile.contains is MoveablePiece:
 		FloorData.floor.HUD.showPieceInfo()
-		FloorData.floor.HUD.updatePortrait()
 		FloorData.floor.HUD.updateLabels()
 	else:
 		FloorData.floor.HUD.hidePieceInfo()

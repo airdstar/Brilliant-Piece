@@ -72,7 +72,6 @@ func generatePieces(playerStarts, enemyStarts):
 	else:
 		
 		mH.TH.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
-		mH.HH.highlightTile(PlayerData.playerPiece.currentTile)
 		
 		for n in range(FloorData.floorInfo.enemies.size()):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
