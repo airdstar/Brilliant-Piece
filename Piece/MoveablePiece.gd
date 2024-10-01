@@ -13,19 +13,26 @@ var healthStatus : Array[StatusResource]
 var damageStatus : Array[StatusResource]
 var otherStatus : Array[StatusResource]
 
-@onready var modelHolder = $Model
-
 signal death
 
 func _ready():
 	self.death.connect(FloorData.floor.pieceDeath)
 
-func loadModel(model):
-	model = model.instantiate()
-	modelHolder.add_child(model)
-
-func setPieceOrientation(dir : int):
-	global_rotation.y = deg_to_rad(FloorData.floor.Handlers.DH.dirDict["RotData"][dir])
+func interact():
+	var interactable = FloorData.floor.Handlers.SH.interactable
+	var acting = FloorData.floor.Handlers.SH.actingPiece
+	
+	if interactable.damage:
+		if interactable is ActionResource:
+			damage((interactable.damage + acting.flatDamage()) * acting.percentDamage())
+		else:
+			damage(interactable.damage)
+	if interactable.healing:
+		heal(interactable.healing)
+	if interactable.armor:
+		addArmor(interactable.armor)
+	if interactable.status:
+		applyStatus(interactable.status)
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:

@@ -2,7 +2,5 @@
 
 [ext_resource type="Script" path="res://Piece/EnemyPiece.gd" id="1_v20ax"]
 
-[node name="EnemyPiece" type="Node3D"]
+[node name="EnemyPiece" type="Sprite2D"]
 script = ExtResource("1_v20ax")
-
-[node name="Model" type="Node3D" parent="."]

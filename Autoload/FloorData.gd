@@ -32,6 +32,7 @@ func updateData():
 		floorInfo.enemies[n].maxHealth = floor.enemies[n].maxHealth
 		floorInfo.enemies[n].health = floor.enemies[n].health
 		floorInfo.enemies[n].armor = floor.enemies[n].armor
+		floorInfo.enemies[n].rc = floor.enemies[n].rc
 	
 	for n in range(floorInfo.rc.x):
 		for m in range(floorInfo.rc.y):

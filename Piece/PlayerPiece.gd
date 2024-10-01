@@ -18,7 +18,6 @@ func loadData():
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
 	
-	loadModel(ResourceLoader.load(classType.associatedModel))
 
 func setData():
 	PlayerData.playerInfo.isNew = false
@@ -36,7 +35,6 @@ func setData():
 	PlayerData.playerInfo.classType = classType
 	PlayerData.playerInfo.pieceType = type
 	
-	loadModel(ResourceLoader.load(classType.associatedModel))
 
 func updateData():
 	level = PlayerData.playerInfo.level

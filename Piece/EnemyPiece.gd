@@ -4,7 +4,6 @@ class_name EnemyPiece
 var enemyType : EnemyResource
 var behavior : String
 
-var prevDirection : int
 
 func setData(pieceNum : int):
 	FloorData.floorInfo.enemies.append(EnemyInfo.new())
@@ -26,7 +25,6 @@ func setData(pieceNum : int):
 	
 	#Determine starting behavior here
 	
-	loadModel(ResourceLoader.load(enemyType.associatedModel))
 
 func loadData(pieceNum : int):
 	type = FloorData.floorInfo.enemies[pieceNum].pieceType
@@ -38,7 +36,6 @@ func loadData(pieceNum : int):
 	maxHealth = FloorData.floorInfo.enemies[pieceNum].maxHealth
 	armor = FloorData.floorInfo.enemies[pieceNum].armor
 	
-	loadModel(ResourceLoader.load(enemyType.associatedModel))
 
 func updateData():
 	level = PlayerData.playerInfo.level

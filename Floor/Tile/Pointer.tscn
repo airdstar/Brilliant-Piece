@@ -1,6 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://vhhyi3mimwtp"]
+[gd_scene load_steps=6 format=3 uid="uid://k36ckfoqy12l"]
 
-[ext_resource type="Script" path="res://Floor/Tile/Pointer.gd" id="1_syfrq"]
+[sub_resource type="GDScript" id="GDScript_0n54m"]
+script/source = "extends Node3D
+
+var up : bool = true
+
+@onready var top = $Top
+@onready var bottom = $Bottom
+
+func _ready():
+	pass
+
+func setColor(color : Color):
+	top.mesh.material.set_albedo(color)
+	bottom.mesh.material.set_albedo(color)
+
+func SwitchBob():
+	var topTween = create_tween()
+	var bottomTween = create_tween()
+	if up:
+		topTween.tween_property(top,\"position\",Vector3(0,0.1 + 0.165,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+		bottomTween.tween_property(bottom,\"position\",Vector3(0,0.1 - 0.246,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	else:
+		topTween.tween_property(top,\"position\",Vector3(0,0 + 0.165,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+		bottomTween.tween_property(bottom,\"position\",Vector3(0,0 - 0.246,0),1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	
+	up = !up
+"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oji6a"]
 albedo_color = Color(0.63, 0.72, 0.86, 1)
@@ -15,7 +41,7 @@ material = SubResource("StandardMaterial3D_6e7v6")
 top_radius = 0.0
 
 [node name="Pointer" type="Node3D"]
-script = ExtResource("1_syfrq")
+script = SubResource("GDScript_0n54m")
 
 [node name="Top" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.16, 0, 0, 0, 0.16, 0, 0, 0, 0.16, 0, 0.164519, 0)
