@@ -11,12 +11,15 @@ func loadData():
 	type = PlayerData.playerInfo.pieceType
 	classType = PlayerData.playerInfo.classType
 	pieceName = classType.className
+	rc = PlayerData.playerInfo.rc
 	
 	level = PlayerData.playerInfo.level
 	
 	health = PlayerData.playerInfo.health
 	maxHealth = PlayerData.playerInfo.maxHealth
 	armor = PlayerData.playerInfo.armor
+	
+	$TextureRect.set_texture(ResourceLoader.load(classType.associatedSprite))
 	
 
 func setData():

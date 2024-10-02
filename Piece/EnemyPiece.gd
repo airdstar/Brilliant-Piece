@@ -37,6 +37,9 @@ func loadData(pieceNum : int):
 	health = FloorData.floorInfo.enemies[pieceNum].health
 	maxHealth = FloorData.floorInfo.enemies[pieceNum].maxHealth
 	armor = FloorData.floorInfo.enemies[pieceNum].armor
+	rc = FloorData.floorInfo.enemies[pieceNum].rc
+	
+	$TextureRect.set_texture(ResourceLoader.load(enemyType.associatedSprite))
 	
 
 func updateData():

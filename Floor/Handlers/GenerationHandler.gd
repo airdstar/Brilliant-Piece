@@ -74,7 +74,8 @@ func generatePieces(playerStarts, enemyStarts):
 					tileEmpty = true
 					enemyStart.setPiece(FloorData.floor.enemies[n], 2)
 			
-			
+		FloorData.updateData()
+		
 	else:
 		
 		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece, 2)
@@ -82,9 +83,9 @@ func generatePieces(playerStarts, enemyStarts):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].loadData(n)
-			
 			FloorData.tiles[FloorData.floorInfo.enemies[n].rc.x][FloorData.floorInfo.enemies[n].rc.y].setPiece(FloorData.floor.enemies[n], 2)
-			
+		
+		
 
 func placeHazards(hazardLocations, endLocations):
 	if FloorData.floorInfo.isNew:
