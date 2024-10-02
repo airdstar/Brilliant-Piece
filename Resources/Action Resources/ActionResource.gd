@@ -12,7 +12,6 @@ class_name ActionResource
 @export var status : StatusResource
 @export var hazard : HazardResource
 @export var effect : EffectResource
-@export var item : ItemResource
 
 @export_category("Range Variables")
 @export_enum("Straight", "Diagonal", "Both", "Cone", "L") var direction : String

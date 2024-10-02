@@ -15,7 +15,7 @@ func _process(_delta):
 					closeMenu()
 			else:
 				closeMenu()
-	elif Input.is_action_just_pressed("Cancel"):
+	elif Input.is_action_just_pressed("Menu Cancel"):
 		if FloorData.floorInfo.playerTurn:
 			mH.TH.stopShowing()
 			openMenu()

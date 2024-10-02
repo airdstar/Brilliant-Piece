@@ -17,7 +17,8 @@ func _ready():
 func setPiece(piece : Piece, dir : int):
 	contains = piece
 	if piece.rc:
-		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
+		if FloorData.tiles[piece.rc.x][piece.rc.y] != self:
+			FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 		var tween = create_tween()
 		tween.tween_property(piece, "position", self.position, 0.2
 							).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)

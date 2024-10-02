@@ -1,18 +1,15 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://b4751svhw4qc"]
+[gd_resource type="Resource" script_class="ConsumableResource" load_steps=3 format=3 uid="uid://b6hgjx7dibq2o"]
 
-[ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="1_27hdm"]
+[ext_resource type="Script" path="res://Resources/Item Resources/ConsumableResource.gd" id="1_8sqwh"]
 [ext_resource type="Resource" uid="uid://dsyo6o0yrnokv" path="res://Resources/Hazard Resources/StickyGoop.tres" id="1_cb454"]
 
 [resource]
-script = ExtResource("1_27hdm")
-name = "Sticky Goo"
-desc = "Stops movement if touched"
-associatedModel = "res://Item/Base.blend"
-itemType = "Hazard"
-usableOn = 4
-useAmount = 3
-itemRange = 10
+script = ExtResource("1_8sqwh")
 damage = 0
 healing = 0
 armor = 0
 hazard = ExtResource("1_cb454")
+usableOn = 7
+associatedModel = "res://Item/Base.blend"
+name = "Sticky Goop"
+desc = "Place on the ground to stop quick movement"

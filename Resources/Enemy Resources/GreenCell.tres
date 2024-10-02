@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=2 format=3 uid="uid://cy5kp51kthgn8"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://cy5kp51kthgn8"]
 
+[ext_resource type="Resource" uid="uid://4x7h7t0iw6xh" path="res://Resources/Item Resources/ItemPools/GreenCellItems.tres" id="1_idg7s"]
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_okj3r"]
 
 [resource]
@@ -12,5 +13,6 @@ baseHealth = 5
 maxLevel = 3
 minLevel = 1
 expAmount = 2
-coinDropMin = 0
-coinDropMax = 0
+itemPool = ExtResource("1_idg7s")
+coinDropMin = 3
+coinDropMax = 5

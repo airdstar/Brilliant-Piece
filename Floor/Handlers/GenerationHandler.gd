@@ -24,7 +24,7 @@ func generateFloor():
 				
 					FloorData.tiles[n][m] = preload("res://Floor/Tile/Tile.tscn").instantiate()
 					FloorData.floor.add_child(FloorData.tiles[n][m])
-					FloorData.tiles[n][m].position = Vector2i(200 + 32 * n, 32 * m)
+					FloorData.tiles[n][m].position = Vector2i(200 + 31 * n, 31 * m)
 					FloorData.tiles[n][m].rc = Vector2i(n,m)
 					
 					if heightMap.get_pixel(n,m) != Color8(255,255,255):
@@ -79,6 +79,7 @@ func generatePieces(playerStarts, enemyStarts):
 	else:
 		
 		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece, 2)
+		
 		for n in range(FloorData.floorInfo.enemies.size()):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
