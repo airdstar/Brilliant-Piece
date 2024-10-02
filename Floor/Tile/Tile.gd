@@ -25,8 +25,6 @@ func setPiece(piece : Piece, dir : int):
 		piece.position = position
 	
 	piece.rc = rc
-	
-	FloorData.updateData()
 
 func interact():
 	var interactable = FloorData.floor.Handlers.SH.interactable
@@ -67,9 +65,8 @@ func setHazard(hazardIn : HazardResource):
 	
 
 func mouseHovered() -> void:
-	FloorData.floor.Handlers.TH.highlightedTile = self
+	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))
 	FloorData.floor.Handlers.UH.displayInfo()
-	print("hi")
 
 func mouseExited() -> void:
 	if FloorData.floor.Handlers.TH.highlightedTile == self:

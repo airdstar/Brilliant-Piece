@@ -35,6 +35,8 @@ func setData():
 	PlayerData.playerInfo.classType = classType
 	PlayerData.playerInfo.pieceType = type
 	
+	$TextureRect.set_texture(ResourceLoader.load(classType.associatedSprite))
+	
 
 func updateData():
 	level = PlayerData.playerInfo.level

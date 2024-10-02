@@ -3,7 +3,7 @@ class_name ClassResource
 
 @export_category("General")
 @export var className : String
-@export var associatedModel : String
+@export var associatedSprite : String
 
 @export_category("Starting")
 @export var startingHealth : int

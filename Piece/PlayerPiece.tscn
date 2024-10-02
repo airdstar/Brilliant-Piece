@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://fkaj1xnx5wjr"]
+[gd_scene load_steps=2 format=3 uid="uid://fkaj1xnx5wjr"]
 
 [ext_resource type="Script" path="res://Piece/PlayerPiece.gd" id="1_5b7hp"]
-[ext_resource type="Texture2D" uid="uid://d1kgwq01xne1r" path="res://Piece/Classes/CrystalSage.png" id="1_l7r8n"]
 
-[node name="PlayerPiece" type="TextureRect"]
+[node name="PlayerPiece" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("1_l7r8n")
+mouse_filter = 2
 script = ExtResource("1_5b7hp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0

@@ -4,10 +4,7 @@ func _process(_delta: float):
 	if mH.SH.moving == true or mH.SH.interactable != null:
 		if Input.is_action_just_pressed("Select"):
 			if mH.TH.iTiles.has(mH.TH.highlightedTile):
-				if mH.SH.moving == true:
-					movePiece(mH.TH.highlightedTile)
-				elif mH.SH.interactable != null:
-					interact(mH.TH.highlightedTile)
+				interact(mH.TH.highlightedTile)
 
 func movePiece(destination : tile):
 	var piece = mH.SH.actingPiece
@@ -40,15 +37,13 @@ func movePiece(destination : tile):
 			
 	mH.SH.actingPiece = null
 	mH.SH.moving = false
+	FloorData.updateData()
 
 func pushPiece(piece : MoveablePiece, direction : int):
 	var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 	if currentTile:
 		currentTile.setPiece(piece, 1)
-		if int(piece.maxHealth / 10) < 1:
-			piece.damage(1)
-		else:
-			piece.damage(1 + int(piece.maxHealth / 10))
+		piece.damage(1)
 		if currentTile.hazard:
 			if currentTile.hazard.effectType == "OnTouch":
 				print("hi")
@@ -56,7 +51,10 @@ func pushPiece(piece : MoveablePiece, direction : int):
 		piece.damage(5 + int(piece.maxHealth / 4))
 
 func interact(destination : tile):
-	destination.interact()
+	if mH.SH.moving == true:
+		movePiece(destination)
+	else:
+		destination.interact()
 	mH.TH.stopShowing()
 	mH.TH.setTilePattern()
 	

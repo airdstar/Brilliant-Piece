@@ -38,10 +38,15 @@ func generateFloor():
 							Color8(200,200,200):
 								possibleEnds.append(FloorData.tiles[n][m])
 	else:
-		for n in range(FloorData.floorInfo.tiles.size()):
-			var tileToAdd = preload("res://Floor/Tile/Tile.tscn").instantiate()
-			FloorData.floor.add_child(tileToAdd)
-			tileToAdd.global_position = FloorData.floorInfo.tiles[n].pos
+		for n in range(FloorData.floorInfo.rc.x):
+			FloorData.tiles.append([])
+			for m in range(FloorData.floorInfo.rc.y):
+				FloorData.tiles[n].append(null)
+				if FloorData.floorInfo.tileInfo[n][m] != null:
+					FloorData.tiles[n][m] = preload("res://Floor/Tile/Tile.tscn").instantiate()
+					FloorData.floor.add_child(FloorData.tiles[n][m])
+					FloorData.tiles[n][m].position = Vector2i(200 + 32 * n, 32 * m)
+					FloorData.tiles[n][m].rc = Vector2i(n,m)
 	
 	mH.TH.setTilePattern()
 	
@@ -72,14 +77,13 @@ func generatePieces(playerStarts, enemyStarts):
 			
 	else:
 		
-		mH.TH.lookForTile(PlayerData.playerInfo.currentPos).setPiece(PlayerData.playerPiece, 2)
-		
+		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece, 2)
 		for n in range(FloorData.floorInfo.enemies.size()):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].loadData(n)
 			
-			mH.TH.lookForTile(FloorData.floorInfo.enemies[n].currentPos).setPiece(FloorData.floor.enemies[n], 2)
+			FloorData.tiles[FloorData.floorInfo.enemies[n].rc.x][FloorData.floorInfo.enemies[n].rc.y].setPiece(FloorData.floor.enemies[n], 2)
 			
 
 func placeHazards(hazardLocations, endLocations):
@@ -90,6 +94,8 @@ func placeHazards(hazardLocations, endLocations):
 										 	randi_range(0, FloorData.floorInfo.layerData.possibleHazards.size() - 1)])
 		endLocations[0].setHazard(ResourceLoader.load("res://Resources/Hazard Resources/FloorEnd.tres"))
 	else:
-		for n in range(FloorData.floorInfo.tiles.size()):
-			if FloorData.floorInfo.tiles[n].hazard:
-				FloorData.floor.Handlers.TH.tileDict["Tiles"][n].setHazard(FloorData.floorInfo.tiles[n].hazard)
+		for n in range(FloorData.floorInfo.rc.x):
+			for m in range(FloorData.floorInfo.rc.y):
+				if FloorData.floorInfo.tileInfo[n][m] != null:
+					if FloorData.floorInfo.tileInfo[n][m].hazard:
+						FloorData.tiles[n][m].setHazard(FloorData.floorInfo.tileInfo[n][m].hazard)

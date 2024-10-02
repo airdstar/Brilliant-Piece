@@ -25,6 +25,8 @@ func setData(pieceNum : int):
 	
 	#Determine starting behavior here
 	
+	$TextureRect.set_texture(ResourceLoader.load(enemyType.associatedSprite))
+	
 
 func loadData(pieceNum : int):
 	type = FloorData.floorInfo.enemies[pieceNum].pieceType

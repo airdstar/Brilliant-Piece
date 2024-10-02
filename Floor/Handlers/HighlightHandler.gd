@@ -53,67 +53,13 @@ func handleMenuHighlighting(input : String):
 				menu.highlightedOption += 1
 			menu.swapItem()
 
-
-func findClosestTile(direction : int):
-	var foundTile : Vector2i
-	var rc : Vector2i = mH.TH.highlightedTile.rc
-	
-	var forward = mH.DH.dirDict["PosData"][direction]
-	var left = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[0]]
-	var right = mH.DH.dirDict["PosData"][mH.DH.getSides(direction)[1]]
-	
-	
-	for n in range(12):
-		if !foundTile:
-			rc += forward
-			
-			if rc.x >= FloorData.floorInfo.rc.x:
-				rc.x = 0
-			elif rc.y >= FloorData.floorInfo.rc.y:
-				rc.y = 0
-			
-			if FloorData.tiles[rc.x][rc.y] == null:
-				
-				if rc.x + forward.x >= FloorData.floorInfo.rc.x:
-					rc.x = 0
-				elif rc.y + forward.y >= FloorData.floorInfo.rc.y:
-					rc.y = 0
-				
-				if FloorData.tiles[rc.x + forward.x][rc.y + forward.y] == null:
-					match randi_range(0,1):
-						0:
-							if rc.x + left.x < FloorData.floorInfo.rc.x and rc.y + left.y < FloorData.floorInfo.rc.y:
-								if FloorData.tiles[rc.x + left.x][rc.y + left.y] == null:
-									if rc.x + right.x < FloorData.floorInfo.rc.x and rc.y + right.y < FloorData.floorInfo.rc.y:
-										if FloorData.tiles[rc.x + right.x][rc.y + right.y] != null:
-											foundTile = Vector2i(rc.x + right.x, rc.y + right.y)
-								else:
-									foundTile = Vector2i(rc.x + left.x, rc.y + left.y)
-						1:
-							if rc.x + right.x < FloorData.floorInfo.rc.x and rc.y + right.y < FloorData.floorInfo.rc.y:
-								if FloorData.tiles[rc.x + right.x][rc.y + right.y] == null:
-									if rc.x + left.x < FloorData.floorInfo.rc.x and rc.y + left.y < FloorData.floorInfo.rc.y:
-										if FloorData.tiles[rc.x + left.x][rc.y + left.y] != null:
-											foundTile = Vector2i(rc.x + left.x, rc.y + left.y)
-								else:
-									foundTile = Vector2i(rc.x + right.x, rc.y + right.y)
-				else:
-					foundTile = Vector2i(rc.x + forward.x, rc.y + forward.y)
-			else:
-				foundTile = Vector2i(rc.x, rc.y)
-		else:
-			break
-	if foundTile:
-		highlightTile(foundTile)
-
 func highlightTile(tPos : Vector2i):
-	print(get_stack())
 	var tileToSelect = FloorData.tiles[tPos.x][tPos.y]
 	mH.TH.highlightedTile = tileToSelect
 	mH.TH.setTilePattern()
 	if FloorData.floorInfo.playerTurn:
-		tileToSelect.set_color(Global.colorDict["Gray"])
+		tileToSelect.tileColor.set_color(Global.colorDict["Gray"])
 	else:
-		tileToSelect.set_color(Global.colorDict["Gray"])
+		tileToSelect.tileColor.set_color(Global.colorDict["Gray"])
 	
 	mH.UH.displayInfo()

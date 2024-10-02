@@ -6,7 +6,7 @@
 script = ExtResource("1_okj3r")
 name = "Green Cell"
 desc = ""
-associatedModel = ""
+associatedSprite = "res://Piece/Enemies/Green Cell.png"
 type = 3
 baseHealth = 5
 maxLevel = 3
