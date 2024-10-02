@@ -6,7 +6,13 @@ var rc : Vector2i
 
 var contains : Piece
 var hazard : HazardResource
+var hazardHolder : TextureRect
 var obstructed := false
+
+@onready var tileColor = $TileColor
+
+func _ready():
+	pass
 
 func setPiece(piece : Piece, dir : int):
 	contains = piece
@@ -32,7 +38,8 @@ func interact():
 	if hazard:
 		if interactable.damage:
 			if hazard.destructable:
-				FloorData.floorInfo.tiles[FloorData.floor.Handlers.TH.tileDict["Tiles"].find(self)].hazard = null
+				remove_child(hazardHolder)
+				hazardHolder = null
 				hazard = null
 				obstructed = false
 	
@@ -45,7 +52,6 @@ func interact():
 	
 	FloorData.floor.Handlers.SH.interactable = null
 	
-	PlayerData.updateData()
 	FloorData.updateData()
 
 func setHazard(hazardIn : HazardResource):
@@ -54,6 +60,11 @@ func setHazard(hazardIn : HazardResource):
 		obstructed = true
 	
 	FloorData.floorInfo.tileInfo[rc.x][rc.y].hazard = hazard
+	
+	hazardHolder = TextureRect.new()
+	hazardHolder.set_texture(ResourceLoader.load(hazard.associatedSprite))
+	add_child(hazardHolder)
+	
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.TH.highlightedTile = self

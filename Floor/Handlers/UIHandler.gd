@@ -4,9 +4,9 @@ var currentMenu = null
 
 func _process(_delta):
 	if currentMenu != null:
-		if Input.is_action_just_pressed("Select"):
+		if Input.is_action_just_pressed("Menu Select"):
 			currentMenu.selectOption()
-		elif Input.is_action_just_pressed("Cancel"):
+		elif Input.is_action_just_pressed("Menu Cancel"):
 			if currentMenu is BasicMenu:
 				if currentMenu.hasSelectedOption:
 					currentMenu.options[currentMenu.highlightedOption - 1].selectToggle()
@@ -25,7 +25,6 @@ func openMenu():
 		await get_tree().create_timer(0.01).timeout
 		currentMenu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
 		FloorData.floor.menuHolder.add_child(currentMenu)
-		FloorData.floor.HUD.showFloorInfo()
 
 func closeMenu():
 	currentMenu.animation.play("CloseMenu")

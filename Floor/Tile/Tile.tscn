@@ -6,17 +6,24 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64e2i"]
 size = Vector2(30, 30)
 
-[node name="Tile" type="ColorRect"]
+[node name="Tile" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -992.0
-offset_bottom = -736.0
+offset_right = -1151.0
+offset_bottom = -647.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.145098, 0.0941176, 0.101961, 1)
 script = ExtResource("1_bu18m")
+
+[node name="TileColor" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.145098, 0.0941176, 0.101961, 1)
 
 [node name="Border" type="TextureRect" parent="."]
 z_index = 1

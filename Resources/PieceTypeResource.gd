@@ -20,9 +20,19 @@ func getMoveableTiles(movementStart : Vector2i):
 			if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 				endSearch = true
 			else:
-				if FloorData.tiles[tileData.x][tileData.y] != null:
-					if !FloorData.tiles[tileData.x][tileData.y].obstructed:
-						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+				var currentTile = FloorData.tiles[tileData.x][tileData.y]
+				if currentTile != null:
+					if !currentTile.obstructed:
+						if currentTile.contains:
+							if FloorData.floorInfo.playerTurn:
+								if currentTile.contains is EnemyPiece:
+									toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+							else:
+								if currentTile.contains is PlayerPiece:
+									toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+							endSearch = true
+						else:
+							toReturn.append(FloorData.tiles[tileData.x][tileData.y])
 					else:
 						endSearch = true
 				else:

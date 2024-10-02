@@ -6,18 +6,19 @@
 [sub_resource type="Resource" id="Resource_8jpfj"]
 script = ExtResource("1_fjpmk")
 name = "Next Floor"
-damage = 0
-heal = 0
+type = ""
+effectStrength = 0
+effectPercent = 1.0
 stopMovement = false
-disAmount = 0
 disDirection = ""
 nextFloor = true
+delete = false
 
 [resource]
 script = ExtResource("1_u4hbd")
 name = ""
 visible = false
-associatedModel = "res://Hazard/FloorEnd.blend"
+associatedSprite = "res://Hazard/FloorEnd.png"
 blockade = false
 destructable = false
 effectType = "OnRest"

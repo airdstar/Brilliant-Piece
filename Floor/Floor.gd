@@ -29,7 +29,7 @@ func pieceDeath(piece : MoveablePiece):
 		PlayerData.gainExp(piece.enemyType.expAmount)
 		PlayerData.playerInfo.items.append(piece.enemyType.itemPool.items[randi_range(0, piece.enemyType.itemPool.items.size() - 1)])
 		PlayerData.playerInfo.coins += randi_range(piece.enemyType.coinDropMin, piece.enemyType.coinDropMax)
-		piece.currentTile.contains = null
+		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 		
 		var pieceNum = FloorData.floor.enemies.find(piece)
 		FloorData.floor.enemies.remove_at(pieceNum)

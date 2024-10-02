@@ -12,7 +12,7 @@ func _process(_delta):
 		inputDirection = "Backward"
 	
 	if inputDirection:
-		if mH.UH.currentMenu:
+		if mH.UH.currentMenu != null:
 			handleMenuHighlighting(inputDirection)
 
 func handleMenuHighlighting(input : String):

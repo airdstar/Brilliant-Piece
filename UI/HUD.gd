@@ -8,12 +8,6 @@ func _ready():
 	pass
 
 
-func showFloorInfo():
-	$Floor_Player.visible = true
-
-func hideFloorInfo():
-	$Floor_Player.visible = false
-
 func updateFloorInfo():
 	$Floor_Player/FloorInfo.text = "[center]Floor " + str(FloorData.floorInfo.floorNum) + "\n" + str(FloorData.floorInfo.layerData.layerName)
 

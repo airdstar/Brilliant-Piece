@@ -7,8 +7,8 @@
 script = ExtResource("1_jdgp7")
 name = "StickyGoop"
 visible = true
-associatedModel = "res://Hazard/StickyGoop.blend"
+associatedSprite = "res://Hazard/StickyGoop.png"
 blockade = false
+destructable = false
 effectType = "OnTouch"
 effect = ExtResource("1_gauyd")
-destructable = false

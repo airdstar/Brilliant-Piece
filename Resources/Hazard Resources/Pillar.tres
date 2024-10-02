@@ -6,7 +6,7 @@
 script = ExtResource("1_q2njl")
 name = "Pillar"
 visible = true
-associatedModel = "res://Hazard/Pillar.blend"
+associatedSprite = "res://Hazard/Pillar.png"
 blockade = true
-effectType = "None"
 destructable = true
+effectType = "None"

@@ -16,16 +16,20 @@ func movePiece(destination : tile):
 	
 	var closestDirection = mH.DH.getClosestDirection(piece.rc, destination.rc)
 	var posData = mH.DH.dirDict["PosData"][closestDirection]
+	var currentTile : tile = FloorData.tiles[piece.rc.x][piece.rc.y]
+	
+	while currentTile != destination:
+		
+		currentTile = FloorData.tiles[currentTile.rc.x + posData.x][currentTile.rc.y + posData.y]
+		
+		if currentTile.hazard:
+			if currentTile.hazard.effectType == "OnTouch":
+				if currentTile.hazard.effect.stopMovement:
+					destination = currentTile
 	
 	if destination.contains:
 		if destination.contains is MoveablePiece:
 			pushPiece(destination.contains, closestDirection)
-	
-	# Determine tiles that would be touched
-	if destination.hazard:
-		if destination.hazard.effectType == "OnTouch":
-			if destination.hazard.effect.stopMovement:
-				destination.rc = piece.rc
 	
 	destination.setPiece(piece, 1)
 	mH.UH.usedMovement()
