@@ -10,6 +10,7 @@ var hazardHolder : TextureRect
 var obstructed := false
 
 @onready var tileColor = $TileColor
+@onready var interactable = $Interactable
 
 func _ready():
 	pass

@@ -10,18 +10,20 @@ func setTilePattern():
 			if FloorData.tiles[n][m] != null:
 				var cTile = FloorData.tiles[n][m]
 				if !iTiles.has(cTile):
+					FloorData.tiles[n][m].interactable.visible = false
 					if (cTile.rc.x + cTile.rc.y)%2 == 1:
 						cTile.tileColor.set_color(Global.tileBlackColor[0])
 					else:
 						cTile.tileColor.set_color(Global.tileWhiteColor[0])
 				else:
+					cTile.interactable.visible = true
 					if mH.SH.moving:
-						cTile.tileColor.set_color(Global.colorDict["Blue"])
+						cTile.interactable.modulate = Global.colorDict["White"]
 					elif mH.SH.interactable:
 						if cTile.contains == PlayerData.playerPiece:
-							cTile.tileColor.set_color(Global.colorDict["Green"])
+							cTile.interactable.modulate = Global.colorDict["Green"]
 						else:
-							cTile.tileColor.set_color(Global.colorDict["Orange"])
+							cTile.interactable.modulate = Global.colorDict["Orange"]
 
 func show():
 	if mH.SH.moving:
