@@ -2,7 +2,7 @@ extends Control
 
 var currentlySelected = null
 @onready var turnHUD : Array[TextureRect] = [$TurnHUD/MoveOutline/Move, $TurnHUD/ActionOutline/Action, $TurnHUD/TurnOutline/Turn]
-@onready var textLabels = [$Portrait/Status/NameLabel, $Portrait/Status/TypeLabel, $Portrait/Status/HealthLabel]
+@onready var textLabels = [$Status/NameLabel, $Status/TypeLabel, $Status/HealthLabel]
 
 func _ready():
 	pass
@@ -12,10 +12,10 @@ func updateFloorInfo():
 	$Floor_Player/FloorInfo.text = "[center]Floor " + str(FloorData.floorInfo.floorNum) + "\n" + str(FloorData.floorInfo.layerData.layerName)
 
 func showPieceInfo():
-	$Portrait.visible = true
+	$Status.visible = true
 
 func hidePieceInfo():
-	$Portrait.visible = false
+	$Status.visible = false
 
 func updateLabels():
 	var piece = FloorData.floor.Handlers.TH.highlightedTile.contains

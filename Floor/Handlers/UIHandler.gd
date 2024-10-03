@@ -11,8 +11,6 @@ func _process(_delta):
 				if currentMenu.hasSelectedOption:
 					currentMenu.options[currentMenu.highlightedOption - 1].selectToggle()
 					currentMenu.hasSelectedOption = false
-				else:
-					closeMenu()
 			else:
 				closeMenu()
 	elif Input.is_action_just_pressed("Menu Cancel"):
@@ -56,9 +54,12 @@ func unselect():
 		currentMenu.selectedOption()
 
 func displayInfo():
-	if mH.TH.highlightedTile.contains is MoveablePiece:
-		FloorData.floor.HUD.showPieceInfo()
-		FloorData.floor.HUD.updateLabels()
+	if mH.TH.highlightedTile != null:
+		if mH.TH.highlightedTile.contains is MoveablePiece:
+			FloorData.floor.HUD.showPieceInfo()
+			FloorData.floor.HUD.updateLabels()
+		else:
+			FloorData.floor.HUD.hidePieceInfo()
 	else:
 		FloorData.floor.HUD.hidePieceInfo()
 

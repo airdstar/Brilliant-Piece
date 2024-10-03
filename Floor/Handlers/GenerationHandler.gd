@@ -24,7 +24,9 @@ func generateFloor():
 				
 					FloorData.tiles[n][m] = preload("res://Floor/Tile/Tile.tscn").instantiate()
 					FloorData.floor.add_child(FloorData.tiles[n][m])
-					FloorData.tiles[n][m].position = Vector2i(200 + 31 * n, 31 * m)
+					var scalar = 1.3
+					FloorData.tiles[n][m].set_scale(Vector2(scalar, scalar))
+					FloorData.tiles[n][m].position = Vector2i(200 + (31 * scalar) * n, (31 * scalar) * m)
 					FloorData.tiles[n][m].rc = Vector2i(n,m)
 					
 					if heightMap.get_pixel(n,m) != Color8(255,255,255):

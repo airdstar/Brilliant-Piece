@@ -67,8 +67,7 @@ func setHazard(hazardIn : HazardResource):
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))
-	FloorData.floor.Handlers.UH.displayInfo()
 
 func mouseExited() -> void:
 	if FloorData.floor.Handlers.TH.highlightedTile == self:
-		FloorData.floor.Handlers.TH.highlightedTile = null
+		FloorData.floor.Handlers.HH.unhighlightTile()

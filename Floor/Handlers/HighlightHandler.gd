@@ -63,3 +63,8 @@ func highlightTile(tPos : Vector2i):
 		tileToSelect.tileColor.set_color(Global.colorDict["Gray"])
 	
 	mH.UH.displayInfo()
+
+func unhighlightTile():
+	mH.TH.highlightedTile = null
+	mH.TH.setTilePattern()
+	mH.UH.displayInfo()
