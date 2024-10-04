@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c801isw0lg4ho"]
+[gd_scene load_steps=5 format=3 uid="uid://c801isw0lg4ho"]
 
 [ext_resource type="Texture2D" uid="uid://b1s74dx0kfrb" path="res://UI/Menu/MenuTab.png" id="1_kob1y"]
+[ext_resource type="Script" path="res://UI/Menu/MenuNew.gd" id="1_y2wie"]
 [ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://UI/Fonts/slkscrb.ttf" id="2_i6q2q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ig2tv"]
@@ -15,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_y2wie")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

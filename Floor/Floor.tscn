@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=6 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://Floor/Floor.gd" id="1_sippj"]
 [ext_resource type="PackedScene" uid="uid://bpg2vyee60md7" path="res://Floor/Handlers/Handlers.tscn" id="2_k2kkp"]
 [ext_resource type="Texture2D" uid="uid://c0owfrdvwxl17" path="res://Floor/Backgrounds/background.png" id="4_hgnwj"]
+[ext_resource type="PackedScene" uid="uid://c801isw0lg4ho" path="res://UI/Menu/MenuNew.tscn" id="4_mhico"]
 [ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="5_0rph0"]
 
 [node name="FloorTest" type="Node"]
@@ -15,7 +16,14 @@ layer = 3
 
 [node name="HUD" parent="Menu" instance=ExtResource("5_0rph0")]
 
+[node name="MenuNew" parent="." instance=ExtResource("4_mhico")]
+offset_left = 811.0
+offset_top = 313.0
+offset_right = 811.0
+offset_bottom = 313.0
+
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 modulate = Color(0.6, 0.6, 0.6, 1)
 offset_right = 40.0
 offset_bottom = 40.0

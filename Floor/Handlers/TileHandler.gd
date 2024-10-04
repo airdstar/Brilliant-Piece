@@ -9,12 +9,12 @@ func setTilePattern():
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
 				var cTile = FloorData.tiles[n][m]
+				if (cTile.rc.x + cTile.rc.y)%2 == 1:
+					cTile.tileColor.set_color(Global.tileBlackColor[0])
+				else:
+					cTile.tileColor.set_color(Global.tileWhiteColor[0])
 				if !iTiles.has(cTile):
 					FloorData.tiles[n][m].interactable.visible = false
-					if (cTile.rc.x + cTile.rc.y)%2 == 1:
-						cTile.tileColor.set_color(Global.tileBlackColor[0])
-					else:
-						cTile.tileColor.set_color(Global.tileWhiteColor[0])
 				else:
 					cTile.interactable.visible = true
 					if mH.SH.moving:
