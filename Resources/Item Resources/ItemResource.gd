@@ -1,8 +1,9 @@
 extends Interactable
 class_name ItemResource
 
-@export_category("Extended General")
-@export var associatedModel : String = "res://Item/Base.blend"
+@export_category("Uses")
+@export var useAmount : int = 1
+var totalUses := 0
 
 func getTiles(iStart : Vector2i):
 	var toReturn : Array[tile]
@@ -10,7 +11,7 @@ func getTiles(iStart : Vector2i):
 	var tileData : Vector2i
 	if getUsable().has("Self"):
 		toReturn.append(FloorData.tiles[iStart.x][iStart.y])
-	if getUsable().has("Enemy") or getUsable().has("Tile"):
+	if getUsable().has("Enemy") and getUsable().has("Tile"):
 		for n in range(pos.size()):
 			tileData = iStart
 			var counter = 1
@@ -29,3 +30,19 @@ func getTiles(iStart : Vector2i):
 				counter += 1
 				
 	return toReturn
+
+func getUsable():
+	var amount = usableOn
+	var possibleUses = []
+
+	if amount >= 4:
+		amount -= 4
+		possibleUses.append("Tile")
+	if amount >= 2:
+		amount -= 2
+		possibleUses.append("Enemy")
+	if amount >= 1:
+		amount -= 1
+		possibleUses.append("Self")
+	
+	return possibleUses
