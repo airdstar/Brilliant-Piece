@@ -13,45 +13,34 @@ func _ready():
 	setOptions()
 
 func _process(delta: float) -> void:
-	var inputDirection : String
 	if Input.is_action_just_pressed("Left"):
-		inputDirection = "Left"
+		if currentTab > 0:
+			currentTab -= 1
+		else:
+			currentTab = tabAmount - 1
+		setOptions()
 	elif Input.is_action_just_pressed("Right"):
-		inputDirection = "Right"
+		if currentTab < tabAmount - 1:
+			currentTab += 1
+		else:
+			currentTab = 0
+		setOptions()
 	elif Input.is_action_just_pressed("Forward"):
-		inputDirection = "Forward"
+		if highlightedOption > 0:
+			highlightedOption -= 1
+		else:
+			highlightedOption = optionCount - 1
+		$Pointer.position = Vector2(-10, 120 + 30 * highlightedOption)
 	elif Input.is_action_just_pressed("Backward"):
-		inputDirection = "Backward"
-	
-	if inputDirection:
-		handleMenuHighlighting(inputDirection)
+		if highlightedOption < optionCount - 1:
+			highlightedOption += 1
+		else:
+			highlightedOption = 0
+		
+		$Pointer.position = Vector2(-10, 120 + 30 * highlightedOption)
 	
 	if Input.is_action_just_pressed("Menu Select") and (!FloorData.floor.Handlers.SH.interactable or !FloorData.floor.Handlers.SH.moving):
 		selectOption()
-
-func handleMenuHighlighting(input : String):
-	match input:
-		"Forward":
-			if highlightedOption < optionCount - 1:
-				highlightedOption += 1
-			else:
-				highlightedOption = 0
-		"Backward":
-			if highlightedOption > 0:
-				highlightedOption -= 1
-			else:
-				highlightedOption = optionCount - 1
-		"Right":
-			if currentTab < tabAmount - 1:
-				currentTab += 1
-			else:
-				currentTab = 0
-		"Left":
-			if currentTab > 0:
-				currentTab -= 1
-			else:
-				currentTab = tabAmount - 1
-	setOptions()
 
 func setOptions():
 	for n in range(optionLabels.size()):
@@ -70,6 +59,7 @@ func setOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
+				$Pointer.position = Vector2(-10, 120)
 				if options.size() - 1 >= n:
 					if options[n] != null:
 						optionLabels[n].bbcode_text = options[n].name
@@ -92,6 +82,7 @@ func setOptions():
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
 				optionLabels[n].bbcode_text = options[n].name
+				$Pointer.position = Vector2(-10, 120)
 			
 func selectOption():
 	if optionCount != 0:

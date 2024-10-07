@@ -5,6 +5,14 @@ func _process(_delta: float):
 		if Input.is_action_just_pressed("Select"):
 			if mH.TH.iTiles.has(mH.TH.highlightedTile):
 				interact(mH.TH.highlightedTile)
+	else:
+		if Input.is_action_just_pressed("Select"):
+			if !FloorData.floorInfo.moveUsed:
+				if mH.TH.highlightedTile.contains is PlayerPiece:
+					mH.SH.actingPiece = mH.TH.highlightedTile.contains
+					mH.SH.moving = true
+					mH.TH.show()
+		
 
 func movePiece(destination : tile):
 	var piece = mH.SH.actingPiece

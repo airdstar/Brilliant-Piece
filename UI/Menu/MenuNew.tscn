@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c801isw0lg4ho"]
+[gd_scene load_steps=6 format=3 uid="uid://c801isw0lg4ho"]
 
 [ext_resource type="Texture2D" uid="uid://b1s74dx0kfrb" path="res://UI/Menu/MenuTab.png" id="1_kob1y"]
 [ext_resource type="Script" path="res://UI/Menu/MenuNew.gd" id="1_y2wie"]
 [ext_resource type="FontFile" uid="uid://bqtqh8vj648s0" path="res://UI/Fonts/slkscrb.ttf" id="2_i6q2q"]
+[ext_resource type="Texture2D" uid="uid://coyuf82gq0841" path="res://UI/Menu/Pointer.png" id="4_6iu80"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ig2tv"]
 line_spacing = -8.0
@@ -34,3 +35,9 @@ text = "A
 C
 T"
 label_settings = SubResource("LabelSettings_ig2tv")
+
+[node name="Pointer" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 7.0
+offset_bottom = 7.0
+texture = ExtResource("4_6iu80")

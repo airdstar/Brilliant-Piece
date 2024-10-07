@@ -2,8 +2,7 @@ extends Interactable
 class_name ItemResource
 
 @export_category("Uses")
-@export var useAmount : int = 1
-var totalUses := 0
+@export var amount : int = 1
 
 func getTiles(iStart : Vector2i):
 	var toReturn : Array[tile]

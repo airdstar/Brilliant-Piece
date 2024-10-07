@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1_nn3g2")
-direction = ""
+direction = "Straight"
 iRange = 3
 rangeExclusive = false
 obstructable = false
 name = "Spiked Armor"
 desc = ""
-type = ""
+type = "Defensive"
 usableOn = 1
 damage = 2
 healing = 0
