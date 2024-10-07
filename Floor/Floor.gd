@@ -11,7 +11,7 @@ var neutrals : Array
 
 
 func _ready():
-	pass
+	Handlers.UH.currentMenu = $MenuNew
 
 func _process(_delta : float):
 	if Input.is_action_just_pressed("Exit"):

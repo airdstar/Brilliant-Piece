@@ -4,19 +4,11 @@ var currentMenu = null
 
 func _process(_delta):
 	if currentMenu != null:
-		if Input.is_action_just_pressed("Menu Select"):
+		if Input.is_action_just_pressed("Menu Select") and (!FloorData.floor.Handlers.SH.interactable or !FloorData.floor.Handlers.SH.moving):
 			currentMenu.selectOption()
 		elif Input.is_action_just_pressed("Menu Cancel"):
-			if currentMenu is BasicMenu:
-				if currentMenu.hasSelectedOption:
-					currentMenu.options[currentMenu.highlightedOption - 1].selectToggle()
-					currentMenu.hasSelectedOption = false
-			else:
-				closeMenu()
-	elif Input.is_action_just_pressed("Menu Cancel"):
-		if FloorData.floorInfo.playerTurn:
-			mH.TH.stopShowing()
-			openMenu()
+			if FloorData.floorInfo.playerTurn:
+				mH.TH.stopShowing()
 
 func openMenu():
 	if currentMenu == null:
