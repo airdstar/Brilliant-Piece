@@ -41,8 +41,8 @@ func updateData():
 				floorInfo.tileInfo[n][m].hazard = tiles[n][m].hazard
 				#floorInfo.tiles[n].status = floor.Handlers.TH.tileDict["Tiles"][n].status
 	
-	floor.Handlers.EH.setSolidTiles()
-	floor.Handlers.EH.setStartEnd()
+	floor.Handlers.EH.movement.setSolidTiles()
+	floor.Handlers.EH.movement.setStartEnd()
 	
 
 func resetInfo():
