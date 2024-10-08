@@ -11,7 +11,7 @@ func setTileMap():
 	grid_size = FloorData.floorInfo.rc
 	astar_grid.region = Rect2i(Vector2i(0,0),grid_size)
 	astar_grid.cell_size = cell_size
-	#astar_grid.offset = cell_size / 2 - Vector2i(1,1)
+	astar_grid.offset = cell_size / 2 - Vector2i(1,1)
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar_grid.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar_grid.update()
@@ -49,9 +49,12 @@ func getBestMovements():
 	var toReturn : Array[tile]
 	for n in range(FloorData.floor.enemies.size()):
 		toReturn.append(null)
-		var possibleMovements = FloorData.floor.enemies[n].type.getMoveableTiles(start)
-		var leastMovements : int = 200
+		var possibleMovements = FloorData.floor.enemies[n].type.getMoveableTiles(FloorData.floorInfo.enemies[n].rc)
+		var leastMovements : int = astar_grid.get_id_path(FloorData.floorInfo.enemies[n].rc,end,true).size()
 		setTempSolid(n)
+		if FloorData.floor.enemies[n].type.movementAngle == "Diagonal":
+			astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ALWAYS
+		astar_grid.update()
 		for m in range(possibleMovements.size()):
 			if astar_grid.get_id_path(possibleMovements[m].rc,end,true).size() < leastMovements:
 				toReturn[n] = possibleMovements[m]

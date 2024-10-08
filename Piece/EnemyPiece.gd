@@ -4,6 +4,8 @@ class_name EnemyPiece
 var enemyType : EnemyResource
 var behavior : String
 
+var colorTile : bool
+
 
 func setData(pieceNum : int):
 	FloorData.floorInfo.enemies.append(EnemyInfo.new())
