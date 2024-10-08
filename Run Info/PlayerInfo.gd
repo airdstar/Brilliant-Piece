@@ -8,7 +8,7 @@ class_name PlayerInfo
 @export var pieceType : PieceTypeResource
 
 @export var level : int = 1
-@export var expAmount : int
+@export var expAmount : int = 0
 
 @export var maxHealth : int
 @export var health : int

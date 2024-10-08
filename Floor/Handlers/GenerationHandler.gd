@@ -26,7 +26,7 @@ func generateFloor():
 					FloorData.floor.add_child(FloorData.tiles[n][m])
 					var scalar = 1
 					FloorData.tiles[n][m].set_scale(Vector2(scalar, scalar))
-					FloorData.tiles[n][m].position = Vector2i(200 + (31 * scalar) * n, (31 * scalar) * m)
+					FloorData.tiles[n][m].position = Vector2i(200 + (32 * scalar) * n, (32 * scalar) * m)
 					FloorData.tiles[n][m].rc = Vector2i(n,m)
 					
 					if heightMap.get_pixel(n,m) != Color8(255,255,255):
@@ -52,8 +52,11 @@ func generateFloor():
 	
 	mH.TH.setTilePattern()
 	
+	mH.EH.setTileMap()
+	
 	generatePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
+	FloorData.updateData()
 
 func generatePieces(playerStarts, enemyStarts):
 	FloorData.floor.add_child(PlayerData.playerPiece)
@@ -76,7 +79,6 @@ func generatePieces(playerStarts, enemyStarts):
 					tileEmpty = true
 					enemyStart.setPiece(FloorData.floor.enemies[n], 2)
 			
-		FloorData.updateData()
 		
 	else:
 		

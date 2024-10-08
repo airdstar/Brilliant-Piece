@@ -33,7 +33,5 @@ func endTurn():
 	FloorData.floor.Handlers.UH.setTurnColors()
 	FloorData.floor.Handlers.TH.checkHazards()
 	
-	if playerTurn:
-		FloorData.floor.Handlers.UH.openMenu()
-	else:
+	if !playerTurn:
 		FloorData.floor.Handlers.EH.makeDecision()

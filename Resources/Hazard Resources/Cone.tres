@@ -6,6 +6,8 @@
 script = ExtResource("1_wt52r")
 name = "Cone"
 visible = true
-associatedModel = "res://Hazard/Cone.blend"
+associatedSprite = "res://Hazard/Cone.png"
 blockade = true
+replaceable = false
+destructable = false
 effectType = "None"

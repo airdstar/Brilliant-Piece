@@ -3,16 +3,16 @@ extends Handler
 var highlightedTile : tile
 var iTiles : Array[tile]
 
-
 func setTilePattern():
 	for n in range(FloorData.floorInfo.rc.x):
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
 				var cTile = FloorData.tiles[n][m]
-				if (cTile.rc.x + cTile.rc.y)%2 == 1:
-					cTile.tileColor.set_color(Global.tileBlackColor[0])
-				else:
-					cTile.tileColor.set_color(Global.tileWhiteColor[0])
+				if cTile != highlightedTile:
+					if (cTile.rc.x + cTile.rc.y)%2 == 1:
+						cTile.tileColor.set_color(Global.tileBlackColor[0])
+					else:
+						cTile.tileColor.set_color(Global.tileWhiteColor[0])
 				if !iTiles.has(cTile):
 					FloorData.tiles[n][m].interactable.visible = false
 				else:
@@ -33,6 +33,7 @@ func show():
 	setTilePattern()
 
 func stopShowing():
+	mH.SH.interactable = null
 	mH.SH.moving = false
 	iTiles.clear()
 	setTilePattern()

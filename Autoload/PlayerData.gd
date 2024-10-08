@@ -22,7 +22,6 @@ func loadInfo():
 func saveInfo():
 	ResourceSaver.save(playerInfo, save_path)
 	
-
 func resetInfo():
 	print("Reset info")
 	ResourceSaver.save(PlayerInfo.new(), save_path)
@@ -42,6 +41,14 @@ func updateData():
 
 func newAction():
 	pass
+
+func addItem(item : ItemResource):
+	if playerInfo.items.has(item):
+		playerInfo.items[playerInfo.items.find(item)].amount += 1
+	else:
+		playerInfo.items.append(item)
+	
+	FloorData.floor.Handlers.UH.currentMenu.updateOptions()
 
 func levelUp():
 	playerInfo.maxHealth += Global.levelDict["health"][playerInfo.level - 1]

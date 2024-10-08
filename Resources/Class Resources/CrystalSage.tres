@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://clk1n28hr60dc" path="res://Resources/Action Resources/Actions/CrystalSpears.tres" id="5_n6db3"]
 [ext_resource type="Resource" uid="uid://ch1iy5jb0igbg" path="res://Resources/Action Resources/Actions/SpikedArmor.tres" id="6_1uao1"]
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="6_iqr2t"]
-[ext_resource type="Resource" uid="uid://cwddtf5wff3xk" path="res://Resources/Item Resources/Items/Bomb.tres" id="7_qlpos"]
+[ext_resource type="Resource" uid="uid://b3remk0aygs26" path="res://Resources/Item Resources/Items/Cone.tres" id="7_xf1f6"]
 
 [resource]
 script = ExtResource("1_lnosw")
@@ -14,6 +14,6 @@ className = "Crystal Sage"
 associatedSprite = "res://Piece/Classes/CrystalSage.png"
 startingHealth = 6
 startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_1uao1")])
-startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_qlpos")])
+startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_xf1f6"), ExtResource("7_xf1f6"), ExtResource("7_xf1f6")])
 levelingHealthIncrease = Array[int]([2, 0, 0, 0, 0])
 levelingActions = Array[ExtResource("3_3at3e")]([null, null, null, null, null])

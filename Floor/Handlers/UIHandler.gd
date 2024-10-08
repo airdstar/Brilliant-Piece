@@ -4,46 +4,26 @@ var currentMenu = null
 
 func _process(_delta):
 	if currentMenu != null:
-		if Input.is_action_just_pressed("Menu Select") and (!FloorData.floor.Handlers.SH.interactable or !FloorData.floor.Handlers.SH.moving):
-			currentMenu.selectOption()
-		elif Input.is_action_just_pressed("Menu Cancel"):
-			if FloorData.floorInfo.playerTurn:
-				mH.TH.stopShowing()
+		if Input.is_action_just_pressed("Menu"):
+			if !FloorData.floor.Handlers.SH.interactable and !FloorData.floor.Handlers.SH.moving:
+				if !FloorData.floorInfo.actionUsed and currentMenu.currentTab == 0:
+					currentMenu.selectOption()
+				elif currentMenu.currentTab == 1:
+					currentMenu.selectOption()
+			else:
+				unselect()
 
-func openMenu():
-	if currentMenu == null:
-		await get_tree().create_timer(0.01).timeout
-		currentMenu = preload("res://UI/Menu/BasicMenu.tscn").instantiate()
-		FloorData.floor.menuHolder.add_child(currentMenu)
-
-func closeMenu():
-	currentMenu.animation.play("CloseMenu")
-	await get_tree().create_timer(0.2).timeout
-	var holder = currentMenu
-	if holder != null:
-		if currentMenu.get_parent() is Menu:
-			currentMenu = currentMenu.get_parent()
-			currentMenu.hasSelectedOption = false
-			currentMenu.options[currentMenu.highlightedOption].selectToggle()
-		holder.queue_free()
-
-func fullyCloseMenu():
-	while currentMenu != null:
-		if !currentMenu.get_parent() is Menu:
-			currentMenu.animation.play("SelectCloseMenu")
-			await get_tree().create_timer(0.1).timeout
-			if currentMenu != null:
-				currentMenu.queue_free()
-				currentMenu = null
-		else:
-			currentMenu = currentMenu.get_parent()
 
 func unselect():
-	if currentMenu is BasicMenu:
-		if currentMenu.hasSelectedOption:
-			currentMenu.hasSelectedOption = false
-			currentMenu.options[currentMenu.highlightedOption].selectToggle()
-		currentMenu.selectedOption()
+	if FloorData.floor.Handlers.SH.interactable:
+		if FloorData.floorInfo.playerTurn:
+			if currentMenu.options[currentMenu.highlightedOption] == FloorData.floor.Handlers.SH.interactable:
+				mH.TH.stopShowing()
+			else:
+				currentMenu.selectOption()
+	elif FloorData.floor.Handlers.SH.moving:
+		if FloorData.floorInfo.playerTurn:
+			mH.TH.stopShowing()
 
 func displayInfo():
 	if mH.TH.highlightedTile != null:

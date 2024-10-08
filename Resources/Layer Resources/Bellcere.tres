@@ -13,5 +13,5 @@ layerName = "Bellcere"
 possibleEnemies = Array[ExtResource("1_vdprw")]([ExtResource("2_rrp5s")])
 possibleHazards = Array[ExtResource("3_0st2v")]([ExtResource("4_0bl10"), ExtResource("5_jooa8")])
 possibleLayouts = Array[String](["res://Floor/Layouts/Start1.png", "res://Floor/Layouts/Start2.png", "res://Floor/Layouts/Start3.png", "res://Floor/Layouts/Start4.png"])
-maxPossibleEnemies = 2
+maxPossibleEnemies = 1
 minPossibleEnemies = 1

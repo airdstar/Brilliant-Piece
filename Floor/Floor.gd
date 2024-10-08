@@ -8,6 +8,7 @@ var neutrals : Array
 
 @onready var menuHolder = $Menu
 @onready var HUD = $Menu/HUD
+@onready var line = $Line2D
 
 
 func _ready():
@@ -27,7 +28,7 @@ func _process(_delta : float):
 func pieceDeath(piece : MoveablePiece):
 	if piece is EnemyPiece:
 		PlayerData.gainExp(piece.enemyType.expAmount)
-		PlayerData.playerInfo.items.append(piece.enemyType.itemPool.items[randi_range(0, piece.enemyType.itemPool.items.size() - 1)])
+		PlayerData.addItem(piece.enemyType.itemPool.items[randi_range(0, piece.enemyType.itemPool.items.size() - 1)])
 		PlayerData.playerInfo.coins += randi_range(piece.enemyType.coinDropMin, piece.enemyType.coinDropMax)
 		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 		
@@ -36,3 +37,7 @@ func pieceDeath(piece : MoveablePiece):
 		FloorData.floorInfo.enemies.remove_at(pieceNum)
 		
 		piece.queue_free()
+
+
+func endTurn() -> void:
+	FloorData.floorInfo.endTurn()

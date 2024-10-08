@@ -40,7 +40,10 @@ func updateData():
 			if floorInfo.tileInfo[n][m] != null:
 				floorInfo.tileInfo[n][m].hazard = tiles[n][m].hazard
 				#floorInfo.tiles[n].status = floor.Handlers.TH.tileDict["Tiles"][n].status
-
+	
+	floor.Handlers.EH.setSolidTiles()
+	floor.Handlers.EH.setStartEnd()
+	
 
 func resetInfo():
 	print("Reset info")

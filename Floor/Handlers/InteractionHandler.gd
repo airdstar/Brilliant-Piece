@@ -5,13 +5,16 @@ func _process(_delta: float):
 		if Input.is_action_just_pressed("Select"):
 			if mH.TH.iTiles.has(mH.TH.highlightedTile):
 				interact(mH.TH.highlightedTile)
+			elif mH.SH.moving == true and mH.TH.highlightedTile.contains is PlayerPiece:
+				mH.TH.stopShowing()
 	else:
 		if Input.is_action_just_pressed("Select"):
 			if !FloorData.floorInfo.moveUsed:
-				if mH.TH.highlightedTile.contains is PlayerPiece:
-					mH.SH.actingPiece = mH.TH.highlightedTile.contains
-					mH.SH.moving = true
-					mH.TH.show()
+				if mH.TH.highlightedTile != null:
+					if mH.TH.highlightedTile.contains is PlayerPiece:
+						mH.SH.actingPiece = mH.TH.highlightedTile.contains
+						mH.SH.moving = true
+						mH.TH.show()
 		
 
 func movePiece(destination : tile):
@@ -40,8 +43,6 @@ func movePiece(destination : tile):
 	mH.UH.usedMovement()
 	if piece is PlayerPiece:
 		mH.UH.displayInfo()
-		await get_tree().create_timer(0.01).timeout
-		mH.UH.openMenu()
 			
 	mH.SH.actingPiece = null
 	mH.SH.moving = false
@@ -65,6 +66,3 @@ func interact(destination : tile):
 		destination.interact()
 	mH.TH.stopShowing()
 	mH.TH.setTilePattern()
-	
-	if FloorData.floorInfo.playerTurn:
-		mH.UH.openMenu()

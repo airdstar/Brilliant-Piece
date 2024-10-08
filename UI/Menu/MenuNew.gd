@@ -38,9 +38,7 @@ func _process(delta: float) -> void:
 			highlightedOption = 0
 		
 		$Pointer.position = Vector2(-10, 120 + 30 * highlightedOption)
-	
-	if Input.is_action_just_pressed("Menu Select") and (!FloorData.floor.Handlers.SH.interactable or !FloorData.floor.Handlers.SH.moving):
-		selectOption()
+
 
 func setOptions():
 	for n in range(optionLabels.size()):
@@ -81,9 +79,48 @@ func setOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
 				$Pointer.position = Vector2(-10, 120)
-			
+
+func updateOptions():
+	for n in range(optionLabels.size()):
+		remove_child(optionLabels[n])
+	optionLabels.clear()
+	match currentTab:
+		0:
+			optionCount = 5
+			options = PlayerData.playerInfo.actions
+			for n in range(optionCount):
+				var newLabel = RichTextLabel.new()
+				add_child(newLabel)
+				optionLabels.append(newLabel)
+				optionLabels[n].bbcode_enabled = true
+				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
+				optionLabels[n].position = Vector2(0, 120 + 30 * n)
+				optionLabels[n].size = Vector2(200, 30)
+				if options.size() - 1 >= n:
+					if options[n] != null:
+						optionLabels[n].bbcode_text = options[n].name
+					else:
+						optionLabels[n].text = "- EMPTY -"
+				else:
+					options.append(null)
+					optionLabels[n].text = "- EMPTY -"
+		1:
+			options = PlayerData.playerInfo.items
+			optionCount = options.size()
+			if optionCount == 0:
+				pass
+			for n in range(optionCount):
+				var newLabel = RichTextLabel.new()
+				add_child(newLabel)
+				optionLabels.append(newLabel)
+				optionLabels[n].bbcode_enabled = true
+				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
+				optionLabels[n].position = Vector2(0, 120 + 30 * n)
+				optionLabels[n].size = Vector2(200, 30)
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
+
 func selectOption():
 	if optionCount != 0:
 		FloorData.floor.Handlers.SH.interactable = options[highlightedOption]

@@ -5,13 +5,15 @@ class_name ItemResource
 @export var amount : int = 1
 
 func getTiles(iStart : Vector2i):
+	print("hi")
 	var toReturn : Array[tile]
 	var pos = FloorData.floor.Handlers.DH.getAll("Both")
 	var tileData : Vector2i
 	if getUsable().has("Self"):
 		toReturn.append(FloorData.tiles[iStart.x][iStart.y])
-	if getUsable().has("Enemy") and getUsable().has("Tile"):
+	if getUsable().has("Enemy") or getUsable().has("Tile"):
 		for n in range(pos.size()):
+			
 			tileData = iStart
 			var counter = 1
 			var endSearch = false
@@ -20,6 +22,7 @@ func getTiles(iStart : Vector2i):
 				
 				if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 					endSearch = true
+					
 				else:
 					if FloorData.tiles[tileData.x][tileData.y] != null:
 						toReturn.append(FloorData.tiles[tileData.x][tileData.y])
