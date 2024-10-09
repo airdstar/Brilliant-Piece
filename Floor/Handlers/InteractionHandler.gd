@@ -57,7 +57,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 			if currentTile.hazard.effectType == "OnTouch":
 				print("hi")
 	else:
-		piece.damage(5 + int(piece.maxHealth / 4))
+		piece.damage(5)
 
 func interact(destination : tile):
 	if mH.SH.moving == true:

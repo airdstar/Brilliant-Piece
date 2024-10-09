@@ -52,11 +52,11 @@ func generateFloor():
 	
 	mH.TH.setTilePattern()
 	
-	mH.EH.movement.setTileMap()
-	
 	generatePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
+	mH.EH.movement.set_tile_map()
 	FloorData.updateData()
+	
 
 func generatePieces(playerStarts, enemyStarts):
 	FloorData.floor.add_child(PlayerData.playerPiece)

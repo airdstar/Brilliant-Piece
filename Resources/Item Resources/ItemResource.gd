@@ -34,17 +34,17 @@ func getTiles(iStart : Vector2i):
 	return toReturn
 
 func getUsable():
-	var amount = usableOn
+	var remainder = usableOn
 	var possibleUses = []
 
-	if amount >= 4:
-		amount -= 4
+	if remainder >= 4:
+		remainder -= 4
 		possibleUses.append("Tile")
-	if amount >= 2:
-		amount -= 2
+	if remainder >= 2:
+		remainder -= 2
 		possibleUses.append("Enemy")
-	if amount >= 1:
-		amount -= 1
+	if remainder >= 1:
+		remainder -= 1
 		possibleUses.append("Self")
 	
 	return possibleUses

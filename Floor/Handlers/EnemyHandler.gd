@@ -9,16 +9,17 @@ func _ready():
 
 func makeDecision():
 	if !FloorData.floorInfo.moveUsed:
-		var bestMovements = movement.getBestMovements()
-		var currentNum = randi_range(0, bestMovements.size() - 1)
-		var counter := 0
-		var canMove := true
-		while bestMovements[currentNum] == null:
-			currentNum = randi_range(0, bestMovements.size() - 1)
-			counter += 1
-			if counter == 5:
-				canMove = false
-				break
-		if canMove:
-			mH.SH.actingPiece = FloorData.floor.enemies[currentNum]
-			mH.IH.movePiece(bestMovements[currentNum])
+		var bestMovements = movement.get_best_movements()
+		if bestMovements != null:
+			var currentNum = randi_range(0, bestMovements.size() - 1)
+			var counter := 0
+			var canMove := true
+			while bestMovements[currentNum].rc == FloorData.floor.enemies[currentNum].rc:
+				currentNum = randi_range(0, bestMovements.size() - 1)
+				counter += 1
+				if counter == 5:
+					canMove = false
+					break
+			if canMove:
+				mH.SH.actingPiece = FloorData.floor.enemies[currentNum]
+				mH.IH.movePiece(bestMovements[currentNum])

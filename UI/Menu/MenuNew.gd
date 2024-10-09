@@ -119,7 +119,7 @@ func updateOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount + "[img]res://UI/Coin.png[/img]")
 
 func selectOption():
 	if optionCount != 0:
