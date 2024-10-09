@@ -7,6 +7,10 @@ class_name EffectResource
 @export var effectStrength : int = 0  #Additive to normal
 @export var effectPercent : float = 1.00 #Negative for opposite value
 
+@export_category("Change")
+@export var adjustMaxHealth : bool
+@export var giveItem : ItemResource
+
 @export_category("Displacement")
 @export var stopMovement : bool
 @export_enum("Toward", "Opposite", "Set") var disDirection : String

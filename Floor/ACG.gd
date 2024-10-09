@@ -59,6 +59,7 @@ func create_connections():
 		3:
 			posData = [Vector2(1,2), Vector2(-1,2), Vector2(2,1), Vector2(2,-1),
 						Vector2(1,-2), Vector2(-1,-2), Vector2(-2,1), Vector2(-2,-1)]
+	
 	for n in range(size.x):
 		for m in range(size.y):
 			if point_ids[n][m] != null:
