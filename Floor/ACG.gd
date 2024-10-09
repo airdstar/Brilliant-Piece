@@ -41,6 +41,8 @@ func set_info(piece : MoveablePiece):
 			pref_direction = DirectionMode.DIAGONAL
 		"Both":
 			pref_direction = DirectionMode.BOTH
+		"L":
+			pref_direction = DirectionMode.L
 	
 	remove_connections()
 	configure_points()
