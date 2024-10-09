@@ -15,7 +15,7 @@ var obstructed := false
 func _ready():
 	pass
 
-func setPiece(piece : Piece, dir : int):
+func setPiece(piece : Piece):
 	contains = piece
 	if piece.rc:
 		if FloorData.tiles[piece.rc.x][piece.rc.y] != self:
@@ -29,24 +29,24 @@ func setPiece(piece : Piece, dir : int):
 	piece.rc = rc
 
 func interact():
-	var interactable = FloorData.floor.Handlers.SH.interactable
+	var inter = FloorData.floor.Handlers.SH.interactable
 	var acting = FloorData.floor.Handlers.SH.actingPiece
 	
 	if contains is MoveablePiece:
 		contains.interact()
 	
 	if hazard:
-		if interactable.damage:
+		if inter.damage:
 			if hazard.destructable:
 				remove_child(hazardHolder)
 				hazardHolder = null
 				hazard = null
 				obstructed = false
 	
-	if interactable.hazard:
-		setHazard(interactable.hazard)
+	if inter.hazard:
+		setHazard(inter.hazard)
 	
-	if interactable is ActionResource:
+	if inter is ActionResource:
 		FloorData.floor.HUD.turnHUD[1].modulate = Color(0.5,0.5,0.5)
 		FloorData.floorInfo.actionUsed = true
 	

@@ -63,7 +63,7 @@ func generatePieces(playerStarts, enemyStarts):
 	
 	if FloorData.floorInfo.isNew:
 		
-		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 2)
+		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece)
 		
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
@@ -77,12 +77,12 @@ func generatePieces(playerStarts, enemyStarts):
 				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
 				if !enemyStart.contains:
 					tileEmpty = true
-					enemyStart.setPiece(FloorData.floor.enemies[n], 2)
+					enemyStart.setPiece(FloorData.floor.enemies[n])
 			
 		
 	else:
 		
-		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece, 2)
+		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece)
 		
 		for n in range(FloorData.floorInfo.enemies.size()):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())

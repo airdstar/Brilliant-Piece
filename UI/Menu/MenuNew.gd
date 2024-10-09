@@ -9,10 +9,10 @@ var options : Array
 var optionLabels : Array[RichTextLabel]
 
 func _ready():
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	setOptions()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Left"):
 		if currentTab > 0:
 			currentTab -= 1
@@ -39,7 +39,6 @@ func _process(delta: float) -> void:
 		
 		$Pointer.position = Vector2(-10, 120 + 30 * highlightedOption)
 
-
 func setOptions():
 	for n in range(optionLabels.size()):
 		remove_child(optionLabels[n])
@@ -60,7 +59,8 @@ func setOptions():
 				$Pointer.position = Vector2(-10, 120)
 				if options.size() - 1 >= n:
 					if options[n] != null:
-						optionLabels[n].bbcode_text = options[n].name
+						optionLabels[n].append_text(options[n].name)
+						add_icon(n)
 					else:
 						optionLabels[n].text = "- EMPTY -"
 				else:
@@ -79,7 +79,7 @@ func setOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)  + "[img]res://UI/Coin.png[/img]"
 				$Pointer.position = Vector2(-10, 120)
 
 func updateOptions():
@@ -94,13 +94,13 @@ func updateOptions():
 				var newLabel = RichTextLabel.new()
 				add_child(newLabel)
 				optionLabels.append(newLabel)
-				optionLabels[n].bbcode_enabled = true
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
+				optionLabels[n].bbcode_enabled = true
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
 				if options.size() - 1 >= n:
 					if options[n] != null:
-						optionLabels[n].bbcode_text = options[n].name
+						optionLabels[n].append_text(options[n].name  + "[img]res://UI/Coin.png[/img]")
 					else:
 						optionLabels[n].text = "- EMPTY -"
 				else:
@@ -120,6 +120,11 @@ func updateOptions():
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
 				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount + "[img]res://UI/Coin.png[/img]")
+
+func add_icon(pos : int):
+	match options[pos]:
+		pass
+	optionLabels[pos].append_text(" [img]res://UI/Coin.png[/img]")
 
 func selectOption():
 	if optionCount != 0:

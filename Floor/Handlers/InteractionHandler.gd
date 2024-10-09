@@ -39,7 +39,7 @@ func movePiece(destination : tile):
 		if destination.contains is MoveablePiece:
 			pushPiece(destination.contains, closestDirection)
 	
-	destination.setPiece(piece, 1)
+	destination.setPiece(piece)
 	mH.UH.usedMovement()
 	if piece is PlayerPiece:
 		mH.UH.displayInfo()
@@ -51,7 +51,7 @@ func movePiece(destination : tile):
 func pushPiece(piece : MoveablePiece, direction : int):
 	var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 	if currentTile:
-		currentTile.setPiece(piece, 1)
+		currentTile.setPiece(piece)
 		piece.damage(1)
 		if currentTile.hazard:
 			if currentTile.hazard.effectType == "OnTouch":
