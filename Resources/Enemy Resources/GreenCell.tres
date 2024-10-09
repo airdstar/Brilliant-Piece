@@ -1,19 +1,22 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://cy5kp51kthgn8"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=4 format=3 uid="uid://cy5kp51kthgn8"]
 
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_okj3r"]
 [ext_resource type="Resource" uid="uid://cq6b6cvbu1a36" path="res://Resources/Item Resources/ItemPools/CellItems.tres" id="1_pxgmu"]
+[ext_resource type="Script" path="res://Resources/BehaviorResource.gd" id="2_qpbwy"]
 
 [resource]
 script = ExtResource("1_okj3r")
 name = "Green Cell"
 desc = ""
 associatedSprite = "res://Piece/Enemies/Green Cell.png"
-type = 8
+type = 1
 baseHealth = 5
-healthScaling = 0.0
-maxLevel = 3
+healthScaling = 0.4
+maxLevel = 2
 minLevel = 1
+possibleBehaviors = Array[ExtResource("2_qpbwy")]([])
 expAmount = 2
+expScaling = 1.5
 itemPool = ExtResource("1_pxgmu")
 coinDropMin = 3
 coinDropMax = 5

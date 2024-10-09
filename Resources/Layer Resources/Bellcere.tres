@@ -1,16 +1,18 @@
-[gd_resource type="Resource" script_class="LayerResource" load_steps=7 format=3 uid="uid://djqj3mu1wxwlv"]
+[gd_resource type="Resource" script_class="LayerResource" load_steps=9 format=3 uid="uid://djqj3mu1wxwlv"]
 
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_vdprw"]
 [ext_resource type="Resource" uid="uid://cy5kp51kthgn8" path="res://Resources/Enemy Resources/GreenCell.tres" id="2_rrp5s"]
 [ext_resource type="Script" path="res://Resources/HazardResource.gd" id="3_0st2v"]
+[ext_resource type="Resource" uid="uid://diqjw2obbcqcu" path="res://Resources/Enemy Resources/RedCell.tres" id="3_1jpch"]
 [ext_resource type="Resource" uid="uid://dw8uenlx7cxx" path="res://Resources/Hazard Resources/Pillar.tres" id="4_0bl10"]
+[ext_resource type="Resource" uid="uid://cjakrvhysgp7y" path="res://Resources/Enemy Resources/BlueCell.tres" id="4_32gs6"]
 [ext_resource type="Resource" uid="uid://dsyo6o0yrnokv" path="res://Resources/Hazard Resources/StickyGoop.tres" id="5_jooa8"]
 [ext_resource type="Script" path="res://Resources/LayerResource.gd" id="6_c5w2y"]
 
 [resource]
 script = ExtResource("6_c5w2y")
 layerName = "Bellcere"
-possibleEnemies = Array[ExtResource("1_vdprw")]([ExtResource("2_rrp5s")])
+possibleEnemies = Array[ExtResource("1_vdprw")]([ExtResource("2_rrp5s"), ExtResource("3_1jpch"), ExtResource("4_32gs6")])
 possibleHazards = Array[ExtResource("3_0st2v")]([ExtResource("4_0bl10"), ExtResource("5_jooa8")])
 possibleLayouts = Array[String](["res://Floor/Layouts/Start1.png", "res://Floor/Layouts/Start2.png", "res://Floor/Layouts/Start3.png", "res://Floor/Layouts/Start4.png"])
 maxPossibleEnemies = 4

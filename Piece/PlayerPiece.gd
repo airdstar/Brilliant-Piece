@@ -24,9 +24,9 @@ func loadData():
 
 func setData():
 	PlayerData.playerInfo.isNew = false
-	classType = ResourceLoader.load("res://Resources/Class Resources/CrystalSage.tres")
+	classType = ResourceLoader.load("res://Resources/Class Resources/Plaguebearer.tres")
 	pieceName = classType.className
-	type = ResourceLoader.load("res://Resources/PieceType Resources/Knight.tres")
+	type = ResourceLoader.load("res://Resources/PieceType Resources/Queen.tres")
 	level = 1
 	maxHealth = classType.startingHealth
 	health = maxHealth
