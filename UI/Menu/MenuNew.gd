@@ -59,8 +59,7 @@ func setOptions():
 				$Pointer.position = Vector2(-10, 120)
 				if options.size() - 1 >= n:
 					if options[n] != null:
-						optionLabels[n].append_text(options[n].name)
-						add_icon(n)
+						optionLabels[n].bbcode_text = options[n].name
 					else:
 						optionLabels[n].text = "- EMPTY -"
 				else:
@@ -79,8 +78,9 @@ func setOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)  + "[img]res://UI/Coin.png[/img]"
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
 				$Pointer.position = Vector2(-10, 120)
+	add_icons()
 
 func updateOptions():
 	for n in range(optionLabels.size()):
@@ -100,7 +100,7 @@ func updateOptions():
 				optionLabels[n].size = Vector2(200, 30)
 				if options.size() - 1 >= n:
 					if options[n] != null:
-						optionLabels[n].append_text(options[n].name  + "[img]res://UI/Coin.png[/img]")
+						optionLabels[n].bbcode_text = options[n].name
 					else:
 						optionLabels[n].text = "- EMPTY -"
 				else:
@@ -119,12 +119,27 @@ func updateOptions():
 				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
 				optionLabels[n].position = Vector2(0, 120 + 30 * n)
 				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount + "[img]res://UI/Coin.png[/img]")
+				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
+	add_icons()
 
-func add_icon(pos : int):
-	match options[pos]:
-		pass
-	optionLabels[pos].append_text(" [img]res://UI/Coin.png[/img]")
+func add_icons():
+	for n in range(optionCount):
+		if options[n] != null:
+			match options[n].type:
+				"Damage":
+					optionLabels[n].append_text(" [img]res://UI/Coin.png[/img]")
+				"Healing":
+					optionLabels[n].append_text(" [img]res://UI/Coin.png[/img]")
+				"Defensive":
+					pass
+				"Hazard":
+					pass
+				"Status":
+					pass
+				"Movement":
+					pass
+				"Creation":
+					pass
 
 func selectOption():
 	if optionCount != 0:

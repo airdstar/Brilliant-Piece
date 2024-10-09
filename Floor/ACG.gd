@@ -27,11 +27,11 @@ func create_new_grid(gridSize : Vector2i):
 	for n in range(size.x):
 		point_ids.append([])
 		for m in range(size.y):
-			point_ids[n].append(null)
-			if FloorData.tiles[n][m] != null:
-				currentId += 1
-				point_ids[n][m] = currentId
-				grid.add_point(point_ids[n][m], Vector2(n,m))
+			currentId += 1
+			point_ids[n].append(currentId)
+			grid.add_point(point_ids[n][m], Vector2(n,m))
+			if FloorData.tiles[n][m] == null:
+				grid.set_point_disabled(point_ids[n][m])
 
 func set_info(piece : MoveablePiece):
 	match piece.type.movementAngle:
@@ -48,24 +48,26 @@ func set_info(piece : MoveablePiece):
 
 func create_connections():
 	var posData : Array[Vector2]
-	if pref_direction < 3:
-		match pref_direction:
-			0:
-				posData = [Vector2(0,1), Vector2(1,0), Vector2(0,-1), Vector2(-1,0)]
-			1:
-				posData = [Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
-			2:
-				posData = [Vector2(0,1), Vector2(1,1), Vector2(1,0), Vector2(1,-1),
-							Vector2(0,-1), Vector2(-1,-1), Vector2(-1,0), Vector2(-1,1)]
-		for n in range(size.x):
-			for m in range(size.y):
-				if point_ids[n][m] != null:
-					for o in range(posData.size()):
-						var current_point = Vector2(n,m) + posData[o]
-						if is_in_range(current_point):
-							if point_ids[current_point.x][current_point.y] != null:
-								if !grid.are_points_connected(point_ids[current_point.x][current_point.y], point_ids[n][m]):
-									grid.connect_points(point_ids[n][m], point_ids[current_point.x][current_point.y])
+	match pref_direction:
+		0:
+			posData = [Vector2(0,1), Vector2(1,0), Vector2(0,-1), Vector2(-1,0)]
+		1:
+			posData = [Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
+		2:
+			posData = [Vector2(0,1), Vector2(1,1), Vector2(1,0), Vector2(1,-1),
+						Vector2(0,-1), Vector2(-1,-1), Vector2(-1,0), Vector2(-1,1)]
+		3:
+			posData = [Vector2(1,2), Vector2(-1,2), Vector2(2,1), Vector2(2,-1),
+						Vector2(1,-2), Vector2(-1,-2), Vector2(-2,1), Vector2(-2,-1)]
+	for n in range(size.x):
+		for m in range(size.y):
+			if point_ids[n][m] != null:
+				for o in range(posData.size()):
+					var current_point = Vector2(n,m) + posData[o]
+					if is_in_range(current_point):
+						if point_ids[current_point.x][current_point.y] != null:
+							if !grid.are_points_connected(point_ids[current_point.x][current_point.y], point_ids[n][m]):
+								grid.connect_points(point_ids[n][m], point_ids[current_point.x][current_point.y])
 
 func remove_connections():
 	for n in range(size.x):

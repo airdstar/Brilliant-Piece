@@ -14,6 +14,6 @@ className = "Crystal Sage"
 associatedSprite = "res://Piece/Classes/CrystalSage.png"
 startingHealth = 6
 startingActions = Array[ExtResource("3_3at3e")]([ExtResource("4_lqujx"), ExtResource("5_n6db3"), ExtResource("6_1uao1")])
-startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_xf1f6"), ExtResource("7_xf1f6"), ExtResource("7_xf1f6")])
+startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_xf1f6")])
 levelingHealthIncrease = Array[int]([2, 0, 0, 0, 0])
 levelingActions = Array[ExtResource("3_3at3e")]([null, null, null, null, null])

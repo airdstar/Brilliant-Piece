@@ -8,16 +8,32 @@ class_name EnemyResource
 @export_flags("Pawn", "Rook", "Bishop", "Knight", "King", "Queen") var type : int
 
 @export_category("Stats")
-@export var baseHealth : int
+## Health of minimum level
+@export var baseHealth : int = 3
+## currentHealth + (this * currentHealth) to calculate health for every level
+@export var healthScaling : float = 0.4
 @export var actions : ActionSetResource
-@export var maxLevel : int
-@export var minLevel : int
+## Max possible level
+@export var maxLevel : int = 1
+## Minimum possible level
+@export var minLevel : int = 1
+
+@export_category("Behavior")
+@export var startingBehavior : BehaviorResource
+## Array of possible behaviors the enemy can cycle through, can be modified if certain conditions are met
+@export var possibleBehaviors : Array[BehaviorResource]
 
 @export_category("Drops")
-@export var expAmount : int
+## Exp dropped at the minimum level
+@export var expAmount : int = 1
+## (currentExpAmount * expScaling) to calculate exp for every level
+@export var expScaling : float = 1.5
+## Every possible drop, chances included, update the resource to change
 @export var itemPool : ItemPoolResource
-@export var coinDropMin : int
-@export var coinDropMax : int
+## Minimum amount of coin that can drop
+@export var coinDropMin : int = 1
+## Maximum amount of coin that can drop
+@export var coinDropMax : int = 1
 
 func getType():
 	var amount = type

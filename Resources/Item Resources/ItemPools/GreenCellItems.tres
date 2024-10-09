@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="ItemPoolResource" load_steps=4 format=3 uid="uid://4x7h7t0iw6xh"]
-
-[ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="1_72fyy"]
-[ext_resource type="Resource" uid="uid://cwddtf5wff3xk" path="res://Resources/Item Resources/Items/Bomb.tres" id="2_cgbn3"]
-[ext_resource type="Script" path="res://Resources/Item Resources/ItemPoolResource.gd" id="2_ll3ci"]
-
-[resource]
-script = ExtResource("2_ll3ci")
-items = Array[ExtResource("1_72fyy")]([ExtResource("2_cgbn3")])

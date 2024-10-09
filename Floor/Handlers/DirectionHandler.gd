@@ -50,7 +50,7 @@ func getSides(dir : Direction):
 
 func getAll(dir : String):
 	match dir:
-		"Straight", "Cone", "L":
+		"Straight", "Cone":
 			return [dirDict["Direction"][0], dirDict["Direction"][2], dirDict["Direction"][4], dirDict["Direction"][6]]
 		"Diagonal":
 			return [dirDict["Direction"][1], dirDict["Direction"][3], dirDict["Direction"][5], dirDict["Direction"][7]]

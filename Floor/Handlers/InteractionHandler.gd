@@ -26,14 +26,15 @@ func movePiece(destination : tile):
 	var posData = mH.DH.dirDict["PosData"][closestDirection]
 	var currentTile : tile = FloorData.tiles[piece.rc.x][piece.rc.y]
 	
-	while currentTile != destination:
-		
-		currentTile = FloorData.tiles[currentTile.rc.x + posData.x][currentTile.rc.y + posData.y]
-		
-		if currentTile.hazard:
-			if currentTile.hazard.effectType == "OnTouch":
-				if currentTile.hazard.effect.stopMovement:
-					destination = currentTile
+	if !piece.type.skip:
+		while currentTile != destination:
+			
+			currentTile = FloorData.tiles[currentTile.rc.x + posData.x][currentTile.rc.y + posData.y]
+			
+			if currentTile.hazard:
+				if currentTile.hazard.effectType == "OnTouch":
+					if currentTile.hazard.effect.stopMovement:
+						destination = currentTile
 	
 	if destination.contains:
 		if destination.contains is MoveablePiece:
@@ -49,13 +50,17 @@ func movePiece(destination : tile):
 	FloorData.updateData()
 
 func pushPiece(piece : MoveablePiece, direction : int):
-	var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
-	if currentTile:
-		currentTile.setPiece(piece)
-		piece.damage(1)
-		if currentTile.hazard:
-			if currentTile.hazard.effectType == "OnTouch":
-				print("hi")
+	var dirVect : Vector2i = mH.DH.dirDict["PosData"][direction]
+	if piece.rc.x + dirVect.x >= 0 and piece.rc.y + dirVect.y >= 0 and piece.rc.x + dirVect.x < FloorData.floorInfo.rc.x and piece.rc.y + dirVect.y < FloorData.floorInfo.rc.y:
+		var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
+		if currentTile:
+			currentTile.setPiece(piece)
+			piece.damage(1)
+			if currentTile.hazard:
+				if currentTile.hazard.effectType == "OnTouch":
+					print("hi")
+		else:
+			piece.damage(5)
 	else:
 		piece.damage(5)
 

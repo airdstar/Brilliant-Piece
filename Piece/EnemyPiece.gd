@@ -6,6 +6,8 @@ var behavior : String
 
 var colorTile : bool
 
+var target : Piece
+
 
 func setData(pieceNum : int):
 	FloorData.floorInfo.enemies.append(EnemyInfo.new())

@@ -6,4 +6,5 @@
 script = ExtResource("1_v0pjr")
 typeName = "Knight"
 movementCount = 1
+skip = true
 movementAngle = "L"

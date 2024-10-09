@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemPoolResource" load_steps=6 format=3 uid="uid://cq6b6cvbu1a36"]
+
+[ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="1_3tvf4"]
+[ext_resource type="Resource" uid="uid://cwddtf5wff3xk" path="res://Resources/Item Resources/Items/Bomb.tres" id="2_5jk7p"]
+[ext_resource type="Script" path="res://Resources/Item Resources/ItemPoolResource.gd" id="2_ebbo4"]
+[ext_resource type="Resource" uid="uid://b3remk0aygs26" path="res://Resources/Item Resources/Items/Cone.tres" id="3_ictqf"]
+[ext_resource type="Resource" uid="uid://vd03wdbue4mn" path="res://Resources/Item Resources/Items/Crown.tres" id="4_2j8p0"]
+
+[resource]
+script = ExtResource("2_ebbo4")
+items = Array[ExtResource("1_3tvf4")]([ExtResource("2_5jk7p"), ExtResource("3_ictqf"), ExtResource("4_2j8p0")])

@@ -3,11 +3,17 @@ class_name PieceTypeResource
 
 @export var typeName : String
 @export var movementCount : int
+@export var skip : bool = false
 @export_enum("Straight", "Diagonal", "Both", "L") var movementAngle : String
 
 func getMoveableTiles(movementStart : Vector2i):
 	var toReturn : Array[tile]
-	var pos = FloorData.floor.Handlers.DH.getAll(movementAngle)
+	var pos
+	if movementAngle != "L":
+		pos = FloorData.floor.Handlers.DH.getAll(movementAngle)
+	else:
+		pos = [Vector2i(1,2), Vector2i(-1,2), Vector2i(2,1), Vector2i(2,-1),
+				Vector2i(1,-2), Vector2i(-1,-2), Vector2i(-2,1), Vector2i(-2,-1)]
 	var tileData : Vector2i
 	
 	for n in range(pos.size()):
@@ -15,7 +21,10 @@ func getMoveableTiles(movementStart : Vector2i):
 		var movementCounter = 1
 		var endSearch = false
 		while !endSearch:
-			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
+			if movementAngle != "L":
+				tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
+			else:
+				tileData += pos[n]
 			
 			if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 				endSearch = true

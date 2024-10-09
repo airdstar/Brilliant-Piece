@@ -4,7 +4,7 @@ class_name Interactable
 @export_category("General")
 @export var name : String
 @export var desc : String
-@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement") var type : String
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var type : String
 @export var AOE : AOEResource
 @export_flags("Self", "Enemy", "Tile") var usableOn : int
 

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://diqjw2obbcqcu"]
+
+[ext_resource type="Resource" uid="uid://cq6b6cvbu1a36" path="res://Resources/Item Resources/ItemPools/CellItems.tres" id="1_xbbfi"]
+[ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_ymlem"]
+
+[resource]
+script = ExtResource("1_ymlem")
+name = "Red Cell"
+desc = ""
+associatedSprite = "res://Piece/Enemies/Red Cell.png"
+type = 3
+baseHealth = 4
+healthScaling = 0.4
+maxLevel = 1
+minLevel = 1
+expAmount = 3
+itemPool = ExtResource("1_xbbfi")
+coinDropMin = 1
+coinDropMax = 1

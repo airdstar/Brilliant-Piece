@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=2 format=3 uid="uid://c7vjbclebf8c4"]
+
+[ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_haggd"]
+
+[resource]
+script = ExtResource("1_haggd")
+name = "Tissuetter"
+desc = ""
+associatedSprite = "None"
+type = 4
+baseHealth = 3
+healthScaling = 0.4
+maxLevel = 4
+minLevel = 2
+expAmount = 1
+expScaling = 1.5
+coinDropMin = 1
+coinDropMax = 1
