@@ -6,7 +6,7 @@ class_name Interactable
 @export var desc : String
 @export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var type : String
 @export var AOE : AOEResource
-@export_flags("Self", "Enemy", "Tile") var usableOn : int
+@export_flags("Self", "Others", "Tile") var usableOn : int
 
 @export_category("Basic Stats")
 @export var damage : int
@@ -15,8 +15,6 @@ class_name Interactable
 @export var status : StatusResource
 @export var hazard : HazardResource
 @export var effect : EffectResource
-
-
 
 func getTiles(_iStart : Vector2i):
 	pass

@@ -4,7 +4,7 @@ class_name EnemyResource
 @export_category("General")
 @export var name : String
 @export var desc : String
-@export var associatedSprite : String
+@export var associatedSprite : Texture2D
 @export_flags("Pawn", "Rook", "Bishop", "Knight", "King", "Queen") var type : int
 
 @export_category("Stats")

@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="HazardResource" load_steps=3 format=3 uid="uid://dsyo6o0yrnokv"]
+[gd_resource type="Resource" script_class="HazardResource" load_steps=4 format=3 uid="uid://dsyo6o0yrnokv"]
 
 [ext_resource type="Resource" uid="uid://d27g6784kl70w" path="res://Resources/Effect Resources/Sticky.tres" id="1_gauyd"]
 [ext_resource type="Script" path="res://Resources/HazardResource.gd" id="1_jdgp7"]
+[ext_resource type="Texture2D" uid="uid://bqioq0d3qsilb" path="res://Resources/Hazard Resources/Sprites/StickyGoop.png" id="1_qorea"]
 
 [resource]
 script = ExtResource("1_jdgp7")
 name = "StickyGoop"
 visible = true
-associatedSprite = "res://Hazard/StickyGoop.png"
+associatedSprite = ExtResource("1_qorea")
 blockade = false
+replaceable = false
 destructable = false
 effectType = "OnTouch"
 effect = ExtResource("1_gauyd")

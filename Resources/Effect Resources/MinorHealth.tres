@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EffectResource" load_steps=2 format=3 uid="uid://cnw2k0qrujrnf"]
+
+[ext_resource type="Script" path="res://Resources/EffectResource.gd" id="1_7q6re"]
+
+[resource]
+script = ExtResource("1_7q6re")
+name = "Minor Health"
+type = "Health"
+effectStrength = 2
+effectPercent = 1.0
+adjustMaxHealth = false
+stopMovement = false
+disDirection = ""
+nextFloor = false
+delete = false

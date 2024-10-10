@@ -8,8 +8,9 @@ var colorDict : Dictionary = {"White" : Color(1,1,1,1), "Black" : Color(0,0,0,1)
 var tileBlackColor : Array = [Color8(37,24,26)]
 var tileWhiteColor : Array = [Color8(214,209,177)]
 
-
 var levelDict : Dictionary
+
+var posDict : Dictionary
 
 func _ready():
 	
@@ -17,3 +18,10 @@ func _ready():
 	var healthArray : Array[int] = [2, 2, 2, 1, 2]
 	
 	levelDict = {"exp" : expArray, "health" : healthArray}
+	
+	posDict = {"Straight" : [Vector2i(0,1), Vector2i(1,0), Vector2i(0,-1), Vector2i(-1,0)],
+				"Diagonal" : [Vector2i(1,1), Vector2i(1,-1), Vector2i(-1,-1), Vector2i(-1,1)],
+				"Both" : [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
+						Vector2i(0,-1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(-1,1)],
+				"L" : [Vector2i(1,2), Vector2i(-1,2), Vector2i(2,1), Vector2i(2,-1),
+						Vector2i(1,-2), Vector2i(-1,-2), Vector2i(-2,1), Vector2i(-2,-1)]}

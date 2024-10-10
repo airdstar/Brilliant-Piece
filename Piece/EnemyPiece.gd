@@ -27,9 +27,7 @@ func setData(pieceNum : int):
 	FloorData.floorInfo.enemies[pieceNum].maxHealth = maxHealth
 	FloorData.floorInfo.enemies[pieceNum].armor = armor
 	
-	#Determine starting behavior here
-	
-	$TextureRect.set_texture(ResourceLoader.load(enemyType.associatedSprite))
+	$TextureRect.set_texture(enemyType.associatedSprite)
 	
 
 func loadData(pieceNum : int):
@@ -43,7 +41,7 @@ func loadData(pieceNum : int):
 	armor = FloorData.floorInfo.enemies[pieceNum].armor
 	rc = FloorData.floorInfo.enemies[pieceNum].rc
 	
-	$TextureRect.set_texture(ResourceLoader.load(enemyType.associatedSprite))
+	$TextureRect.set_texture(enemyType.associatedSprite)
 	
 
 func updateData():

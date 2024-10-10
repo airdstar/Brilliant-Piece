@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="HazardResource" load_steps=2 format=3 uid="uid://dw8uenlx7cxx"]
+[gd_resource type="Resource" script_class="HazardResource" load_steps=3 format=3 uid="uid://dw8uenlx7cxx"]
 
+[ext_resource type="Texture2D" uid="uid://doiqy8jydvf0c" path="res://Resources/Hazard Resources/Sprites/Pillar.png" id="1_n1e4k"]
 [ext_resource type="Script" path="res://Resources/HazardResource.gd" id="1_q2njl"]
 
 [resource]
 script = ExtResource("1_q2njl")
 name = "Pillar"
 visible = true
-associatedSprite = "res://Hazard/Pillar.png"
+associatedSprite = ExtResource("1_n1e4k")
 blockade = true
+replaceable = false
 destructable = true
 effectType = "None"

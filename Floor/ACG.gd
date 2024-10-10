@@ -1,24 +1,10 @@
 extends RefCounted
 class_name ACG
 
-enum Heuristic {
-	EUCLIDEAN,
-	MANHATTAN,
-	OCTILE,
-	CHEBYSHEV
-}
-
-enum DirectionMode {
-	STRAIGHT,
-	DIAGONAL,
-	BOTH,
-	L
-}
-
 var grid : AStar2D = AStar2D.new()
 var size : Vector2i = Vector2i.ZERO
 var point_ids : Array
-var pref_direction : DirectionMode = DirectionMode.STRAIGHT
+var pref_direction : String = "Straight"
 
 func create_new_grid(gridSize : Vector2i):
 	grid = AStar2D.new()
@@ -34,39 +20,19 @@ func create_new_grid(gridSize : Vector2i):
 				grid.set_point_disabled(point_ids[n][m])
 
 func set_info(piece : MoveablePiece):
-	match piece.type.movementAngle:
-		"Straight":
-			pref_direction = DirectionMode.STRAIGHT
-		"Diagonal":
-			pref_direction = DirectionMode.DIAGONAL
-		"Both":
-			pref_direction = DirectionMode.BOTH
-		"L":
-			pref_direction = DirectionMode.L
-	
+	pref_direction = piece.type.movementAngle
 	remove_connections()
 	configure_points()
 	create_connections()
 
 func create_connections():
-	var posData : Array[Vector2]
-	match pref_direction:
-		0:
-			posData = [Vector2(0,1), Vector2(1,0), Vector2(0,-1), Vector2(-1,0)]
-		1:
-			posData = [Vector2(1,1), Vector2(1,-1), Vector2(-1,-1), Vector2(-1,1)]
-		2:
-			posData = [Vector2(0,1), Vector2(1,1), Vector2(1,0), Vector2(1,-1),
-						Vector2(0,-1), Vector2(-1,-1), Vector2(-1,0), Vector2(-1,1)]
-		3:
-			posData = [Vector2(1,2), Vector2(-1,2), Vector2(2,1), Vector2(2,-1),
-						Vector2(1,-2), Vector2(-1,-2), Vector2(-2,1), Vector2(-2,-1)]
-	
+	var posData = Global.posDict[pref_direction]
+
 	for n in range(size.x):
 		for m in range(size.y):
 			if point_ids[n][m] != null:
 				for o in range(posData.size()):
-					var current_point = Vector2(n,m) + posData[o]
+					var current_point = Vector2i(n,m) + posData[o]
 					if is_in_range(current_point):
 						if point_ids[current_point.x][current_point.y] != null:
 							if !grid.are_points_connected(point_ids[current_point.x][current_point.y], point_ids[n][m]):

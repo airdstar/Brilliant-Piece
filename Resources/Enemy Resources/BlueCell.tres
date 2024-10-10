@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=4 format=3 uid="uid://cjakrvhysgp7y"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=5 format=3 uid="uid://cjakrvhysgp7y"]
 
+[ext_resource type="Texture2D" uid="uid://brk3qa3kp1cqj" path="res://Resources/Enemy Resources/Sprites/Blue Cell.png" id="1_2kn6e"]
 [ext_resource type="Script" path="res://Resources/BehaviorResource.gd" id="1_feb0e"]
 [ext_resource type="Resource" uid="uid://cq6b6cvbu1a36" path="res://Resources/Item Resources/ItemPools/CellItems.tres" id="1_lsgs1"]
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="2_v6lp5"]
@@ -8,7 +9,7 @@
 script = ExtResource("2_v6lp5")
 name = "Blue Cell"
 desc = ""
-associatedSprite = "res://Piece/Enemies/Blue Cell.png"
+associatedSprite = ExtResource("1_2kn6e")
 type = 1
 baseHealth = 3
 healthScaling = 0.4

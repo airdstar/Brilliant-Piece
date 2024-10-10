@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="HazardResource" load_steps=2 format=3 uid="uid://bvnjer56r3tab"]
+[gd_resource type="Resource" script_class="HazardResource" load_steps=3 format=3 uid="uid://bvnjer56r3tab"]
 
+[ext_resource type="Texture2D" uid="uid://c6ms1nna4pg6p" path="res://Resources/Hazard Resources/Sprites/Cone.png" id="1_kixp4"]
 [ext_resource type="Script" path="res://Resources/HazardResource.gd" id="1_wt52r"]
 
 [resource]
 script = ExtResource("1_wt52r")
 name = "Cone"
 visible = true
-associatedSprite = "res://Hazard/Cone.png"
+associatedSprite = ExtResource("1_kixp4")
 blockade = true
 replaceable = false
 destructable = false

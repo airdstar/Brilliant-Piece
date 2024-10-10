@@ -4,7 +4,7 @@ class_name HazardResource
 @export_category("General")
 @export var name : String
 @export var visible : bool
-@export var associatedSprite : String
+@export var associatedSprite : Texture2D
 
 @export_category("Stats")
 @export var blockade : bool

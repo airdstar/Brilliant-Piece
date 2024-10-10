@@ -131,7 +131,7 @@ func add_icons():
 				"Healing":
 					optionLabels[n].append_text(" [img]res://UI/Coin.png[/img]")
 				"Defensive":
-					pass
+					optionLabels[n].append_text(" [img]res://UI/Defense.png[/img]")
 				"Hazard":
 					pass
 				"Status":
@@ -139,7 +139,7 @@ func add_icons():
 				"Movement":
 					pass
 				"Creation":
-					pass
+					optionLabels[n].append_text(" [img]res://UI/Creation.png[/img]")
 
 func selectOption():
 	if optionCount != 0:

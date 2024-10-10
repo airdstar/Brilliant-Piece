@@ -30,7 +30,7 @@ func setPiece(piece : Piece):
 
 func interact():
 	var inter = FloorData.floor.Handlers.SH.interactable
-	var acting = FloorData.floor.Handlers.SH.actingPiece
+	var _acting = FloorData.floor.Handlers.SH.actingPiece
 	
 	if contains is MoveablePiece:
 		contains.interact()
@@ -62,7 +62,7 @@ func setHazard(hazardIn : HazardResource):
 	FloorData.floorInfo.tileInfo[rc.x][rc.y].hazard = hazard
 	
 	hazardHolder = TextureRect.new()
-	hazardHolder.set_texture(ResourceLoader.load(hazard.associatedSprite))
+	hazardHolder.set_texture(hazard.associatedSprite)
 	add_child(hazardHolder)
 	
 
