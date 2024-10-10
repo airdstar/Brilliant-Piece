@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Floor/Handlers/UIHandler.gd" id="5_mmjj1"]
 [ext_resource type="Script" path="res://Floor/Handlers/StateHandler.gd" id="6_4wu62"]
 [ext_resource type="Script" path="res://Floor/Handlers/TileHandler.gd" id="7_12ipr"]
-[ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://Floor/Handlers/EnemyHandler.tscn" id="9_igvtt"]
+[ext_resource type="PackedScene" uid="uid://ct2p0kor7elmq" path="res://Floor/Handlers/Enemy Handlers/EnemyHandler.tscn" id="9_igvtt"]
 
 [node name="FloorHandlers" type="Node"]
 script = ExtResource("1_l3wu7")

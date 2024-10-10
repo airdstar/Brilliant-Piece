@@ -9,3 +9,4 @@
 [resource]
 script = ExtResource("2_ebbo4")
 items = Array[ExtResource("1_3tvf4")]([ExtResource("2_5jk7p"), ExtResource("3_ictqf"), ExtResource("4_2j8p0")])
+itemChances = Array[float]([0.45, 0.35, 0.2])

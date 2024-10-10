@@ -12,6 +12,7 @@ enum Direction {
 }
 
 var dirDict : Dictionary
+var posDict : Dictionary
 
 func _ready():
 	var dirPosArray : Array[Vector2i] = [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
@@ -24,6 +25,13 @@ func _ready():
 								   Direction.EAST, Direction.NORTHEAST]
 	
 	dirDict = {"Direction" : dirArray, "PosData" : dirPosArray, "RotData" : dirRotationArray}
+	
+	posDict = {"Straight" : [Vector2i(0,1), Vector2i(1,0), Vector2i(0,-1), Vector2i(-1,0)],
+				"Diagonal" : [Vector2i(1,1), Vector2i(1,-1), Vector2i(-1,-1), Vector2i(-1,1)],
+				"Both" : [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
+						Vector2i(0,-1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(-1,1)],
+				"L" : [Vector2i(1,2), Vector2i(-1,2), Vector2i(2,1), Vector2i(2,-1),
+						Vector2i(1,-2), Vector2i(-1,-2), Vector2i(-2,1), Vector2i(-2,-1)]}
 	
 	mH = get_parent()
 

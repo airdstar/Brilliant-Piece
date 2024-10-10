@@ -26,7 +26,7 @@ func set_info(piece : MoveablePiece):
 	create_connections()
 
 func create_connections():
-	var posData = Global.posDict[pref_direction]
+	var posData = FloorData.floor.Handlers.DH.posDict[pref_direction]
 
 	for n in range(size.x):
 		for m in range(size.y):

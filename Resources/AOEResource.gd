@@ -1,34 +1,42 @@
 extends Resource
 class_name AOEResource
 
-@export_enum("Straight", "Diagonal", "Both", "Square", "Sides") var AOEdirection: String
+@export_enum("Straight", "Diagonal", "Both", "L", "Sides") var AOEdirection: String
+## Trails go in the specified direction until the edges of map or stopped by an obstruction
 @export_enum("None", "Forward", "Backward", "Both") var trailType : String
+## Amount of tiles the AOE can go
 @export var AOErange : int = 1
-@export var trailRange : int = 10
+## Width of trail
+@export var trailWidth : int = 0
 
 
-func getAOE(AOEstart : Vector3, relativeDir : int):
-	var toReturn : Array[Vector3]
-	var pos
+func getAOE(AOEstart : Vector2i, relativeDir : int):
+	var toReturn : Array[tile]
+	var pos : Array[Vector2i]
 	
-	if AOEdirection == "Sides":
-		pos = FloorData.floor.Handlers.DH.getSides(relativeDir)
-	else:
-		pos = FloorData.floor.Handlers.DH.getAll(AOEdirection)
+	if AOEdirection != "Sides":
+		pos = FloorData.floor.Handlers.DH.posDict[AOEdirection]
+		
 	
-	var tileData : Vector3
+	var tileData : Vector2i
 	for n in range(pos.size()):
 		tileData = AOEstart
-		for m in range(AOErange):
-			tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
-			toReturn.append(tileData)
-			if AOEdirection == "Square":
-				if n % 2 == 0:
-					var counter = m
-					while counter > 0:
-						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[0]] * counter)
-						toReturn.append(tileData + FloorData.floor.Handlers.DH.dirDict["PosData"][FloorData.floor.Handlers.DH.getSides(pos[n])[1]] * counter)
-						counter -= 1
-	for n in range(trailRange):
-		pass
+		var counter := 1
+		var endSearch := false
+		while !endSearch:
+			tileData += pos[n]
+			
+			if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
+				endSearch = true
+			else:
+				if FloorData.tiles[tileData.x][tileData.y] != null:
+					toReturn.append(FloorData.tiles[tileData.x][tileData.y])
+					if FloorData.tiles[tileData.x][tileData.y].obstructed:
+						endSearch = true
+			
+			if counter == AOErange:
+				endSearch = true
+				
+			counter += 1
+			
 	return toReturn

@@ -65,4 +65,17 @@ func nextFloor():
 	
 	setData()
 	saveInfo()
+
+func reload_floor():
+	PlayerData.playerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
+	
+	floorInfo = FloorInfo.new()
+	floorInfo.floorNum = PlayerData.playerInfo.currentFloorNum
+	
+	var main = floor.get_parent()
+	floor.queue_free()
+	floor = preload("res://Floor/Floor.tscn").instantiate()
+	main.add_child(floor)
+	
+	setData()
 	

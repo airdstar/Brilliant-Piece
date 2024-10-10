@@ -18,10 +18,3 @@ func _ready():
 	var healthArray : Array[int] = [2, 2, 2, 1, 2]
 	
 	levelDict = {"exp" : expArray, "health" : healthArray}
-	
-	posDict = {"Straight" : [Vector2i(0,1), Vector2i(1,0), Vector2i(0,-1), Vector2i(-1,0)],
-				"Diagonal" : [Vector2i(1,1), Vector2i(1,-1), Vector2i(-1,-1), Vector2i(-1,1)],
-				"Both" : [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
-						Vector2i(0,-1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(-1,1)],
-				"L" : [Vector2i(1,2), Vector2i(-1,2), Vector2i(2,1), Vector2i(2,-1),
-						Vector2i(1,-2), Vector2i(-1,-2), Vector2i(-2,1), Vector2i(-2,-1)]}

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct2p0kor7elmq"]
+
+[ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyHandler.gd" id="1_y5b15"]
+[ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyMovement.gd" id="2_kkjat"]
+[ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyAction.gd" id="3_ag245"]
+[ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyBehavior.gd" id="4_l5klg"]
+
+[node name="EnemyHandler" type="Node"]
+script = ExtResource("1_y5b15")
+
+[node name="MovementNode" type="Node" parent="."]
+script = ExtResource("2_kkjat")
+
+[node name="ActionNode" type="Node" parent="."]
+script = ExtResource("3_ag245")
+
+[node name="BehaviorNode" type="Node" parent="."]
+script = ExtResource("4_l5klg")
