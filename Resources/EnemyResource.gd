@@ -19,8 +19,7 @@ class_name EnemyResource
 @export var minLevel : int = 1
 
 @export_category("Behavior")
-@export var startingBehavior : BehaviorResource
-## Array of possible behaviors the enemy can cycle through, can be modified if certain conditions are met
+## Array of possible specific behaviors the enemy can cycle through, can be modified if certain conditions are met
 @export var possibleBehaviors : Array[BehaviorResource]
 
 @export_category("Drops")

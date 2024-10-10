@@ -23,7 +23,6 @@ func saveInfo():
 	ResourceSaver.save(playerInfo, save_path)
 	
 func resetInfo():
-	print("Reset info")
 	ResourceSaver.save(PlayerInfo.new(), save_path)
 
 func updateData():

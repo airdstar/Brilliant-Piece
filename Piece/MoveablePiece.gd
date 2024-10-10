@@ -33,6 +33,8 @@ func interact():
 		addArmor(interactable.armor)
 	if interactable.status:
 		applyStatus(interactable.status)
+	if interactable.effect:
+		proc_effect(interactable.effect)
 
 func damage(damageAmount : int):
 	if damageAmount >= armor:
@@ -82,6 +84,16 @@ func applyStatus(status : StatusResource):
 	
 	PlayerData.updateData()
 	FloorData.updateData()
+
+func proc_effect(effect : EffectResource):
+	if effect.type == "Change":
+		if effect.adjustMaxHealth:
+			maxHealth += effect.effectStrength * effect.effectPercent
+			health += effect.effectStrength * effect.effectPercent
+		elif effect.pieceType:
+			type = effect.pieceType
+		elif effect.giveItem:
+			return false
 
 func flatDamage():
 	var toReturn : int = 0

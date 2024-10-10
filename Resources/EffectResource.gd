@@ -9,6 +9,7 @@ class_name EffectResource
 ##Multiplied by the strength. Make negative to grant opposite effect
 @export var effectPercent : float = 1.00
 
+## Only 1 change can happen per effect
 @export_category("Change")
 @export var adjustMaxHealth : bool
 @export var pieceType : PieceTypeResource

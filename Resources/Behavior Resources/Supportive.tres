@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BehaviorResource" load_steps=2 format=3 uid="uid://c7ot6cqugr6x"]
+
+[ext_resource type="Script" path="res://Resources/BehaviorResource.gd" id="1_xlaff"]
+
+[resource]
+script = ExtResource("1_xlaff")
+target = "Enemy"
+type = 26

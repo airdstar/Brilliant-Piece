@@ -2,12 +2,10 @@ extends MoveablePiece
 class_name EnemyPiece
 
 var enemyType : EnemyResource
-var behavior : String
 
 var colorTile : bool
 
 var target : Piece
-
 
 func setData(pieceNum : int):
 	FloorData.floorInfo.enemies.append(EnemyInfo.new())

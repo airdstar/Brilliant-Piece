@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ClassResource" load_steps=7 format=3 uid="uid://lvfi5wwrr7or"]
+[gd_resource type="Resource" script_class="ClassResource" load_steps=8 format=3 uid="uid://lvfi5wwrr7or"]
 
 [ext_resource type="Script" path="res://Resources/ClassResource.gd" id="1_lnosw"]
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="3_3at3e"]
 [ext_resource type="Resource" uid="uid://bvt1vr3s0sfhv" path="res://Resources/Action Resources/Actions/ShardSlash.tres" id="3_apsrk"]
 [ext_resource type="Resource" uid="uid://ch1iy5jb0igbg" path="res://Resources/Action Resources/Actions/SpikedArmor.tres" id="6_1uao1"]
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="6_iqr2t"]
+[ext_resource type="Resource" uid="uid://coyanuq1y1gmn" path="res://Resources/Item Resources/Items/PeasantHat.tres" id="7_1fe00"]
 [ext_resource type="Resource" uid="uid://b3remk0aygs26" path="res://Resources/Item Resources/Items/Cone.tres" id="7_xf1f6"]
 
 [resource]
@@ -13,6 +14,6 @@ className = "Plaguebearer"
 associatedSprite = "res://Resources/Class Resources/Sprites/Plaguebearer.png"
 startingHealth = 6
 startingActions = Array[ExtResource("3_3at3e")]([ExtResource("3_apsrk"), ExtResource("6_1uao1")])
-startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_xf1f6")])
+startingItems = Array[ExtResource("6_iqr2t")]([ExtResource("7_xf1f6"), ExtResource("7_1fe00")])
 levelingHealthIncrease = Array[int]([2, 0, 0, 0, 0])
 levelingActions = Array[ExtResource("3_3at3e")]([null, null, null, null, null])

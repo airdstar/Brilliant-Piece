@@ -1,4 +1,4 @@
-extends Node
+extends enemyExtension
 
 var grid : ACG = ACG.new()
 

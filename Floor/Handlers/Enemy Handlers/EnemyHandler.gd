@@ -9,6 +9,8 @@ func _ready():
 
 func makeDecision():
 	
+	behavior
+	
 	# Array that stores order of action and movement for a specified piece
 	# Array goes first then second, first then second, etc...
 	var possibleCombos : Array
@@ -18,7 +20,8 @@ func makeDecision():
 	
 	if !FloorData.floorInfo.actionUsed and !FloorData.floorInfo.moveUsed:
 		# Determine which should happen first
-		pass
+		mH.UH.usedAction()
+		makeDecision()
 	elif !FloorData.floorInfo.moveUsed:
 		var bestMovements = movement.get_best_movements()
 		if bestMovements != null:

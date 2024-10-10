@@ -42,7 +42,6 @@ func updateData():
 				#floorInfo.tiles[n].status = floor.Handlers.TH.tileDict["Tiles"][n].status
 
 func resetInfo():
-	print("Reset info")
 	ResourceSaver.save(FloorInfo.new(), save_path)
 
 func setData():
