@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="ActionSetResource" load_steps=3 format=3 uid="uid://bvcgujghu04j6"]
+[gd_resource type="Resource" script_class="ActionSetResource" load_steps=4 format=3 uid="uid://bvcgujghu04j6"]
 
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="1_q3jui"]
+[ext_resource type="Resource" uid="uid://wdu3l3qwg6pn" path="res://Resources/Action Resources/Actions/Headbutt.tres" id="2_h5iu6"]
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionSetResource.gd" id="2_hlta1"]
 
 [resource]
 script = ExtResource("2_hlta1")
-actions = Array[ExtResource("1_q3jui")]([null, null])
+actions = Array[ExtResource("1_q3jui")]([ExtResource("2_h5iu6")])

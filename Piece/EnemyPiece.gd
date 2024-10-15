@@ -21,6 +21,9 @@ func setData(pieceNum : int):
 	FloorData.floorInfo.enemies[pieceNum].maxHealth = maxHealth
 	FloorData.floorInfo.enemies[pieceNum].armor = armor
 	
+	for n in range(enemyType.actions.actions.size()):
+		FloorData.floorInfo.enemies[pieceNum].actions.append(enemyType.actions.actions[n])
+	
 	$TextureRect.set_texture(enemyType.associatedSprite)
 	
 

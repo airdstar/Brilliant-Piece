@@ -33,10 +33,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("4_hgnwj")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 622.0
-offset_top = 556.0
-offset_right = 700.0
-offset_bottom = 587.0
+offset_left = -496.0
+offset_top = 178.0
+offset_right = -418.0
+offset_bottom = 209.0
 focus_mode = 0
 text = "End Turn"
 

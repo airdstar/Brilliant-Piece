@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=4 format=3 uid="uid://b185x8xlshbhb"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=5 format=3 uid="uid://b185x8xlshbhb"]
 
 [ext_resource type="Texture2D" uid="uid://b5rns4plblbgp" path="res://Resources/Enemy Resources/Sprites/Red Cell.png" id="1_6835g"]
+[ext_resource type="Resource" uid="uid://bvcgujghu04j6" path="res://Resources/Action Resources/ActionSets/CellActions.tres" id="1_e7x5p"]
 [ext_resource type="Resource" uid="uid://cq6b6cvbu1a36" path="res://Resources/Item Resources/ItemPools/CellItems.tres" id="1_xbbfi"]
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_ymlem"]
 
@@ -12,6 +13,7 @@ associatedSprite = ExtResource("1_6835g")
 type = 5
 baseHealth = 3
 healthScaling = 0.4
+actions = ExtResource("1_e7x5p")
 maxLevel = 1
 minLevel = 1
 expAmount = 1

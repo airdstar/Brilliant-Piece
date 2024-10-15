@@ -28,5 +28,7 @@ func makeDecision():
 		
 		
 		var possibleActions = action.get_possible_actions()
+
+		print_rich("[rainbow]" + possibleActions.size())
 		FloorData.floorInfo.endTurn()
 		
