@@ -48,38 +48,29 @@ func setOptions():
 		0:
 			optionCount = 5
 			options = PlayerData.playerInfo.actions
-			for n in range(optionCount):
-				var newLabel = RichTextLabel.new()
-				add_child(newLabel)
-				optionLabels.append(newLabel)
-				optionLabels[n].bbcode_enabled = true
-				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
-				optionLabels[n].position = Vector2(0, 120 + 30 * n)
-				optionLabels[n].size = Vector2(200, 30)
-				$Pointer.position = Vector2(-10, 120)
-				if options.size() - 1 >= n:
-					if options[n] != null:
-						optionLabels[n].bbcode_text = options[n].name
-					else:
-						optionLabels[n].text = "- EMPTY -"
-				else:
-					options.append(null)
-					optionLabels[n].text = "- EMPTY -"
 		1:
 			options = PlayerData.playerInfo.items
 			optionCount = options.size()
-			if optionCount == 0:
-				pass
-			for n in range(optionCount):
-				var newLabel = RichTextLabel.new()
-				add_child(newLabel)
-				optionLabels.append(newLabel)
-				optionLabels[n].bbcode_enabled = true
-				optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
-				optionLabels[n].position = Vector2(0, 120 + 30 * n)
-				optionLabels[n].size = Vector2(200, 30)
-				optionLabels[n].bbcode_text = options[n].name + " x" + str(options[n].amount)
-				$Pointer.position = Vector2(-10, 120)
+	for n in range(optionCount):
+		var newLabel = RichTextLabel.new()
+		add_child(newLabel)
+		optionLabels.append(newLabel)
+		optionLabels[n].bbcode_enabled = true
+		optionLabels[n].theme = ResourceLoader.load("res://UI/InteractableTheme.tres")
+		optionLabels[n].position = Vector2(0, 120 + 30 * n)
+		optionLabels[n].size = Vector2(200, 30)
+		$Pointer.position = Vector2(-10, 120)
+		if options.size() - 1 >= n:
+			if options[n] != null:
+				optionLabels[n].bbcode_text = options[n].name
+				if currentTab == 1:
+					optionLabels[n].append_text(" x" + str(options[n].amount))
+			else:
+				optionLabels[n].text = "- EMPTY -"
+		else:
+			options.append(null)
+			optionLabels[n].text = "- EMPTY -"
+	
 	add_icons()
 
 func updateOptions():

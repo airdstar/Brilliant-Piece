@@ -76,5 +76,7 @@ func reload_floor():
 	floor = preload("res://Floor/Floor.tscn").instantiate()
 	main.add_child(floor)
 	
+	PlayerData.playerInfo = PlayerInfo.new()
+	
 	setData()
 	
