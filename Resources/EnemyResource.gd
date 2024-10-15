@@ -18,10 +18,6 @@ class_name EnemyResource
 ## Minimum possible level
 @export var minLevel : int = 1
 
-@export_category("Behavior")
-## Array of possible specific behaviors the enemy can cycle through, can be modified if certain conditions are met
-@export var possibleBehaviors : Array[BehaviorResource]
-
 @export_category("Drops")
 ## Exp dropped at the minimum level
 @export var expAmount : int = 1

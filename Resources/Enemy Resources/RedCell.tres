@@ -1,22 +1,20 @@
-[gd_resource type="Resource" script_class="EnemyResource" load_steps=5 format=3 uid="uid://diqjw2obbcqcu"]
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=4 format=3 uid="uid://b185x8xlshbhb"]
 
 [ext_resource type="Texture2D" uid="uid://b5rns4plblbgp" path="res://Resources/Enemy Resources/Sprites/Red Cell.png" id="1_6835g"]
 [ext_resource type="Resource" uid="uid://cq6b6cvbu1a36" path="res://Resources/Item Resources/ItemPools/CellItems.tres" id="1_xbbfi"]
 [ext_resource type="Script" path="res://Resources/EnemyResource.gd" id="1_ymlem"]
-[ext_resource type="Script" path="res://Resources/BehaviorResource.gd" id="2_gw20i"]
 
 [resource]
 script = ExtResource("1_ymlem")
 name = "Red Cell"
 desc = ""
 associatedSprite = ExtResource("1_6835g")
-type = 1
-baseHealth = 4
+type = 5
+baseHealth = 3
 healthScaling = 0.4
 maxLevel = 1
 minLevel = 1
-possibleBehaviors = Array[ExtResource("2_gw20i")]([])
-expAmount = 3
+expAmount = 1
 expScaling = 1.5
 itemPool = ExtResource("1_xbbfi")
 coinDropMin = 1

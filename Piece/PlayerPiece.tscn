@@ -2,15 +2,7 @@
 
 [ext_resource type="Script" path="res://Piece/PlayerPiece.gd" id="1_5b7hp"]
 
-[node name="PlayerPiece" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 32.0
-offset_bottom = 32.0
-mouse_filter = 2
+[node name="PlayerPiece" type="Node2D"]
 script = ExtResource("1_5b7hp")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
+[node name="TextureRect" type="Sprite2D" parent="."]

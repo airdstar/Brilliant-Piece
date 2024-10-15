@@ -4,10 +4,7 @@ func highlightTile(tPos : Vector2i):
 	var tileToSelect = FloorData.tiles[tPos.x][tPos.y]
 	mH.TH.highlightedTile = tileToSelect
 	mH.TH.setTilePattern()
-	if FloorData.floorInfo.playerTurn:
-		tileToSelect.tileColor.set_color(Global.colorDict["Gray"])
-	else:
-		tileToSelect.tileColor.set_color(Global.colorDict["Gray"])
+	tileToSelect.tileColor.modulate = Global.colorDict["Gray"]
 	
 	mH.UH.displayInfo()
 

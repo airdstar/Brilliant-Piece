@@ -8,11 +8,11 @@ var neutrals : Array
 
 @onready var menuHolder = $Menu
 @onready var HUD = $Menu/HUD
-@onready var line = $Line2D
+
 
 
 func _ready():
-	Handlers.UH.currentMenu = $MenuNew
+	Handlers.UH.currentMenu = $Menu/MenuNew
 
 func _process(_delta : float):
 	if Input.is_action_just_pressed("Exit"):

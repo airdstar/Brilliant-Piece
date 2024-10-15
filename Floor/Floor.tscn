@@ -9,6 +9,8 @@
 [node name="Floor" type="Node"]
 script = ExtResource("1_sippj")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="FloorHandlers" parent="." instance=ExtResource("2_k2kkp")]
 
 [node name="Menu" type="CanvasLayer" parent="."]
@@ -16,7 +18,7 @@ layer = 3
 
 [node name="HUD" parent="Menu" instance=ExtResource("5_0rph0")]
 
-[node name="MenuNew" parent="." instance=ExtResource("4_mhico")]
+[node name="MenuNew" parent="Menu" instance=ExtResource("4_mhico")]
 offset_left = 811.0
 offset_top = 313.0
 offset_right = 811.0
@@ -37,9 +39,5 @@ offset_right = 700.0
 offset_bottom = 587.0
 focus_mode = 0
 text = "End Turn"
-
-[node name="Line2D" type="Line2D" parent="."]
-z_index = 10
-width = 3.0
 
 [connection signal="pressed" from="Button" to="." method="endTurn"]

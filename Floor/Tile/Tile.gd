@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 class_name tile
 
 var hovered : bool
@@ -6,7 +6,7 @@ var rc : Vector2i
 
 var contains : Piece
 var hazard : HazardResource
-var hazardHolder : TextureRect
+var hazardHolder : Sprite2D
 var obstructed := false
 
 @onready var tileColor = $TileColor
@@ -61,7 +61,7 @@ func setHazard(hazardIn : HazardResource):
 	
 	FloorData.floorInfo.tileInfo[rc.x][rc.y].hazard = hazard
 	
-	hazardHolder = TextureRect.new()
+	hazardHolder = Sprite2D.new()
 	hazardHolder.set_texture(hazard.associatedSprite)
 	add_child(hazardHolder)
 	

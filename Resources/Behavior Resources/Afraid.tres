@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="BehaviorResource" load_steps=2 format=3 uid="uid://bekaiw1crfo0r"]
-
-[ext_resource type="Script" path="res://Resources/BehaviorResource.gd" id="1_25nd7"]
-
-[resource]
-script = ExtResource("1_25nd7")
-target = "Nothing"
-type = 0
-desiredRange = 1

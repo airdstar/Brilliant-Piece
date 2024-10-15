@@ -3,7 +3,21 @@
 [ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyHandler.gd" id="1_y5b15"]
 [ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyMovement.gd" id="2_kkjat"]
 [ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyAction.gd" id="3_ag245"]
-[ext_resource type="Script" path="res://Floor/Handlers/Enemy Handlers/EnemyBehavior.gd" id="4_l5klg"]
+
+[sub_resource type="GDScript" id="GDScript_iadfi"]
+script/source = "extends enemyExtension
+
+func determine_targets():
+	for n in range(FloorData.floor.enemies.size()):
+		var currentEnemy = FloorData.floor.enemies[n]
+		for m in range(currentEnemy.enemyType.possibleBehaviors.size()):
+			var currentBehavior = currentEnemy.enemyType.possibleBehaviors[m]
+			match currentBehavior:
+				pass
+
+func change_target(enemyNum : int):
+	pass
+"
 
 [node name="EnemyHandler" type="Node"]
 script = ExtResource("1_y5b15")
@@ -15,4 +29,4 @@ script = ExtResource("2_kkjat")
 script = ExtResource("3_ag245")
 
 [node name="BehaviorNode" type="Node" parent="."]
-script = ExtResource("4_l5klg")
+script = SubResource("GDScript_iadfi")

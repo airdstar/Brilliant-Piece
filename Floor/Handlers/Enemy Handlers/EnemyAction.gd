@@ -1,7 +1,7 @@
 extends enemyExtension
 
 
-func best_immediate_actions():
+func get_possible_actions():
 	pass
 
 
