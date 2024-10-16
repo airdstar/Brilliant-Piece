@@ -11,7 +11,6 @@
 script = ExtResource("1_sippj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.25, 1.25)
 
 [node name="FloorHandlers" parent="." instance=ExtResource("2_k2kkp")]
 
@@ -21,16 +20,20 @@ layer = 3
 [node name="HUD" parent="Menu" instance=ExtResource("5_0rph0")]
 
 [node name="MenuNew" parent="Menu" instance=ExtResource("4_mhico")]
-offset_left = 811.0
-offset_top = 313.0
-offset_right = 811.0
-offset_bottom = 313.0
+offset_left = 900.0
+offset_top = 322.0
+offset_right = 900.0
+offset_bottom = 322.0
 
-[node name="Outline" type="TextureRect" parent="Menu"]
-offset_left = 276.0
-offset_top = 20.0
-offset_right = 876.0
-offset_bottom = 620.0
+[node name="CenterContainer" type="CenterContainer" parent="Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Outline" type="TextureRect" parent="Menu/CenterContainer"]
+layout_mode = 2
 texture = ExtResource("5_38r2r")
 
 [node name="TextureRect" type="TextureRect" parent="."]
