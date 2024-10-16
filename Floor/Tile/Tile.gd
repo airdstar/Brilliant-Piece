@@ -32,6 +32,7 @@ func interact():
 	var inter = FloorData.floor.Handlers.SH.interactable
 	var _acting = FloorData.floor.Handlers.SH.actingPiece
 	
+	
 	if contains is MoveablePiece:
 		contains.interact()
 	

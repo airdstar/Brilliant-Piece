@@ -2,33 +2,39 @@ extends enemyExtension
 
 func get_possible_actions():
 	var toReturn : Array
-	for n in range(FloorData.floor.enemies.size()):
-		toReturn.append([])
+	
+	for n in range(FloorData.floorInfo.enemies.size()):
 		for m in range(FloorData.floorInfo.enemies[n].actions.size()):
-			toReturn[n].append(null)
 			var actionHolder = FloorData.floorInfo.enemies[n].actions[m]
 			var actionRange = actionHolder.getTiles(FloorData.floor.enemies[n].rc)
 			if check_action(actionRange):
-				toReturn[n] = []
 				match actionHolder.type:
 					"Damage":
 						for o in range(actionRange.size()):
 							if actionRange[o].contains:
 								if actionRange[o].contains is PlayerPiece:
-									toReturn[n][m].append(actionRange[o])
+									toReturn.append(FloorData.floor.enemies[n])
+									toReturn.append(actionHolder)
+									toReturn.append(actionRange[o])
 							elif actionRange[o].obstructed:
 								if actionRange[o].hazard.destructable:
-									toReturn[n][m].append(actionRange[o])
+									toReturn.append(FloorData.floor.enemies[n])
+									toReturn.append(actionHolder)
+									toReturn.append(actionRange[o])
 					"Healing":
 						for o in range(actionRange.size()):
 							if actionRange[o].contains:
 								if actionRange[o].contains is EnemyPiece:
-									toReturn[n][m].append(actionRange[o])
+									toReturn.append(FloorData.floor.enemies[n])
+									toReturn.append(actionHolder)
+									toReturn.append(actionRange[o])
 					"Defensive":
 						for o in range(actionRange.size()):
 							if actionRange[o].contains:
 								if actionRange[o].contains is EnemyPiece:
-									toReturn[n][m].append(actionRange[o])
+									toReturn.append(FloorData.floor.enemies[n])
+									toReturn.append(actionHolder)
+									toReturn.append(actionRange[o])
 					"Status":
 						var isBuff : bool = false
 						if actionHolder.status.statusType == "Buff":
@@ -37,10 +43,16 @@ func get_possible_actions():
 							if actionRange[o].contains:
 								if isBuff:
 									if actionRange[o].contains is EnemyPiece:
-										toReturn[n][m].append(actionRange[o])
+										toReturn.append(FloorData.floor.enemies[n])
+										toReturn.append(actionHolder)
+										toReturn.append(actionRange[o])
 								else:
 									if actionRange[o].contains is PlayerPiece:
-										toReturn[n][m].append(actionRange[o])
+										toReturn.append(FloorData.floor.enemies[n])
+										toReturn.append(actionHolder)
+										toReturn.append(actionRange[o])
+	
+	
 	return toReturn
 
 func check_action(actionRange : Array[tile]):

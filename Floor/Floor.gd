@@ -8,6 +8,7 @@ var neutrals : Array
 
 @onready var menuHolder = $Menu
 @onready var HUD = $Menu/HUD
+@onready var camera = $Camera2D
 
 
 
