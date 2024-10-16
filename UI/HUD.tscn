@@ -74,10 +74,10 @@ texture = ExtResource("6_ko3ij")
 
 [node name="Floor_Player" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 416.0
-offset_top = 559.0
-offset_right = 608.0
-offset_bottom = 618.0
+offset_left = 950.0
+offset_top = 90.0
+offset_right = 1142.0
+offset_bottom = 149.0
 texture = ExtResource("8_ysboo")
 
 [node name="FloorInfo" type="RichTextLabel" parent="Floor_Player"]

@@ -7,7 +7,11 @@ func generateFloor():
 	var possibleEnds = []
 	
 	if FloorData.floorInfo.isNew:
-		var heightMap = Image.load_from_file(FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)])
+		
+		var heightMap : Image = FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)].get_image()
+		
+		
+		
 		
 		FloorData.floorInfo.rc = Vector2i(heightMap.get_size().x, heightMap.get_size().y)
 		
@@ -24,7 +28,7 @@ func generateFloor():
 				
 					FloorData.tiles[n][m] = preload("res://Floor/Tile/Tile.tscn").instantiate()
 					FloorData.floor.add_child(FloorData.tiles[n][m])
-					FloorData.tiles[n][m].position = Vector2i(-((heightMap.get_size().x * 32) / 2) + (32 * n) + 16, -((heightMap.get_size().y * 32) / 2) + (32 * m))
+					FloorData.tiles[n][m].position = Vector2i(-((heightMap.get_size().x * 32) / 2) + (32 * n) + 16, -((heightMap.get_size().y * 32) / 2) + (32 * m) + 16)
 					FloorData.tiles[n][m].rc = Vector2i(n,m)
 					
 					if heightMap.get_pixel(n,m) != Color8(255,255,255):
@@ -45,7 +49,7 @@ func generateFloor():
 				if FloorData.floorInfo.tileInfo[n][m] != null:
 					FloorData.tiles[n][m] = preload("res://Floor/Tile/Tile.tscn").instantiate()
 					FloorData.floor.add_child(FloorData.tiles[n][m])
-					FloorData.tiles[n][m].position = Vector2i(32 * n, 32 * m)
+					FloorData.tiles[n][m].position = Vector2i(-((FloorData.floorInfo.rc.x * 32) / 2) + (32 * n) + 16, -((FloorData.floorInfo.rc.y * 32) / 2) + (32 * m) + 16)
 					FloorData.tiles[n][m].rc = Vector2i(n,m)
 	
 	mH.TH.setTilePattern()
@@ -60,8 +64,8 @@ func generatePieces(playerStarts, enemyStarts):
 	FloorData.floor.add_child(PlayerData.playerPiece)
 	
 	if FloorData.floorInfo.isNew:
-		
-		playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece)
+		if playerStarts.size() != 0:
+			playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece)
 		
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())

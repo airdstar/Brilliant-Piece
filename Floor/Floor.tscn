@@ -11,6 +11,7 @@
 script = ExtResource("1_sippj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.4, 1.4)
 
 [node name="FloorHandlers" parent="." instance=ExtResource("2_k2kkp")]
 
