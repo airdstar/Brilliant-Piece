@@ -56,6 +56,9 @@ func generateFloor():
 	
 	generatePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
+	
+	create_outlines()
+	
 	mH.EH.movement.set_tile_map()
 	FloorData.updateData()
 	
@@ -107,3 +110,61 @@ func placeHazards(hazardLocations, endLocations):
 				if FloorData.floorInfo.tileInfo[n][m] != null:
 					if FloorData.floorInfo.tileInfo[n][m].hazard:
 						FloorData.tiles[n][m].setHazard(FloorData.floorInfo.tileInfo[n][m].hazard)
+
+func create_outlines():
+	for n in range(FloorData.floorInfo.rc.x):
+		for m in range(FloorData.floorInfo.rc.y):
+			if FloorData.tiles[n][m] == null:
+				var direction = FloorData.floor.Handlers.DH.posDict["Straight"]
+				var connectedTiles = []
+				for o in range(4):
+					var holder = Vector2i(n,m) + direction[o]
+					if holder.x < FloorData.floorInfo.rc.x and holder.y < FloorData.floorInfo.rc.y and holder.x >= 0 and holder.y >= 0:
+						if FloorData.tiles[holder.x][holder.y] != null:
+							connectedTiles.append(o)
+				
+
+				if connectedTiles.size() != 0:
+					var spriteHolder = Sprite2D.new()
+					spriteHolder.position = Vector2i(-((FloorData.floorInfo.rc.x * 32) / 2) + (32 * n) + 16, -((FloorData.floorInfo.rc.y * 32) / 2) + (32 * m) + 16)
+					FloorData.floor.add_child(spriteHolder)
+					match connectedTiles.size():
+						1:
+							spriteHolder.set_texture(load("res://Floor/Tile/OneSideOutline.png"))
+							match connectedTiles[0]:
+								0:
+									spriteHolder.set_rotation_degrees(180)
+								1:
+									spriteHolder.set_rotation_degrees(90)
+								3:
+									spriteHolder.set_rotation_degrees(270)
+						2:
+							if (connectedTiles[0] + 1 != connectedTiles[1]) and (connectedTiles[0] != 0 or connectedTiles[1] != 3):
+								spriteHolder.set_texture(load("res://Floor/Tile/TopBottomOutline.png"))
+								if connectedTiles[0] != 0:
+									spriteHolder.set_rotation_degrees(90)
+							else:
+								spriteHolder.set_texture(load("res://Floor/Tile/CornerOutline.png"))
+								
+								match connectedTiles[0]:
+									0:
+										spriteHolder.set_rotation_degrees(180)
+										if connectedTiles[1] == 3:
+											spriteHolder.set_rotation_degrees(270)
+									1:
+										spriteHolder.set_rotation_degrees(90)
+
+						3:
+							spriteHolder.set_texture(load("res://Floor/Tile/ThreeSideOutline.png"))
+							if !connectedTiles.has(0):
+								spriteHolder.set_rotation_degrees(180)
+							elif !connectedTiles.has(3):
+								spriteHolder.set_rotation_degrees(90)
+							elif !connectedTiles.has(1):
+								spriteHolder.set_rotation_degrees(270)
+							
+						4:
+							pass
+					
+				
+				
