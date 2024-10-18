@@ -69,5 +69,10 @@ func interact(destination : tile):
 		movePiece(destination)
 	else:
 		destination.interact()
+		if mH.SH.interactable.AOE:
+			mH.TH.aoeTiles = mH.SH.interactable.AOE.getAOE(destination.rc, mH.DH.getClosestDirection(mH.SH.actingPiece.rc, destination.rc))
+			
+	
+	
 	mH.TH.stopShowing()
 	mH.TH.setTilePattern()

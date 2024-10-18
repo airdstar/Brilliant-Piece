@@ -12,7 +12,7 @@ class_name AOEResource
 
 func getAOE(AOEstart : Vector2i, relativeDir : int):
 	var toReturn : Array[tile]
-	var pos : Array[Vector2i]
+	var pos 
 	
 	if AOEdirection != "Sides":
 		pos = FloorData.floor.Handlers.DH.posDict[AOEdirection]
@@ -28,6 +28,7 @@ func getAOE(AOEstart : Vector2i, relativeDir : int):
 			
 			if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 				endSearch = true
+				
 			else:
 				if FloorData.tiles[tileData.x][tileData.y] != null:
 					toReturn.append(FloorData.tiles[tileData.x][tileData.y])

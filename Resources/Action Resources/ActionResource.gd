@@ -10,7 +10,7 @@ class_name ActionResource
 
 func getTiles(iStart : Vector2i):
 	var toReturn : Array[tile]
-	var pos = FloorData.floor.Handlers.DH.getAll(direction)
+	var pos = FloorData.floor.Handlers.DH.posDict[direction]
 	var tileData : Vector2i
 	if getUsable().has("Self"):
 		toReturn.append(FloorData.tiles[iStart.x][iStart.y])
@@ -20,7 +20,7 @@ func getTiles(iStart : Vector2i):
 			var counter = 1
 			var endSearch = false
 			while !endSearch:
-				tileData += FloorData.floor.Handlers.DH.dirDict["PosData"][pos[n]]
+				tileData += pos[n]
 				
 				if tileData.x >= FloorData.floorInfo.rc.x or tileData.y >= FloorData.floorInfo.rc.y or tileData.x < 0 or tileData.y < 0:
 					endSearch = true

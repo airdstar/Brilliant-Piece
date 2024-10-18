@@ -14,8 +14,6 @@ class_name FloorInfo
 @export var actionUsed : bool = false
 @export var moveUsed : bool = false
 
-@export var endLocation : Vector3
-
 @export var isNew : bool = true
 
 func setLayerInfo():

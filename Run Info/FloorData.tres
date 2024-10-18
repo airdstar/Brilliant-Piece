@@ -13,5 +13,4 @@ neutrals = []
 playerTurn = true
 actionUsed = false
 moveUsed = false
-endLocation = Vector3(0, 0, 0)
 isNew = true
