@@ -9,10 +9,7 @@ func generateFloor():
 	if FloorData.floorInfo.isNew:
 		
 		var heightMap : Image = FloorData.floorInfo.layerData.possibleLayouts[randi_range(0, FloorData.floorInfo.layerData.possibleLayouts.size() - 1)].get_image()
-		
-		
-		
-		
+
 		FloorData.floorInfo.rc = Vector2i(heightMap.get_size().x, heightMap.get_size().y)
 		
 		for n in range(heightMap.get_size().x):
@@ -57,10 +54,11 @@ func generateFloor():
 	generatePieces(playerStarts, enemyStarts)
 	placeHazards(hazardLocations, possibleEnds)
 	
-	create_outlines()
-	
 	mH.EH.movement.set_tile_map()
 	FloorData.updateData()
+	await get_tree().create_timer(0.001).timeout
+	create_outlines()
+	
 	
 
 func generatePieces(playerStarts, enemyStarts):
@@ -156,15 +154,9 @@ func create_outlines():
 
 						3:
 							spriteHolder.set_texture(load("res://Floor/Tile/ThreeSideOutline.png"))
-							if !connectedTiles.has(0):
+							if !connectedTiles.has(2):
 								spriteHolder.set_rotation_degrees(180)
 							elif !connectedTiles.has(3):
 								spriteHolder.set_rotation_degrees(90)
 							elif !connectedTiles.has(1):
 								spriteHolder.set_rotation_degrees(270)
-							
-						4:
-							pass
-					
-				
-				

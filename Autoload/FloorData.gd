@@ -47,7 +47,7 @@ func resetInfo():
 func setData():
 	floorInfo.setLayerInfo()
 	floor.Handlers.GH.generateFloor()
-	FloorData.floor.HUD.updateFloorInfo()
+	floor.HUD.updateFloorInfo()
 	floorInfo.isNew = false
 
 func nextFloor():
@@ -69,14 +69,12 @@ func reload_floor():
 	PlayerData.playerPiece = preload("res://Piece/PlayerPiece.tscn").instantiate()
 	
 	floorInfo = FloorInfo.new()
-	floorInfo.floorNum = PlayerData.playerInfo.currentFloorNum
 	
 	var main = floor.get_parent()
 	floor.queue_free()
+	main.remove_child(floor)
 	floor = preload("res://Floor/Floor.tscn").instantiate()
 	main.add_child(floor)
-	
-	PlayerData.playerInfo = PlayerInfo.new()
 	
 	setData()
 	

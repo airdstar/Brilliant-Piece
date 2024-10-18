@@ -2,6 +2,7 @@ extends Handler
 
 var highlightedTile : tile
 var iTiles : Array[tile]
+var aoeTiles : Array[tile]
 
 func setTilePattern():
 	for n in range(FloorData.floorInfo.rc.x):
@@ -24,6 +25,14 @@ func setTilePattern():
 							cTile.interactable.modulate = Global.colorDict["Green"]
 						else:
 							cTile.interactable.modulate = Global.colorDict["Orange"]
+	if mH.SH.interactable and highlightedTile != null:
+		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
+			showAOE()
+
+func showAOE():
+	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
+	for o in range(aoeTiles.size()):
+		aoeTiles[o].interactable.visible = true
 
 func show():
 	if mH.SH.moving:
