@@ -37,6 +37,14 @@ grow_vertical = 2
 layout_mode = 2
 texture = ExtResource("5_38r2r")
 
+[node name="Button" type="Button" parent="Menu"]
+offset_left = 19.0
+offset_top = 593.0
+offset_right = 97.0
+offset_bottom = 624.0
+focus_mode = 0
+text = "End Turn"
+
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
 modulate = Color(0.6, 0.6, 0.6, 1)
@@ -45,12 +53,4 @@ offset_bottom = 40.0
 scale = Vector2(2, 2)
 texture = ExtResource("4_hgnwj")
 
-[node name="Button" type="Button" parent="."]
-offset_left = -496.0
-offset_top = 178.0
-offset_right = -418.0
-offset_bottom = 209.0
-focus_mode = 0
-text = "End Turn"
-
-[connection signal="pressed" from="Button" to="." method="endTurn"]
+[connection signal="pressed" from="Menu/Button" to="." method="endTurn"]

@@ -33,6 +33,7 @@ func showAOE():
 	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
 	for o in range(aoeTiles.size()):
 		aoeTiles[o].interactable.visible = true
+		aoeTiles[o].interactable.modulate = Color(0.86,0.72,0.63,0.5)
 
 func show():
 	if mH.SH.moving:
@@ -54,3 +55,7 @@ func checkHazards():
 			if playerTile.hazard.effectType == "OnRest":
 				if playerTile.hazard.effect.nextFloor:
 					FloorData.nextFloor()
+
+func getEmptyTile():
+	var randX = randi_range(0, FloorData.floorInfo.rc.x)
+	return 2

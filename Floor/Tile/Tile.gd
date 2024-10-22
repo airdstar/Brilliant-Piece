@@ -15,17 +15,29 @@ var obstructed := false
 func _ready():
 	pass
 
-func setPiece(piece : Piece):
+func setPiece(piece : Piece, type : int):
+	## 0 is for loading an area
+	## 1 is for moving to a new tile
+	## 2 is for being pushed to a new tile
+	## 3 is for falling onto a new tile
 	contains = piece
-	if piece.rc:
-		if FloorData.tiles[piece.rc.x][piece.rc.y] != self:
-			FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
-		var tween = create_tween()
-		tween.tween_property(piece, "position", self.position, 0.2
-							).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	else:
-		piece.position = position
-	
+	match type:
+		0:
+			piece.position = position
+		1:
+			var tween = create_tween()
+			tween.tween_property(piece, "position", self.position, 0.2
+								).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		2:
+			var tween = create_tween()
+			tween.tween_property(piece, "position", self.position, 0.15
+								).set_trans(Tween.TRANS_BACK)
+		3:
+			piece.position = position
+			piece.scale = Vector2(2,2)
+			var tween = create_tween()
+			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
+								).set_trans(Tween.TRANS_BACK)
 	piece.rc = rc
 
 func interact():
@@ -51,7 +63,6 @@ func interact():
 		FloorData.floor.HUD.turnHUD[1].modulate = Color(0.5,0.5,0.5)
 		FloorData.floorInfo.actionUsed = true
 	
-	FloorData.floor.Handlers.SH.interactable = null
 	
 	FloorData.updateData()
 

@@ -2,11 +2,11 @@ extends Resource
 class_name Interactable
 
 @export_category("General")
-@export var name : String
-@export var desc : String
-@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var type : String
-@export var AOE : AOEResource
-@export_flags("Self", "Others", "Tile") var usableOn : int
+@export var name : String = "Placeholder"
+@export var desc : String = "Placeholder"
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var type : String = "Damage"
+@export var AOE : AOEResource = null
+@export_flags("Self", "Others", "Tile") var usableOn : int = 2
 
 @export_category("Basic Stats")
 @export var damage : int

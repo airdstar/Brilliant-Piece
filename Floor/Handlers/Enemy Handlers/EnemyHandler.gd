@@ -30,6 +30,7 @@ func makeDecision():
 			var decidedAction = randi_range(0, possibleActions.size()/3 - 1)
 			mH.SH.actingPiece = possibleActions[decidedAction * 3]
 			mH.SH.interactable = possibleActions[1 + (decidedAction * 3)]
+
 			mH.IH.interact(possibleActions[2 + (decidedAction * 3)])
 		
 		FloorData.floorInfo.endTurn()

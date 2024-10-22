@@ -40,7 +40,7 @@ func movePiece(destination : tile):
 		if destination.contains is MoveablePiece:
 			pushPiece(destination.contains, closestDirection)
 	
-	destination.setPiece(piece)
+	destination.setPiece(piece, 1)
 	mH.UH.usedMovement()
 	if piece is PlayerPiece:
 		mH.UH.displayInfo()
@@ -54,13 +54,14 @@ func pushPiece(piece : MoveablePiece, direction : int):
 	if piece.rc.x + dirVect.x >= 0 and piece.rc.y + dirVect.y >= 0 and piece.rc.x + dirVect.x < FloorData.floorInfo.rc.x and piece.rc.y + dirVect.y < FloorData.floorInfo.rc.y:
 		var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 		if currentTile:
-			currentTile.setPiece(piece)
+			currentTile.setPiece(piece, 2)
 			piece.damage(1)
 			if currentTile.hazard:
 				if currentTile.hazard.effectType == "OnTouch":
 					print("hi")
 		else:
 			piece.damage(5)
+			
 	else:
 		piece.damage(5)
 
@@ -72,6 +73,9 @@ func interact(destination : tile):
 		if mH.SH.interactable.AOE:
 			mH.TH.aoeTiles = mH.SH.interactable.AOE.getAOE(destination.rc, mH.DH.getClosestDirection(mH.SH.actingPiece.rc, destination.rc))
 			
+			for n in range(mH.TH.aoeTiles.size()):
+				mH.TH.aoeTiles[n].interact()
+	
 	
 	
 	mH.TH.stopShowing()

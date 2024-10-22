@@ -32,6 +32,8 @@ func generateFloor():
 						match heightMap.get_pixel(n,m):
 							Color8(100,150,200):
 								playerStarts.append(FloorData.tiles[n][m])
+							Color8(100,149,200):
+								playerStarts.append(FloorData.tiles[n][m])
 							Color8(200,100,100):
 								enemyStarts.append(FloorData.tiles[n][m])
 							Color8(100,100,100):
@@ -66,7 +68,7 @@ func generatePieces(playerStarts, enemyStarts):
 	
 	if FloorData.floorInfo.isNew:
 		if playerStarts.size() != 0:
-			playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece)
+			playerStarts[randi_range(0, playerStarts.size() - 1)].setPiece(PlayerData.playerPiece, 0)
 		
 		for n in randi_range(FloorData.floorInfo.layerData.minPossibleEnemies, FloorData.floorInfo.layerData.maxPossibleEnemies):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
@@ -80,18 +82,18 @@ func generatePieces(playerStarts, enemyStarts):
 				var enemyStart = enemyStarts[randi_range(0, enemyStarts.size() - 1)]
 				if !enemyStart.contains:
 					tileEmpty = true
-					enemyStart.setPiece(FloorData.floor.enemies[n])
+					enemyStart.setPiece(FloorData.floor.enemies[n], 0)
 			
 		
 	else:
 		
-		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece)
+		FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y].setPiece(PlayerData.playerPiece, 0)
 		
 		for n in range(FloorData.floorInfo.enemies.size()):
 			FloorData.floor.enemies.append(preload("res://Piece/EnemyPiece.tscn").instantiate())
 			FloorData.floor.add_child(FloorData.floor.enemies[n])
 			FloorData.floor.enemies[n].loadData(n)
-			FloorData.tiles[FloorData.floorInfo.enemies[n].rc.x][FloorData.floorInfo.enemies[n].rc.y].setPiece(FloorData.floor.enemies[n], 2)
+			FloorData.tiles[FloorData.floorInfo.enemies[n].rc.x][FloorData.floorInfo.enemies[n].rc.y].setPiece(FloorData.floor.enemies[n], 0)
 		
 		
 
