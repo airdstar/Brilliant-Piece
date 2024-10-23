@@ -20,7 +20,6 @@ func setPiece(piece : Piece, type : int):
 	## 1 is for moving to a new tile
 	## 2 is for being pushed to a new tile
 	## 3 is for falling onto a new tile
-	contains = piece
 	match type:
 		0:
 			piece.position = position
@@ -33,12 +32,16 @@ func setPiece(piece : Piece, type : int):
 			tween.tween_property(piece, "position", self.position, 0.15
 								).set_trans(Tween.TRANS_BACK)
 		3:
-			piece.position = position
 			piece.scale = Vector2(2,2)
+			piece.position = position
+			
 			var tween = create_tween()
 			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
 								).set_trans(Tween.TRANS_BACK)
+	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
+		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 	piece.rc = rc
+	contains = piece
 
 func interact():
 	var inter = FloorData.floor.Handlers.SH.interactable

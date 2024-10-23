@@ -60,10 +60,26 @@ func pushPiece(piece : MoveablePiece, direction : int):
 				if currentTile.hazard.effectType == "OnTouch":
 					print("hi")
 		else:
-			piece.damage(5)
+			piece.damage(2)
+			
+			var tween = create_tween()
+			tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
+								).set_trans(Tween.TRANS_BACK)
+			
+			await get_tree().create_timer(0.15).timeout
+			
+			mH.TH.getEmptyTile().setPiece(piece,3)
 			
 	else:
-		piece.damage(5)
+		piece.damage(2)
+		
+		var tween = create_tween()
+		tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
+								).set_trans(Tween.TRANS_BACK)
+			
+		await get_tree().create_timer(0.15).timeout
+		
+		mH.TH.getEmptyTile().setPiece(piece,3)
 
 func interact(destination : tile):
 	if mH.SH.moving == true:

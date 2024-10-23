@@ -57,5 +57,14 @@ func checkHazards():
 					FloorData.nextFloor()
 
 func getEmptyTile():
-	var randX = randi_range(0, FloorData.floorInfo.rc.x)
-	return 2
+	var isEmpty := false
+	var randX : int
+	var randY : int
+	while !isEmpty:
+		randX = randi_range(0, FloorData.floorInfo.rc.x - 1)
+		randY = randi_range(0, FloorData.floorInfo.rc.y - 1)
+		if FloorData.tiles[randX][randY] != null:
+			if FloorData.tiles[randX][randY].contains == null:
+				if FloorData.tiles[randX][randY].obstructed == false:
+					isEmpty = true
+	return FloorData.tiles[randX][randY]
