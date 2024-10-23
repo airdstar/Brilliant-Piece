@@ -17,10 +17,9 @@ func get_possible_actions():
 									toReturn.append(actionHolder)
 									toReturn.append(actionRange[o])
 							elif actionRange[o].obstructed:
-								if actionRange[o].hazard.destructable:
-									toReturn.append(FloorData.floor.enemies[n])
-									toReturn.append(actionHolder)
-									toReturn.append(actionRange[o])
+								toReturn.append(FloorData.floor.enemies[n])
+								toReturn.append(actionHolder)
+								toReturn.append(actionRange[o])
 					"Healing":
 						for o in range(actionRange.size()):
 							if actionRange[o].contains:
@@ -59,6 +58,6 @@ func check_action(actionRange : Array[tile]):
 	for n in range(actionRange.size()):
 		if actionRange[n].contains:
 			return true
-		if actionRange[n].obstructed and actionRange[n].hazard.destructable:
+		if actionRange[n].obstructed:
 			return true
 	return false

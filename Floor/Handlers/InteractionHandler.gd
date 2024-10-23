@@ -50,23 +50,34 @@ func movePiece(destination : tile):
 	FloorData.updateData()
 
 func pushPiece(piece : MoveablePiece, direction : int):
-	var dirVect : Vector2i = mH.DH.dirDict["PosData"][direction]
+	var dirVect : Vector2 = mH.DH.dirDict["PosData"][direction]
 	if piece.rc.x + dirVect.x >= 0 and piece.rc.y + dirVect.y >= 0 and piece.rc.x + dirVect.x < FloorData.floorInfo.rc.x and piece.rc.y + dirVect.y < FloorData.floorInfo.rc.y:
 		var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
 		if currentTile:
-			currentTile.setPiece(piece, 2)
-			piece.damage(1)
+			var collision := false
 			if currentTile.hazard:
 				if currentTile.hazard.effectType == "OnTouch":
 					print("hi")
+				if currentTile.obstructed:
+					collision = true
+					currentTile.remove_hazard()
+					
+					
+			if currentTile.contains:
+				pushPiece(currentTile.contains, direction)
+			
+			currentTile.setPiece(piece, 2)
+			piece.damage(1)
+			
 		else:
 			piece.damage(2)
 			
 			var tween = create_tween()
 			tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
-								).set_trans(Tween.TRANS_BACK)
+								).set_trans(Tween.TRANS_QUART)
 			
 			await get_tree().create_timer(0.15).timeout
+			
 			
 			mH.TH.getEmptyTile().setPiece(piece,3)
 			
@@ -75,7 +86,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 		
 		var tween = create_tween()
 		tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
-								).set_trans(Tween.TRANS_BACK)
+								).set_trans(Tween.TRANS_QUART)
 			
 		await get_tree().create_timer(0.15).timeout
 		

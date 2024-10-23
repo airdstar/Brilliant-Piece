@@ -32,12 +32,20 @@ func setPiece(piece : Piece, type : int):
 			tween.tween_property(piece, "position", self.position, 0.15
 								).set_trans(Tween.TRANS_BACK)
 		3:
+			var scaleTween = create_tween()
+		
+			scaleTween.tween_property(piece, "scale", Vector2(0.6,0.6), 0.15
+								).set_trans(Tween.TRANS_QUART)
+		
+			await get_tree().create_timer(0.15).timeout
+			
 			piece.scale = Vector2(2,2)
 			piece.position = position
 			
 			var tween = create_tween()
 			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
 								).set_trans(Tween.TRANS_BACK)
+	
 	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
 		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
 	piece.rc = rc
@@ -53,11 +61,8 @@ func interact():
 	
 	if hazard:
 		if inter.damage:
-			if hazard.destructable:
-				remove_child(hazardHolder)
-				hazardHolder = null
-				hazard = null
-				obstructed = false
+			if obstructed:
+				remove_hazard()
 	
 	if inter.hazard:
 		setHazard(inter.hazard)
@@ -80,6 +85,12 @@ func setHazard(hazardIn : HazardResource):
 	hazardHolder.set_texture(hazard.associatedSprite)
 	add_child(hazardHolder)
 	
+
+func remove_hazard():
+	remove_child(hazardHolder)
+	hazardHolder = null
+	hazard = null
+	obstructed = false
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))
