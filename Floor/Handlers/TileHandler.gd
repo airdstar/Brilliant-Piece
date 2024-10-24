@@ -8,8 +8,6 @@ func setTilePattern():
 	var relevantTiles : Array[tile]
 	if mH.SH.interactable:
 		relevantTiles = mH.SH.interactable.get_relevant_tiles(PlayerData.playerInfo.rc,1)
-		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
-			showAOE()
 	for n in range(FloorData.floorInfo.rc.x):
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
@@ -39,13 +37,30 @@ func setTilePattern():
 								cTile.interactable.modulate = Global.colorDict["Green"]
 						if !relevantTiles.has(cTile):
 							cTile.interactable.modulate -= Color(0,0,0,0.5)
+	if mH.SH.interactable:
+		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
+			showAOE()
 
 func showAOE():
 	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
-	for o in range(aoeTiles.size()):
-		aoeTiles[o].interactable.visible = true
-		if !aoeTiles[o].has_target():
-			aoeTiles[o].interactable.modulate = Color(0.86,0.72,0.63,0.5)
+	for n in range(aoeTiles.size()):
+		aoeTiles[n].interactable.visible = true
+		var isRelevant : bool = false
+		match mH.SH.interactable.type:
+			"Damage":
+				aoeTiles[n].interactable.modulate = Global.colorDict["Orange"]
+					
+			"Healing":
+				aoeTiles[n].interactable.modulate = Global.colorDict["Green"]
+			"Defensive":
+				aoeTiles[n].interactable.modulate = Global.colorDict["Blue"]
+			"Status":
+				aoeTiles[n].interactable.modulate = Global.colorDict["Green"]
+			"Hazard":
+				aoeTiles[n].interactable.modulate = Global.colorDict["Green"]
+		
+		if !isRelevant:
+			aoeTiles[n].interactable.modulate -= Color(0,0,0,0.5)
 
 func show():
 	if mH.SH.moving:
