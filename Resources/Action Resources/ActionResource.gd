@@ -70,15 +70,15 @@ func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
 				if (actionRange[n].get_contain() != pieceType and actionRange[n].get_contain() != 0) or actionRange[n].obstructed:
 					possibleTiles.append(actionRange[n])
 				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
 					for m in range(aoeRange.size()):
-						if aoeRange[m].get_contain() != pieceType or actionRange[n].obstructed:
+						if (aoeRange[m].get_contain() != pieceType and actionRange[n].get_contain() != 0) or actionRange[n].obstructed:
 							possibleTiles.append(actionRange[n])
 			"Healing":
 				if actionRange[n].get_contain() == pieceType:
 					possibleTiles.append(actionRange[n])
 				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
 					for m in range(aoeRange.size()):
 						if aoeRange[m].get_contain() == pieceType:
 							possibleTiles.append(actionRange[n])
@@ -87,7 +87,7 @@ func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
 				if actionRange[n].get_contain() == pieceType:
 					possibleTiles.append(actionRange[n])
 				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
 					for m in range(aoeRange.size()):
 						if aoeRange[m].get_contain() == pieceType:
 							possibleTiles.append(actionRange[n])
@@ -99,7 +99,7 @@ func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
 				if (actionRange[n].get_contain() == pieceType) == isBuff:
 					possibleTiles.append(actionRange[n])
 				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
 					for m in range(aoeRange.size()):
 						if (aoeRange[m].get_contain() == pieceType) == isBuff:
 							possibleTiles.append(actionRange[n])
@@ -107,5 +107,12 @@ func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
 				var isObstruction : bool = false
 				if hazard.blockade:
 					isObstruction = true
+				
+				if isObstruction:
+					if actionRange[n].get_contain() == 0:
+						possibleTiles.append(actionRange[n])
+				else:
+					possibleTiles.append(actionRange[n])
+					
 	return possibleTiles
 	

@@ -5,6 +5,11 @@ var iTiles : Array[tile]
 var aoeTiles : Array[tile]
 
 func setTilePattern():
+	var relevantTiles : Array[tile]
+	if mH.SH.interactable:
+		relevantTiles = mH.SH.interactable.get_relevant_tiles(PlayerData.playerInfo.rc,1)
+		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
+			showAOE()
 	for n in range(FloorData.floorInfo.rc.x):
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
@@ -23,16 +28,17 @@ func setTilePattern():
 					elif mH.SH.interactable:
 						match mH.SH.interactable.type:
 							"Damage":
-								pass
-						if cTile.get_contain() == 1:
-							cTile.interactable.modulate = Global.colorDict["Green"]
-						elif cTile.get_contain() == 2:
-							cTile.interactable.modulate = Global.colorDict["Orange"]
-						else:
-							cTile.interactable.modulate = Color(0.86,0.72,0.63,0.5)
-	if mH.SH.interactable and highlightedTile != null:
-		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
-			showAOE()
+								cTile.interactable.modulate = Global.colorDict["Orange"]
+							"Healing":
+								cTile.interactable.modulate = Global.colorDict["Green"]
+							"Defensive":
+								cTile.interactable.modulate = Global.colorDict["Blue"]
+							"Status":
+								cTile.interactable.modulate = Global.colorDict["Green"]
+							"Hazard":
+								cTile.interactable.modulate = Global.colorDict["Green"]
+						if !relevantTiles.has(cTile):
+							cTile.interactable.modulate -= Color(0,0,0,0.5)
 
 func showAOE():
 	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
