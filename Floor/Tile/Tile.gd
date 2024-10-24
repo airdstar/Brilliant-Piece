@@ -84,13 +84,30 @@ func setHazard(hazardIn : HazardResource):
 	hazardHolder = Sprite2D.new()
 	hazardHolder.set_texture(hazard.associatedSprite)
 	add_child(hazardHolder)
-	
 
 func remove_hazard():
 	remove_child(hazardHolder)
 	hazardHolder = null
 	hazard = null
 	obstructed = false
+
+func get_contain():
+	if contains:
+		if contains is PlayerPiece:
+			return 1
+		elif contains is EnemyPiece:
+			return 2
+	else:
+		return 0
+
+func has_target():
+	if contains:
+		return true
+	elif obstructed:
+		return true
+	else:
+		return false
+
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))

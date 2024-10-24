@@ -5,59 +5,10 @@ func get_possible_actions():
 	
 	for n in range(FloorData.floorInfo.enemies.size()):
 		for m in range(FloorData.floorInfo.enemies[n].actions.size()):
-			var actionHolder = FloorData.floorInfo.enemies[n].actions[m]
-			var actionRange = actionHolder.getTiles(FloorData.floor.enemies[n].rc)
-			if check_action(actionRange):
-				match actionHolder.type:
-					"Damage":
-						for o in range(actionRange.size()):
-							if actionRange[o].contains:
-								if actionRange[o].contains is PlayerPiece:
-									toReturn.append(FloorData.floor.enemies[n])
-									toReturn.append(actionHolder)
-									toReturn.append(actionRange[o])
-							elif actionRange[o].obstructed:
-								toReturn.append(FloorData.floor.enemies[n])
-								toReturn.append(actionHolder)
-								toReturn.append(actionRange[o])
-					"Healing":
-						for o in range(actionRange.size()):
-							if actionRange[o].contains:
-								if actionRange[o].contains is EnemyPiece:
-									toReturn.append(FloorData.floor.enemies[n])
-									toReturn.append(actionHolder)
-									toReturn.append(actionRange[o])
-					"Defensive":
-						for o in range(actionRange.size()):
-							if actionRange[o].contains:
-								if actionRange[o].contains is EnemyPiece:
-									toReturn.append(FloorData.floor.enemies[n])
-									toReturn.append(actionHolder)
-									toReturn.append(actionRange[o])
-					"Status":
-						var isBuff : bool = false
-						if actionHolder.status.statusType == "Buff":
-							isBuff = true
-						for o in range(actionRange.size()):
-							if actionRange[o].contains:
-								if isBuff:
-									if actionRange[o].contains is EnemyPiece:
-										toReturn.append(FloorData.floor.enemies[n])
-										toReturn.append(actionHolder)
-										toReturn.append(actionRange[o])
-								else:
-									if actionRange[o].contains is PlayerPiece:
-										toReturn.append(FloorData.floor.enemies[n])
-										toReturn.append(actionHolder)
-										toReturn.append(actionRange[o])
-	
-	
-	return toReturn
+			var possibleTiles : Array[tile] = FloorData.floorInfo.enemies[n].actions[m].get_relevant_tiles(FloorData.floorInfo.enemies[n].rc,2)
+			for o in range(possibleTiles.size()):
+				toReturn.append(FloorData.floor.enemies[n])
+				toReturn.append(FloorData.floorInfo.enemies[n].actions[m])
+				toReturn.append(possibleTiles[o])
 
-func check_action(actionRange : Array[tile]):
-	for n in range(actionRange.size()):
-		if actionRange[n].contains:
-			return true
-		if actionRange[n].obstructed:
-			return true
-	return false
+	return toReturn

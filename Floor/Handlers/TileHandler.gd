@@ -21,10 +21,15 @@ func setTilePattern():
 					if mH.SH.moving:
 						cTile.interactable.modulate = Global.colorDict["White"]
 					elif mH.SH.interactable:
-						if cTile.contains == PlayerData.playerPiece:
+						match mH.SH.interactable.type:
+							"Damage":
+								pass
+						if cTile.get_contain() == 1:
 							cTile.interactable.modulate = Global.colorDict["Green"]
-						else:
+						elif cTile.get_contain() == 2:
 							cTile.interactable.modulate = Global.colorDict["Orange"]
+						else:
+							cTile.interactable.modulate = Color(0.86,0.72,0.63,0.5)
 	if mH.SH.interactable and highlightedTile != null:
 		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
 			showAOE()
@@ -33,7 +38,8 @@ func showAOE():
 	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
 	for o in range(aoeTiles.size()):
 		aoeTiles[o].interactable.visible = true
-		aoeTiles[o].interactable.modulate = Color(0.86,0.72,0.63,0.5)
+		if !aoeTiles[o].has_target():
+			aoeTiles[o].interactable.modulate = Color(0.86,0.72,0.63,0.5)
 
 func show():
 	if mH.SH.moving:

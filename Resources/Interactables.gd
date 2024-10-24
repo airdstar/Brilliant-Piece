@@ -21,3 +21,9 @@ func getTiles(_iStart : Vector2i):
 
 func getUsable():
 	pass
+
+func get_relevant_tiles(_aStart : Vector2i, pieceType : int):
+	pass
+
+func has_target(_actionRange : Array[tile], _iStart : Vector2i):
+	pass

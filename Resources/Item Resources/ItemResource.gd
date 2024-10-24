@@ -48,3 +48,6 @@ func getUsable():
 		possibleUses.append("Self")
 	
 	return possibleUses
+
+func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
+	pass

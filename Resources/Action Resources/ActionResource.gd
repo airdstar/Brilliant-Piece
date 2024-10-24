@@ -58,3 +58,54 @@ func getUsable():
 		possibleUses.append("Self")
 	
 	return possibleUses
+
+func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
+	var actionRange = getTiles(_iStart)
+	var aoeRange : Array[tile]
+	var possibleTiles : Array[tile]
+	var aoeTiles : Array[tile]
+	for n in range(actionRange.size()):
+		match type:
+			"Damage":
+				if (actionRange[n].get_contain() != pieceType and actionRange[n].get_contain() != 0) or actionRange[n].obstructed:
+					possibleTiles.append(actionRange[n])
+				elif AOE != null:
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					for m in range(aoeRange.size()):
+						if aoeRange[m].get_contain() != pieceType or actionRange[n].obstructed:
+							possibleTiles.append(actionRange[n])
+			"Healing":
+				if actionRange[n].get_contain() == pieceType:
+					possibleTiles.append(actionRange[n])
+				elif AOE != null:
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					for m in range(aoeRange.size()):
+						if aoeRange[m].get_contain() == pieceType:
+							possibleTiles.append(actionRange[n])
+
+			"Defensive":
+				if actionRange[n].get_contain() == pieceType:
+					possibleTiles.append(actionRange[n])
+				elif AOE != null:
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					for m in range(aoeRange.size()):
+						if aoeRange[m].get_contain() == pieceType:
+							possibleTiles.append(actionRange[n])
+			"Status":
+				var isBuff : bool = false
+				if status.statusType == "Buff":
+					isBuff = true
+				
+				if (actionRange[n].get_contain() == pieceType) == isBuff:
+					possibleTiles.append(actionRange[n])
+				elif AOE != null:
+					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.fl.mH.DH.getClosestDirection(_iStart, actionRange[n].rc))
+					for m in range(aoeRange.size()):
+						if (aoeRange[m].get_contain() == pieceType) == isBuff:
+							possibleTiles.append(actionRange[n])
+			"Hazard":
+				var isObstruction : bool = false
+				if hazard.blockade:
+					isObstruction = true
+	return possibleTiles
+	
