@@ -1,24 +1,33 @@
-[gd_resource type="Resource" script_class="PlayerInfo" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="PlayerInfo" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="1_l3cd0"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/ShardSlash.tres" id="2_e00k0"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/SpikedArmor.tres" id="3_a3dnv"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/CrystalThrow.tres" id="4_bijvw"]
+[ext_resource type="Resource" path="res://Resources/Class Resources/Plaguebearer.tres" id="5_juhav"]
 [ext_resource type="Script" path="res://Resources/StatusResource.gd" id="6_tjtx1"]
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="7_qa77f"]
+[ext_resource type="Resource" path="res://Resources/Item Resources/Items/Cone.tres" id="8_aikyd"]
 [ext_resource type="Script" path="res://Run Info/PlayerInfo.gd" id="9_colmx"]
+[ext_resource type="Resource" path="res://Resources/Item Resources/Items/PeasantHat.tres" id="9_i62to"]
+[ext_resource type="Resource" path="res://Resources/PieceType Resources/Queen.tres" id="10_icfpq"]
 
 [resource]
 script = ExtResource("9_colmx")
-rc = Vector2i(0, 0)
+rc = Vector2i(3, 0)
 currentFloorNum = 1
+classType = ExtResource("5_juhav")
+pieceType = ExtResource("10_icfpq")
 level = 1
 expAmount = 0
-maxHealth = 0
-health = 0
+maxHealth = 6
+health = 6
 armor = 0
 healthStatus = Array[ExtResource("6_tjtx1")]([])
 damageStatus = Array[ExtResource("6_tjtx1")]([])
 otherStatus = Array[ExtResource("6_tjtx1")]([])
-actions = Array[ExtResource("1_l3cd0")]([])
-items = Array[ExtResource("7_qa77f")]([])
+actions = Array[ExtResource("1_l3cd0")]([ExtResource("2_e00k0"), ExtResource("3_a3dnv"), ExtResource("4_bijvw"), null, null])
+items = Array[ExtResource("7_qa77f")]([ExtResource("8_aikyd"), ExtResource("9_i62to")])
 coins = 0
 soul = 0
-isNew = true
+isNew = false

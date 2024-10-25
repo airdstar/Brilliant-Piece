@@ -72,7 +72,7 @@ func get_relevant_tiles(_iStart : Vector2i, pieceType : int):
 				elif AOE != null:
 					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
 					for m in range(aoeRange.size()):
-						if (aoeRange[m].get_contain() != pieceType and actionRange[n].get_contain() != 0) or actionRange[n].obstructed:
+						if (aoeRange[m].get_contain() != pieceType and aoeRange[m].get_contain() != 0) or aoeRange[m].obstructed:
 							possibleTiles.append(actionRange[n])
 			"Healing":
 				if actionRange[n].get_contain() == pieceType:
