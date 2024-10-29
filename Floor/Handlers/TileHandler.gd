@@ -5,9 +5,9 @@ var iTiles : Array[tile]
 var aoeTiles : Array[tile]
 
 func setTilePattern():
-	var relevantTiles : Array[tile]
+	var relevantTiles : Array[bool]
 	if mH.SH.interactable:
-		relevantTiles = mH.SH.interactable.get_relevant_tiles(PlayerData.playerInfo.rc,1)
+		relevantTiles = get_relevant_tiles(FloorData.tiles[PlayerData.playerInfo.rc.x][PlayerData.playerInfo.rc.y], iTiles, 1, mH.SH.interactable.type, mH.SH.interactable)
 	for n in range(FloorData.floorInfo.rc.x):
 		for m in range(FloorData.floorInfo.rc.y):
 			if FloorData.tiles[n][m] != null:
@@ -18,59 +18,23 @@ func setTilePattern():
 					else:
 						cTile.tileColor.modulate = Global.tileWhiteColor[0]
 				if !iTiles.has(cTile):
-					FloorData.tiles[n][m].interactable.visible = false
+					cTile.interactable.visible = false
 				else:
 					cTile.interactable.visible = true
 					if mH.SH.moving:
-						cTile.interactable.modulate = Global.colorDict["White"]
+						cTile.set_interactable("Move", true)
 					elif mH.SH.interactable:
-						match mH.SH.interactable.type:
-							"Damage":
-								cTile.interactable.modulate = Global.colorDict["Orange"]
-							"Healing":
-								cTile.interactable.modulate = Global.colorDict["Green"]
-							"Defensive":
-								cTile.interactable.modulate = Global.colorDict["Blue"]
-							"Status":
-								cTile.interactable.modulate = Global.colorDict["Green"]
-							"Hazard":
-								cTile.interactable.modulate = Global.colorDict["Green"]
-						if !relevantTiles.has(cTile):
-							cTile.interactable.modulate -= Color(0,0,0,0.5)
+						cTile.set_interactable(mH.SH.interactable.type, relevantTiles[iTiles.find(cTile)])
 	if mH.SH.interactable:
 		if mH.SH.interactable.AOE and iTiles.has(highlightedTile):
 			showAOE()
 
 func showAOE():
 	aoeTiles = mH.SH.interactable.AOE.getAOE(highlightedTile.rc, mH.DH.getClosestDirection(PlayerData.playerPiece.rc, highlightedTile.rc))
+	var relevantTiles = get_relevant_tiles(highlightedTile, aoeTiles, 1, mH.SH.interactable.type, null)
 	for n in range(aoeTiles.size()):
-		aoeTiles[n].interactable.visible = true
-		var isRelevant : bool = false
-		match mH.SH.interactable.type:
-			"Damage":
-				aoeTiles[n].interactable.modulate = Global.colorDict["Orange"]
-				if aoeTiles[n].get_contain() == 2 or aoeTiles[n].obstructed:
-					isRelevant = true
-			"Healing":
-				aoeTiles[n].interactable.modulate = Global.colorDict["Green"]
-				if aoeTiles[n].get_contain() == 1:
-					isRelevant = true
-			"Defensive":
-				aoeTiles[n].interactable.modulate = Global.colorDict["Blue"]
-				if aoeTiles[n].get_contain() == 1:
-					isRelevant = true
-			"Status":
-				aoeTiles[n].interactable.modulate = Global.colorDict["Green"]
-				if mH.SH.interactable.status.statusType == "Buff":
-					if aoeTiles[n].get_contain() == 1:
-						isRelevant = true
-				else:
-					if aoeTiles[n].get_contain() == 2:
-						isRelevant = true
-		
+		aoeTiles[n].set_interactable(mH.SH.interactable.type, relevantTiles[n])
 		aoeTiles[n].interactable.modulate -= Color(0,0,0,0.1)
-		if !isRelevant:
-			aoeTiles[n].interactable.modulate -= Color(0,0,0,0.5)
 
 func show():
 	if mH.SH.moving:
@@ -106,60 +70,57 @@ func getEmptyTile():
 					isEmpty = true
 	return FloorData.tiles[randX][randY]
 
-func get_relevant_tiles(startTile : tile, iTiles : Array[tile], pieceType : int):
-	var iRange = mH.SH.interactable.getTiles(startTile)
+func get_relevant_tiles(startTile : tile, iTiles : Array[tile], pieceType : int, type : String, interactable : Interactable):
 	var possibleTiles : Array[bool]
 	var aoeRange : Array[tile]
 	var aoeTiles : Array[tile]
-	for n in range(iRange.size()):
+	for n in range(iTiles.size()):
 		possibleTiles.append(false)
-		match mH.SH.interactable.type:
+		match type:
 			"Damage":
-				if (iRange[n].get_contain() != pieceType and iRange[n].get_contain() != 0) or iRange[n].obstructed:
+				if (iTiles[n].get_contain() != pieceType and iTiles[n].get_contain() != 0) or iTiles[n].obstructed:
 					possibleTiles[n] = true
-				elif mH.SH.interactable.AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
-					for m in range(aoeRange.size()):
-						if (aoeRange[m].get_contain() != pieceType and aoeRange[m].get_contain() != 0) or aoeRange[m].obstructed:
-							possibleTiles.append(actionRange[n])
+				elif interactable != null:
+					if interactable.AOE != null:
+						aoeRange = interactable.AOE.getAOE(iTiles[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(startTile.rc, iTiles[n].rc))
+						for m in range(aoeRange.size()):
+							if (aoeRange[m].get_contain() != pieceType and aoeRange[m].get_contain() != 0) or aoeRange[m].obstructed:
+								possibleTiles[n] = true
 			"Healing":
-				if actionRange[n].get_contain() == pieceType:
-					possibleTiles.append(actionRange[n])
-				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
-					for m in range(aoeRange.size()):
-						if aoeRange[m].get_contain() == pieceType:
-							possibleTiles.append(actionRange[n])
+				if iTiles[n].get_contain() == pieceType:
+					possibleTiles[n] = true
+				elif interactable != null:
+					if interactable.AOE != null:
+						aoeRange = interactable.AOE.getAOE(iTiles[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(startTile, iTiles[n].rc))
+						for m in range(aoeRange.size()):
+							if aoeRange[m].get_contain() == pieceType:
+								possibleTiles[n] = true
 
 			"Defensive":
-				if actionRange[n].get_contain() == pieceType:
-					possibleTiles.append(actionRange[n])
-				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
-					for m in range(aoeRange.size()):
-						if aoeRange[m].get_contain() == pieceType:
-							possibleTiles.append(actionRange[n])
+				if iTiles[n].get_contain() == pieceType:
+					possibleTiles[n] = true
+				elif interactable != null:
+					if interactable.AOE != null:
+						aoeRange = interactable.AOE.getAOE(iTiles[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(startTile, iTiles[n].rc))
+						for m in range(aoeRange.size()):
+							if aoeRange[m].get_contain() == pieceType:
+								possibleTiles[n] = true
 			"Status":
-				var isBuff : bool = false
-				if status.statusType == "Buff":
-					isBuff = true
 				
-				if (actionRange[n].get_contain() == pieceType) == isBuff:
-					possibleTiles.append(actionRange[n])
-				elif AOE != null:
-					aoeRange = AOE.getAOE(actionRange[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(_iStart, actionRange[n].rc))
-					for m in range(aoeRange.size()):
-						if (aoeRange[m].get_contain() == pieceType) == isBuff:
-							possibleTiles.append(actionRange[n])
+				if (iTiles[n].get_contain() == pieceType) == interactable.status.buff:
+					possibleTiles[n] = true
+				elif interactable != null:
+					if interactable.AOE != null:
+						aoeRange = interactable.AOE.getAOE(iTiles[n].rc, FloorData.floor.Handlers.DH.getClosestDirection(startTile, iTiles[n].rc))
+						for m in range(aoeRange.size()):
+							if (aoeRange[m].get_contain() == pieceType) == interactable.status.buff:
+								possibleTiles[n] = true
 			"Hazard":
-				var isObstruction : bool = false
-				if hazard.blockade:
-					isObstruction = true
 				
-				if isObstruction:
-					if actionRange[n].get_contain() == 0:
-						possibleTiles.append(actionRange[n])
+				if interactable.hazard.blockade:
+					if iTiles[n].get_contain() == 0:
+						possibleTiles[n] = true
 				else:
-					possibleTiles.append(actionRange[n])
+					possibleTiles[n] = true
 					
 	return possibleTiles

@@ -127,6 +127,7 @@ func create_outlines():
 				if connectedTiles.size() != 0:
 					var spriteHolder = Sprite2D.new()
 					spriteHolder.position = Vector2i(-((FloorData.floorInfo.rc.x * 32) / 2) + (32 * n) + 16, -((FloorData.floorInfo.rc.y * 32) / 2) + (32 * m) + 16)
+					spriteHolder.z_index = 0
 					FloorData.floor.add_child(spriteHolder)
 					match connectedTiles.size():
 						1:

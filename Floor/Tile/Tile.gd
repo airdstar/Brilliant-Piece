@@ -16,6 +16,12 @@ func _ready():
 	pass
 
 func setPiece(piece : Piece, type : int):
+	
+	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
+		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
+	piece.rc = rc
+	contains = piece
+	
 	## 0 is for loading an area
 	## 1 is for moving to a new tile
 	## 2 is for being pushed to a new tile
@@ -28,9 +34,32 @@ func setPiece(piece : Piece, type : int):
 			tween.tween_property(piece, "position", self.position, 0.2
 								).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 		2:
+			
+			var particles := CPUParticles2D.new()
+			particles.amount = 18
+			particles.lifetime = 0.09
+			particles.spread = 65
+			particles.gravity = Vector2.ZERO
+			particles.initial_velocity_min = 165
+			particles.initial_velocity_max = 250
+			particles.scale_amount_min = 3
+			particles.scale_amount_max = 5
+			particles.color = Color(0.7,0.7,0.7)
+			
+			particles.z_index = 1
+			particles.position = piece.position
+			particles.set_rotation_degrees(180)
+			
+			particles.one_shot = true
+			particles.finished.connect(self.delete_particles.bind(particles))
+			FloorData.floor.add_child(particles)
+			
+			
+			
 			var tween = create_tween()
 			tween.tween_property(piece, "position", self.position, 0.15
 								).set_trans(Tween.TRANS_BACK)
+			
 		3:
 			var scaleTween = create_tween()
 		
@@ -46,10 +75,6 @@ func setPiece(piece : Piece, type : int):
 			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
 								).set_trans(Tween.TRANS_BACK)
 	
-	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
-		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
-	piece.rc = rc
-	contains = piece
 
 func interact():
 	var inter = FloorData.floor.Handlers.SH.interactable
@@ -108,6 +133,27 @@ func has_target():
 	else:
 		return false
 
+func set_interactable(type : String, relevant : bool):
+	interactable.visible = true
+	match type:
+		"Move":
+			interactable.modulate = Global.colorDict["White"]
+		"Damage":
+			interactable.modulate = Global.colorDict["Orange"]
+		"Healing":
+			interactable.modulate = Global.colorDict["Green"]
+		"Defensive":
+			interactable.modulate = Global.colorDict["Blue"]
+		"Status":
+			interactable.modulate = Global.colorDict["Green"]
+		"Hazard":
+			interactable.modulate = Global.colorDict["Green"]
+	
+	if !relevant:
+		interactable.modulate -= Color(0,0,0,0.5)
+
+func delete_particles(k):
+	FloorData.floor.remove_child(k)
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))

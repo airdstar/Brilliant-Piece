@@ -4,7 +4,7 @@ class_name Interactable
 @export_category("General")
 @export var name : String = "Placeholder"
 @export var desc : String = "Placeholder"
-@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation") var type : String = "Damage"
+@export_enum("Damage", "Healing", "Defensive", "Hazard", "Status", "Movement", "Creation", "Instant Effect") var type : String = "Damage"
 @export var AOE : AOEResource = null
 @export_flags("Self", "Others", "Tile") var usableOn : int = 2
 
@@ -22,7 +22,7 @@ func getTiles(_iStart : Vector2i):
 func getUsable():
 	pass
 
-func get_relevant_tiles(_aStart : Vector2i, pieceType : int):
+func get_relevant_tiles(_aStart : Vector2i, _pieceType : int):
 	pass
 
 func has_target(_actionRange : Array[tile], _iStart : Vector2i):
