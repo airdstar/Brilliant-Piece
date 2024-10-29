@@ -16,12 +16,6 @@ func _ready():
 	pass
 
 func setPiece(piece : Piece, type : int):
-	
-	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
-		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
-	piece.rc = rc
-	contains = piece
-	
 	## 0 is for loading an area
 	## 1 is for moving to a new tile
 	## 2 is for being pushed to a new tile
@@ -47,12 +41,10 @@ func setPiece(piece : Piece, type : int):
 			particles.color = Color(0.7,0.7,0.7)
 			
 			particles.z_index = 1
-			particles.position = piece.position
-			particles.set_rotation_degrees(180)
+			particles.position = (piece.position + self.position)/2
+			particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][FloorData.floor.Handlers.DH.getClosestDirection(piece.rc, rc)] - 180)
 			
-			particles.one_shot = true
-			particles.finished.connect(self.delete_particles.bind(particles))
-			FloorData.floor.add_child(particles)
+			Global.create_particles(particles, FloorData.floor, 0)
 			
 			
 			
@@ -74,7 +66,29 @@ func setPiece(piece : Piece, type : int):
 			var tween = create_tween()
 			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
 								).set_trans(Tween.TRANS_BACK)
+			
+			
+			
+			var particles := CPUParticles2D.new()
+			particles.amount = 18
+			particles.lifetime = 0.1
+			particles.spread = 180
+			particles.gravity = Vector2.ZERO
+			particles.initial_velocity_min = 165
+			particles.initial_velocity_max = 250
+			particles.scale_amount_min = 3
+			particles.scale_amount_max = 5
+			particles.color = Color(0.7,0.7,0.7)
+			
+			particles.z_index = 1
+			particles.position = position
+			
+			Global.create_particles(particles, FloorData.floor, 0.15)
 	
+	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
+		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null
+	piece.rc = rc
+	contains = piece
 
 func interact():
 	var inter = FloorData.floor.Handlers.SH.interactable
@@ -152,8 +166,7 @@ func set_interactable(type : String, relevant : bool):
 	if !relevant:
 		interactable.modulate -= Color(0,0,0,0.5)
 
-func delete_particles(k):
-	FloorData.floor.remove_child(k)
+
 
 func mouseHovered() -> void:
 	FloorData.floor.Handlers.HH.highlightTile(Vector2i(rc.x,rc.y))

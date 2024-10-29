@@ -18,3 +18,15 @@ func _ready():
 	var healthArray : Array[int] = [2, 2, 2, 1, 2]
 	
 	levelDict = {"exp" : expArray, "health" : healthArray}
+
+func delete_particles(particles, location):
+	location.remove_child(particles)
+
+func create_particles(particles : CPUParticles2D, location, delay : float):
+	particles.one_shot = true
+	particles.finished.connect(self.delete_particles.bind(particles, location))
+	
+	if delay != 0:
+		await get_tree().create_timer(delay).timeout
+	
+	location.add_child(particles)

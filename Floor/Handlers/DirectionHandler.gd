@@ -18,7 +18,7 @@ func _ready():
 	var dirPosArray : Array[Vector2i] = [Vector2i(0,1), Vector2i(1,1), Vector2i(1,0), Vector2i(1,-1),
 										Vector2i(0,-1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(-1,1)]
 	
-	var dirRotationArray : Array[int] = [-90, -45, 0, 45, 90, 135, 180, -135]
+	var dirRotationArray : Array[int] = [-90, -135, 0, 45, 90, 135, 180, -45]
 	
 	var dirArray : Array[Direction] = [Direction.NORTH, Direction.NORTHWEST, Direction.WEST,
 								   Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST,

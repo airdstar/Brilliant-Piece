@@ -46,6 +46,7 @@ func show():
 func stopShowing():
 	mH.SH.interactable = null
 	mH.SH.moving = false
+	mH.SH.actingPiece = null
 	iTiles.clear()
 	setTilePattern()
 

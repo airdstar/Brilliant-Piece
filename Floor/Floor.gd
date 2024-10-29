@@ -26,7 +26,6 @@ func _process(_delta : float):
 		Handlers.SH.resetState()
 		FloorData.reload_floor()
 
-
 func pieceDeath(piece : MoveablePiece):
 	if piece is EnemyPiece:
 		PlayerData.gainExp(piece.enemyType.expAmount)

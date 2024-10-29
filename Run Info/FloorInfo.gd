@@ -30,6 +30,7 @@ func endTurn():
 	
 	FloorData.floor.Handlers.UH.setTurnColors()
 	FloorData.floor.Handlers.TH.checkHazards()
+	FloorData.floor.Handlers.TH.stopShowing()
 	
 	if !playerTurn:
 		FloorData.floor.Handlers.EH.makeDecision()

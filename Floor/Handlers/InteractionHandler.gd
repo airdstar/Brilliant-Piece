@@ -2,11 +2,12 @@ extends Handler
 
 func _process(_delta: float):
 	if mH.SH.moving == true or mH.SH.interactable != null:
-		if Input.is_action_just_pressed("Select"):
-			if mH.TH.iTiles.has(mH.TH.highlightedTile):
-				interact(mH.TH.highlightedTile)
-			elif mH.SH.moving == true and mH.TH.highlightedTile.contains is PlayerPiece:
-				mH.TH.stopShowing()
+		if mH.TH.highlightedTile != null:
+			if Input.is_action_just_pressed("Select"):
+				if mH.TH.iTiles.has(mH.TH.highlightedTile):
+					interact(mH.TH.highlightedTile)
+				elif mH.SH.moving == true and mH.TH.highlightedTile.contains is PlayerPiece:
+					mH.TH.stopShowing()
 	else:
 		if Input.is_action_just_pressed("Select"):
 			if !FloorData.floorInfo.moveUsed:
@@ -54,7 +55,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 	var pieceHealth := piece.health
 	if piece.rc.x + dirVect.x >= 0 and piece.rc.y + dirVect.y >= 0 and piece.rc.x + dirVect.x < FloorData.floorInfo.rc.x and piece.rc.y + dirVect.y < FloorData.floorInfo.rc.y:
 		var currentTile = FloorData.tiles[piece.rc.x + mH.DH.dirDict["PosData"][direction].x][piece.rc.y + mH.DH.dirDict["PosData"][direction].y]
-		if currentTile:
+		if currentTile != null:
 			if currentTile.hazard:
 				if currentTile.hazard.effectType == "OnTouch":
 					print("hi")
@@ -77,6 +78,25 @@ func pushPiece(piece : MoveablePiece, direction : int):
 		else:
 			piece.damage(2)
 			if pieceHealth > 2:
+				
+				var particles := CPUParticles2D.new()
+				particles.amount = 18
+				particles.lifetime = 0.09
+				particles.spread = 65
+				particles.gravity = Vector2.ZERO
+				particles.initial_velocity_min = 165
+				particles.initial_velocity_max = 250
+				particles.scale_amount_min = 3
+				particles.scale_amount_max = 5
+				particles.color = Color(0.7,0.7,0.7)
+				
+				particles.z_index = 1
+				particles.position = piece.position + (dirVect * 16)
+				print(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
+				particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
+				
+				Global.create_particles(particles, FloorData.floor, 0)
+				
 				var tween = create_tween()
 				tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
 									).set_trans(Tween.TRANS_QUART)
@@ -89,6 +109,25 @@ func pushPiece(piece : MoveablePiece, direction : int):
 	else:
 		piece.damage(2)
 		if pieceHealth > 2:
+			
+			var particles := CPUParticles2D.new()
+			particles.amount = 18
+			particles.lifetime = 0.09
+			particles.spread = 65
+			particles.gravity = Vector2.ZERO
+			particles.initial_velocity_min = 165
+			particles.initial_velocity_max = 250
+			particles.scale_amount_min = 3
+			particles.scale_amount_max = 5
+			particles.color = Color(0.7,0.7,0.7)
+			
+			particles.z_index = 1
+			particles.position = (piece.position + (dirVect * 32))/2
+			print(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
+			particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
+			
+			Global.create_particles(particles, FloorData.floor, 0)
+			
 			var tween = create_tween()
 			tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
 									).set_trans(Tween.TRANS_QUART)
