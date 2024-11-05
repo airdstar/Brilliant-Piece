@@ -1,24 +1,34 @@
-[gd_resource type="Resource" script_class="PlayerInfo" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="PlayerInfo" load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://Resources/Action Resources/ActionResource.gd" id="1_l3cd0"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/ShardSlash.tres" id="2_h63qu"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/SpikedArmor.tres" id="3_men1t"]
+[ext_resource type="Resource" path="res://Resources/Action Resources/Actions/CrystalThrow.tres" id="4_4116y"]
+[ext_resource type="Resource" path="res://Resources/Class Resources/Plaguebearer.tres" id="5_2bfnk"]
 [ext_resource type="Script" path="res://Resources/StatusResource.gd" id="6_tjtx1"]
 [ext_resource type="Script" path="res://Resources/Item Resources/ItemResource.gd" id="7_qa77f"]
+[ext_resource type="Resource" path="res://Resources/Item Resources/Items/Cone.tres" id="8_vtjca"]
+[ext_resource type="Resource" path="res://Resources/Item Resources/Items/PeasantHat.tres" id="9_byv7m"]
 [ext_resource type="Script" path="res://Run Info/PlayerInfo.gd" id="9_colmx"]
+[ext_resource type="Resource" path="res://Resources/Item Resources/Items/Crown.tres" id="10_pi36g"]
+[ext_resource type="Resource" path="res://Resources/PieceType Resources/Queen.tres" id="11_inlrq"]
 
 [resource]
 script = ExtResource("9_colmx")
-rc = Vector2i(0, 0)
-currentFloorNum = 1
+rc = Vector2i(3, 1)
+currentFloorNum = 2
+classType = ExtResource("5_2bfnk")
+pieceType = ExtResource("11_inlrq")
 level = 1
-expAmount = 0
-maxHealth = 0
-health = 0
+expAmount = 2
+maxHealth = 6
+health = 4
 armor = 0
 healthStatus = Array[ExtResource("6_tjtx1")]([])
 damageStatus = Array[ExtResource("6_tjtx1")]([])
 otherStatus = Array[ExtResource("6_tjtx1")]([])
-actions = Array[ExtResource("1_l3cd0")]([])
-items = Array[ExtResource("7_qa77f")]([])
-coins = 0
+actions = Array[ExtResource("1_l3cd0")]([ExtResource("2_h63qu"), ExtResource("3_men1t"), ExtResource("4_4116y"), null, null])
+items = Array[ExtResource("7_qa77f")]([ExtResource("8_vtjca"), ExtResource("9_byv7m"), ExtResource("10_pi36g")])
+coins = 2
 soul = 0
-isNew = true
+isNew = false

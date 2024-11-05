@@ -35,6 +35,7 @@ func displayInfo():
 	else:
 		FloorData.floor.HUD.hidePieceInfo()
 
+
 func setTurnColors():
 	for n in range(3):
 		if FloorData.floorInfo.playerTurn:

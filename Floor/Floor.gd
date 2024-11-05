@@ -37,6 +37,8 @@ func pieceDeath(piece : MoveablePiece):
 		FloorData.floor.enemies.remove_at(pieceNum)
 		FloorData.floorInfo.enemies.remove_at(pieceNum)
 		
+		HUD.update_money()
+		
 		piece.queue_free()
 
 

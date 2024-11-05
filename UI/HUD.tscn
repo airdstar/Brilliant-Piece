@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdr4d7j2lkvsg"]
+[gd_scene load_steps=11 format=3 uid="uid://bdr4d7j2lkvsg"]
 
 [ext_resource type="Texture2D" uid="uid://bcwfc204nf0kq" path="res://UI/MoveOutline.png" id="1_m1oxk"]
 [ext_resource type="Script" path="res://UI/HUD.gd" id="1_ymfxc"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://deo1msgydtcbb" path="res://UI/Turn.png" id="6_ko3ij"]
 [ext_resource type="Theme" uid="uid://b3m5cx7w8nya8" path="res://UI/HUD.tres" id="8_037fx"]
 [ext_resource type="Texture2D" uid="uid://buisvcwrhy2q0" path="res://UI/FloorInfo.png" id="8_ysboo"]
+[ext_resource type="Texture2D" uid="uid://doy8o30qa7y7q" path="res://UI/Outline.png" id="10_tcfy0"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -74,10 +75,10 @@ texture = ExtResource("6_ko3ij")
 
 [node name="Floor_Player" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 950.0
-offset_top = 90.0
-offset_right = 1142.0
-offset_bottom = 149.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 202.0
+offset_bottom = 69.0
 texture = ExtResource("8_ysboo")
 
 [node name="FloorInfo" type="RichTextLabel" parent="Floor_Player"]
@@ -94,24 +95,14 @@ scroll_active = false
 
 [node name="Money" type="RichTextLabel" parent="Floor_Player"]
 layout_mode = 0
-offset_top = 59.0
-offset_right = 96.0
-offset_bottom = 87.0
+offset_left = 93.0
+offset_top = 64.0
+offset_right = 189.0
+offset_bottom = 92.0
 theme = ExtResource("8_037fx")
 bbcode_enabled = true
 text = " [img]res://UI/Coin.png[/img] 0 
 "
-text_direction = 1
-
-[node name="Soul" type="RichTextLabel" parent="Floor_Player"]
-layout_mode = 0
-offset_left = 96.0
-offset_top = 59.0
-offset_right = 192.0
-offset_bottom = 86.0
-theme = ExtResource("8_037fx")
-bbcode_enabled = true
-text = " [img]res://UI/Soul.png[/img] 0 "
 text_direction = 2
 
 [node name="Status" type="Control" parent="."]
@@ -154,3 +145,15 @@ theme = ExtResource("8_037fx")
 bbcode_enabled = true
 text = " [img]res://UI/Heart.png[/img] hi [img]res://UI/Armor.png[/img]"
 scroll_active = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Outline" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("10_tcfy0")

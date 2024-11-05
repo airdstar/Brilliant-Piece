@@ -21,6 +21,8 @@ func loadData():
 	
 	$TextureRect.set_texture(ResourceLoader.load(classType.associatedSprite))
 	
+	FloorData.floor.HUD.update_money()
+	
 
 func setData():
 	PlayerData.playerInfo.isNew = false

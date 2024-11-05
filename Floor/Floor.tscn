@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0rs8wca01dop"]
+[gd_scene load_steps=5 format=3 uid="uid://c0rs8wca01dop"]
 
 [ext_resource type="Script" path="res://Floor/Floor.gd" id="1_sippj"]
 [ext_resource type="PackedScene" uid="uid://bpg2vyee60md7" path="res://Floor/Handlers/Handlers.tscn" id="2_k2kkp"]
-[ext_resource type="Texture2D" uid="uid://c0owfrdvwxl17" path="res://Floor/Backgrounds/background.png" id="4_hgnwj"]
 [ext_resource type="PackedScene" uid="uid://c801isw0lg4ho" path="res://UI/Menu/MenuNew.tscn" id="4_mhico"]
 [ext_resource type="PackedScene" uid="uid://bdr4d7j2lkvsg" path="res://UI/HUD.tscn" id="5_0rph0"]
-[ext_resource type="Texture2D" uid="uid://doy8o30qa7y7q" path="res://UI/Outline.png" id="5_38r2r"]
 
 [node name="Floor" type="Node"]
 script = ExtResource("1_sippj")
@@ -26,17 +24,6 @@ offset_top = 322.0
 offset_right = 900.0
 offset_bottom = 322.0
 
-[node name="CenterContainer" type="CenterContainer" parent="Menu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Outline" type="TextureRect" parent="Menu/CenterContainer"]
-layout_mode = 2
-texture = ExtResource("5_38r2r")
-
 [node name="Button" type="Button" parent="Menu"]
 offset_left = 19.0
 offset_top = 593.0
@@ -44,13 +31,5 @@ offset_right = 97.0
 offset_bottom = 624.0
 focus_mode = 0
 text = "End Turn"
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-modulate = Color(0.6, 0.6, 0.6, 1)
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(2, 2)
-texture = ExtResource("4_hgnwj")
 
 [connection signal="pressed" from="Menu/Button" to="." method="endTurn"]

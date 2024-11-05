@@ -79,23 +79,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 			piece.damage(2)
 			if pieceHealth > 2:
 				
-				var particles := CPUParticles2D.new()
-				particles.amount = 18
-				particles.lifetime = 0.09
-				particles.spread = 65
-				particles.gravity = Vector2.ZERO
-				particles.initial_velocity_min = 165
-				particles.initial_velocity_max = 250
-				particles.scale_amount_min = 3
-				particles.scale_amount_max = 5
-				particles.color = Color(0.7,0.7,0.7)
-				
-				particles.z_index = 1
-				particles.position = piece.position + (dirVect * 16)
-				print(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
-				particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
-				
-				Global.create_particles(particles, FloorData.floor, 0)
+				Global.create_particles(piece.position + (dirVect * 16), FloorData.floor.Handlers.DH.dirDict["RotData"][direction], 0, FloorData.floor, 0)
 				
 				var tween = create_tween()
 				tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15
@@ -110,23 +94,7 @@ func pushPiece(piece : MoveablePiece, direction : int):
 		piece.damage(2)
 		if pieceHealth > 2:
 			
-			var particles := CPUParticles2D.new()
-			particles.amount = 18
-			particles.lifetime = 0.09
-			particles.spread = 65
-			particles.gravity = Vector2.ZERO
-			particles.initial_velocity_min = 165
-			particles.initial_velocity_max = 250
-			particles.scale_amount_min = 3
-			particles.scale_amount_max = 5
-			particles.color = Color(0.7,0.7,0.7)
-			
-			particles.z_index = 1
-			particles.position = (piece.position + (dirVect * 32))/2
-			print(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
-			particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][direction])
-			
-			Global.create_particles(particles, FloorData.floor, 0)
+			Global.create_particles(piece.position + (dirVect * 16), FloorData.floor.Handlers.DH.dirDict["RotData"][direction], 0, FloorData.floor, 0)
 			
 			var tween = create_tween()
 			tween.tween_property(piece, "position", piece.position + (dirVect * 32), 0.15

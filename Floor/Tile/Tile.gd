@@ -29,22 +29,9 @@ func setPiece(piece : Piece, type : int):
 								).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 		2:
 			
-			var particles := CPUParticles2D.new()
-			particles.amount = 18
-			particles.lifetime = 0.09
-			particles.spread = 65
-			particles.gravity = Vector2.ZERO
-			particles.initial_velocity_min = 165
-			particles.initial_velocity_max = 250
-			particles.scale_amount_min = 3
-			particles.scale_amount_max = 5
-			particles.color = Color(0.7,0.7,0.7)
-			
-			particles.z_index = 1
-			particles.position = (piece.position + self.position)/2
-			particles.set_rotation_degrees(FloorData.floor.Handlers.DH.dirDict["RotData"][FloorData.floor.Handlers.DH.getClosestDirection(piece.rc, rc)] - 180)
-			
-			Global.create_particles(particles, FloorData.floor, 0)
+			Global.create_particles((piece.position + self.position)/2,
+									FloorData.floor.Handlers.DH.dirDict["RotData"][FloorData.floor.Handlers.DH.getClosestDirection(piece.rc, rc)] - 180,
+									0, FloorData.floor, 0)
 			
 			
 			
@@ -67,23 +54,7 @@ func setPiece(piece : Piece, type : int):
 			tween.tween_property(piece, "scale", Vector2(1,1), 0.15
 								).set_trans(Tween.TRANS_BACK)
 			
-			
-			
-			var particles := CPUParticles2D.new()
-			particles.amount = 18
-			particles.lifetime = 0.1
-			particles.spread = 180
-			particles.gravity = Vector2.ZERO
-			particles.initial_velocity_min = 165
-			particles.initial_velocity_max = 250
-			particles.scale_amount_min = 3
-			particles.scale_amount_max = 5
-			particles.color = Color(0.7,0.7,0.7)
-			
-			particles.z_index = 1
-			particles.position = position
-			
-			Global.create_particles(particles, FloorData.floor, 0.15)
+			Global.create_particles(position, 0, 1, FloorData.floor, 0.15)
 	
 	if FloorData.tiles[piece.rc.x][piece.rc.y].contains == piece:
 		FloorData.tiles[piece.rc.x][piece.rc.y].contains = null

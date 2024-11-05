@@ -22,7 +22,41 @@ func _ready():
 func delete_particles(particles, location):
 	location.remove_child(particles)
 
-func create_particles(particles : CPUParticles2D, location, delay : float):
+func create_particles(position : Vector2, rotation : float, type: int, location, delay : float):
+	
+	## type 0 is pushing/hitting something while moving
+	## type 1 is landing after falling
+	## type 2 is for a slash type action
+	
+	var particles : CPUParticles2D = CPUParticles2D.new()
+	match type:
+		0:
+			particles.amount = 18
+			particles.lifetime = 0.09
+			particles.spread = 65
+			particles.gravity = Vector2.ZERO
+			particles.initial_velocity_min = 165
+			particles.initial_velocity_max = 250
+			particles.scale_amount_min = 3
+			particles.scale_amount_max = 5
+			particles.color = Color(0.7,0.7,0.7)
+			
+		1:
+			particles.amount = 18
+			particles.lifetime = 0.1
+			particles.spread = 180
+			particles.gravity = Vector2.ZERO
+			particles.initial_velocity_min = 165
+			particles.initial_velocity_max = 250
+			particles.scale_amount_min = 3
+			particles.scale_amount_max = 5
+			particles.color = Color(0.7,0.7,0.7)
+	
+	
+	particles.z_index = 1
+	particles.position = position
+	particles.set_rotation_degrees(rotation)
+	
 	particles.one_shot = true
 	particles.finished.connect(self.delete_particles.bind(particles, location))
 	

@@ -11,6 +11,9 @@ func _ready():
 func updateFloorInfo():
 	$Floor_Player/FloorInfo.text = "[center]Floor " + str(FloorData.floorInfo.floorNum) + "\n" + str(FloorData.floorInfo.layerData.layerName)
 
+func update_money():
+	$Floor_Player/Money.text = " [img]res://UI/Coin.png[/img] " + str(PlayerData.playerInfo.coins)
+
 func showPieceInfo():
 	$Status.visible = true
 
