@@ -40,6 +40,8 @@ func pieceDeath(piece : MoveablePiece):
 		HUD.update_money()
 		
 		piece.queue_free()
+	elif piece is PlayerPiece:
+		FloorData.resetInfo()
 
 
 func endTurn() -> void:

@@ -43,6 +43,7 @@ func updateData():
 
 func resetInfo():
 	ResourceSaver.save(FloorInfo.new(), save_path)
+	PlayerData.resetInfo()
 
 func setData():
 	floorInfo.setLayerInfo()
